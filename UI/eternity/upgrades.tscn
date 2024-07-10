@@ -1,0 +1,192 @@
+[gd_scene load_steps=2 format=3 uid="uid://f1s25k1un5sf"]
+
+[ext_resource type="Script" path="res://UI/eternity/upgrades.gd" id="1_f5okh"]
+
+[node name="upgrades" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f5okh")
+
+[node name="Columns" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Col1" type="VBoxContainer" parent="Columns"]
+layout_mode = 2
+
+[node name="TimePlayed" type="Button" parent="Columns/Col1"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Tachyon Dimensions
+get a multiplier
+based on time played.
+ 
+Cost: 1 EP"
+text_overrun_behavior = 2
+
+[node name="Dim18mult" type="Button" parent="Columns/Col1"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "1st and 8th
+Tachyon Dimensions
+get a multiplier
+based on Eternities.
+Cost: 1 EP"
+text_overrun_behavior = 2
+
+[node name="Dim27mult" type="Button" parent="Columns/Col1"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "2nd and 7th
+Tachyon Dimensions
+get a multiplier
+based on Eternities.
+Cost: 1 EP"
+text_overrun_behavior = 2
+
+[node name="DGCheaper" type="Button" parent="Columns/Col1"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Dilation and Galaxies
+are cheaper by
+5 and 10 Dimensions,
+respectively.
+Cost: 2 EP"
+text_overrun_behavior = 2
+
+[node name="Col2" type="VBoxContainer" parent="Columns"]
+layout_mode = 2
+
+[node name="MultIncrease" type="Button" parent="Columns/Col2"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Increase the multiplier
+for buying 10
+Tachyon Dimensions.
+(×2.0 → ×2.2)
+Cost: 1 EP"
+text_overrun_behavior = 2
+
+[node name="Dim45mult" type="Button" parent="Columns/Col2"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "4th and 5th
+Tachyon Dimensions
+get a multiplier
+based on Eternities.
+Cost: 1 EP"
+text_overrun_behavior = 2
+
+[node name="Dim36mult" type="Button" parent="Columns/Col2"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "3rd and 6th
+Tachyon Dimensions
+get a multiplier
+based on Eternities.
+Cost: 1 EP"
+text_overrun_behavior = 2
+
+[node name="GalaxyBoost" type="Button" parent="Columns/Col2"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Tachyon Galaxies are
+twice as strong.
+ 
+ 
+Cost: 2 EP"
+text_overrun_behavior = 2
+
+[node name="Col3" type="VBoxContainer" parent="Columns"]
+layout_mode = 2
+
+[node name="AchMult" type="Button" parent="Columns/Col3"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Achievements give a
+multiplier to all
+Tachyon Dimensions.
+ 
+Cost: 3 EP"
+text_overrun_behavior = 2
+
+[node name="DilaMult" type="Button" parent="Columns/Col3"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Time Dilation
+multiplier is increased.
+(×2.0 → ×2.5)
+ 
+Cost: 5 EP"
+text_overrun_behavior = 2
+
+[node name="EPMult" type="Button" parent="Columns/Col3"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Tachyon Dimensions
+get a multiplier
+based on unspent EP.
+ 
+Cost: 7 EP"
+text_overrun_behavior = 2
+
+[node name="PassiveEP" type="Button" parent="Columns/Col3"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "You gain Eternity Points
+passively 3 times
+slower than your
+fastest Eternity.
+Cost: 10 EP"
+text_overrun_behavior = 2
+
+[connection signal="pressed" from="Columns/Col1/TimePlayed" to="." method="buy" binds= [1]]
+[connection signal="pressed" from="Columns/Col1/Dim18mult" to="." method="buy" binds= [2]]
+[connection signal="pressed" from="Columns/Col1/Dim27mult" to="." method="buy" binds= [3]]
+[connection signal="pressed" from="Columns/Col1/DGCheaper" to="." method="buy" binds= [4]]
+[connection signal="pressed" from="Columns/Col2/MultIncrease" to="." method="buy" binds= [5]]
+[connection signal="pressed" from="Columns/Col2/Dim45mult" to="." method="buy" binds= [6]]
+[connection signal="pressed" from="Columns/Col2/Dim36mult" to="." method="buy" binds= [7]]
+[connection signal="pressed" from="Columns/Col2/GalaxyBoost" to="." method="buy" binds= [8]]
+[connection signal="pressed" from="Columns/Col3/AchMult" to="." method="buy" binds= [9]]
+[connection signal="pressed" from="Columns/Col3/DilaMult" to="." method="buy" binds= [10]]
+[connection signal="pressed" from="Columns/Col3/EPMult" to="." method="buy" binds= [11]]
+[connection signal="pressed" from="Columns/Col3/PassiveEP" to="." method="buy" binds= [12]]

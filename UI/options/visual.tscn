@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://r8keg03d3xue"]
+
+[ext_resource type="Script" path="res://UI/options/visual.gd" id="1_57g10"]
+
+[node name="visual" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_57g10")
+
+[node name="HFlowContainer" type="HFlowContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 80.0
+offset_right = -108.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Notation" type="OptionButton" parent="HFlowContainer"]
+custom_minimum_size = Vector2(203, 62)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+alignment = 1
+
+[node name="Animations" type="Button" parent="HFlowContainer"]
+custom_minimum_size = Vector2(230, 62)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Animation Options…"
+
+[node name="Panel" type="Panel" parent="HFlowContainer/Animations"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = 317.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="AnimOptions" type="HFlowContainer" parent="HFlowContainer/Animations/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Close" type="Button" parent="HFlowContainer/Animations/Panel/AnimOptions"]
+layout_mode = 2
+text = " Close "
+
+[node name="Check" type="CheckButton" parent="."]
+visible = false
+layout_mode = 2
+offset_right = 102.0
+offset_bottom = 22.0
+button_pressed = true
+text = "Aaaaa"
+
+[connection signal="item_selected" from="HFlowContainer/Notation" to="." method="change_notation"]
+[connection signal="pressed" from="HFlowContainer/Animations" to="HFlowContainer/Animations/Panel" method="show"]
+[connection signal="pressed" from="HFlowContainer/Animations/Panel/AnimOptions/Close" to="HFlowContainer/Animations/Panel" method="hide"]

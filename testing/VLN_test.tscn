@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://djkrlolrdnefw"]
+
+[ext_resource type="Script" path="res://testing/VLN_test.gd" id="1_r40w7"]
+[ext_resource type="FontFile" uid="uid://vukx52qhj6ec" path="res://MonospaceTypewriter.ttf" id="2_b6mmy"]
+[ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="2_w8ao2"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_r40w7")
+
+[node name="SpinBox" type="SpinBox" parent="."]
+offset_left = 40.0
+offset_top = 34.0
+offset_right = 198.0
+offset_bottom = 65.0
+theme = ExtResource("2_w8ao2")
+max_value = 9.22337e+18
+step = 0.01
+value = 1.0
+update_on_text_changed = true
+
+[node name="SpinBox2" type="SpinBox" parent="."]
+offset_left = 425.0
+offset_top = 25.0
+offset_right = 558.0
+offset_bottom = 56.0
+theme = ExtResource("2_w8ao2")
+max_value = 9.22337e+18
+step = 0.01
+value = 1.0
+update_on_text_changed = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 3.0
+offset_top = 91.0
+offset_right = 635.0
+offset_bottom = 435.0
+theme = ExtResource("2_w8ao2")
+theme_override_fonts/font = ExtResource("2_b6mmy")

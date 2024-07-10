@@ -1,0 +1,781 @@
+[gd_scene load_steps=2 format=3 uid="uid://di8p3xe1w45pw"]
+
+[ext_resource type="Script" path="res://UI/automation/autobuyers.gd" id="1_4b317"]
+
+[node name="Autobuyers" type="VBoxContainer"]
+custom_minimum_size = Vector2(750, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4b317")
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="TimeSpeedLocked" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+text = "Timespeed Autobuyer locked
+(Requires 1e100 total Tachyons)"
+
+[node name="TimeSpeed" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TimeSpeed"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Timespeed Autobuyer
+[font_size=10] Activates every 0.50 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="TimeSpeed"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Mode" type="Button" parent="TimeSpeed"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+disabled = true
+toggle_mode = true
+text = "Complete the challenge to
+change the mode"
+
+[node name="Enabled" type="Button" parent="TimeSpeed"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="TimeSpeed"]
+wait_time = 0.5
+
+[node name="TD1Locked" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+text = "1st Tachyon Dimension Autobuyer locked
+(Requires 1e20 total Tachyons)"
+
+[node name="TD1" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TD1"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]1st Tachyon Dim Autobuyer
+[font_size=10] Activates every 0.50 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="TD1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Mode" type="Button" parent="TD1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+button_pressed = true
+text = "Buys 10s"
+
+[node name="Enabled" type="Button" parent="TD1"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="TD1"]
+wait_time = 0.5
+
+[node name="TD2Locked" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+text = "2nd Tachyon Dimension Autobuyer locked
+(Requires 1e30 total Tachyons)"
+
+[node name="TD2" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TD2"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]2nd Tachyon Dim Autobuyer
+[font_size=10] Activates every 0.60 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="TD2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Mode" type="Button" parent="TD2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+button_pressed = true
+text = "Buys 10s"
+
+[node name="Enabled" type="Button" parent="TD2"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="TD2"]
+wait_time = 0.6
+
+[node name="TD3Locked" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+text = "3rd Tachyon Dimension Autobuyer locked
+(Requires 1e40 total Tachyons)"
+
+[node name="TD3" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TD3"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]3rd Tachyon Dim Autobuyer
+[font_size=10] Activates every 0.70 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="TD3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Mode" type="Button" parent="TD3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+button_pressed = true
+text = "Buys 10s"
+
+[node name="Enabled" type="Button" parent="TD3"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="TD3"]
+wait_time = 0.7
+
+[node name="TD4Locked" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+text = "4th Tachyon Dimension Autobuyer locked
+(Requires 1e50 total Tachyons)"
+
+[node name="TD4" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TD4"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]4th Tachyon Dim Autobuyer
+[font_size=10] Activates every 0.80 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="TD4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Mode" type="Button" parent="TD4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+button_pressed = true
+text = "Buys 10s"
+
+[node name="Enabled" type="Button" parent="TD4"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="TD4"]
+wait_time = 0.8
+
+[node name="TD5Locked" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+text = "5th Tachyon Dimension Autobuyer locked
+(Requires 1e60 total Tachyons)"
+
+[node name="TD5" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TD5"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]5th Tachyon Dim Autobuyer
+[font_size=10] Activates every 0.90 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="TD5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Mode" type="Button" parent="TD5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+button_pressed = true
+text = "Buys 10s"
+
+[node name="Enabled" type="Button" parent="TD5"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="TD5"]
+wait_time = 0.8
+
+[node name="TD6Locked" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+text = "6th Tachyon Dimension Autobuyer locked
+(Requires 1e70 total Tachyons)"
+
+[node name="TD6" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TD6"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]6th Tachyon Dim Autobuyer
+[font_size=10] Activates every 1.00 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="TD6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Mode" type="Button" parent="TD6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+button_pressed = true
+text = "Buys 10s"
+
+[node name="Enabled" type="Button" parent="TD6"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="TD6"]
+wait_time = 0.8
+
+[node name="TD7Locked" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+text = "7th Tachyon Dimension Autobuyer locked
+(Requires 1e80 total Tachyons)"
+
+[node name="TD7" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TD7"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]7th Tachyon Dim Autobuyer
+[font_size=10] Activates every 1.10 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="TD7"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Mode" type="Button" parent="TD7"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+button_pressed = true
+text = "Buys 10s"
+
+[node name="Enabled" type="Button" parent="TD7"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="TD7"]
+wait_time = 0.8
+
+[node name="TD8Locked" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+text = "8th Tachyon Dimension Autobuyer locked
+(Requires 1e90 total Tachyons)"
+
+[node name="TD8" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TD8"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]8th Tachyon Dim Autobuyer
+[font_size=10] Activates every 1.20 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="TD8"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Mode" type="Button" parent="TD8"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+button_pressed = true
+text = "Buys 10s"
+
+[node name="Enabled" type="Button" parent="TD8"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="TD8"]
+wait_time = 0.8
+
+[node name="Dilation" type="Control" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Dilation"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Time Dilation Autobuyer
+[font_size=10] Activates every 10.00 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="Dilation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Decrease interval by 40%
+Cost: 1 EP"
+
+[node name="SpinBox" type="SpinBox" parent="Dilation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_right = 0.72
+anchor_bottom = 0.5
+offset_left = -109.0
+offset_right = 108.0
+prefix = "Limit Dilation to"
+
+[node name="CheckBox" type="CheckBox" parent="Dilation/SpinBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.999
+anchor_right = 0.999
+anchor_bottom = 0.917
+offset_left = 0.0169678
+offset_right = 20.017
+offset_bottom = -0.00800133
+flat = true
+
+[node name="SpinBox2" type="SpinBox" parent="Dilation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.5
+anchor_right = 0.72
+anchor_bottom = 1.0
+offset_left = -109.2
+offset_top = 0.5
+offset_right = 107.8
+offset_bottom = 2.0
+prefix = "Ignore the limit at"
+suffix = "TG"
+
+[node name="CheckBox" type="CheckBox" parent="Dilation/SpinBox2"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_right = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+flat = true
+
+[node name="Enabled" type="Button" parent="Dilation"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="Dilation"]
+wait_time = 0.5
+
+[connection signal="pressed" from="TimeSpeedLocked" to="TimeSpeedLocked" method="hide"]
+[connection signal="pressed" from="TimeSpeedLocked" to="TimeSpeed" method="show"]
+[connection signal="pressed" from="TimeSpeedLocked" to="." method="unlock" binds= [0]]
+[connection signal="pressed" from="TimeSpeed/Interval" to="." method="improve_interval"]
+[connection signal="timeout" from="TimeSpeed/Timer" to="." method="buyTSpeed"]
+[connection signal="pressed" from="TD1Locked" to="TD1Locked" method="hide"]
+[connection signal="pressed" from="TD1Locked" to="TD1" method="show"]
+[connection signal="pressed" from="TD1Locked" to="." method="unlock" binds= [1]]
+[connection signal="pressed" from="TD1/Interval" to="." method="improve_interval" binds= [1]]
+[connection signal="timeout" from="TD1/Timer" to="." method="buytdim" binds= [1]]
+[connection signal="pressed" from="TD2Locked" to="TD2Locked" method="hide"]
+[connection signal="pressed" from="TD2Locked" to="TD2" method="show"]
+[connection signal="pressed" from="TD2Locked" to="." method="unlock" binds= [2]]
+[connection signal="pressed" from="TD2/Interval" to="." method="improve_interval" binds= [2]]
+[connection signal="timeout" from="TD2/Timer" to="." method="buytdim" binds= [2]]
+[connection signal="pressed" from="TD3Locked" to="TD3Locked" method="hide"]
+[connection signal="pressed" from="TD3Locked" to="TD3" method="show"]
+[connection signal="pressed" from="TD3Locked" to="." method="unlock" binds= [3]]
+[connection signal="pressed" from="TD3/Interval" to="." method="improve_interval" binds= [3]]
+[connection signal="timeout" from="TD3/Timer" to="." method="buytdim" binds= [3]]
+[connection signal="pressed" from="TD4Locked" to="TD4Locked" method="hide"]
+[connection signal="pressed" from="TD4Locked" to="TD4" method="show"]
+[connection signal="pressed" from="TD4Locked" to="." method="unlock" binds= [4]]
+[connection signal="pressed" from="TD4/Interval" to="." method="improve_interval" binds= [4]]
+[connection signal="timeout" from="TD4/Timer" to="." method="buytdim" binds= [4]]
+[connection signal="pressed" from="TD5Locked" to="TD5Locked" method="hide"]
+[connection signal="pressed" from="TD5Locked" to="TD5" method="show"]
+[connection signal="pressed" from="TD5Locked" to="." method="unlock" binds= [5]]
+[connection signal="pressed" from="TD5/Interval" to="." method="improve_interval" binds= [5]]
+[connection signal="timeout" from="TD5/Timer" to="." method="buytdim" binds= [5]]
+[connection signal="pressed" from="TD6Locked" to="TD6Locked" method="hide"]
+[connection signal="pressed" from="TD6Locked" to="TD6" method="show"]
+[connection signal="pressed" from="TD6Locked" to="." method="unlock" binds= [6]]
+[connection signal="pressed" from="TD6/Interval" to="." method="improve_interval" binds= [6]]
+[connection signal="timeout" from="TD6/Timer" to="." method="buytdim" binds= [6]]
+[connection signal="pressed" from="TD7Locked" to="TD7Locked" method="hide"]
+[connection signal="pressed" from="TD7Locked" to="TD7" method="show"]
+[connection signal="pressed" from="TD7Locked" to="." method="unlock" binds= [7]]
+[connection signal="pressed" from="TD7/Interval" to="." method="improve_interval" binds= [7]]
+[connection signal="timeout" from="TD7/Timer" to="." method="buytdim" binds= [7]]
+[connection signal="pressed" from="TD8Locked" to="TD8Locked" method="hide"]
+[connection signal="pressed" from="TD8Locked" to="TD8" method="show"]
+[connection signal="pressed" from="TD8Locked" to="." method="unlock" binds= [8]]
+[connection signal="pressed" from="TD8/Interval" to="." method="improve_interval" binds= [8]]
+[connection signal="timeout" from="TD8/Timer" to="." method="buytdim" binds= [8]]
+[connection signal="pressed" from="Dilation/Interval" to="." method="improve_interval" binds= [8]]
+[connection signal="timeout" from="Dilation/Timer" to="." method="buytdim" binds= [8]]

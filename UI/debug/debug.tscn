@@ -1,0 +1,133 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccgn0cmks56jk"]
+
+[ext_resource type="Script" path="res://UI/debug/debug.gd" id="1_ib462"]
+
+[node name="Debug" type="Control"]
+custom_minimum_size = Vector2(650, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ib462")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 131.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Debug mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resource" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.047
+anchor_top = 0.5
+anchor_right = 0.296
+anchor_bottom = 0.501
+offset_left = -0.120003
+offset_top = -34.0
+offset_right = -0.160004
+offset_bottom = 34.36
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+item_count = 5
+selected = 3
+popup/item_0/text = "Tachyons"
+popup/item_0/id = 0
+popup/item_1/text = "Total Tachyons"
+popup/item_1/id = 1
+popup/item_2/text = "Time played"
+popup/item_2/id = 2
+popup/item_3/text = "Eternity Points"
+popup/item_3/id = 3
+popup/item_4/text = "Eternities"
+popup/item_4/id = 4
+
+[node name="Operation" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.326
+anchor_top = 0.5
+anchor_right = 0.575
+anchor_bottom = 0.501
+offset_left = 0.0400085
+offset_top = -34.0
+offset_right = -6.10352e-05
+offset_bottom = 34.36
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+item_count = 4
+popup/item_0/text = "Set to"
+popup/item_0/id = 0
+popup/item_1/text = "Add"
+popup/item_1/id = 1
+popup/item_2/text = "Multiply by"
+popup/item_2/id = 2
+popup/item_3/text = "Elevate to power"
+popup/item_3/id = 3
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.698
+anchor_top = 0.5
+anchor_right = 0.971
+anchor_bottom = 0.5
+offset_left = -0.0800171
+offset_top = -34.0
+offset_right = -0.160095
+offset_bottom = 13.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Input a number…"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.698
+anchor_top = 0.5
+anchor_right = 0.971
+anchor_bottom = 0.5
+offset_left = -0.0800171
+offset_top = 13.0
+offset_right = -0.160095
+offset_bottom = 35.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "go!!"
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.786
+anchor_right = 1.0
+anchor_bottom = 0.786
+offset_left = 45.0
+offset_top = -8.04001
+offset_right = -28.0
+offset_bottom = 7.95999
+grow_horizontal = 2
+grow_vertical = 2
+min_value = 1.0
+value = 1.0
+exp_edit = true
+
+[node name="Label" type="Label" parent="HSlider"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -32.0
+offset_bottom = -7.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="evil"]

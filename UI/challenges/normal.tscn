@@ -1,0 +1,1036 @@
+[gd_scene load_steps=17 format=3 uid="uid://cpyhr1o2ep885"]
+
+[ext_resource type="Script" path="res://UI/challenges/normal.gd" id="1_3pc03"]
+[ext_resource type="Texture2D" uid="uid://cxfooampya5rj" path="res://images/challenges/C1.png" id="1_nyqtu"]
+[ext_resource type="Texture2D" uid="uid://cu3vqgqona2nt" path="res://images/challenges/C2.png" id="2_44jri"]
+[ext_resource type="Texture2D" uid="uid://dsxwfo6og6cmt" path="res://images/challenges/C3.png" id="4_cfjoj"]
+[ext_resource type="Texture2D" uid="uid://pxc48ivqyswr" path="res://images/challenges/C4.png" id="5_3reo3"]
+[ext_resource type="Texture2D" uid="uid://bytco7bgo1t2c" path="res://images/challenges/C5.png" id="6_typxx"]
+[ext_resource type="Texture2D" uid="uid://xjawf3s3nroa" path="res://images/challenges/C6.png" id="7_epn58"]
+[ext_resource type="Texture2D" uid="uid://cfj26mepw08fn" path="res://images/challenges/C7.png" id="8_nf57y"]
+[ext_resource type="Texture2D" uid="uid://cawckx7dnptx3" path="res://images/challenges/C8.png" id="9_1wo7n"]
+[ext_resource type="Texture2D" uid="uid://bkbqq5ba1nka4" path="res://images/challenges/C9.png" id="10_0mr7a"]
+[ext_resource type="Texture2D" uid="uid://c1p8xcsph3p0m" path="res://images/challenges/C10.png" id="11_57tgk"]
+[ext_resource type="Texture2D" uid="uid://5vr03ye616j1" path="res://images/challenges/C11.png" id="12_wrilm"]
+[ext_resource type="Texture2D" uid="uid://cvocqjmkv42ey" path="res://images/challenges/C12.png" id="13_4oqa0"]
+[ext_resource type="Texture2D" uid="uid://yy0rdplh3nct" path="res://images/challenges/C13.png" id="14_ithnu"]
+[ext_resource type="Texture2D" uid="uid://jtmoe1oph6i2" path="res://images/challenges/C14.png" id="15_w54aj"]
+[ext_resource type="Texture2D" uid="uid://350nivv1bt7v" path="res://images/challenges/C15.png" id="16_lt2i0"]
+
+[node name="normal" type="Control"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3pc03")
+
+[node name="CurrentChallenge" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -177.0
+offset_right = 178.0
+offset_bottom = 30.0
+grow_horizontal = 2
+collapsed = true
+dragger_visibility = 2
+
+[node name="Label" type="Label" parent="CurrentChallenge"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "You aren't in any challenge."
+horizontal_alignment = 1
+
+[node name="Exit" type="Button" parent="CurrentChallenge"]
+visible = false
+custom_minimum_size = Vector2(110, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Exit challenge"
+
+[node name="Chal" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="lenges" type="HFlowContainer" parent="Chal"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/v_separation = 25
+alignment = 1
+
+[node name="Separator" type="Control" parent="Chal/lenges"]
+layout_mode = 2
+
+[node name="C1" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C1"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C1"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C1"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "Tachyon Dimension costs
+increase more rapidly."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C1"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable 1st TD autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C1"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("1_nyqtu")
+
+[node name="C2" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C2"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C2"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C2"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "Buying Tachyon
+Dimensions temporairly
+stops production.
+After that, it will
+increase linearly
+and arrive at 100% in
+one minute."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C2"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable 2nd TD autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C2"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("2_44jri")
+
+[node name="C3" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C3"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C3"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C3"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "The 3rd Tachyon
+Dimension is stronger,
+but the 1st and 2nd
+are weaker."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C3"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable 3rd TD autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C3"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("4_cfjoj")
+
+[node name="C4" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C4"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C4"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C4"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "The multiplier for
+buying 10 dimensions is
+reduced to ×1.00, and
+increases by 0.20 for
+each Time Dilation."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C4"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable 4th TD autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C4"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("5_3reo3")
+
+[node name="C5" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C5"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C5"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C5"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "Tachyon Dimensions take
+15 purchases instead of
+10 to increase their
+multiplier.
+Dilation and Galaxies
+are more expensive."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C5"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C5"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable 5th TD autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C5"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("6_typxx")
+
+[node name="C6" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C6"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C6"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C6"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "The 7th and 8th
+Dimensions are
+disabled, but
+Dilation and Galaxies
+are cheaper."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C6"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C6"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable 6th TD autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C6"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("7_epn58")
+
+[node name="C7" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C7"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C7"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C7"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "Buying any Tachyon
+Dimensions resets all
+lower Dimensions, like
+a Rewind without the
+boost."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C7"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C7"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable 7th TD autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C7"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("8_nf57y")
+
+[node name="C8" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C8"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C8"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C8"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "Dilation is limited
+and Galaxies are
+disabled, but Rewind
+is significantly
+stronger despite
+resetting all TDs."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C8"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C8"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable 7th TD autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C8"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("9_1wo7n")
+
+[node name="C9" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C9"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C9"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C9"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "TBD"
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C9"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C9"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable Timespeed autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C9"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("10_0mr7a")
+
+[node name="C10" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C10"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C10"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C10"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "The Time Dilation
+autobuyer is disabled.
+The Dilation multiplier
+is based on timing,
+like Rewind."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C10"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C10"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Dimensional Rewind autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C10"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("11_57tgk")
+
+[node name="C11" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C11"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C11"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C11"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "You start with -3
+Dilation, locking all
+Tachyon Dimensions
+except the 1st."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C11"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C11"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Dilation autobuyer and upgrades"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C11"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("12_wrilm")
+
+[node name="C12" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C12"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C12"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C12"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "Timespeed strength
+starts at 1.10 instead
+of 1.13."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C12"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C12"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Galaxy autobuyer and upgrades"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C12"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("13_4oqa0")
+
+[node name="C13" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C13"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C13"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C13"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "TBD"
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C13"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C13"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Upgradeable Dimensional Rewind autobuyer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C13"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("14_ithnu")
+
+[node name="C14" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C14"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C14"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C14"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "Tachyon Dimensions
+multipliers are divided
+exponentially. Buying
+Timespeed or Dimensions
+resets the divisor."
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C14"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C14"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Big Bang autobuyer and upgrades"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C14"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("15_w54aj")
+
+[node name="C15" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Chal/lenges/C15"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "C15"
+
+[node name="Condition" type="Label" parent="Chal/lenges/C15"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "TBD"
+clip_text = true
+
+[node name="Start" type="Button" parent="Chal/lenges/C15"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = 37.0
+offset_right = 59.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Start challenge"
+
+[node name="Reward" type="Label" parent="Chal/lenges/C15"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reward: Unlock idle progress"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/C15"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("16_lt2i0")
+
+[connection signal="pressed" from="CurrentChallenge/Exit" to="." method="challenge_start" binds= [0]]
+[connection signal="pressed" from="Chal/lenges/C1/Start" to="." method="challenge_start" binds= [1]]
+[connection signal="pressed" from="Chal/lenges/C2/Start" to="." method="challenge_start" binds= [2]]
+[connection signal="pressed" from="Chal/lenges/C3/Start" to="." method="challenge_start" binds= [3]]
+[connection signal="pressed" from="Chal/lenges/C4/Start" to="." method="challenge_start" binds= [4]]
+[connection signal="pressed" from="Chal/lenges/C5/Start" to="." method="challenge_start" binds= [5]]
+[connection signal="pressed" from="Chal/lenges/C6/Start" to="." method="challenge_start" binds= [6]]
+[connection signal="pressed" from="Chal/lenges/C7/Start" to="." method="challenge_start" binds= [7]]
+[connection signal="pressed" from="Chal/lenges/C8/Start" to="." method="challenge_start" binds= [8]]
+[connection signal="pressed" from="Chal/lenges/C9/Start" to="." method="challenge_start" binds= [9]]
+[connection signal="pressed" from="Chal/lenges/C10/Start" to="." method="challenge_start" binds= [10]]
+[connection signal="pressed" from="Chal/lenges/C11/Start" to="." method="challenge_start" binds= [11]]
+[connection signal="pressed" from="Chal/lenges/C12/Start" to="." method="challenge_start" binds= [12]]
+[connection signal="pressed" from="Chal/lenges/C13/Start" to="." method="challenge_start" binds= [13]]
+[connection signal="pressed" from="Chal/lenges/C14/Start" to="." method="challenge_start" binds= [14]]
+[connection signal="pressed" from="Chal/lenges/C15/Start" to="." method="challenge_start" binds= [15]]

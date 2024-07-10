@@ -1,0 +1,809 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmg6stncirb3o"]
+
+[ext_resource type="Script" path="res://UI/dimensions/tachyons.gd" id="1_3wvft"]
+[ext_resource type="Shader" path="res://UI/dimensions/rewind.gdshader" id="2_5oiqa"]
+[ext_resource type="Script" path="res://UI/dimensions/rewind.gd" id="2_wyclk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ngcjy"]
+shader = ExtResource("2_5oiqa")
+shader_parameter/pixelsize = 0.0016276
+
+[node name="Tachyons" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3wvft")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSplitContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Important" type="RichTextLabel" parent="ScrollContainer/VSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]You have [font_size=20]1.80e308[/font_size] Tachyons.
+[font_size=10]You're gaining [/font_size]1.80e308[font_size=10] Tachyons per second.[/font_size] "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="TopButtons" type="Control" parent="ScrollContainer/VSplitContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="BuyMode" type="Button" parent="ScrollContainer/VSplitContainer/TopButtons"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -15.0
+offset_right = 109.0
+offset_bottom = 15.0
+grow_vertical = 2
+toggle_mode = true
+button_pressed = true
+text = "Buy until 10"
+
+[node name="Rewind" type="Button" parent="ScrollContainer/VSplitContainer/TopButtons"]
+material = SubResource("ShaderMaterial_ngcjy")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_right = 0.9
+offset_left = 72.8
+offset_right = -80.8
+offset_bottom = 30.0
+grow_horizontal = 2
+text = "Dimensional Rewind"
+script = ExtResource("2_wyclk")
+metadata/_edit_group_ = true
+
+[node name="Accuracy" type="ColorRect" parent="ScrollContainer/VSplitContainer/TopButtons/Rewind"]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 16.0
+offset_bottom = 30.0
+mouse_filter = 2
+color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="Timespeed" type="Button" parent="ScrollContainer/VSplitContainer/TopButtons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 1.0
+anchor_right = 0.9
+anchor_bottom = 1.0
+offset_left = 72.912
+offset_top = -30.0
+offset_right = -178.6
+grow_horizontal = 2
+grow_vertical = 0
+text = "Timespeed (1.00e3 TC)"
+
+[node name="BuyMax" type="Button" parent="ScrollContainer/VSplitContainer/TopButtons/Timespeed"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -15.0
+offset_right = 98.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Buy Max"
+
+[node name="BuyMax" type="Button" parent="ScrollContainer/VSplitContainer/TopButtons"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -109.0
+offset_top = -15.0
+offset_right = -7.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Max All (M)"
+
+[node name="Dimensions" type="VBoxContainer" parent="ScrollContainer/VSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Dimension1" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1/N&M"]
+layout_mode = 2
+text = "1st Tachyon Dimension  "
+
+[node name="Multiplier" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"TransparentButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 0
+Cost: 10 TC"
+
+[node name="Progress" type="ProgressBar" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1/Buy"]
+show_behind_parent = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+max_value = 10.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension1"]
+layout_mode = 2
+
+[node name="Dimension2" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2/N&M"]
+layout_mode = 2
+text = "2nd Tachyon Dimension  "
+
+[node name="Multiplier" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"TransparentButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 0
+Cost: 10 TC"
+
+[node name="Progress" type="ProgressBar" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2/Buy"]
+show_behind_parent = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+max_value = 10.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension2"]
+layout_mode = 2
+
+[node name="Dimension3" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3/N&M"]
+layout_mode = 2
+text = "3rd Tachyon Dimension  "
+
+[node name="Multiplier" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"TransparentButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 0
+Cost: 10 TC"
+
+[node name="Progress" type="ProgressBar" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3/Buy"]
+show_behind_parent = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+max_value = 10.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension3"]
+layout_mode = 2
+
+[node name="Dimension4" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4/N&M"]
+layout_mode = 2
+text = "4th Tachyon Dimension  "
+
+[node name="Multiplier" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"TransparentButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 0
+Cost: 10 TC"
+
+[node name="Progress" type="ProgressBar" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4/Buy"]
+show_behind_parent = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+max_value = 10.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension4"]
+layout_mode = 2
+
+[node name="Dimension5" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5/N&M"]
+layout_mode = 2
+text = "5th Tachyon Dimension  "
+
+[node name="Multiplier" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"TransparentButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 0
+Cost: 10 TC"
+
+[node name="Progress" type="ProgressBar" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5/Buy"]
+show_behind_parent = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+max_value = 10.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension5"]
+layout_mode = 2
+
+[node name="Dimension6" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6/N&M"]
+layout_mode = 2
+text = "6th Tachyon Dimension  "
+
+[node name="Multiplier" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"TransparentButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 0
+Cost: 10 TC"
+
+[node name="Progress" type="ProgressBar" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6/Buy"]
+show_behind_parent = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+max_value = 10.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension6"]
+layout_mode = 2
+
+[node name="Dimension7" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7/N&M"]
+layout_mode = 2
+text = "7th Tachyon Dimension  "
+
+[node name="Multiplier" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"TransparentButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 0
+Cost: 10 TC"
+
+[node name="Progress" type="ProgressBar" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7/Buy"]
+show_behind_parent = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+max_value = 10.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension7"]
+layout_mode = 2
+
+[node name="Dimension8" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension8"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension8"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension8/N&M"]
+layout_mode = 2
+text = "8th Tachyon Dimension  "
+
+[node name="Multiplier" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension8/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension8"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension8/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Buy" type="Button" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension8"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"TransparentButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 0
+Cost: 10 TC"
+
+[node name="Progress" type="ProgressBar" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension8/Buy"]
+show_behind_parent = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+max_value = 10.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/VSplitContainer/Dimensions/Dimension8"]
+layout_mode = 2
+
+[node name="Progress" type="ProgressBar" parent="ScrollContainer/VSplitContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_vertical = 8
+max_value = 1024.0
+value = 1024.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="ScrollContainer/VSplitContainer/Progress"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Prestiges" type="Control" parent="ScrollContainer/VSplitContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(520, 100)
+layout_mode = 2
+
+[node name="DiLabel" type="RichTextLabel" parent="ScrollContainer/VSplitContainer/Prestiges"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 258.0
+offset_bottom = 39.0
+bbcode_enabled = true
+text = "[center]Time Dilation (0)
+[font_size=2] 
+[font_size=10]Requires: 20 4th Tachyon Dimensions"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="DiButton" type="Button" parent="ScrollContainer/VSplitContainer/Prestiges"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -61.0
+offset_right = 258.0
+offset_bottom = 1.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reset your Dimensions to
+unlock the 5th Dimension and
+gain a ×2.0 multiplier to Dimension 1"
+
+[node name="Accuracy" type="ColorRect" parent="ScrollContainer/VSplitContainer/Prestiges/DiButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_right = -110.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="GaLabel" type="RichTextLabel" parent="ScrollContainer/VSplitContainer/Prestiges"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -258.0
+offset_right = -8.0
+offset_bottom = 39.0
+grow_horizontal = 0
+bbcode_enabled = true
+text = "[center]Tachyon Galaxies (0)
+[font_size=2] 
+[font_size=10]Requires: 80 8th Tachyon Dimensions"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="GaButton" type="Button" parent="ScrollContainer/VSplitContainer/Prestiges"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -258.0
+offset_top = -62.0
+offset_right = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Reset your Dimensions and
+Time Dilation to increase the
+power of Timespeed upgrades"
+
+[node name="ETERNITY" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 200.0
+offset_top = 124.0
+offset_right = -200.0
+offset_bottom = 316.0
+grow_horizontal = 2
+theme_type_variation = &"ButtonEtern"
+theme_override_font_sizes/font_size = 75
+text = "Big Bang"
+
+[node name="Label" type="Label" parent="ETERNITY"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -96.0
+offset_bottom = -15.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Due to continued tachyon exposure,
+you traveled back in time to the
+beginning of the universe by accident."
+horizontal_alignment = 1
+
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/TopButtons/Rewind" to="ScrollContainer/VSplitContainer/TopButtons/Rewind" method="_on_pressed"]
+[connection signal="rewind" from="ScrollContainer/VSplitContainer/TopButtons/Rewind" to="." method="rewind"]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/TopButtons/Timespeed" to="." method="buytspeed" binds= [false]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/TopButtons/Timespeed/BuyMax" to="." method="buytspeed" binds= [true]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/TopButtons/BuyMax" to="." method="set" binds= ["BuyMax", true]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Dimensions/Dimension1/Buy" to="." method="buydim" binds= [1]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Dimensions/Dimension2/Buy" to="." method="buydim" binds= [2]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Dimensions/Dimension3/Buy" to="." method="buydim" binds= [3]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Dimensions/Dimension4/Buy" to="." method="buydim" binds= [4]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Dimensions/Dimension5/Buy" to="." method="buydim" binds= [5]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Dimensions/Dimension6/Buy" to="." method="buydim" binds= [6]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Dimensions/Dimension7/Buy" to="." method="buydim" binds= [7]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Dimensions/Dimension8/Buy" to="." method="buydim" binds= [8]]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Prestiges/DiButton" to="." method="dilate"]
+[connection signal="pressed" from="ScrollContainer/VSplitContainer/Prestiges/GaButton" to="." method="galaxy"]
+[connection signal="pressed" from="ETERNITY" to="." method="eternity"]
+[connection signal="pressed" from="ETERNITY" to="ScrollContainer" method="show"]
+[connection signal="pressed" from="ETERNITY" to="ETERNITY" method="hide"]

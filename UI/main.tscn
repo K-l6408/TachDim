@@ -1,0 +1,305 @@
+[gd_scene load_steps=16 format=3 uid="uid://6ny1c2muccuk"]
+
+[ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
+[ext_resource type="Script" path="res://UI/main.gd" id="1_qdidp"]
+[ext_resource type="Script" path="res://UI/dimensions/rewind.gd" id="2_4w04a"]
+[ext_resource type="Shader" path="res://UI/dimensions/rewind.gdshader" id="3_o4cqe"]
+[ext_resource type="PackedScene" uid="uid://di8p3xe1w45pw" path="res://UI/automation/autobuyers.tscn" id="5_f3s3t"]
+[ext_resource type="PackedScene" uid="uid://f1s25k1un5sf" path="res://UI/eternity/upgrades.tscn" id="6_0l55j"]
+[ext_resource type="PackedScene" uid="uid://cpyhr1o2ep885" path="res://UI/challenges/normal.tscn" id="6_agbn0"]
+[ext_resource type="PackedScene" uid="uid://cy1o0vjg4sdbt" path="res://UI/achievements/achievements.tscn" id="6_mtmcd"]
+[ext_resource type="PackedScene" uid="uid://bb23v4wug50t3" path="res://UI/options/saving.tscn" id="6_rxys2"]
+[ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
+[ext_resource type="PackedScene" uid="uid://ccgn0cmks56jk" path="res://UI/debug/debug.tscn" id="11_t3vch"]
+[ext_resource type="Script" path="res://UI/notifs.gd" id="12_ab4py"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
+shader = ExtResource("3_o4cqe")
+shader_parameter/pixelsize = 0.00740741
+
+[sub_resource type="Animation" id="Animation_m0sop"]
+resource_name = "bang"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 0.8, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(100, 100), Vector2(0.1, 0.1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D/CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.5),
+"transitions": PackedFloat32Array(0.148651, 4.59479, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8dv4p"]
+_data = {
+"bang": SubResource("Animation_m0sop")
+}
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qdidp")
+
+[node name="News" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -640.0
+grow_horizontal = 2
+
+[node name="Text" type="RichTextLabel" parent="News"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -109.5
+offset_top = -8.0
+offset_right = 109.5
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "news go here…… [rainbow]but maybe not only ðat?"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 150
+
+[node name="Resources" type="VBoxContainer" parent="HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Tachyons" type="Panel" parent="HSplitContainer/Resources"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+
+[node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/Tachyons"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center][font_size=16]1.80e308[/font_size]
+Tachyons[/center]"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Rewind" type="Panel" parent="HSplitContainer/Resources"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HSplitContainer/Resources/Rewind"]
+material = SubResource("ShaderMaterial_qqelc")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 7.5
+offset_top = 5.0
+offset_right = -7.5
+offset_bottom = 30.0
+grow_horizontal = 2
+script = ExtResource("2_4w04a")
+metadata/_edit_group_ = true
+
+[node name="Accuracy" type="ColorRect" parent="HSplitContainer/Resources/Rewind/Button"]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 16.0
+offset_bottom = 25.0
+mouse_filter = 2
+color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="Label" type="Label" parent="HSplitContainer/Resources/Rewind"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Rewind"
+horizontal_alignment = 1
+
+[node name="EP" type="Panel" parent="HSplitContainer/Resources"]
+visible = false
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+
+[node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/EP"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center][color=b241e3][font_size=16]1.8e308[/font_size]
+Eternity Points[/color][/center]"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Challenge" type="Panel" parent="HSplitContainer/Resources"]
+visible = false
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+
+[node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/Challenge"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Current challenge:
+[font_size=16]C1[/font_size][/center]"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Panel2" type="Panel" parent="HSplitContainer/Resources"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tabs" type="TabContainer" parent="HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="⇠ Dimensions ⇢" type="TabContainer" parent="HSplitContainer/Tabs"]
+layout_mode = 2
+
+[node name="Ψ Tachyons Ψ" parent="HSplitContainer/Tabs/⇠ Dimensions ⇢" instance=ExtResource("1_8gea7")]
+clip_contents = true
+layout_mode = 2
+
+[node name="⚙ Automation ⚙" parent="HSplitContainer/Tabs" instance=ExtResource("5_f3s3t")]
+visible = false
+layout_mode = 2
+
+[node name="⁈ Challenges ⁉" type="TabContainer" parent="HSplitContainer/Tabs"]
+visible = false
+layout_mode = 2
+
+[node name="Ψ Regular Challenges Ψ" parent="HSplitContainer/Tabs/⁈ Challenges ⁉" instance=ExtResource("6_agbn0")]
+layout_mode = 2
+
+[node name="Δ Eternity Δ" type="TabContainer" parent="HSplitContainer/Tabs"]
+visible = false
+layout_mode = 2
+
+[node name="⨹ Eternity Upgrades ⨹" parent="HSplitContainer/Tabs/Δ Eternity Δ" instance=ExtResource("6_0l55j")]
+layout_mode = 2
+
+[node name="↥ Overcome Eternity ↥" type="Control" parent="HSplitContainer/Tabs/Δ Eternity Δ"]
+visible = false
+layout_mode = 2
+
+[node name="🏆 Achievements 🏆" parent="HSplitContainer/Tabs" instance=ExtResource("6_mtmcd")]
+visible = false
+layout_mode = 2
+
+[node name="🔧 Options 🔧" type="TabContainer" parent="HSplitContainer/Tabs"]
+visible = false
+layout_mode = 2
+
+[node name="💾 Saving 💾" parent="HSplitContainer/Tabs/🔧 Options 🔧" instance=ExtResource("6_rxys2")]
+layout_mode = 2
+
+[node name="🎨 Visual 🖌" parent="HSplitContainer/Tabs/🔧 Options 🔧" instance=ExtResource("7_qd5si")]
+visible = false
+layout_mode = 2
+
+[node name="Debug" parent="HSplitContainer/Tabs" instance=ExtResource("11_t3vch")]
+visible = false
+layout_mode = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(480, 320)
+ignore_rotation = false
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Camera2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8dv4p")
+}
+
+[node name="NotifDeft" type="Label" parent="."]
+visible = false
+layout_mode = 1
+offset_right = 8.0
+offset_bottom = 16.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 12
+text = " "
+
+[node name="Panel" type="Panel" parent="NotifDeft"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -7.0
+offset_top = -2.0
+offset_right = 7.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"NotificationPanel"
+
+[node name="Notifs" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+script = ExtResource("12_ab4py")
+
+[connection signal="pressed" from="HSplitContainer/Resources/Rewind/Button" to="HSplitContainer/Resources/Rewind/Button" method="_on_pressed"]
+[connection signal="rewind" from="HSplitContainer/Resources/Rewind/Button" to="." method="rewind"]
