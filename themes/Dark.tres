@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=36 format=3 uid="uid://dbbjjuko7gh5h"]
 
-[ext_resource type="FontFile" uid="uid://vukx52qhj6ec" path="res://MonospaceTypewriter.ttf" id="1_jjnxe"]
+[ext_resource type="FontFile" uid="uid://b5fmpw14pnhov" path="res://fonts/FairfaxHD.ttf" id="3_yvoh7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kiek"]
 bg_color = Color(0.69, 0.2139, 0.2139, 1)
@@ -202,6 +202,10 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_se75g"]
@@ -438,7 +442,7 @@ anti_aliasing = false
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bvhu7"]
 
 [resource]
-default_font = ExtResource("1_jjnxe")
+default_font = ExtResource("3_yvoh7")
 default_font_size = 12
 Button/colors/font_disabled_color = Color(1, 1, 1, 1)
 Button/styles/disabled = SubResource("StyleBoxFlat_4kiek")

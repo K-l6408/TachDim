@@ -26,30 +26,30 @@ func _process(_delta):
 		if i <= 8:
 			$Chal/lenges.get_child(i).get_node("Reward").text = "Reward: Upgradeable %s TD autobuyer" % Globals.ordinal(i)
 	
-	$Chal/lenges/C2/Condition.text = "Buying Tachyon\nDimensions temporairly\nstops production." +\
-	"\nAfter that, it will\nincrease linearly\nand arrive at %s in\n%s minute." % \
+	$Chal/lenges/C2/Condition.text = "Buying Tachyon Dimensions temporairly stops production. " +\
+	"After that, it will increase linearly and arrive at %s in %s minute." % \
 	[Globals.percent_to_string(1,0), Globals.int_to_string(1)]
 	
-	$Chal/lenges/C3/Condition.text = "The %s Tachyon\nDimension is stronger,\n" % Globals.ordinal(3) \
-	+ "but the %s and %s\nare weaker." % [Globals.ordinal(1), Globals.ordinal(2)]
+	$Chal/lenges/C3/Condition.text = "The %s Tachyon Dimension is stronger, " % Globals.ordinal(3) \
+	+ "but the %s and %s are weaker." % [Globals.ordinal(1), Globals.ordinal(2)]
 	
-	$Chal/lenges/C4/Condition.text = "The multiplier for\nbuying %s dimensions is" % \
-	Globals.int_to_string(10) + "\nreduced to ×%s, and\nincreases by %s for\neach Time Dilation." % \
+	$Chal/lenges/C4/Condition.text = "The multiplier for buying %s dimensions is" % \
+	Globals.int_to_string(10) + " reduced to ×%s, and increases by %s for each Time Dilation." % \
 	[Globals.float_to_string(1), Globals.float_to_string(.2)]
 	
-	$Chal/lenges/C5/Condition.text = "Tachyon Dimensions take\n" + \
-	"%s purchases instead of\n%s to increase their\nmultiplier." % \
+	$Chal/lenges/C5/Condition.text = "Tachyon Dimensions take " + \
+	"%s purchases instead of %s to increase their multiplier." % \
 	[Globals.int_to_string(15), Globals.int_to_string(10)] + \
-	"\nDilation and Galaxies\nare more expensive."
+	" Dilation and Galaxies are more expensive."
 	
-	$Chal/lenges/C6/Condition.text = "The %s and %s\nDimensions are\n" % \
+	$Chal/lenges/C6/Condition.text = "The %s and %s Dimensions are " % \
 	[Globals.ordinal(7), Globals.ordinal(8)] + \
-	"disabled, but\nDilation and Galaxies\nare cheaper."
+	"disabled, but Dilation and Galaxies are cheaper."
 	
-	$Chal/lenges/C11/Condition.text = "You start with %s\nDilation, locking all" % Globals.int_to_string(-3) + \
-	"\nTachyon Dimensions\nexcept the %s." % Globals.ordinal(1)
+	$Chal/lenges/C11/Condition.text = "You start with -%s Dilation, locking all " % Globals.int_to_string(3) + \
+	"Tachyon Dimensions except the %s." % Globals.ordinal(1)
 	
-	$Chal/lenges/C12/Condition.text = "Timespeed strength\nstarts at %s instead\nof %s." % \
+	$Chal/lenges/C12/Condition.text = "Timespeed strength starts at %s instead of %s." % \
 	[Globals.float_to_string(1.1), Globals.float_to_string(1.13)]
 	
 	if Globals.Challenge == 0:

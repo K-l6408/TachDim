@@ -111,7 +111,7 @@ func percent_to_string(f:float, precision:=2) -> String:
 		DisplayMode.toki_pona:
 			return float_to_string(f * 100) + " pi ale"
 		DisplayMode.sitelen_pona:
-			return float_to_string(f * 100) + "󱥍󱤄"
+			return float_to_string(f * 100) + "󱦓󱤄󱦔"
 		DisplayMode.Strict_Logarithm:
 			return "%s/e2" % float_to_string(f * 100, precision + 1)
 		DisplayMode.Dozenal:

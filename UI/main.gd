@@ -27,12 +27,16 @@ func _process(_delta):
 	Globals.TDHandler.rewindNode.visible
 	
 	%Resources/EP.visible = (Globals.progress >= Globals.Progression.Eternity)
+	%Resources/Challenge.visible = (Globals.progress >= Globals.Progression.Eternity)
 	
 	%Resources/Tachyons/Text.text = \
 	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Globals.Tachyons.to_string()
 	%Resources/EP/Text.text = \
 	"[center][color=b241e3][font_size=16]%s[/font_size]\nEternity Points[/color][/center]" % \
 	Globals.EternityPts.to_string()
+	%Resources/Challenge/Text.text = \
+	"[center]Current Challenge:\n[font_size=16]%s[/font_size][/center]" % \
+	("C" + Globals.int_to_string(Globals.Challenge) if Globals.Challenge > 0 else "None")
 
 func rewind(score):
 	Globals.TDHandler.rewind(score)

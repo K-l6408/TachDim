@@ -3,7 +3,7 @@ extends Button
 
 var score := 0.0
 
-func _process(delta):
+func _process(_delta):
 	if not Engine.is_editor_hint(): 
 		score = sin(Time.get_ticks_msec() / 2000.0)
 		$Accuracy.position.x = (

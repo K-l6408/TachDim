@@ -36,6 +36,9 @@ func _init(from = 0):
 			exponent -= 1
 			fix_mantissa()
 
+static func ten_to_the(exponent := 1.0):
+	return largenum.new(10).pow2self(exponent)
+
 func neg():
 	var result = largenum.new(self)
 	result.sign *= -1
@@ -374,13 +377,13 @@ static func sitelen(f:float, forceint := false):
 	elif f >= 20: s += "󱤼"
 	f = fmod(f, 20)
 	if   f >= 10: s += sitelen(floor(f / 5)) + "󱤭"
-	elif f >=  5: s += "󱤭"
+	elif f >=  5: s += "󱤭‍"
 	f = fmod(f, 5)
 	match int(f):
 		1: s += "󱥳"
-		2: s += "󱥮"
-		3: s += "󱥮󱥳"
-		4: s += "󱥮󱥮"
+		2: s += "󱥮‍"
+		3: s += "󱥮‍󱥳"
+		4: s += "󱥮‍󱥮"
 	f = fmod(f, 1)
 	if f < 0.01 or forceint:
 		if s == "": return "󱤂"

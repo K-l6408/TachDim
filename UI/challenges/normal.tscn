@@ -80,8 +80,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C1"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C1"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C1"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -90,9 +91,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "Tachyon Dimension costs
-increase more rapidly."
-clip_text = true
+text = "Tachyon Dimension costs increase more rapidly."
 
 [node name="Start" type="Button" parent="Chal/lenges/C1"]
 layout_mode = 1
@@ -141,8 +140,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C2"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C2"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C2"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -151,14 +151,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "Buying Tachyon
-Dimensions temporairly
-stops production.
-After that, it will
-increase linearly
-and arrive at 100% in
-one minute."
-clip_text = true
+text = "Buying Tachyon Dimensions temporairly stops production. After that, it will increase linearly and arrive at 100% in one minute."
 
 [node name="Start" type="Button" parent="Chal/lenges/C2"]
 layout_mode = 1
@@ -207,8 +200,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C3"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C3"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C3"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -217,11 +211,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "The 3rd Tachyon
-Dimension is stronger,
-but the 1st and 2nd
-are weaker."
-clip_text = true
+text = "The 3rd Tachyon Dimension is stronger, but the 1st and 2nd are weaker."
 
 [node name="Start" type="Button" parent="Chal/lenges/C3"]
 layout_mode = 1
@@ -270,8 +260,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C4"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C4"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C4"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -280,12 +271,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "The multiplier for
-buying 10 dimensions is
-reduced to ×1.00, and
-increases by 0.20 for
-each Time Dilation."
-clip_text = true
+text = "The multiplier for buying 10 dimensions is reduced to ×1.00, and increases by 0.20 for each Time Dilation."
 
 [node name="Start" type="Button" parent="Chal/lenges/C4"]
 layout_mode = 1
@@ -334,8 +320,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C5"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C5"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C5"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -344,13 +331,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "Tachyon Dimensions take
-15 purchases instead of
-10 to increase their
-multiplier.
-Dilation and Galaxies
-are more expensive."
-clip_text = true
+text = "Tachyon Dimensions take 15 purchases instead of 10 to increase their multiplier. Dilation and Galaxies are more expensive."
 
 [node name="Start" type="Button" parent="Chal/lenges/C5"]
 layout_mode = 1
@@ -399,8 +380,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C6"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C6"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C6"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -409,12 +391,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "The 7th and 8th
-Dimensions are
-disabled, but
-Dilation and Galaxies
-are cheaper."
-clip_text = true
+text = "The 7th and 8th Dimensions are disabled, but Dilation and Galaxies are cheaper."
 
 [node name="Start" type="Button" parent="Chal/lenges/C6"]
 layout_mode = 1
@@ -463,8 +440,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C7"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C7"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C7"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -473,12 +451,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "Buying any Tachyon
-Dimensions resets all
-lower Dimensions, like
-a Rewind without the
-boost."
-clip_text = true
+text = "Buying any Tachyon Dimension resets all lower Dimensions, like a Rewind without the boost."
 
 [node name="Start" type="Button" parent="Chal/lenges/C7"]
 layout_mode = 1
@@ -527,8 +500,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C8"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C8"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C8"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -537,13 +511,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "Dilation is limited
-and Galaxies are
-disabled, but Rewind
-is significantly
-stronger despite
-resetting all TDs."
-clip_text = true
+text = "Dilation gives no multiplier and Galaxies are disabled, but Rewind is significantly stronger despite resetting all TDs."
 
 [node name="Start" type="Button" parent="Chal/lenges/C8"]
 layout_mode = 1
@@ -592,8 +560,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C9"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C9"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C9"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -603,7 +572,6 @@ offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
 text = "TBD"
-clip_text = true
 
 [node name="Start" type="Button" parent="Chal/lenges/C9"]
 layout_mode = 1
@@ -653,8 +621,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C10"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C10"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C10"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -663,12 +632,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "The Time Dilation
-autobuyer is disabled.
-The Dilation multiplier
-is based on timing,
-like Rewind."
-clip_text = true
+text = "The Time Dilation autobuyer is disabled. The Dilation multiplier is based on timing, like Rewind."
 
 [node name="Start" type="Button" parent="Chal/lenges/C10"]
 layout_mode = 1
@@ -717,8 +681,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C11"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C11"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C11"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -727,11 +692,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "You start with -3
-Dilation, locking all
-Tachyon Dimensions
-except the 1st."
-clip_text = true
+text = "You start with -3 Dilation, locking all Tachyon Dimensions except the 1st."
 
 [node name="Start" type="Button" parent="Chal/lenges/C11"]
 layout_mode = 1
@@ -780,8 +741,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C12"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C12"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C12"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -790,10 +752,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "Timespeed strength
-starts at 1.10 instead
-of 1.13."
-clip_text = true
+text = "Timespeed strength starts at 1.10 instead of 1.13."
 
 [node name="Start" type="Button" parent="Chal/lenges/C12"]
 layout_mode = 1
@@ -842,8 +801,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C13"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C13"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C13"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -853,7 +813,6 @@ offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
 text = "TBD"
-clip_text = true
 
 [node name="Start" type="Button" parent="Chal/lenges/C13"]
 layout_mode = 1
@@ -903,8 +862,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C14"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C14"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C14"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -913,12 +873,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "Tachyon Dimensions
-multipliers are divided
-exponentially. Buying
-Timespeed or Dimensions
-resets the divisor."
-clip_text = true
+text = "Tachyon Dimensions multipliers are divided exponentially. Buying Timespeed or Dimensions resets the divisor."
 
 [node name="Start" type="Button" parent="Chal/lenges/C14"]
 layout_mode = 1
@@ -967,8 +922,9 @@ offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
 text = "C15"
+vertical_alignment = 2
 
-[node name="Condition" type="Label" parent="Chal/lenges/C15"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/C15"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -978,7 +934,6 @@ offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
 text = "TBD"
-clip_text = true
 
 [node name="Start" type="Button" parent="Chal/lenges/C15"]
 layout_mode = 1

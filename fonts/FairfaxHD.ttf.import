@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://vukx52qhj6ec"
-path="res://.godot/imported/MonospaceTypewriter.ttf-9ce74950a659c36f7a7a668522c747f7.fontdata"
+uid="uid://b5fmpw14pnhov"
+path="res://.godot/imported/FairfaxHD.ttf-85aa3c5d0e76464ad3987b1da94dfe0a.fontdata"
 
 [deps]
 
-source_file="res://MonospaceTypewriter.ttf"
-dest_files=["res://.godot/imported/MonospaceTypewriter.ttf-9ce74950a659c36f7a7a668522c747f7.fontdata"]
+source_file="res://fonts/FairfaxHD.ttf"
+dest_files=["res://.godot/imported/FairfaxHD.ttf-85aa3c5d0e76464ad3987b1da94dfe0a.fontdata"]
 
 [params]
 

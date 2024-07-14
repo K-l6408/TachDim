@@ -79,7 +79,7 @@ func saveF(file : String = saveFilePath):
 	sf.store_8(Globals.Automation.TDEnabl)
 	sf.store_8(
 		int(Globals.Automation.TSpeedUnlocked) +
-		int(Globals.Automation.get_node("TimeSpeed/Enabled").button_pressed) * 2
+		int(Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Enabled").button_pressed) * 2
 	)
 	
 	if Globals.progress >= GL.Progression.Eternity:
@@ -92,6 +92,17 @@ func saveF(file : String = saveFilePath):
 		sf.store_16(Globals.EUHandler.Bought)
 		sf.store_8(Globals.Automation.TSUpgrades)
 		sf.store_buffer(Globals.Automation.TDUpgrades)
+		sf.store_8(Globals.Automation.DilUpgrades)
+		sf.store_8(Globals.Automation.GalUpgrades)
+		sf.store_8(Globals.Automation.BangUpgrades)
+		sf.store_8(
+			int(Globals.Automation.get_node("Auto/Buyers/Dilation/Enabled").button_pressed) +
+			int(Globals.Automation.get_node("Auto/Buyers/Galaxy/Enabled").button_pressed) * 2 +
+			int(Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed) * 4
+		)
+		sf.store_8(Globals.Automation.DilLimit)
+		sf.store_8(Globals.Automation.DilIgnore)
+		sf.store_8(Globals.Automation.GalLimit)
 	sf.close()
 
 func loadF(file : String = saveFilePath):
@@ -137,7 +148,7 @@ func loadF(file : String = saveFilePath):
 	Globals.Automation.TDEnabl = sf.get_8()
 	var TSAB = sf.get_8()
 	Globals.Automation.TSpeedUnlocked = (TSAB & 1)
-	Globals.Automation.get_node("TimeSpeed/Enabled").button_pressed = (TSAB & 2)
+	Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Enabled").button_pressed = (TSAB & 2)
 	
 	if Globals.progress >= GL.Progression.Eternity:
 		Globals.EternityPts.from_bytes(sf.get_buffer(16))
@@ -149,6 +160,16 @@ func loadF(file : String = saveFilePath):
 		Globals.EUHandler.Bought = sf.get_16()
 		Globals.Automation.TSUpgrades = sf.get_8()
 		Globals.Automation.TDUpgrades = sf.get_buffer(8)
+		Globals.Automation.DilUpgrades = sf.get_8()
+		Globals.Automation.GalUpgrades = sf.get_8()
+		Globals.Automation.BangUpgrades = sf.get_8()
+		var k = sf.get_8()
+		Globals.Automation.get_node("Auto/Buyers/Dilation/Enabled").button_pressed = (k&1)
+		Globals.Automation.get_node("Auto/Buyers/Galaxy/Enabled").button_pressed   = (k&2)
+		Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed  = (k&4)
+		Globals.Automation.DilLimit  = sf.get_8()
+		Globals.Automation.DilIgnore = sf.get_8()
+		Globals.Automation.GalLimit  = sf.get_8()
 	else:
 		Globals.EternityPts = largenum.new(0)
 		Globals.Challenge = 0
@@ -156,6 +177,12 @@ func loadF(file : String = saveFilePath):
 		Globals.EUHandler.Bought = 0
 		Globals.Automation.TSUpgrades = 0
 		Globals.Automation.TDUpgrades = [0,0,0,0,0,0,0,0]
+		Globals.Automation.DilUpgrades = 0
+		Globals.Automation.GalUpgrades = 0
+		Globals.Automation.BangUpgrades = 0
+		Globals.Automation.DilLimit  = -4
+		Globals.Automation.DilIgnore = -2
+		Globals.Automation.GalLimit  = -2
 	sf.close()
 	
 	Globals.TDHandler.updateTSpeed()
@@ -171,8 +198,8 @@ func gameReset():
 		Globals.TDHandler.DimAmount[i] = largenum.new(0)
 		Globals.TDHandler.DimPurchase[i] = 0
 		Globals.TDHandler.DimCost[i] = [
-			largenum.new(10   ),largenum.new(100   ),largenum.new(10**4 ),largenum.new(10**6),
-			largenum.new(10**9),largenum.new(10**13),largenum.new(10**18),largenum.new(10).power(24)
+			largenum.ten_to_the(1),largenum.ten_to_the( 2),largenum.ten_to_the( 4),largenum.ten_to_the( 6),
+			largenum.ten_to_the(9),largenum.ten_to_the(13),largenum.ten_to_the(18),largenum.ten_to_the(24)
 		][i]
 	Globals.TDHandler.TSpeedCount = 0
 	Globals.TDHandler.TSpeedCost = largenum.new(1000)
@@ -183,7 +210,7 @@ func gameReset():
 	Globals.Automation.TDModes = 255
 	Globals.Automation.TDEnabl = 255
 	Globals.Automation.TSpeedUnlocked = false
-	Globals.Automation.get_node("TimeSpeed/Enabled").button_pressed = true
+	Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Enabled").button_pressed = true
 	Globals.EternityPts = largenum.new(0)
 	Globals.Eternities = largenum.new(0)
 	Globals.Challenge = 0

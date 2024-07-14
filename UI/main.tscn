@@ -102,7 +102,7 @@ layout_mode = 2
 theme_override_constants/separation = -2
 
 [node name="Tachyons" type="Panel" parent="HSplitContainer/Resources"]
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/Tachyons"]
@@ -111,19 +111,20 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -20.0
-offset_bottom = 17.0
+offset_top = -13.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center][font_size=16]1.80e308[/font_size]
 Tachyons[/center]"
+fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
 [node name="Rewind" type="Panel" parent="HSplitContainer/Resources"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 
 [node name="Button" type="Button" parent="HSplitContainer/Resources/Rewind"]
@@ -153,15 +154,14 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -21.0
+offset_top = -14.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Rewind"
 horizontal_alignment = 1
 
 [node name="EP" type="Panel" parent="HSplitContainer/Resources"]
-visible = false
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/EP"]
@@ -170,19 +170,19 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -20.0
-offset_bottom = 17.0
+offset_top = -13.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
-text = "[center][color=b241e3][font_size=16]1.8e308[/font_size]
+text = "[center][color=b241e3][font_size=16]1.80e308[/font_size]
 Eternity Points[/color][/center]"
+fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
 [node name="Challenge" type="Panel" parent="HSplitContainer/Resources"]
-visible = false
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/Challenge"]
@@ -191,13 +191,14 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -20.0
-offset_bottom = 17.0
+offset_top = -13.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
-text = "[center]Current challenge:
-[font_size=16]C1[/font_size][/center]"
+text = "[center]Current Challenge:
+[font_size=16]None[/font_size][/center]"
+fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
@@ -272,12 +273,14 @@ libraries = {
 [node name="NotifDeft" type="Label" parent="."]
 visible = false
 layout_mode = 1
+offset_top = 2.0
 offset_right = 8.0
-offset_bottom = 16.0
+offset_bottom = 30.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 12
-text = " "
+theme_override_font_sizes/font_size = 16
+text = "A"
+vertical_alignment = 1
 
 [node name="Panel" type="Panel" parent="NotifDeft"]
 show_behind_parent = true

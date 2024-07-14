@@ -18,22 +18,21 @@ var DimAmount : Array[largenum] = [
 ]
 var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
 var DimCost : Array[largenum] = [
-	largenum.new(10   ),largenum.new(100   ),largenum.new(10**4 ),largenum.new(10**6),
-	largenum.new(10**9),largenum.new(10**13),largenum.new(10**18),largenum.new(10).power(24)
+	largenum.ten_to_the(1),largenum.ten_to_the( 2),largenum.ten_to_the( 4),largenum.ten_to_the( 6),
+	largenum.ten_to_the(9),largenum.ten_to_the(13),largenum.ten_to_the(18),largenum.ten_to_the(24)
 ]
 var DimCostMult : Array[largenum] :
 	get:
 		if Globals.Challenge == 1:
 			return [
-			largenum.new(10**4 ),largenum.new(10**6 ),largenum.new(10**8 ),largenum.new(10**10),
-			largenum.new(10**13),largenum.new(10).power(15),
-			largenum.new(10).power(17),largenum.new(10).power(20)
-		]
+				largenum.ten_to_the( 4),largenum.ten_to_the( 6),largenum.ten_to_the( 8),largenum.ten_to_the(10),
+				largenum.ten_to_the(13),largenum.ten_to_the(15),largenum.ten_to_the(17),largenum.ten_to_the(20)
+			]
 		else:
 			return [
-			largenum.new(1000 ),largenum.new(10**4 ),largenum.new(10**5 ),largenum.new(10**6),
-			largenum.new(10**8),largenum.new(10**10),largenum.new(10**12),largenum.new(10**15)
-		]
+				largenum.ten_to_the(3),largenum.ten_to_the( 4),largenum.ten_to_the( 5),largenum.ten_to_the( 6),
+				largenum.ten_to_the(8),largenum.ten_to_the(10),largenum.ten_to_the(12),largenum.ten_to_the(15)
+			]
 
 var TSpeedBoost := largenum.new(1.15)
 var TSpeedCost := largenum.new(1000)
@@ -44,11 +43,19 @@ var TCperS := largenum.new(0)
 var BuyMax : bool
 
 var C2Multiplier := 1.0
+var C14Divisor := 1.0
 var C10Power := 0.0
 func C10Score():
 	return sin(Time.get_ticks_msec() / 1000.0)
 
 var RewindMult := largenum.new(1)
+
+var canDilate :
+	get: return (not %Prestiges/DiButton.disabled) and $ScrollContainer.visible
+var canGalaxy :
+	get: return (not %Prestiges/GaButton.disabled) and $ScrollContainer.visible
+var canBigBang:
+	get: return $ScrollContainer.visible
 
 var buylim : int :
 	get:
@@ -106,6 +113,7 @@ func buydim(which, bulkoverride := 0):
 	
 	if Globals.Challenge == 2: C2Multiplier = 0.0
 	if Globals.Challenge == 7: for i in which - 1: DimAmount[i] = largenum.new(DimPurchase[i])
+	if Globals.Challenge == 14: C14Divisor = 1.0
 	
 	if bulk < 1:
 		return
@@ -124,6 +132,7 @@ func buytspeed(maxm:bool):
 		TSpeedCost.mult2self(10)
 		TSpeedCount += 1
 		if Globals.Challenge == 2: C2Multiplier = 0.0
+		if Globals.Challenge == 14:  C14Divisor = 1.0
 		if not maxm or Input.is_action_pressed("BuyOne"): break
 
 func dilate():
@@ -154,6 +163,7 @@ func eternity():
 func reset(level := 0, challengeReset := true):
 	if level >= 2 and challengeReset: Globals.Challenge = 0
 	if Globals.Challenge == 2: C2Multiplier = 1.0
+	if Globals.Challenge == 14:  C14Divisor = 1.0
 	if Globals.Achievemer.is_unlocked(2,8):
 		Globals.Tachyons = largenum.new(100)
 	else:
@@ -186,9 +196,6 @@ func reset(level := 0, challengeReset := true):
 func _process(delta):
 	$ScrollContainer.visible = (Globals.Tachyons.exponent <  1024)
 	$ETERNITY.visible        = (Globals.Tachyons.exponent >= 1024)
-	if Globals.Challenge == 2:
-		C2Multiplier += delta / 60
-		C2Multiplier = min(C2Multiplier, 1)
 	
 	if Globals.Tachyons.exponent >= 1024:
 		Globals.Tachyons.exponent = 1024
@@ -252,6 +259,9 @@ func _process(delta):
 		[Globals.ordinal(3), Globals.int_to_string(3)]
 		%Important.text += "\n[font_size=10]%s and %s Dimension: [/font_size]×%s" % \
 		[Globals.ordinal(2), Globals.ordinal(1), Globals.float_to_string(0.03)]
+	if Globals.Challenge == 14:
+		%Important.text += "\n \n[font_size=10]Production: [/font_size]/ " + \
+		Globals.float_to_string(C14Divisor)
 	
 	if DimAmount[7].exponent == -INF:
 		rewindNode.disabled = true
@@ -384,6 +394,11 @@ func _process(delta):
 			%Prestiges/DiButton.text = "Time Dilation capped\n(Challenge %s)" % Globals.int_to_string(8)
 		%Prestiges/GaButton.disabled = true
 		%Prestiges/GaButton.text = "Tachyon Galaxies disabled\n(Challenge %s)" % Globals.int_to_string(8)
+	if Globals.Challenge == 2:
+		C2Multiplier += delta / 60
+		C2Multiplier = min(C2Multiplier, 1)
+	if Globals.Challenge == 14:
+		C14Divisor *= 1e9 ** delta
 	
 	if not Input.is_action_pressed("ToggleAB"):
 		for i in range(8, 0, -1):
@@ -451,6 +466,7 @@ func _process(delta):
 		if Globals.Challenge == 3:
 			if i == 3: mult.mult2self(3)
 			if i <= 2: mult.mult2self(0.03)
+		if Globals.Challenge == 14: mult.div2self(C14Divisor)
 		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		mult.mult2self(TSpeedBoost.power(TSpeedCount))
