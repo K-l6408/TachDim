@@ -12,7 +12,7 @@ const LOG2  = log(2)
 const LOG10 = log(10)
 const LOG12 = log(12)
 
-var display  : DisplayMode = DisplayMode.sitelen_pona
+var display  : DisplayMode = DisplayMode.Scientific
 var progress : Progression = Progression.None
 
 var Tachyons  := largenum.new(10)

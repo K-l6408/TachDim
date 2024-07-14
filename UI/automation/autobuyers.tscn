@@ -29,6 +29,7 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="TimeSpeedLocked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 text = "Timespeed Autobuyer locked
@@ -890,18 +891,22 @@ wait_time = 10.0
 
 [connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="Auto/Buyers/TimeSpeedLocked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="Auto/Buyers/TimeSpeed" method="show"]
+[connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="." method="unlock" binds= [0]]
 [connection signal="pressed" from="Auto/Buyers/TimeSpeed/Interval" to="." method="improve_interval"]
 [connection signal="timeout" from="Auto/Buyers/TimeSpeed/Timer" to="." method="buyTSpeed"]
 [connection signal="pressed" from="Auto/Buyers/TD1Locked" to="Auto/Buyers/TD1Locked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TD1Locked" to="Auto/Buyers/TD1" method="show"]
+[connection signal="pressed" from="Auto/Buyers/TD1Locked" to="." method="unlock" binds= [1]]
 [connection signal="pressed" from="Auto/Buyers/TD1/Interval" to="." method="improve_interval"]
 [connection signal="timeout" from="Auto/Buyers/TD1/Timer" to="." method="buytdim" binds= [1]]
 [connection signal="pressed" from="Auto/Buyers/TD2Locked" to="Auto/Buyers/TD2Locked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TD2Locked" to="Auto/Buyers/TD2" method="show"]
+[connection signal="pressed" from="Auto/Buyers/TD2Locked" to="." method="unlock" binds= [2]]
 [connection signal="pressed" from="Auto/Buyers/TD2/Interval" to="." method="improve_interval"]
 [connection signal="timeout" from="Auto/Buyers/TD2/Timer" to="." method="buytdim" binds= [2]]
 [connection signal="pressed" from="Auto/Buyers/TD3Locked" to="Auto/Buyers/TD3Locked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TD3Locked" to="Auto/Buyers/TD3" method="show"]
+[connection signal="pressed" from="Auto/Buyers/TD3Locked" to="." method="unlock" binds= [3]]
 [connection signal="pressed" from="Auto/Buyers/TD3/Interval" to="." method="improve_interval"]
 [connection signal="timeout" from="Auto/Buyers/TD3/Timer" to="." method="buytdim" binds= [3]]
 [connection signal="pressed" from="Auto/Buyers/TD4Locked" to="Auto/Buyers/TD4Locked" method="hide"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=17 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Script" path="res://UI/main.gd" id="1_qdidp"]
+[ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_uhadk"]
 [ext_resource type="Script" path="res://UI/dimensions/rewind.gd" id="2_4w04a"]
 [ext_resource type="Shader" path="res://UI/dimensions/rewind.gdshader" id="3_o4cqe"]
 [ext_resource type="PackedScene" uid="uid://di8p3xe1w45pw" path="res://UI/automation/autobuyers.tscn" id="5_f3s3t"]
@@ -57,30 +58,27 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_uhadk")
 script = ExtResource("1_qdidp")
 
 [node name="News" type="Panel" parent="."]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -640.0
 grow_horizontal = 2
 
 [node name="Text" type="RichTextLabel" parent="News"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -109.5
-offset_top = -8.0
-offset_right = 109.5
-offset_bottom = 8.0
+anchor_bottom = 1.0
+offset_left = -114.0
+offset_top = 4.0
+offset_right = 114.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 bbcode_enabled = true
 text = "news go here…… [rainbow]but maybe not only ðat?"
 fit_content = true

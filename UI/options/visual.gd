@@ -22,7 +22,7 @@ func load_anim_settings(current : int):
 
 func _ready():
 	for i in GL.DisplayMode.keys():
-		$HFlowContainer/Notation.add_item(i.replace("_", " "))
+		$Scr/HFlow/Notation.add_item(i.replace("_", " "))
 	for i in ANIMATION.size():
 		var C = ANIMATION[i]
 		var ck = $Check.duplicate()
@@ -37,10 +37,12 @@ func change_anim_opt(what, index):
 func change_notation(index):
 	Globals.display = index as GL.DisplayMode
 
-func _process(delta):
+func _process(_delta):
 	for i in ANIMATION.size():
 		var j = false
 		match i:
 			0: j = (Globals.progress >= Globals.Progression.Eternity)
 		%AnimOptions.get_node(ANIMATION[i]).visible = j
-	$HFlowContainer/Notation.select(Globals.display)
+	$Scr/HFlow/Notation.select(Globals.display)
+	get_node("/root").content_scale_factor = $Scr/HFlow/Scaling.value
+	$Scr/HFlow/Scaling/Label.text = " \nUI Scaling: ×%.2f" % $Scr/HFlow/Scaling.value
