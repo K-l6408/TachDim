@@ -5,31 +5,28 @@ const MIN_INTERVAL = 0.1
 var Unlocked :
 	get:
 		var UL = 0
-		for i in 8:
-			if not get_node("Auto/Buyers/TD%d/Timer" % (i + 1)).is_stopped():
+		for i in 9:
+			if i == 8:
+				if not $Auto/Buyers/TimeSpeed.visible:
+					UL += 2 ** i
+			elif not get_node("Auto/Buyers/TD%d").visible:
 				UL += 2 ** i
 		return UL
 	set(value):
 		var UL = value
 		Unlocked = value
-		for i in 8:
+		for i in 9:
 			if UL & 1:
-				unlock(i + 1)
+				unlock((i + 1) % 9)
+			elif i == 8:
+				$Auto/Buyers/TimeSpeed/Timer.stop()
+				$Auto/Buyers/TimeSpeed.hide()
+				$Auto/Buyers/TimeSpeedLocked.show()
 			else:
 				get_node("Auto/Buyers/TD%d/Timer" % (i + 1)).stop()
 				get_node("Auto/Buyers/TD%d" % (i + 1)).hide()
 				get_node("Auto/Buyers/TD%dLocked" % (i + 1)).show()
 			UL >>= 1
-var TSpeedUnlocked : bool = false :
-	get:
-		return $Auto/Buyers/TimeSpeed.visible
-	set(value):
-		if value:
-			unlock(0)
-		else:
-			$Auto/Buyers/TimeSpeed/Timer.stop()
-			$Auto/Buyers/TimeSpeed.hide()
-			$Auto/Buyers/TimeSpeedLocked.show()
 var TDModes :
 	get:
 		return (
@@ -61,7 +58,8 @@ var TDEnabl :
 			int($Auto/Buyers/TD5/Enabled.button_pressed) * 16 +
 			int($Auto/Buyers/TD6/Enabled.button_pressed) * 32 +
 			int($Auto/Buyers/TD7/Enabled.button_pressed) * 64 +
-			int($Auto/Buyers/TD8/Enabled.button_pressed) * 128
+			int($Auto/Buyers/TD8/Enabled.button_pressed) * 128 +
+			int($Auto/Buyers/TimeSpeed/Enabled.button_pressed) * 256
 		)
 	set(value):
 		$Auto/Buyers/TD1/Enabled.button_pressed = value & 1 << 0 > 0
@@ -72,6 +70,7 @@ var TDEnabl :
 		$Auto/Buyers/TD6/Enabled.button_pressed = value & 1 << 5 > 0
 		$Auto/Buyers/TD7/Enabled.button_pressed = value & 1 << 6 > 0
 		$Auto/Buyers/TD8/Enabled.button_pressed = value & 1 << 7 > 0
+		$Auto/Buyers/TimeSpeed/Enabled.button_pressed = value & 1 << 8 > 0
 
 var DilLimit:
 	get:

@@ -47,62 +47,80 @@ func openDialog():
 func saveF(file : String = saveFilePath):
 	var settf := FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.WRITE)
 	
-	settf.store_8(128 * int($HFlowContainer/Autosave.button_pressed) + int($HFlowContainer/HSlider.value / 30))
-	settf.store_8(Globals.display)
-	settf.store_8(Globals.VisualSett.save_anim_settings())
+	settf.store_var({
+		"autosaving" : $HFlowContainer/Autosave.button_pressed,
+		"autosave interval" : int($HFlowContainer/HSlider.value),
+		"notation" : Globals.display,
+		"animation settings" : Globals.VisualSett.save_anim_settings()
+	})
 	
 	settf.close()
 	var sf := FileAccess.open(file, FileAccess.WRITE)
 	sf.store_line("TachDimSave")
-	sf.store_64(Globals.existence)
-	sf.store_16(Time.get_unix_time_from_system() as int)
 	
 	sf.store_8(Globals.progress)
-	sf.store_buffer(Globals.Tachyons.to_bytes())
-	sf.store_buffer(Globals.TachTotal.to_bytes())
-	sf.store_buffer(Globals.Achievemer.unlocked)
+	sf.store_8(Globals.Challenge)
 	
-	for i in 8:
-		sf.store_buffer(Globals.TDHandler.DimAmount[i].to_bytes())
-		sf.store_64(Globals.TDHandler.DimPurchase[i])
-		sf.store_buffer(Globals.TDHandler.DimCost[i].to_bytes())
-	
-	sf.store_64(Globals.TDHandler.TSpeedCount)
-	sf.store_buffer(Globals.TDHandler.TSpeedCost.to_bytes())
-	sf.store_buffer(Globals.TDHandler.RewindMult.to_bytes())
-	
-	sf.store_64(Globals.TDilation)
-	sf.store_64(Globals.TGalaxies)
-	
-	sf.store_8(Globals.Automation.Unlocked)
-	sf.store_8(Globals.Automation.TDModes)
-	sf.store_8(Globals.Automation.TDEnabl)
-	sf.store_8(
-		int(Globals.Automation.TSpeedUnlocked) +
-		int(Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Enabled").button_pressed) * 2
-	)
+	var DATA : Dictionary = {
+		"time played": Globals.existence,
+		"last time" : Time.get_unix_time_from_system() as int,
+		"tachyons" : Globals.Tachyons.to_bytes(),
+		"total tachyons" : Globals.TachTotal.to_bytes(),
+		"achievements" : Globals.Achievemer.unlocked,
+		"tach dim amounts" : [
+			Globals.TDHandler.DimAmount[0].to_bytes(),
+			Globals.TDHandler.DimAmount[1].to_bytes(),
+			Globals.TDHandler.DimAmount[2].to_bytes(),
+			Globals.TDHandler.DimAmount[3].to_bytes(),
+			Globals.TDHandler.DimAmount[4].to_bytes(),
+			Globals.TDHandler.DimAmount[5].to_bytes(),
+			Globals.TDHandler.DimAmount[6].to_bytes(),
+			Globals.TDHandler.DimAmount[7].to_bytes()
+		],
+		"tach dim purchases" : Globals.TDHandler.DimPurchase,
+		"tach dim costs" : [
+			Globals.TDHandler.DimCost[0].to_bytes(),
+			Globals.TDHandler.DimCost[1].to_bytes(),
+			Globals.TDHandler.DimCost[2].to_bytes(),
+			Globals.TDHandler.DimCost[3].to_bytes(),
+			Globals.TDHandler.DimCost[4].to_bytes(),
+			Globals.TDHandler.DimCost[5].to_bytes(),
+			Globals.TDHandler.DimCost[6].to_bytes(),
+			Globals.TDHandler.DimCost[7].to_bytes()
+		],
+		"timespeed amount" : Globals.TDHandler.TSpeedCount,
+		"timespeed cost" : Globals.TDHandler.TSpeedCost.to_bytes(),
+		"rewind multiplier" : Globals.TDHandler.RewindMult.to_bytes(),
+		"time dilation" : Globals.TDilation,
+		"tachyon galaxies" : Globals.TGalaxies,
+		"unlocked automators" : (Globals.Automation.Unlocked),
+		"tach dim buyers modes" : Globals.Automation.TDModes,
+		"tach dim buyers enabled" : Globals.Automation.TDEnabl
+	}
 	
 	if Globals.progress >= GL.Progression.Eternity:
-		sf.store_buffer(Globals.EternityPts.to_bytes())
-		sf.store_buffer(Globals.Eternities.to_bytes())
-		sf.store_8(Globals.Challenge)
+		DATA["eternity points"] = Globals.EternityPts.to_bytes()
+		DATA["eternities"] = Globals.Eternities.to_bytes()
 		if Globals.Challenge == 10:
-			sf.store_float(Globals.TDHandler.C10Power)
-		sf.store_16(Globals.CompletedChallenges)
-		sf.store_16(Globals.EUHandler.Bought)
-		sf.store_8(Globals.Automation.TSUpgrades)
-		sf.store_buffer(Globals.Automation.TDUpgrades)
-		sf.store_8(Globals.Automation.DilUpgrades)
-		sf.store_8(Globals.Automation.GalUpgrades)
-		sf.store_8(Globals.Automation.BangUpgrades)
-		sf.store_8(
-			int(Globals.Automation.get_node("Auto/Buyers/Dilation/Enabled").button_pressed) +
-			int(Globals.Automation.get_node("Auto/Buyers/Galaxy/Enabled").button_pressed) * 2 +
-			int(Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed) * 4
-		)
-		sf.store_8(Globals.Automation.DilLimit)
-		sf.store_8(Globals.Automation.DilIgnore)
-		sf.store_8(Globals.Automation.GalLimit)
+			DATA["c10 power"] = Globals.TDHandler.C10Power
+		DATA["completed challenges"] = Globals.CompletedChallenges
+		DATA["bought eternity upgrades"] = Globals.EUHandler.Bought
+		DATA["tach dim buyers upgrades"] = Globals.Automation.TDUpgrades
+		DATA["timespeed buyer upgrades"] = Globals.Automation.TSUpgrades
+		DATA["dilation buyer upgrades"] = Globals.Automation.DilUpgrades
+		DATA["tach gal buyer upgrades"] = Globals.Automation.GalUpgrades
+		DATA["autobanger upgrades"] = Globals.Automation.BangUpgrades
+		DATA["dilation buyer enabled"] = \
+		Globals.Automation.get_node("Auto/Buyers/Dilation/Enabled").button_pressed
+		DATA["tach gal buyer enabled"] = \
+		Globals.Automation.get_node("Auto/Buyers/Galaxy/Enabled").button_pressed
+		DATA["autobanger enabled"] = \
+		Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed
+		DATA["dilation buy limit"] = Globals.Automation.DilLimit
+		DATA["dilation limit ignore"] = Globals.Automation.DilIgnore
+		DATA["tach gal buy limit"] = -Globals.Automation.GalLimit
+	
+	sf.store_var(DATA)
 	sf.close()
 
 func loadF(file : String = saveFilePath):
