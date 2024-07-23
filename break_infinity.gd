@@ -36,8 +36,8 @@ func _init(from = 0):
 			exponent -= 1
 			fix_mantissa()
 
-static func ten_to_the(exponent := 1.0):
-	return largenum.new(10).pow2self(exponent)
+static func ten_to_the(xponent := 1.0):
+	return largenum.new(10).pow2self(xponent)
 
 func neg():
 	var result = largenum.new(self)
@@ -249,24 +249,26 @@ func _to_string() -> String:
 				return "0;00"
 			var m = 12 ** (l - floor(l))
 			if l < 3:
-				return dozenal(to_float())
+				return largenum.dozenal(to_float())
 			if l > 12 ** 5:
 				return "e%se%s" % [
-					dozenal(l / 12 ** floor(log(l) / GL.LOG12)),
-					dozenal(log(l) / GL.LOG12, 0)
+					largenum.dozenal(l / 12 ** floor(log(l) / GL.LOG12)),
+					largenum.dozenal(log(l) / GL.LOG12, 0)
 				]
-			return "%se%s" % [dozenal(m), dozenal(l,0)]
+			return "%se%s" % [largenum.dozenal(m), largenum.dozenal(l,0)]
 		GL.DisplayMode.Strict_Logarithm:
 			if log10() < 1e3:
 				return "e%.2f" % log10()
 			return "ee%.2f" % (log(log10()) / GL.LOG10)
 		GL.DisplayMode.Roman:
 			var l = log10() / 3
-			if l < 2.3333:
-				return roman(to_float())
+			if l < 3.3333:
+				var m = to_float()
+				if abs(m - round(m)) < 0.05: m = round(m)
+				return largenum.roman(m)
 			var S = ""
 			if l >= 1e18:
-				S = roman(floor(log(l) / GL.LOG10)) + "/" + roman(fmod(l, 1000))
+				S = largenum.roman(floor(log(l) / GL.LOG10)) + "/" + largenum.roman(fmod(l, 1000))
 			elif l <= 5:
 				for i in floor(l):
 					S += "/"
@@ -274,7 +276,7 @@ func _to_string() -> String:
 				S = roman(floor(l)) + "/"
 			var m = 1000 ** (l - floor(l))
 			if abs(m - round(m)) < 0.01: m = round(m)
-			return S + roman(m)
+			return S + largenum.roman(m)
 		GL.DisplayMode.sitelen_pona:
 			var l = log10() / 2
 			var m = 100 ** fmod(l, 1)
@@ -284,8 +286,8 @@ func _to_string() -> String:
 			if l >= 1e5:
 				return "󱤄󱥵" + sitelen(l, true)
 			elif l >= 5:
-				return (sitelen(m, true) if round(m) > 1 else "") + "󱤄󱥵" + sitelen(l, true)
-			return sitelen(to_float())
+				return (largenum.sitelen(m, true) if round(m) > 1 else "") + "󱤄󱥵" + largenum.sitelen(l, true)
+			return largenum.sitelen(to_float())
 		GL.DisplayMode.toki_pona:
 			Globals.display = GL.DisplayMode.sitelen_pona
 			var s = _to_string()

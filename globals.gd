@@ -102,8 +102,8 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 		DisplayMode.Roman:
 			return largenum.roman(f)
 		_:
-			if f > 1000:
-				return "%.2fe" % fmod(f, 10) + String.num(log(f) / LOG10,0)
+			if f > 1000 and not force_dec:
+				return "%.2fe" % (f / (10.0 ** floor(log(f) / LOG10))) + String.num(log(f) / LOG10,0)
 			return String.num(f, precision).pad_decimals(precision)
 
 func percent_to_string(f:float, precision:=2) -> String:

@@ -38,11 +38,14 @@ func openDialog():
 		var sf = FileAccess.open("user://save%d.txt" % (f + 1), FileAccess.READ)
 		if sf == null: continue
 		if sf.get_line() != "TachDimSave": continue
-		sf.get_64()
-		sf.get_16()
 		get_node("Files/%d/Progress" % (f+1)).texture.region.position.x = sf.get_8() * 32
-		get_node("Files/%d/Tachyons" % (f+1)).text = \
-		"%s Tachyons" % largenum.new().from_bytes(sf.get_buffer(16)).to_string()
+		sf.get_8()
+		var D = sf.get_var()
+		if D is Dictionary:
+			get_node("Files/%d/Tachyons" % (f+1)).text = \
+			"%s Tachyons" % largenum.new().from_bytes(D["tachyons"]).to_string()
+		else:
+			get_node("Files/%d/Tachyons" % (f+1)).text = "Outdated or corrupted file"
 
 func saveF(file : String = saveFilePath):
 	var settf := FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.WRITE)
@@ -125,46 +128,52 @@ func saveF(file : String = saveFilePath):
 
 func loadF(file : String = saveFilePath):
 	var settf := FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.READ)
-	
-	var d = settf.get_var()
-	if d != null:
-		$HFlowContainer/Autosave.button_pressed = d["autosaving"]
-		$HFlowContainer/HSlider.value = ["autosave interval"]
-		Globals.display = d["notation"] as GL.DisplayMode
-		Globals.VisualSett.load_anim_settings(d["animation settings"])
-	else:
-		settf = FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.READ)
-		var autosavesettings = settf.get_8()
-		$HFlowContainer/Autosave.button_pressed = autosavesettings & 128
-		$HFlowContainer/HSlider.value = (autosavesettings & 127) * 30
-		Globals.display = settf.get_8() as Globals.DisplayMode
-		Globals.VisualSett.load_anim_settings(settf.get_8())
-		settf.close()
+	if settf != null:
+		
+		var d = settf.get_var()
+		if d != null:
+			$HFlowContainer/Autosave.button_pressed = d["autosaving"]
+			$HFlowContainer/HSlider.value = d["autosave interval"]
+			Globals.display = d["notation"] as GL.DisplayMode
+			Globals.VisualSett.load_anim_settings(d["animation settings"])
+		else:
+			settf = FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.READ)
+			var autosavesettings = settf.get_8()
+			$HFlowContainer/Autosave.button_pressed = autosavesettings & 128
+			$HFlowContainer/HSlider.value = (autosavesettings & 127) * 30
+			Globals.display = settf.get_8() as Globals.DisplayMode
+			Globals.VisualSett.load_anim_settings(settf.get_8())
+			settf.close()
 	
 	var sf := FileAccess.open(file, FileAccess.READ)
 	if sf == null:
 		gameReset()
 		return
 	if sf.get_line() != "TachDimSave": return
-	var DATA = sf.get_var()
-	if DATA == null: return loadF_OLD(file)
+	
+	gameReset()
 	
 	Globals.progress = sf.get_8()
 	Globals.Challenge = sf.get_8()
 	
-	Globals.existence = DATA["time played"]
+	var DATA = sf.get_var()
+	if not DATA is Dictionary:
+		Globals.progress = 0
+		Globals.Challenge = 0
+		return
 	
-	# online progress. uses "last time" to check.
+	Globals.existence = DATA["time played"]
+	# idle progress. uses "last time" to check.
 	
 	Globals.Tachyons.from_bytes(DATA["tachyons"])
 	Globals.TachTotal.from_bytes(DATA["total tachyons"])
 	
 	Globals.Achievemer.unlocked = DATA["achievements"]
 	for i in 8:
-		Globals.TDHandler.DimAmount.from_bytes(DATA["tach dim amounts"][i])
-		Globals.TDHandler.DimCost.from_bytes(DATA["tach dim costs"][i])
+		Globals.TDHandler.DimAmount[i].from_bytes(DATA["tach dim amounts"][i])
+		Globals.TDHandler.DimCost[i].from_bytes(DATA["tach dim costs"][i])
+		Globals.TDHandler.DimPurchase[i] = DATA["tach dim purchases"][i]
 	
-	Globals.TDHandler.DimPurchase = DATA["tach dim purchases"]
 	Globals.TDHandler.TSpeedCount = DATA["timespeed amount"]
 	Globals.TDHandler.TSpeedCost.from_bytes(DATA["timespeed cost"])
 	Globals.TDHandler.RewindMult.from_bytes(DATA["rewind multiplier"])
@@ -198,77 +207,6 @@ func loadF(file : String = saveFilePath):
 		Globals.Automation.DilIgnore = DATA["dilation limit ignore"]
 		Globals.Automation.GalLimit = DATA["tach gal buy limit"]
 
-func loadF_OLD(file : String = saveFilePath):
-	var sf := FileAccess.open(file, FileAccess.READ)
-	if sf == null:
-		gameReset()
-		return
-	if sf.get_line() != "TachDimSave": return
-	
-	Globals.existence = sf.get_64()
-	sf.get_16() # for when i implement online progress ← NOT WIÐ ÐIS FORMAT YOU AREN'T HAHHAHAHAAHHAHAHAHAHAHAAHAHAA
-	
-	Globals.progress = sf.get_8() as Globals.Progression
-	Globals.Tachyons.from_bytes(sf.get_buffer(16))
-	Globals.TachTotal.from_bytes(sf.get_buffer(16))
-	Globals.Achievemer.unlocked = sf.get_buffer(Globals.Achievemer.MAXROWS)
-	
-	for i in 8:
-		Globals.TDHandler.DimAmount[i].from_bytes(sf.get_buffer(16))
-		Globals.TDHandler.DimPurchase[i] = sf.get_64()
-		Globals.TDHandler.DimCost[i].from_bytes(sf.get_buffer(16))
-	
-	Globals.TDHandler.TSpeedCount = sf.get_64()
-	Globals.TDHandler.TSpeedCost.from_bytes(sf.get_buffer(16))
-	Globals.TDHandler.RewindMult.from_bytes(sf.get_buffer(16))
-	
-	Globals.TDilation = sf.get_64()
-	Globals.TGalaxies = sf.get_64()
-	
-	Globals.Automation.Unlocked = sf.get_8()
-	Globals.Automation.TDModes = sf.get_8()
-	Globals.Automation.TDEnabl = sf.get_8()
-	var TSAB = sf.get_8()
-	Globals.Automation.TSpeedUnlocked = (TSAB & 1)
-	Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Enabled").button_pressed = (TSAB & 2)
-	
-	if Globals.progress >= GL.Progression.Eternity:
-		Globals.EternityPts.from_bytes(sf.get_buffer(16))
-		Globals.Eternities.from_bytes(sf.get_buffer(16))
-		Globals.Challenge = sf.get_8()
-		if Globals.Challenge == 10:
-			Globals.TDHandler.C10Power = sf.get_float()
-		Globals.CompletedChallenges = sf.get_16()
-		Globals.EUHandler.Bought = sf.get_16()
-		Globals.Automation.TSUpgrades = sf.get_8()
-		Globals.Automation.TDUpgrades = sf.get_buffer(8)
-		Globals.Automation.DilUpgrades = sf.get_8()
-		Globals.Automation.GalUpgrades = sf.get_8()
-		Globals.Automation.BangUpgrades = sf.get_8()
-		var k = sf.get_8()
-		Globals.Automation.get_node("Auto/Buyers/Dilation/Enabled").button_pressed = (k&1)
-		Globals.Automation.get_node("Auto/Buyers/Galaxy/Enabled").button_pressed   = (k&2)
-		Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed  = (k&4)
-		Globals.Automation.DilLimit  = sf.get_8()
-		Globals.Automation.DilIgnore = sf.get_8()
-		Globals.Automation.GalLimit  = sf.get_8()
-	else:
-		Globals.EternityPts = largenum.new(0)
-		Globals.Challenge = 0
-		Globals.CompletedChallenges = 0
-		Globals.EUHandler.Bought = 0
-		Globals.Automation.TSUpgrades = 0
-		Globals.Automation.TDUpgrades = [0,0,0,0,0,0,0,0]
-		Globals.Automation.DilUpgrades = 0
-		Globals.Automation.GalUpgrades = 0
-		Globals.Automation.BangUpgrades = 0
-		Globals.Automation.DilLimit  = -4
-		Globals.Automation.DilIgnore = -2
-		Globals.Automation.GalLimit  = -2
-	sf.close()
-	
-	Globals.TDHandler.updateTSpeed()
-
 func gameReset():
 	Globals.progress = Globals.Progression.None
 	Globals.Tachyons  = largenum.new(10)
@@ -290,9 +228,7 @@ func gameReset():
 	Globals.TGalaxies = 0
 	Globals.Automation.Unlocked = 0
 	Globals.Automation.TDModes = 255
-	Globals.Automation.TDEnabl = 255
-	Globals.Automation.TSpeedUnlocked = false
-	Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Enabled").button_pressed = true
+	Globals.Automation.TDEnabl = 511
 	Globals.EternityPts = largenum.new(0)
 	Globals.Eternities = largenum.new(0)
 	Globals.Challenge = 0

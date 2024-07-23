@@ -24,5 +24,6 @@ func notif(type:String, text:String):
 	lab.text     = text
 	last_y += $"../NotifDeft/Panel".size.y
 	add_child(lab)
-	lab.get_node("Panel").modulate = \
-	load(ProjectSettings.get("gui/theme/custom")).get_color(type, "NotificationPanel")
+	var C : Color = load(ProjectSettings.get("gui/theme/custom")).get_color(type, "NotificationPanel")
+	C.a = 0.5
+	lab.get_node("Panel").modulate = C

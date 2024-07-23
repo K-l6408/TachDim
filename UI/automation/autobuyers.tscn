@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://UI/automation/autobuyers.gd" id="1_4b317"]
 
 [node name="Autobuyers" type="Control"]
-custom_minimum_size = Vector2(750, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Buyers" type="VBoxContainer" parent="Auto"]
+custom_minimum_size = Vector2(750, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -29,7 +29,6 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="TimeSpeedLocked" type="Button" parent="Auto/Buyers"]
-visible = false
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 text = "Timespeed Autobuyer locked

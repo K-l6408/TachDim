@@ -93,7 +93,9 @@ func rewind(score:float):
 func rewindBoost() -> largenum:
 	if Globals.Challenge == 8:
 		return DimAmount[0].power(0.075)
-	return largenum.new(DimAmount[0].log10()).power(1.5).divide(10)
+	var RBoost = largenum.new(DimAmount[0].log10()).power(1.5).divide(10)
+	if Globals.Achievemer.is_unlocked(2, 4): RBoost.mult2self(2)
+	return RBoost
 
 func buydim(which, bulkoverride := 0):
 	if which > DimsUnlocked: return
@@ -122,6 +124,9 @@ func buydim(which, bulkoverride := 0):
 	DimAmount[which-1].add2self(largenum.new(bulk))
 	if DimPurchase[which-1] % buylim == 0:
 		DimCost[which-1].mult2self(DimCostMult[which-1])
+	if not Globals.Achievemer.is_unlocked(2, 7):
+		if bulk == 1 and which == 1 and DimAmount[which-1].log10() >= 100:
+			Globals.Achievemer.set_unlocked(2, 7)
 	
 	if bulkoverride > 10:
 		buydim(which, bulkoverride - 10)
@@ -468,6 +473,9 @@ func _process(delta):
 			if i <= 2: mult.mult2self(0.03)
 		if Globals.Challenge == 14: mult.div2self(C14Divisor)
 		
+		if Globals.Achievemer.is_unlocked(2, 5): mult.mult2self(1.1)
+		if Globals.Achievemer.is_unlocked(2, 7) and i == 1: mult.mult2self(1.5)
+		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		mult.mult2self(TSpeedBoost.power(TSpeedCount))
 		
@@ -482,3 +490,7 @@ func _process(delta):
 			dims[i-1].get_node("A&G/Growth").text = "(+%s/s)" % \
 				Globals.percent_to_string(DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).to_float())
 			DimAmount[i-2].add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
+
+
+func c15disableslider(value_changed):
+	pass # Replace with function body.

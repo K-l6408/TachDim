@@ -25,6 +25,11 @@ func achnames(r, c):
 		2: match c:
 			1: return "Tier %s-C" % Globals.int_to_string(3)
 			2: return "Galaxy %s: the sequel" % Globals.int_to_string(2)
+			3: return "Speedometer broke :("
+			4: return "CRITICAL HIT!!"
+			5: return "Uwa! So Dimensions ♪"
+			6: return "You can stop holding M now"
+			7: return "Seriously, why?"
 			8: return "Popular TV sitcom"
 	return "TBD"
 
@@ -34,7 +39,18 @@ func achreqs(r, c):
 		2: match c:
 			1: return "Get a Tachyon Galaxy."
 			2: return "Get ANOTHER Tachyon Galaxy."
-			8: return "Reach Infinite Tachyons.\n(Reward: Start with %s Tachyons.)" % Globals.int_to_string(100)
+			3: return "Have %s Time Dilations." % Globals.int_to_string(10)
+			4: return "Rewind with near-perfect accuracy." + \
+			"\n(Reward: Rewind is stronger, and its power can't go below one half.)"
+			5: return "Have at least %s of all TDs except for the %s." % [
+				Globals.float_to_string(10**10), Globals.ordinal(8)
+			] + "\n(Reward: All TDs are %s stronger.)" % Globals.percent_to_string(0.1)
+			6: return "Unlock all TD autobuyers."
+			7: return "Buy a single %s TD when you have over %s of them." % [
+				Globals.ordinal(1), largenum.ten_to_the(100).to_string()
+			] + "\n(Reward: The %s TD is %s stronger.)" % [Globals.ordinal(1), Globals.percent_to_string(0.5)]
+			8: return "Reach Infinite Tachyons." + \
+			"\n(Reward: Start with %s Tachyons.)" % Globals.int_to_string(100)
 	return "TBD"
 
 func is_unlocked(row, num):
@@ -58,7 +74,7 @@ func _ready():
 			var n : TextureRect = $Achiev.duplicate()
 			n.texture = n.texture.duplicate()
 			n.texture.region.position = n.texture.region.size * Vector2(j, i)
-			n.name = "%d%d" % [i+1, j+1]
+			n.name = "%dx%d" % [i+1, j+1]
 			%GridContainer.add_child(n)
 			n.get_node("Label").text = n.name
 			n.show()
@@ -66,9 +82,9 @@ func _ready():
 func _process(delta):
 	for i in range(1, min(MAXROWS, %GridContainer.get_child_count() / 8) + 1):
 		for j in range(1, 9):
-			%GridContainer.get_node("%d%d" % [i,j]).self_modulate = \
+			%GridContainer.get_node("%dx%d" % [i,j]).self_modulate = \
 			Color("9f9") if is_unlocked(i,j) else Color("999")
-			%GridContainer.get_node("%d%d" % [i,j]).tooltip_text = \
+			%GridContainer.get_node("%dx%d" % [i,j]).tooltip_text = \
 			"\"%s\"\n%s" % [achnames(i,j), achreqs(i,j)]
 	for i in 8:
 		if not is_unlocked(1,i+1):
@@ -80,6 +96,19 @@ func _process(delta):
 	if not is_unlocked(2, 2):
 		if Globals.TGalaxies >= 2:
 			set_unlocked(2, 2)
+	if not is_unlocked(2, 3):
+		if Globals.TDilation >= 10:
+			set_unlocked(2, 3)
+	if not is_unlocked(2, 5):
+		var ok := true
+		for i in 7:
+			if Globals.TDHandler.DimAmount[i].less(largenum.ten_to_the(10)):
+				ok = false
+				break
+		if ok: set_unlocked(2, 5)
+	if not is_unlocked(2, 6):
+		if Globals.Automation.Unlocked == 511:
+			set_unlocked(2, 6)
 	if not is_unlocked(2, 8):
 		if Globals.progress >= Globals.Progression.Eternity:
 			set_unlocked(2, 8)

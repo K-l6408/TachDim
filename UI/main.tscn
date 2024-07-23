@@ -17,6 +17,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
 shader = ExtResource("3_o4cqe")
 shader_parameter/pixelsize = 0.00740741
+shader_parameter/zoom = 1.0
 
 [sub_resource type="Animation" id="Animation_m0sop"]
 resource_name = "bang"
@@ -292,6 +293,7 @@ offset_right = 7.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_type_variation = &"NotificationPanel"
 
 [node name="Notifs" type="Control" parent="."]

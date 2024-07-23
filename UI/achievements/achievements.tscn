@@ -25,9 +25,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Control" type="Control" parent="ScrollContainer"]
+custom_minimum_size = Vector2(560, 360)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer/Control"]
 unique_name_in_owner = true
@@ -36,26 +36,27 @@ anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -280.0
-offset_top = 16.0
+offset_top = 23.0
 offset_right = 280.0
 grow_horizontal = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/v_separation = 16
+theme_override_constants/v_separation = 13
 columns = 8
 
 [node name="Achiev" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
-offset_top = 16.0
+offset_top = 11.0
 offset_right = 64.0
-offset_bottom = 80.0
+offset_bottom = 75.0
 tooltip_text = "\"Welcome to TachDim!\"
 Requirements: Buy a 1st Tachyon Dimension"
 texture = SubResource("AtlasTexture_vnntm")
 
 [node name="Label" type="Label" parent="Achiev"]
 layout_mode = 0
-offset_top = -16.0
+offset_top = -11.0
 offset_right = 15.0
+offset_bottom = 5.0
 text = "11"

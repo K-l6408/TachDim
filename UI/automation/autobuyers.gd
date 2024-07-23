@@ -7,9 +7,9 @@ var Unlocked :
 		var UL = 0
 		for i in 9:
 			if i == 8:
-				if not $Auto/Buyers/TimeSpeed.visible:
+				if not $Auto/Buyers/TimeSpeedLocked.visible:
 					UL += 2 ** i
-			elif not get_node("Auto/Buyers/TD%d").visible:
+			elif not get_node("Auto/Buyers/TD%dLocked" % (i+1)).visible:
 				UL += 2 ** i
 		return UL
 	set(value):
