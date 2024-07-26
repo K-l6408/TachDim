@@ -41,7 +41,7 @@ func achreqs(r, c):
 			2: return "Get ANOTHER Tachyon Galaxy."
 			3: return "Have %s Time Dilations." % Globals.int_to_string(10)
 			4: return "Rewind with near-perfect accuracy." + \
-			"\n(Reward: Rewind is stronger, and its power can't go below one half.)"
+			"\n(Reward: Rewind is stronger, and its multiplier can't go below the current one.)"
 			5: return "Have at least %s of all TDs except for the %s." % [
 				Globals.float_to_string(10**10), Globals.ordinal(8)
 			] + "\n(Reward: All TDs are %s stronger.)" % Globals.percent_to_string(0.1)

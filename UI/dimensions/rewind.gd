@@ -1,6 +1,8 @@
 @tool
 extends Button
 
+@export var smol := false
+
 var score := 0.0
 
 func _process(_delta):
@@ -10,11 +12,18 @@ func _process(_delta):
 			(score * (size.x - 20)) + size.x - $Accuracy.size.x
 		) / 2
 		if Globals.Achievemer.is_unlocked(2, 4):
-			score *= .75
-			material.set_shader_parameter("zoom", 4./3.)
+			material.set_shader_parameter("zoom",
+				max(
+					Globals.TDHandler.rewindBoost().log2() / Globals.TDHandler.RewindMult.log2()
+				, 1) if (Globals.TDHandler.RewindMult.log2() > 0) else 1
+			)
 		else:
 			material.set_shader_parameter("zoom", 1.0)
 		score = 1 - abs(score)
+		if smol:
+			if disabled: text = ""
+			else: text = "×%s" % \
+				Globals.TDHandler.rewindBoost(score).divide(Globals.TDHandler.RewindMult).to_string()
 	material.set_shader_parameter("pixelsize", 1./size.x)
 
 func _on_pressed():

@@ -71,7 +71,7 @@ func updateTSpeed():
 		TSpeedBoost = largenum.new(1.13 + GalaxyBoost * Globals.TGalaxies)
 
 func rewind(score:float):
-	RewindMult = rewindBoost().power(score)
+	RewindMult = rewindBoost(score)
 	if Globals.Challenge == 8:
 		if Globals.Achievemer.is_unlocked(2,1):
 			Globals.Tachyons = largenum.new(100)
@@ -90,11 +90,16 @@ func rewind(score:float):
 		for i in 7:
 			DimAmount[i].pow2self(1 - score)
 
-func rewindBoost() -> largenum:
+func rewindBoost(score := 1.0) -> largenum:
 	if Globals.Challenge == 8:
 		return DimAmount[0].power(0.075)
 	var RBoost = largenum.new(DimAmount[0].log10()).power(1.5).divide(10)
 	if Globals.Achievemer.is_unlocked(2, 4): RBoost.mult2self(2)
+	
+	if Globals.Achievemer.is_unlocked(2, 4): RBoost.div2self(RewindMult)
+	RBoost.pow2self(score)
+	if Globals.Achievemer.is_unlocked(2, 4): RBoost.mult2self(RewindMult)
+	
 	return RBoost
 
 func buydim(which, bulkoverride := 0):
@@ -272,14 +277,14 @@ func _process(delta):
 		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (no %s TD)" % \
 		Globals.ordinal(8)
-	elif rewindBoost().power(rewindNode.score).divide(RewindMult).less(1):
+	elif rewindBoost(rewindNode.score).divide(RewindMult).less(1):
 		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (×%s multiplier)" % \
 		Globals.int_to_string(1)
 	else:
 		rewindNode.disabled = false
 		rewindNode.text = "Dimensional Rewind (×%s to %s TD)" % \
-		[rewindBoost().power(rewindNode.score).divide(RewindMult).to_string(), Globals.ordinal(8)]
+		[rewindBoost(rewindNode.score).divide(RewindMult).to_string(), Globals.ordinal(8)]
 		if Input.is_action_pressed("Rewind"):
 			rewind(rewindNode.score)
 	
@@ -487,8 +492,12 @@ func _process(delta):
 			Globals.Tachyons .add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
 			Globals.TachTotal.add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
 		else:
-			dims[i-1].get_node("A&G/Growth").text = "(+%s/s)" % \
-				Globals.percent_to_string(DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).to_float())
+			if DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).less(10):
+				dims[i-1].get_node("A&G/Growth").text = "(+%s/s)" % \
+					Globals.percent_to_string(DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).to_float())
+			else:
+				dims[i-1].get_node("A&G/Growth").text = "(×%s/s)" % \
+					DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).to_string()
 			DimAmount[i-2].add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
 
 
