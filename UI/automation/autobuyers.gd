@@ -105,6 +105,14 @@ func TSpeedInterval():
 	var i = 0.5 * (0.6 ** TSUpgrades)
 	if i < 0.11: return MIN_INTERVAL
 	return i
+func RewdAccuracy():
+	var i = 0.5 * (1.095 ** RewdAQups)
+	if i > 1: return 1
+	return i
+func RewdInterval():
+	var i = 1.5 * (0.6 ** RewdUpgrades)
+	if i < 0.11: return MIN_INTERVAL
+	return i
 func DilInterval():
 	var i = 4 * (0.6 ** DilUpgrades)
 	if i < 0.11: return MIN_INTERVAL
@@ -118,12 +126,15 @@ func BangInterval():
 	if i < 0.11: return MIN_INTERVAL
 	return i
 
-var TSUpgrades  := 0
-var TDUpgrades  := [0, 0, 0, 0, 0, 0, 0, 0]
-var DilUpgrades := 0
-var GalUpgrades := 0
+
+var TSUpgrades   := 0
+var TDUpgrades   := [0, 0, 0, 0, 0, 0, 0, 0]
+var RewdUpgrades := 0
+var RewdAQups    := 0
+var DilUpgrades  := 0
+var GalUpgrades  := 0
 var BangUpgrades := 0
-var IntervalCap := [3, 4, 4, 4, 5, 5, 5, 5]
+var IntervalCap  := [3, 4, 4, 4, 5, 5, 5, 5]
 
 func improve_interval(which = 0):
 	if which == 0:
@@ -138,6 +149,9 @@ func improve_interval(which = 0):
 	elif which == 11:
 		Globals.EternityPts.add2self(-(2 ** BangUpgrades))
 		BangUpgrades		+= 1
+	elif which == 12:
+		Globals.EternityPts.add2self(-(2 ** RewdUpgrades))
+		RewdUpgrades		+= 1
 	else:
 		Globals.EternityPts.add2self(-(2 ** TDUpgrades[which-1]))
 		TDUpgrades[which-1] += 1
@@ -167,19 +181,30 @@ func _process(_delta):
 				"Enabled" if i.get_node("Enabled").button_pressed else "Disabled"
 			i.get_node("Timer").set_paused(not i.get_node("Enabled").button_pressed)
 	
+	$Auto/Buyers/Dilation/Enabled.disabled = Globals.Challenge == 10
 	if Globals.Challenge == 10:
-		$Auto/Buyers/Dilation/Enabled.disabled = true
 		$Auto/Buyers/Dilation/Enabled.text = " Disabled (Challenge %s) " % Globals.int_to_string(10)
 	
+	$Auto/Buyers/Rewind  .visible = Globals.challengeCompleted(10)
 	$Auto/Buyers/Dilation.visible = Globals.challengeCompleted(11)
 	$Auto/Buyers/Galaxy  .visible = Globals.challengeCompleted(12)
 	$Auto/Buyers/BigBang .visible = Globals.challengeCompleted(14)
+	if Globals.challengeCompleted(10) and $Auto/Buyers/Rewind/Timer.time_left == 0:
+		if $Auto/Buyers/Rewind/Enabled.button_pressed and \
+		Globals.TDHandler.rewindNode.score >= RewdAccuracy:
+			if buyrewd(): $Auto/Buyers/Rewind/Timer.start(RewdInterval())
 	if Globals.challengeCompleted(11) and $Auto/Buyers/Dilation/Timer.time_left == 0:
-		if $Auto/Buyers/Dilation/Enabled.button_pressed: $Auto/Buyers/Dilation/Timer.start()
+		if $Auto/Buyers/Dilation/Enabled.button_pressed:
+			buydila()
+			$Auto/Buyers/Dilation/Timer.start(DilInterval())
 	if Globals.challengeCompleted(12) and $Auto/Buyers/Galaxy/Timer.time_left == 0:
-		if $Auto/Buyers/Galaxy/Enabled.button_pressed: $Auto/Buyers/Galaxy/Timer.start()
+		if $Auto/Buyers/Galaxy/Enabled.button_pressed:
+			buygala()
+			$Auto/Buyers/Galaxy/Timer.start(GalInterval())
 	if Globals.challengeCompleted(14) and $Auto/Buyers/BigBang/Timer.time_left == 0:
-		if $Auto/Buyers/BigBang/Enabled.button_pressed: $Auto/Buyers/BigBang/Timer.start()
+		if $Auto/Buyers/BigBang/Enabled.button_pressed:
+			bigbang()
+			$Auto/Buyers/BigBang/Timer.start(BangInterval())
 	
 	if Input.is_action_pressed("ToggleAB"):
 		for i in range(1, 9):
@@ -264,8 +289,15 @@ func buytdim(which):
 		Globals.TDHandler.buydim(which, 1)
 	get_node("Auto/Buyers/TD%d/Timer" % which).start(TDInterval(which - 1))
 
+func buyrewd():
+	if Globals.TDHandler.rewindNode.disabled: return false
+	if $Auto/Buyers/Rewind/Enabled.button_pressed:
+		Globals.TDHandler.rewind(Globals.TDHandler.rewindNode.score)
+	return true
+
 func buydila():
-	if  Globals.TDHandler.canDilate:
+	if Globals.Challenge == 10: return
+	if Globals.TDHandler.canDilate:
 		var doit = true
 		if $Auto/Buyers/Dilation/Limit/Enabled.button_pressed:
 			if Globals.TDilation >= DilLimit:

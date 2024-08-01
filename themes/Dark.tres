@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=36 format=3 uid="uid://dbbjjuko7gh5h"]
 
-[ext_resource type="FontFile" uid="uid://b5fmpw14pnhov" path="res://fonts/FairfaxHD.ttf" id="3_yvoh7"]
+[ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kiek"]
 bg_color = Color(0.69, 0.2139, 0.2139, 1)
@@ -67,10 +67,10 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d8upe"]
 bg_color = Color(0.698039, 0.254902, 0.890196, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
 border_blend = true
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -442,7 +442,7 @@ anti_aliasing = false
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bvhu7"]
 
 [resource]
-default_font = ExtResource("3_yvoh7")
+default_font = ExtResource("1_6475w")
 default_font_size = 12
 Button/colors/font_disabled_color = Color(1, 1, 1, 1)
 Button/styles/disabled = SubResource("StyleBoxFlat_4kiek")
@@ -450,6 +450,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_snsx0")
 Button/styles/normal = SubResource("StyleBoxFlat_wvhmr")
 Button/styles/pressed = SubResource("StyleBoxFlat_wj2sw")
 ButtonEtern/base_type = &"Button"
+ButtonEtern/colors/disabled_color = Color(0.133333, 0.133333, 0.133333, 1)
 ButtonEtern/colors/font_color = Color(0.698039, 0.254902, 0.890196, 1)
 ButtonEtern/colors/font_hover_color = Color(0, 0, 0, 1)
 ButtonEtern/colors/font_pressed_color = Color(0, 0, 0, 1)

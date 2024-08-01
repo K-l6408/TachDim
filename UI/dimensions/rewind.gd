@@ -5,18 +5,22 @@ extends Button
 
 var score := 0.0
 
-func _process(_delta):
+func _process(delta):
 	if not Engine.is_editor_hint(): 
 		score = sin(Time.get_ticks_msec() / 2000.0)
+		
+		# sine changed sign (score reached maximum)
+		if sin(Time.get_ticks_msec() / 2000.0) * \
+		sin((Time.get_ticks_msec() - delta * 1000.0) / 2000.0) < 0:
+			score = 0
+		
 		$Accuracy.position.x = (
 			(score * (size.x - 20)) + size.x - $Accuracy.size.x
 		) / 2
 		if Globals.Achievemer.is_unlocked(2, 4):
-			material.set_shader_parameter("zoom",
-				max(
-					Globals.TDHandler.rewindBoost().log2() / Globals.TDHandler.RewindMult.log2()
-				, 1) if (Globals.TDHandler.RewindMult.log2() > 0) else 1
-			)
+			var B = Globals.TDHandler.rewindBoost().log2()
+			var M = Globals.TDHandler.RewindMult.log2()
+			material.set_shader_parameter("zoom", max(M / (B - M), 1))
 		else:
 			material.set_shader_parameter("zoom", 1.0)
 		score = 1 - abs(score)

@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://UI/options/visual.gd" id="1_57g10"]
 
 [node name="visual" type="Control"]
+custom_minimum_size = Vector2(480, 200)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,32 +12,33 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_57g10")
 
-[node name="Scr" type="ScrollContainer" parent="."]
+[node name="HFlow" type="HFlowContainer" parent="."]
+custom_minimum_size = Vector2(480, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 80.0
+offset_right = -108.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="HFlow" type="HFlowContainer" parent="Scr"]
-layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Notation" type="OptionButton" parent="Scr/HFlow"]
+[node name="Notation" type="OptionButton" parent="HFlow"]
 custom_minimum_size = Vector2(203, 62)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 alignment = 1
 
-[node name="Animations" type="Button" parent="Scr/HFlow"]
+[node name="Animations" type="Button" parent="HFlow"]
 custom_minimum_size = Vector2(230, 62)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Animation Options…"
 
-[node name="Panel" type="Panel" parent="Scr/HFlow/Animations"]
+[node name="Panel" type="Panel" parent="HFlow/Animations"]
 visible = false
 layout_mode = 1
 anchors_preset = 12
@@ -48,7 +50,7 @@ offset_bottom = 317.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="AnimOptions" type="HFlowContainer" parent="Scr/HFlow/Animations/Panel"]
+[node name="AnimOptions" type="HFlowContainer" parent="HFlow/Animations/Panel"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -58,12 +60,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 
-[node name="Close" type="Button" parent="Scr/HFlow/Animations/Panel/AnimOptions"]
+[node name="Close" type="Button" parent="HFlow/Animations/Panel/AnimOptions"]
 layout_mode = 2
 text = " Close "
 
-[node name="Scaling" type="HSlider" parent="Scr/HFlow"]
-custom_minimum_size = Vector2(433, 0)
+[node name="Scaling" type="HSlider" parent="HFlow"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 min_value = 0.25
 max_value = 4.0
@@ -71,7 +73,7 @@ step = 0.05
 value = 1.0
 exp_edit = true
 
-[node name="Label" type="Label" parent="Scr/HFlow/Scaling"]
+[node name="Label" type="Label" parent="HFlow/Scaling"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -94,6 +96,7 @@ offset_bottom = 22.0
 button_pressed = true
 text = "Aaaaa"
 
-[connection signal="item_selected" from="Scr/HFlow/Notation" to="." method="change_notation"]
-[connection signal="pressed" from="Scr/HFlow/Animations" to="Scr/HFlow/Animations/Panel" method="show"]
-[connection signal="pressed" from="Scr/HFlow/Animations/Panel/AnimOptions/Close" to="Scr/HFlow/Animations/Panel" method="hide"]
+[connection signal="item_selected" from="HFlow/Notation" to="." method="change_notation"]
+[connection signal="pressed" from="HFlow/Animations" to="HFlow/Animations/Panel" method="show"]
+[connection signal="pressed" from="HFlow/Animations/Panel/AnimOptions/Close" to="HFlow/Animations/Panel" method="hide"]
+[connection signal="drag_ended" from="HFlow/Scaling" to="." method="change_ui_scaling"]

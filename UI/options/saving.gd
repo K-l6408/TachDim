@@ -11,8 +11,9 @@ func _ready():
 func start():
 	await get_tree().process_frame
 	var sf = FileAccess.open("user://lastsave.txt", FileAccess.READ)
-	if sf == null: gameReset()
+	if sf == null: return gameReset()
 	currentFile = sf.get_as_text().to_int()
+	await get_tree().process_frame
 	loadF()
 
 func _process(_delta):
@@ -27,11 +28,10 @@ func autosave():
 		saveF()
 
 func choose_save(which):
-	if which == currentFile: return
 	currentFile = which
-	loadF()
 	var sf = FileAccess.open("user://lastsave.txt", FileAccess.WRITE)
 	sf.store_string("%d" % which)
+	loadF()
 
 func openDialog():
 	for f in 5:
@@ -104,6 +104,11 @@ func saveF(file : String = saveFilePath):
 	if Globals.progress >= GL.Progression.Eternity:
 		DATA["eternity points"] = Globals.EternityPts.to_bytes()
 		DATA["eternities"] = Globals.Eternities.to_bytes()
+		DATA["fastest eternity"] = {
+			time = Globals.fastestEtern.time,
+			epgain = Globals.fastestEtern.epgain.to_bytes(),
+			eternities = Globals.fastestEtern.eternities.to_bytes()
+		}
 		if Globals.Challenge == 10:
 			DATA["c10 power"] = Globals.TDHandler.C10Power
 		DATA["completed challenges"] = Globals.CompletedChallenges
@@ -125,6 +130,9 @@ func saveF(file : String = saveFilePath):
 	
 	sf.store_var(DATA)
 	sf.close()
+	
+	var lsf = FileAccess.open("user://lastsave.txt", FileAccess.WRITE)
+	lsf.store_string("%d" % currentFile)
 
 func loadF(file : String = saveFilePath):
 	var settf := FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.READ)
@@ -146,12 +154,11 @@ func loadF(file : String = saveFilePath):
 			settf.close()
 	
 	var sf := FileAccess.open(file, FileAccess.READ)
-	if sf == null:
-		gameReset()
-		return
-	if sf.get_line() != "TachDimSave": return
 	
 	gameReset()
+	
+	if sf == null:						return
+	if sf.get_line() != "TachDimSave":	return
 	
 	Globals.progress = sf.get_8()
 	Globals.Challenge = sf.get_8()
@@ -188,6 +195,11 @@ func loadF(file : String = saveFilePath):
 	if Globals.progress >= GL.Progression.Eternity:
 		Globals.EternityPts.from_bytes(DATA["eternity points"])
 		Globals.Eternities.from_bytes(DATA["eternities"])
+		
+		Globals.fastestEtern.time				 = DATA["fastest eternity"].time
+		Globals.fastestEtern.epgain    .from_bytes(DATA["fastest eternity"].epgain)
+		Globals.fastestEtern.eternities.from_bytes(DATA["fastest eternity"].epgain)
+		
 		if Globals.Challenge == 10:
 			Globals.TDHandler.C10Power = DATA["c10 power"]
 		Globals.CompletedChallenges = DATA["completed challenges"]
@@ -229,6 +241,11 @@ func gameReset():
 	Globals.Automation.Unlocked = 0
 	Globals.Automation.TDModes = 255
 	Globals.Automation.TDEnabl = 511
+	Globals.fastestEtern = {
+		time       = -1,
+		epgain     = largenum.new(1),
+		eternities = largenum.new(1)
+	}
 	Globals.EternityPts = largenum.new(0)
 	Globals.Eternities = largenum.new(0)
 	Globals.Challenge = 0

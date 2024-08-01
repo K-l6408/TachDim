@@ -16,7 +16,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
 shader = ExtResource("3_o4cqe")
-shader_parameter/pixelsize = 0.00740741
+shader_parameter/pixelsize = 0.00769231
 shader_parameter/zoom = 1.0
 
 [sub_resource type="Animation" id="Animation_m0sop"]
@@ -93,7 +93,7 @@ anchor_bottom = 1.0
 offset_top = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-split_offset = 150
+split_offset = 145
 
 [node name="Resources" type="VBoxContainer" parent="HSplitContainer"]
 unique_name_in_owner = true
@@ -101,6 +101,7 @@ layout_mode = 2
 theme_override_constants/separation = -2
 
 [node name="Tachyons" type="Panel" parent="HSplitContainer/Resources"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
@@ -128,6 +129,7 @@ layout_mode = 2
 
 [node name="Button" type="Button" parent="HSplitContainer/Resources/Rewind"]
 material = SubResource("ShaderMaterial_qqelc")
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -138,7 +140,6 @@ offset_bottom = 30.0
 grow_horizontal = 2
 script = ExtResource("2_4w04a")
 smol = true
-metadata/_edit_group_ = true
 
 [node name="Accuracy" type="ColorRect" parent="HSplitContainer/Resources/Rewind/Button"]
 layout_mode = 0
@@ -161,6 +162,7 @@ text = "Rewind"
 horizontal_alignment = 1
 
 [node name="EP" type="Panel" parent="HSplitContainer/Resources"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
@@ -182,6 +184,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="Challenge" type="Panel" parent="HSplitContainer/Resources"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
@@ -203,59 +206,70 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="Panel2" type="Panel" parent="HSplitContainer/Resources"]
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Tabs" type="TabContainer" parent="HSplitContainer"]
-unique_name_in_owner = true
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_bottom = -2
 
-[node name="⇠ Dimensions ⇢" type="TabContainer" parent="HSplitContainer/Tabs"]
+[node name="Tabs" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Ψ Tachyons Ψ" parent="HSplitContainer/Tabs/⇠ Dimensions ⇢" instance=ExtResource("1_8gea7")]
+[node name="Dimensions" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+layout_mode = 2
+
+[node name="Tachyons" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("1_8gea7")]
 clip_contents = true
 layout_mode = 2
 
-[node name="⚙ Automation ⚙" parent="HSplitContainer/Tabs" instance=ExtResource("5_f3s3t")]
+[node name="Automation" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("5_f3s3t")]
 visible = false
 layout_mode = 2
 
-[node name="⁈ Challenges ⁉" type="TabContainer" parent="HSplitContainer/Tabs"]
+[node name="Challenges" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="Ψ Regular Challenges Ψ" parent="HSplitContainer/Tabs/⁈ Challenges ⁉" instance=ExtResource("6_agbn0")]
+[node name="Regular Challenges" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("6_agbn0")]
 layout_mode = 2
 
-[node name="Δ Eternity Δ" type="TabContainer" parent="HSplitContainer/Tabs"]
+[node name="Eternity" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="⨹ Eternity Upgrades ⨹" parent="HSplitContainer/Tabs/Δ Eternity Δ" instance=ExtResource("6_0l55j")]
+[node name="Eternity Upgrades" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity" instance=ExtResource("6_0l55j")]
 layout_mode = 2
 
-[node name="↥ Overcome Eternity ↥" type="Control" parent="HSplitContainer/Tabs/Δ Eternity Δ"]
+[node name="Overcome Eternity" type="Control" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity"]
 visible = false
 layout_mode = 2
 
-[node name="🏆 Achievements 🏆" parent="HSplitContainer/Tabs" instance=ExtResource("6_mtmcd")]
+[node name="Achievements" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("6_mtmcd")]
 visible = false
 layout_mode = 2
 
-[node name="🔧 Options 🔧" type="TabContainer" parent="HSplitContainer/Tabs"]
+[node name="Options" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="💾 Saving 💾" parent="HSplitContainer/Tabs/🔧 Options 🔧" instance=ExtResource("6_rxys2")]
+[node name="Saving" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options" instance=ExtResource("6_rxys2")]
 layout_mode = 2
 
-[node name="🎨 Visual 🖌" parent="HSplitContainer/Tabs/🔧 Options 🔧" instance=ExtResource("7_qd5si")]
+[node name="Visual" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options" instance=ExtResource("7_qd5si")]
 visible = false
 layout_mode = 2
 
-[node name="Debug" parent="HSplitContainer/Tabs" instance=ExtResource("11_t3vch")]
+[node name="Debug" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("11_t3vch")]
 visible = false
 layout_mode = 2
 

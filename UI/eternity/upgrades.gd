@@ -2,7 +2,7 @@ extends Control
 
 var Bought := 0
 var Costs := [
-	[1, 1, 1, 2], [1, 1, 1, 2], [3, 5, 7, 10], [20, 30, 40, 75]
+	[1, 1, 1, 2], [1, 1, 1, 2], [3, 5, 7, 10], [20, 35, 50, 75]
 ]
 
 func is_bought(which):
@@ -26,7 +26,17 @@ func _process(delta):
 	for i in $Columns.get_child_count():
 		var k = $Columns.get_child(i)
 		for j in k.get_child_count():
-			if not k.get_child(j) is Button: break
+			if not k.get_child(j) is Button:
+				if k.get_child(j) is Line2D:
+					var L : Line2D = k.get_child(j)
+					for q in 4:
+						if is_bought(i*4+q+1):
+							L.gradient.colors[q + 1] = get_theme_color("font_color", "ButtonEtern")
+						else:
+							L.gradient.colors[q + 1] = get_theme_color("disabled_color", "ButtonEtern")
+					L.gradient.colors[0] = L.gradient.colors[1]
+					L.gradient.colors[5] = L.gradient.colors[4]
+				continue
 			
 			if is_bought(i*4+j+1):
 				k.get_child(j).disabled = true
@@ -42,102 +52,125 @@ func _process(delta):
 			if j > 0 and not is_bought(i*4+j):
 				k.get_child(j).disabled = true
 	
-	if is_bought(1):
+	if is_bought(1) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col1/TimePlayed.text = \
-		"Tachyon Dimensions\nget a multiplier\nbased on time played.\n \nCurrently: ×%s" % \
+		"Tachyon Dimensions\nget a multiplier\nbased on time spent\nin this Eternity.\n \nCurrently: ×%s" % \
 		Globals.float_to_string(Formulas.eternity_11())
 	else:
 		$Columns/Col1/TimePlayed.text = \
-		"Tachyon Dimensions\nget a multiplier\nbased on time played.\n \nCost: %s EP" % \
+		"Tachyon Dimensions\nget a multiplier\nbased on time spent\nin this Eternity.\n \nCost: %s EP" % \
 		Globals.int_to_string(Costs[0][0])
 	
-	if is_bought(2):
+	if is_bought(2) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col1/Dim18mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\nCurrently: ×%s" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\n\nCurrently: ×%s" % \
 		[Globals.ordinal(1), Globals.ordinal(8), Formulas.eternity_23().to_string()]
 	else:
 		$Columns/Col1/Dim18mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\nCost: %s EP" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\n\nCost: %s EP" % \
 		[Globals.ordinal(1), Globals.ordinal(8), Globals.int_to_string(Costs[0][1])]
 	
-	if is_bought(3):
+	if is_bought(3) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col1/Dim27mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\nCurrently: ×%s" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\n\nCurrently: ×%s" % \
 		[Globals.ordinal(2), Globals.ordinal(7), Formulas.eternity_23().to_string()]
 	else:
 		$Columns/Col1/Dim27mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\nCost: %s EP" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\n\nCost: %s EP" % \
 		[Globals.ordinal(2), Globals.ordinal(7), Globals.int_to_string(Costs[0][2])]
 	
-	if is_bought(4):
+	if is_bought(4) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col1/DGCheaper.text = \
 		"Dilation and Galaxies\nare cheaper by\n%s and %s Dimensions,\nrespectively." % \
 		[Globals.int_to_string(5), Globals.int_to_string(10)]
 	else:
 		$Columns/Col1/DGCheaper.text = \
-		"Dilation and Galaxies\nare cheaper by\n%s and %s Dimensions,\nrespectively.\nCost: %s EP" % \
+		"Dilation and Galaxies\nare cheaper by\n%s and %s Dimensions,\nrespectively.\n\nCost: %s EP" % \
 		[Globals.int_to_string(5), Globals.int_to_string(10), Globals.int_to_string(Costs[0][3])]
 	
-	if is_bought(5):
+	if is_bought(5) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col2/MultIncrease.text = \
-		"Increase the multiplier\nfor buying %s\nTachyon Dimensions.\n \n(×%s → ×%s)" % \
+		"Increase the multiplier\nfor buying %s\nTachyon Dimensions.\n\n\n(×%s → ×%s)" % \
 		[Globals.int_to_string(10),
 		Globals.float_to_string(2), Globals.float_to_string(2.22222)]
 	else:
 		$Columns/Col2/MultIncrease.text = \
-		"Increase the multiplier\nfor buying %s\nTachyon Dimensions.\n(×%s → ×%s)\nCost: %s EP" % \
+		"Increase the multiplier\nfor buying %s\nTachyon Dimensions.\n\n\nCost: %s EP" % \
 		[Globals.int_to_string(10),
-		Globals.float_to_string(2), Globals.float_to_string(2.22222),
 		Globals.int_to_string(Costs[1][0])]
 	
-	if is_bought(6):
+	if is_bought(6) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col2/Dim45mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\nCurrently: ×%s" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\n\nCurrently: ×%s" % \
 		[Globals.ordinal(4), Globals.ordinal(5), Formulas.eternity_23().to_string()]
 	else:
 		$Columns/Col2/Dim45mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\nCost: %s EP" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\n\nCost: %s EP" % \
 		[Globals.ordinal(4), Globals.ordinal(5), Globals.int_to_string(Costs[1][1])]
 	
-	if is_bought(7):
+	if is_bought(7) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col2/Dim36mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\nCurrently: ×%s" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\n\nCurrently: ×%s" % \
 		[Globals.ordinal(3), Globals.ordinal(6), Formulas.eternity_23().to_string()]
 	else:
 		$Columns/Col2/Dim36mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\nCost: %s EP" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Eternities.\n\nCost: %s EP" % \
 		[Globals.ordinal(3), Globals.ordinal(6), Globals.int_to_string(Costs[1][2])]
 	
-	if is_bought(8):
+	if is_bought(8) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col2/GalaxyBoost.text = "Tachyon Galaxies are\ntwice as strong."
 	else:
 		$Columns/Col2/GalaxyBoost.text = \
-		"Tachyon Galaxies are\ntwice as strong.\n \n \nCost: %s EP" % \
+		"\nTachyon Galaxies are\ntwice as strong.\n \n \nCost: %s EP" % \
 		Globals.int_to_string(Costs[1][3])
 	
-	if is_bought(9):
+	if is_bought(9) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col3/AchMult.text = \
-		"Achievements give a\nmultiplier to all\nTachyon Dimensions.\n \nCurrently: ×%s" % \
+		"Achievements give a\nmultiplier to all\nTachyon Dimensions.\n\n\nCurrently: ×%s" % \
 		Formulas.achievement_mult()
 	else:
 		$Columns/Col3/AchMult.text = \
-		"Achievements give a\nmultiplier to all\nTachyon Dimensions.\n \nCost: %s EP" % \
+		"Achievements give a\nmultiplier to all\nTachyon Dimensions.\n\n\nCost: %s EP" % \
 		Globals.int_to_string(Costs[2][0])
 	
-	if is_bought(10):
+	if is_bought(10) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col3/DilaMult.text = \
-		"Time Dilation\nmultiplier is increased.\n(×%s → ×%s)" % \
+		"\nTime Dilation\nmultiplier is increased.\n\n\n(×%s → ×%s)" % \
 		[Globals.float_to_string(2,1), Globals.float_to_string(2.5,1)]
 	else:
 		$Columns/Col3/DilaMult.text = \
-		"Time Dilation\nmultiplier is increased.\n(×%s → ×%s)\n \nCost: %s EP" % \
-		[Globals.float_to_string(2,1), Globals.float_to_string(2.5,1), Globals.int_to_string(Costs[2][1])]
+		"\nTime Dilation\nmultiplier is increased.\n\n\nCost: %s EP" % \
+		Globals.int_to_string(Costs[2][1])
 	
-	if is_bought(11):
+	if is_bought(11) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col3/EPMult.text = \
-		"Tachyon Dimensions\nget a multiplier\nbased on unspent EP.\n \nCurrently: ×%s" % \
+		"Tachyon Dimensions\nget a multiplier\nbased on unspent EP.\n\n\nCurrently: ×%s" % \
 		Globals.EternityPts.add(1).to_string()
 	else:
 		$Columns/Col3/EPMult.text = \
-		"Tachyon Dimensions\nget a multiplier\nbased on unspent EP.\n \nCost: %s EP" % \
+		"Tachyon Dimensions\nget a multiplier\nbased on unspent EP.\n\n\nCost: %s EP" % \
 		Globals.int_to_string(Costs[2][2])
+	
+	$Columns/Col3/PassiveEP.text = \
+	"You gain Eternity Points\npassively %s times\nslower than your\nfastest Eternity.\n\n" % \
+	Globals.int_to_string(3)
+	if is_bought(12) != Input.is_action_pressed("BuyOne"):
+		if Globals.fastestEtern.time < 0:
+			$Columns/Col3/PassiveEP.text += "Currently: Too slow to generate"
+		else:
+			$Columns/Col3/PassiveEP.text += "Currently: %s every %s" % \
+			[Globals.fastestEtern.epgain, Globals.fastestEtern.time]
+	else:
+		$Columns/Col3/PassiveEP.text += "Cost: %s EP" % \
+		Globals.int_to_string(Costs[2][3])
+	
+	for i in 4:
+		if is_bought(13 + i) != Input.is_action_pressed("BuyOne"):
+			$Columns/Col4.get_child(i).text = \
+			"Start every reset with %s\nDilation," % Globals.int_to_string(i + 1) + \
+			" automatically\nunlocking the %s\nTachyon Dimension." % Globals.ordinal(i + 5)
+		else:
+			$Columns/Col4.get_child(i).text = \
+			"Start every reset with %s\nDilation," % Globals.int_to_string(i + 1) + \
+			" automatically\nunlocking the %s\nTachyon Dimension.\n" % Globals.ordinal(i + 5) + \
+			"\nCost: %s EP" % Globals.int_to_string(Costs[3][i])

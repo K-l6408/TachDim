@@ -3,7 +3,7 @@ class_name GL
 
 enum DisplayMode {
 	Scientific, Engineering, Logarithm, Letters, Dozenal, Strict_Logarithm, Roman,
-	toki_pona, sitelen_pona, Canonical_toki_pona
+	toki_pona, sitelen_pona, Canonical_toki_pona, Evil
 }
 enum Progression {
 	None, Dilation, Galaxy, Eternity, Overcome
@@ -45,9 +45,19 @@ func animation(which):
 	Animater.play(which)
 
 var existence := 0
+var eternTime := 0
+
+var fastestEtern := {
+	time       = -1,
+	epgain     = largenum.new(1),
+	eternities = largenum.new(1)
+}
 
 func _process(delta):
 	existence += int(delta * 1000)
+	eternTime += int(delta * 1000)
+	if EUHandler.is_bought(12):
+		EternityPts.add2self(largenum.new(delta * fastestEtern / 2))
 
 func int_to_string(i:int) -> String:
 	match display:

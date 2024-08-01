@@ -3,14 +3,39 @@ extends Control
 @onready var TBar : TabBar = %Tabs.get_tab_bar()
 var debugMode := false
 
+var tabSymbolLeft  = "⇠⚙⁈δ🏆🔧["
+var tabSymbolRight = "⇢⚙⁉δ🏆🔧]"
+
+var dimensionSymbols = "Ψ"
+var challengeSymbols = "Ψ"
+var  eternitySymbols = "↑⭻"
+var   optionsSymbols = "💾🎨"
+var celestialSymbols = "⏣⚴☾𝄽\uF1E0ɸΩ"
+
 func _ready():
 	Globals.NotifHandler = $Notifs
-	Globals.TDHandler = %"Tabs/⇠ Dimensions ⇢/Ψ Tachyons Ψ"
-	Globals.Automation = %"Tabs/⚙ Automation ⚙"
-	Globals.Achievemer = %"Tabs/🏆 Achievements 🏆"
+	Globals.TDHandler = %Tabs/Dimensions/Tachyons
+	Globals.Automation = %Tabs/Automation
+	Globals.Achievemer = %Tabs/Achievements
 	Globals.Animater = $AnimationPlayer
-	Globals.VisualSett = %"Tabs/🔧 Options 🔧/🎨 Visual 🖌"
-	Globals.EUHandler = %"Tabs/Δ Eternity Δ/⨹ Eternity Upgrades ⨹"
+	Globals.VisualSett = %Tabs/Options/Visual
+	Globals.EUHandler = %"Tabs/Eternity/Eternity Upgrades"
+	
+	for i in %Tabs.get_child_count():
+		TBar.set_tab_title(i, "%s %s %s" % \
+		[tabSymbolLeft[i], %Tabs.get_child(i).name, tabSymbolRight[i]])
+	for i in %Tabs/Dimensions.get_child_count():
+		%Tabs/Dimensions.get_tab_bar().set_tab_title(i, "%s %s %s" % \
+		[dimensionSymbols[i], %Tabs/Dimensions.get_child(i).name, dimensionSymbols[i]])
+	for i in %Tabs/Challenges.get_child_count():
+		%Tabs/Challenges.get_tab_bar().set_tab_title(i, "%s %s %s" % \
+		[challengeSymbols[i], %Tabs/Challenges.get_child(i).name, challengeSymbols[i]])
+	for i in %Tabs/Eternity.get_child_count():
+		%Tabs/Eternity.get_tab_bar().set_tab_title(i, "%s %s %s" % \
+		[eternitySymbols[i], %Tabs/Eternity.get_child(i).name, eternitySymbols[i]])
+	for i in %Tabs/Options.get_child_count():
+		%Tabs/Options.get_tab_bar().set_tab_title(i, "%s %s %s" % \
+		[optionsSymbols[i], %Tabs/Options.get_child(i).name, optionsSymbols[i]])
 
 func _process(_delta):
 	$Camera2D.position = get_viewport_rect().size / 2

@@ -183,7 +183,9 @@ func less(b) -> bool:
 	return false
 
 func _to_string() -> String:
-	if exponent >= 1024 and Globals.progress < GL.Progression.Overcome:
+	var logfinity = 1024
+	if Globals.Challenge == 15: logfinity = 2048
+	if log2() >= logfinity and Globals.progress < GL.Progression.Overcome:
 		return "Infinite"
 	
 	match Globals.display:

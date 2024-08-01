@@ -51,11 +51,11 @@ func C10Score():
 var RewindMult := largenum.new(1)
 
 var canDilate :
-	get: return (not %Prestiges/DiButton.disabled) and $ScrollContainer.visible
+	get: return (not %Prestiges/DiButton.disabled) and $VSplitContainer.visible
 var canGalaxy :
-	get: return (not %Prestiges/GaButton.disabled) and $ScrollContainer.visible
+	get: return (not %Prestiges/GaButton.disabled) and $VSplitContainer.visible
 var canBigBang:
-	get: return $ScrollContainer.visible
+	get: return $ETERNITY.visible
 
 var buylim : int :
 	get:
@@ -63,12 +63,14 @@ var buylim : int :
 		else: 						return 10
 
 func updateTSpeed():
-	var GalaxyBoost = 0.01
-	if Globals.EUHandler.is_bought(8): GalaxyBoost *= 2
+	var GalaxyBoost = 0.965
+	var GalaxyMult = 1
+	if Globals.EUHandler.is_bought(8): GalaxyMult *= 2
 	if Globals.Challenge == 12:
-		TSpeedBoost = largenum.new(1.10 + GalaxyBoost * Globals.TGalaxies)
+		TSpeedBoost = largenum.new(1.10)
 	else:
-		TSpeedBoost = largenum.new(1.13 + GalaxyBoost * Globals.TGalaxies)
+		TSpeedBoost = largenum.new(1.13)
+	TSpeedBoost.div2self(largenum.new(GalaxyBoost).power(Globals.TGalaxies * GalaxyMult))
 
 func rewind(score:float):
 	RewindMult = rewindBoost(score)
@@ -91,9 +93,10 @@ func rewind(score:float):
 			DimAmount[i].pow2self(1 - score)
 
 func rewindBoost(score := 1.0) -> largenum:
-	if Globals.Challenge == 8:
-		return DimAmount[0].power(0.075)
 	var RBoost = largenum.new(DimAmount[0].log10()).power(1.5).divide(10)
+	if Globals.Challenge == 8:
+		RBoost = DimAmount[0].power(0.1)
+	
 	if Globals.Achievemer.is_unlocked(2, 4): RBoost.mult2self(2)
 	
 	if Globals.Achievemer.is_unlocked(2, 4): RBoost.div2self(RewindMult)
@@ -168,6 +171,11 @@ func eternity():
 	reset(2)
 	if Globals.progress < Globals.Progression.Eternity:
 		Globals.progress = Globals.Progression.Eternity
+	if Globals.fastestEtern.time > Globals.eternTime \
+	or Globals.fastestEtern.time < 0:
+		Globals.fastestEtern.time		= Globals.eternTime
+		Globals.fastestEtern.epgain		= largenum.new(1)
+		Globals.fastestEtern.eternities = largenum.new(1)
 	Globals.animation("bang")
 
 func reset(level := 0, challengeReset := true):
@@ -201,14 +209,17 @@ func reset(level := 0, challengeReset := true):
 			%Prestiges/DiButton.material.set_shader_parameter("pixelsize", 1./250.)
 		else:
 			%Prestiges/DiButton.material = null
+		Globals.eternTime = 0
 	updateTSpeed()
 
 func _process(delta):
-	$ScrollContainer.visible = (Globals.Tachyons.exponent <  1024)
-	$ETERNITY.visible        = (Globals.Tachyons.exponent >= 1024)
+	var logfinity = 2048 if Globals.Challenge == 15 else 1024
 	
-	if Globals.Tachyons.exponent >= 1024:
-		Globals.Tachyons.exponent = 1024
+	$VSplitContainer.visible = (Globals.Tachyons.log2() <= logfinity)
+	$ETERNITY.visible        = (Globals.Tachyons.log2() >= logfinity)
+	
+	if Globals.Tachyons.log2() >= logfinity:
+		Globals.Tachyons.exponent = logfinity
 		Globals.Tachyons.mantissa = (1 << 62)
 		if Input.is_action_pressed("BBang"):
 			eternity()
@@ -246,7 +257,7 @@ func _process(delta):
 	else:
 		%Progress.tooltip_text = "Percentage to Eternity"
 	%Progress/Label.text = Globals.percent_to_string(%Progress.value / %Progress.max_value, 1)
-	rewindNode.visible = (Globals.TDilation >= 5) and (Globals.Challenge != 6)
+	rewindNode.visible = (Globals.TDilation >= 5) or (Globals.progress >= Globals.Progression.Galaxy)
 	
 	var buy10mult = 2
 	if Globals.Challenge == 4: buy10mult = 1.0 + 0.2 * Globals.TDilation
@@ -273,7 +284,11 @@ func _process(delta):
 		%Important.text += "\n \n[font_size=10]Production: [/font_size]/ " + \
 		Globals.float_to_string(C14Divisor)
 	
-	if DimAmount[7].exponent == -INF:
+	if Globals.TDilation < 5:
+		rewindNode.disabled = true
+		rewindNode.text = "Dimensional Rewind disabled (requires %s Time Dilation) " % \
+		Globals.int_to_string(5)
+	elif DimAmount[7].exponent == -INF:
 		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (no %s TD)" % \
 		Globals.ordinal(8)
@@ -293,8 +308,7 @@ func _process(delta):
 	var DilaBoost = 2
 	if Globals.EUHandler.is_bought(10): DilaBoost = 2.5
 	if Globals.Challenge == 10:
-		DilaBoost *= 1.1
-		DilaBoost **= 1 - abs(C10Score())
+		DilaBoost = 2.2 ** (1 - abs(C10Score()))
 	if Globals.Challenge == 8: DilaBoost = 1
 	if Globals.Challenge == 6:
 		if DimsUnlocked < 6:
@@ -413,11 +427,11 @@ func _process(delta):
 	if not Input.is_action_pressed("ToggleAB"):
 		for i in range(8, 0, -1):
 			if Input.is_action_pressed("BuyTD%d" % i) or BuyMax:
-				if dims[i].get_node("Buy/Progress").value >= \
-				dims[i].get_node("Buy/Progress").max_value:
-					buydim(i, INF if BuyMax else 0)
-				elif Input.is_action_pressed("BuyOne"):
+				if Input.is_action_pressed("BuyOne"):
 					buydim(i, 1)
+				elif dims[i].get_node("Buy/Progress").value >= \
+				dims[i].get_node("Buy/Progress").max_value:
+					buydim(i, 1e9 if BuyMax else 0)
 		if Input.is_action_pressed("BuyTSpeed") or BuyMax:
 			if TSpeedCost.less(Globals.Tachyons):
 				buytspeed(true)
@@ -441,7 +455,9 @@ func _process(delta):
 	if Globals.Challenge == 10:
 		if %Prestiges/DiButton.material == null:
 			%Prestiges/DiButton.material = rewindNode.material.duplicate()
-			%Prestiges/DiButton.material.set_shader_material("pixelsize", 1./250.)
+		%Prestiges/DiButton.material.set_shader_parameter(
+			"pixelsize", 1./250.
+		)
 		%Prestiges/DiButton/Accuracy.visible = true
 		%Prestiges/DiButton/Accuracy.position.x = (
 			(C10Score() * 230) + 240
@@ -454,7 +470,7 @@ func _process(delta):
 		
 		mult.mult2self(largenum.new(buy10mult).power(DimPurchase[i-1] / buylim))
 		if Globals.Challenge == 10:
-			mult.mult2self(largenum.new(DilaBoost * 1.1).power(max(   C10Power   - i + 1, 0)))
+			mult.mult2self(largenum.new(   2.2   ).power(max(      C10Power    - i + 1, 0)))
 		else:
 			mult.mult2self(largenum.new(DilaBoost).power(max(Globals.TDilation - i + 1, 0)))
 		
@@ -499,7 +515,3 @@ func _process(delta):
 				dims[i-1].get_node("A&G/Growth").text = "(×%s/s)" % \
 					DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).to_string()
 			DimAmount[i-2].add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
-
-
-func c15disableslider(value_changed):
-	pass # Replace with function body.
