@@ -110,7 +110,7 @@ func RewdAccuracy():
 	if i > 1: return 1
 	return i
 func RewdInterval():
-	var i = 1.5 * (0.6 ** RewdUpgrades)
+	var i = 3 * (0.6 ** RewdUpgrades)
 	if i < 0.11: return MIN_INTERVAL
 	return i
 func DilInterval():
@@ -159,13 +159,9 @@ func improve_interval(which = 0):
 func _process(_delta):
 	for i in 8:
 		var k = get_node("Auto/Buyers/TD%dLocked" % (i+1))
-		if not Globals.TachTotal.less(largenum.new(10).pow2self((i+2) * 10)) and k.disabled:
-			Globals.notificate("autobuyers", Globals.ordinal(i+1) + " Dimension Autobuyer unlocked!")
 		k.disabled = Globals.TachTotal.less(largenum.new(10).pow2self((i+2) * 10))
 		k.text = "%s Tachyon Dimension Autobuyer disabled\n(Requires %s total Tachyons)" % \
 		[Globals.ordinal(i+1), largenum.new(10).pow2self((i+2) * 10).to_string()]
-	if not Globals.TachTotal.less(largenum.new(10).pow2self(100)) and $Auto/Buyers/TimeSpeedLocked.disabled:
-		Globals.notificate("autobuyers", "Timespeed Autobuyer unlocked!")
 	$Auto/Buyers/TimeSpeedLocked.disabled = Globals.TachTotal.less(largenum.new(10).pow2self(100))
 	$Auto/Buyers/TimeSpeedLocked.text = "Timespeed Autobuyer disabled\n(Requires %s total Tachyons)" % \
 	largenum.new(10).pow2self(100).to_string()
@@ -191,7 +187,9 @@ func _process(_delta):
 	$Auto/Buyers/BigBang .visible = Globals.challengeCompleted(14)
 	if Globals.challengeCompleted(10) and $Auto/Buyers/Rewind/Timer.time_left == 0:
 		if $Auto/Buyers/Rewind/Enabled.button_pressed and \
-		Globals.TDHandler.rewindNode.score >= RewdAccuracy:
+		Globals.TDHandler.rewindNode.score >= RewdAccuracy() and not \
+		Globals.TDHandler.rewindBoost().divide(Globals.TDHandler.RewindMult).\
+		less($Auto/Buyers/Rewind/Objective.value):
 			if buyrewd(): $Auto/Buyers/Rewind/Timer.start(RewdInterval())
 	if Globals.challengeCompleted(11) and $Auto/Buyers/Dilation/Timer.time_left == 0:
 		if $Auto/Buyers/Dilation/Enabled.button_pressed:
@@ -306,8 +304,6 @@ func buydila():
 			if Globals.TGalaxies >= DilIgnore:
 				doit = true
 		if doit: Globals.TDHandler.dilate()
-		
-		$Auto/Buyers/Dilation/Timer.start(DilInterval())
 
 func buygala():
 	if Globals.TDHandler.canGalaxy:
@@ -316,9 +312,7 @@ func buygala():
 			if Globals.TGalaxies >= GalLimit:
 				doit = false
 		if doit: Globals.TDHandler.galaxy()
-		$Auto/Buyers/Galaxy/Timer.start(GalInterval())
 
 func bigbang():
 	if Globals.TDHandler.canBigBang:
 		Globals.TDHandler.eternity()
-		$Auto/Buyers/BigBang/Timer.start(BangInterval())

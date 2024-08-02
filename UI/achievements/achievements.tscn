@@ -17,28 +17,30 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mawnv")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="ScrollContainer" parent="."]
 custom_minimum_size = Vector2(560, 360)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-
-[node name="GridContainer" type="GridContainer" parent="Control"]
-unique_name_in_owner = true
-layout_mode = 2
+anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -274.0
-offset_top = 23.0
-offset_right = 274.0
+offset_left = -280.0
+offset_top = 51.0
+offset_right = 280.0
 grow_horizontal = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+grow_vertical = 2
+size_flags_horizontal = 3
+vertical_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 2
+theme_override_constants/margin_top = 9
+
+[node name="GridContainer" type="GridContainer" parent="Control/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/v_separation = 13
 columns = 8
 

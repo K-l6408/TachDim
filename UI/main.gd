@@ -3,13 +3,14 @@ extends Control
 @onready var TBar : TabBar = %Tabs.get_tab_bar()
 var debugMode := false
 
-var tabSymbolLeft  = "⇠⚙⁈δ🏆🔧["
-var tabSymbolRight = "⇢⚙⁉δ🏆🔧]"
+var tabSymbolLeft  = "⇠\uf085⁈δ\uf091\uf0ca\uf1de["
+var tabSymbolRight = "⇢\uf1de⁉δ\uf091\uf0c9\uf0ad]"
 
 var dimensionSymbols = "Ψ"
 var challengeSymbols = "Ψ"
 var  eternitySymbols = "↑⭻"
-var   optionsSymbols = "💾🎨"
+var     statsSymbols = "\uf036"
+var   optionsSymbols = "\uf0c7\uf1fc"
 var celestialSymbols = "⏣⚴☾𝄽\uF1E0ɸΩ"
 
 func _ready():
@@ -33,6 +34,9 @@ func _ready():
 	for i in %Tabs/Eternity.get_child_count():
 		%Tabs/Eternity.get_tab_bar().set_tab_title(i, "%s %s %s" % \
 		[eternitySymbols[i], %Tabs/Eternity.get_child(i).name, eternitySymbols[i]])
+	for i in %Tabs/Statistics.get_child_count():
+		%Tabs/Statistics.get_tab_bar().set_tab_title(i, "%s %s %s" % \
+		[statsSymbols[i], %Tabs/Statistics.get_child(i).name, statsSymbols[i]])
 	for i in %Tabs/Options.get_child_count():
 		%Tabs/Options.get_tab_bar().set_tab_title(i, "%s %s %s" % \
 		[optionsSymbols[i], %Tabs/Options.get_child(i).name, optionsSymbols[i]])
@@ -57,8 +61,8 @@ func _process(_delta):
 	%Resources/Tachyons/Text.text = \
 	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Globals.Tachyons.to_string()
 	%Resources/EP/Text.text = \
-	"[center][color=b241e3][font_size=16]%s[/font_size]\nEternity Points[/color][/center]" % \
-	Globals.EternityPts.to_string()
+	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Points[/color][/center]" % \
+	[get_theme_color("font_color", "ButtonEtern").to_html(false), Globals.EternityPts.to_string()]
 	%Resources/Challenge/Text.text = \
 	"[center]Current Challenge:\n[font_size=16]%s[/font_size][/center]" % \
 	("C" + Globals.int_to_string(Globals.Challenge) if Globals.Challenge > 0 else "None")

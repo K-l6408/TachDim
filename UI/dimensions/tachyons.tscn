@@ -6,11 +6,11 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngcjy"]
 shader = ExtResource("2_5oiqa")
-shader_parameter/pixelsize = 0.0016276
+shader_parameter/pixelsize = 0.00207987
 shader_parameter/zoom = 1.0
 
 [node name="Tachyons" type="Control"]
-custom_minimum_size = Vector2(520, 630)
+custom_minimum_size = Vector2(520, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,13 +20,12 @@ grow_vertical = 2
 script = ExtResource("1_3wvft")
 
 [node name="VSplitContainer" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(520, 600)
+custom_minimum_size = Vector2(520, 0)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 601.0
 grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -725,6 +724,7 @@ offset_left = -115.0
 offset_right = -110.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.8, 0.8, 0.8, 1)
 
 [node name="GaLabel" type="RichTextLabel" parent="VSplitContainer/Prestiges"]

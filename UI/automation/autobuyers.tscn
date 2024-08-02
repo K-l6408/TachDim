@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://UI/automation/autobuyers.gd" id="1_4b317"]
 
 [node name="Autobuyers" type="Control"]
+custom_minimum_size = Vector2(870, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,9 +19,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
 
 [node name="Buyers" type="VBoxContainer" parent="Auto"]
-custom_minimum_size = Vector2(750, 0)
+custom_minimum_size = Vector2(870, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -670,8 +672,8 @@ scroll_active = false
 [node name="Interval" type="Button" parent="Auto/Buyers/Rewind"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4
-anchor_right = 0.4
+anchor_left = 0.35
+anchor_right = 0.35
 anchor_bottom = 1.0
 offset_left = -108.56
 offset_right = 108.44
@@ -681,11 +683,28 @@ disabled = true
 text = "Complete the challenge to
 upgrade the interval"
 
-[node name="Mode" type="Button" parent="Auto/Buyers/Rewind"]
+[node name="Objective" type="SpinBox" parent="Auto/Buyers/Rewind"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.7
-anchor_right = 0.7
+anchor_left = 0.55
+anchor_top = 0.25
+anchor_right = 0.55
+anchor_bottom = 0.75
+offset_left = -61.5
+offset_top = -0.25
+offset_right = 61.5
+offset_bottom = 0.25
+min_value = 1.0
+max_value = 1000.0
+step = 0.01
+value = 2.0
+prefix = "Rewind at ×"
+
+[node name="Accuracy" type="Button" parent="Auto/Buyers/Rewind"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_right = 0.75
 anchor_bottom = 1.0
 offset_left = -108.56
 offset_right = 108.44
@@ -712,6 +731,7 @@ text = "Enabled"
 
 [node name="Timer" type="Timer" parent="Auto/Buyers/Rewind"]
 wait_time = 0.5
+one_shot = true
 
 [node name="Dilation" type="Control" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(0, 45)
@@ -999,7 +1019,7 @@ wait_time = 10.0
 [connection signal="pressed" from="Auto/Buyers/TD8Locked" to="." method="unlock" binds= [8]]
 [connection signal="pressed" from="Auto/Buyers/TD8/Interval" to="." method="improve_interval" binds= [8]]
 [connection signal="timeout" from="Auto/Buyers/TD8/Timer" to="." method="buytdim" binds= [8]]
-[connection signal="pressed" from="Auto/Buyers/Rewind/Interval" to="." method="improve_interval"]
+[connection signal="pressed" from="Auto/Buyers/Rewind/Interval" to="." method="improve_interval" binds= [12]]
 [connection signal="timeout" from="Auto/Buyers/Rewind/Timer" to="." method="buyTSpeed"]
 [connection signal="pressed" from="Auto/Buyers/Dilation/Interval" to="." method="improve_interval" binds= [9]]
 [connection signal="pressed" from="Auto/Buyers/Galaxy/Interval" to="." method="improve_interval" binds= [10]]

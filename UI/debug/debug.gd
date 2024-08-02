@@ -27,6 +27,6 @@ func evil():
 		4:
 			Globals.Eternities.call(oper, $LineEdit.text.to_float())
 
-func _process(delta):
+func _process(_delta):
 	Engine.time_scale = $HSlider.value
 	$HSlider/Label.text = "Game speed: ×%s" % Globals.float_to_string($HSlider.value)

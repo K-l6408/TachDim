@@ -46,5 +46,5 @@ func _process(_delta):
 	$HFlow/Notation.select(Globals.display)
 	$HFlow/Scaling/Label.text = " \nUI Scaling: ×%.2f" % $HFlow/Scaling.value
 
-func change_ui_scaling(value_changed):
+func change_ui_scaling(_value_changed):
 	get_node("/root").content_scale_factor = $HFlow/Scaling.value

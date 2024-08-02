@@ -68,6 +68,7 @@ theme_override_constants/v_separation = 25
 alignment = 1
 
 [node name="Separator" type="Control" parent="Chal/lenges"]
+custom_minimum_size = Vector2(960, 0)
 layout_mode = 2
 
 [node name="C1" type="Panel" parent="Chal/lenges"]

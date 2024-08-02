@@ -1,7 +1,7 @@
 extends Control
 
 const MAXROWS = 20
-var loaded_rows = 2
+var loaded_rows = 3
 var unlocked : PackedByteArray = []
 var achgot : int :
 	get:
@@ -31,6 +31,13 @@ func achnames(r, c):
 			6: return "You can stop holding M now"
 			7: return "Seriously, why?"
 			8: return "Popular TV sitcom"
+		3: match c:
+			1: return "Kinda OP innit"
+			2: return "many"
+			3: return "Goodnight! :3"
+			4: return "I h-eight them ›:("
+			6: return "And… time!"
+			7: return "Too is two many"
 	return "TBD"
 
 func achreqs(r, c):
@@ -39,7 +46,7 @@ func achreqs(r, c):
 		2: match c:
 			1: return "Get a Tachyon Galaxy."
 			2: return "Get ANOTHER Tachyon Galaxy."
-			3: return "Have %s Time Dilations." % Globals.int_to_string(10)
+			3: return "Have %s Time Dilation." % Globals.int_to_string(10)
 			4: return "Rewind with near-perfect accuracy." + \
 			"\n(Reward: Rewind is stronger, and its multiplier can't go below the current one.)"
 			5: return "Have at least %s of all TDs except for the %s." % [
@@ -51,6 +58,18 @@ func achreqs(r, c):
 			] + "\n(Reward: The %s TD is %s stronger.)" % [Globals.ordinal(1), Globals.percent_to_string(0.5)]
 			8: return "Reach Infinite Tachyons." + \
 			"\n(Reward: Start with %s Tachyons.)" % Globals.int_to_string(100)
+		3: match c:
+			1: return "Get any TD multiplier above %s." % largenum.ten_to_the(40)
+			2: return "Big Bang %s times." % Globals.int_to_string(10)
+			3: return "Keep the game closed for more than %s." % Globals.format_time(3600*6)
+			4: return "Eternity with no %s TDs." % Globals.ordinal(8) + \
+			"\n(Reward: TDs %s-%s are %s stronger.)" % [
+				Globals.int_to_string(1), Globals.int_to_string(7),
+				Globals.percent_to_string(.5)
+			]
+			6: return "Eternity in under %s.\n(Reward: Start with %s Tachyons.)" % \
+			[Globals.format_time(600), Globals.int_to_string(5000)]
+			7: return "Eternity with a single Tachyon Galaxy."
 	return "TBD"
 
 func is_unlocked(row, num):
@@ -79,7 +98,7 @@ func _ready():
 			n.get_node("Label").text = n.name
 			n.show()
 
-func _process(delta):
+func _process(_delta):
 	for i in range(1, min(MAXROWS, %GridContainer.get_child_count() / 8) + 1):
 		for j in range(1, 9):
 			%GridContainer.get_node("%dx%d" % [i,j]).self_modulate = \
@@ -109,6 +128,6 @@ func _process(delta):
 	if not is_unlocked(2, 6):
 		if Globals.Automation.Unlocked == 511:
 			set_unlocked(2, 6)
-	if not is_unlocked(2, 8):
-		if Globals.progress >= Globals.Progression.Eternity:
-			set_unlocked(2, 8)
+	if not is_unlocked(3, 2):
+		if not Globals.Eternities.less(10):
+			set_unlocked(3, 2)

@@ -260,7 +260,7 @@ func _to_string() -> String:
 			return "%se%s" % [largenum.dozenal(m), largenum.dozenal(l,0)]
 		GL.DisplayMode.Strict_Logarithm:
 			if log10() < 1e3:
-				return "e%.2f" % log10()
+				return ("e%.2f" % log10()).replace("inf", "∞")
 			return "ee%.2f" % (log(log10()) / GL.LOG10)
 		GL.DisplayMode.Roman:
 			var l = log10() / 3
@@ -275,7 +275,7 @@ func _to_string() -> String:
 				for i in floor(l):
 					S += "/"
 			else:
-				S = roman(floor(l)) + "/"
+				S = largenum.roman(floor(l)) + "/"
 			var m = 1000 ** (l - floor(l))
 			if abs(m - round(m)) < 0.01: m = round(m)
 			return S + largenum.roman(m)
@@ -286,7 +286,7 @@ func _to_string() -> String:
 				l = ceil(l)
 				m = 1
 			if l >= 1e5:
-				return "󱤄󱥵" + sitelen(l, true)
+				return "󱤄󱥵" + largenum.sitelen(l, true)
 			elif l >= 5:
 				return (largenum.sitelen(m, true) if round(m) > 1 else "") + "󱤄󱥵" + largenum.sitelen(l, true)
 			return largenum.sitelen(to_float())
@@ -305,6 +305,19 @@ func _to_string() -> String:
 			if to_float() < 2: return "wan"
 			if to_float() < 3: return "tu"
 			return "mute"
+		GL.DisplayMode.Evil:
+			if exponent == -INF:
+				return "0.00"
+			var l = log10() * (1 + sin(log10()) / 10)
+			var m = 10 ** (l - floor(l))
+			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
+				return Globals.float_to_string(to_float())
+			if m > 9.999:
+				l = ceil(l)
+				m = 1
+			if l > 1e5:
+				return "e%.2fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
+			return "%.2fe%.0f" % [m, floor(l)]
 	return "N/A"
 
 static func dozenal(f:float, precision:=2):

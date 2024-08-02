@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://damsts43cifm8"]
+
+[ext_resource type="Script" path="res://UI/statistics/statistics.gd" id="1_5vl1r"]
+
+[node name="Statistics" type="RichTextLabel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center][font_size=30]Stats[/font_size]
+You produced a total of XXXXX tachyons.
+You have played for XXX days, XX:XX:XX.
+
+[font_size=30]Eternity[/font_size]
+You have XXXXX Eternities.
+Your fastest Eternity was XX:XX:XX.
+You have spent XX:XX:XX in this Eternity."
+script = ExtResource("1_5vl1r")

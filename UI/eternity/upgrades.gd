@@ -20,9 +20,13 @@ func buy(which):
 	var i : int = (which - 1) / 4
 	var j : int = (which - 1) % 4
 	Globals.EternityPts.add2self(-Costs[i][j])
+	if Globals.EternityPts.sign < 0:
+		Globals.EternityPts.add2self(Costs[i][j])
+		push_error("eternity points attempted to go negative (wrong eternity upgrade?)")
+		return
 	set_bought(which)
 
-func _process(delta):
+func _process(_delta):
 	for i in $Columns.get_child_count():
 		var k = $Columns.get_child(i)
 		for j in k.get_child_count():
@@ -159,7 +163,7 @@ func _process(delta):
 			$Columns/Col3/PassiveEP.text += "Currently: Too slow to generate"
 		else:
 			$Columns/Col3/PassiveEP.text += "Currently: %s every %s" % \
-			[Globals.fastestEtern.epgain, Globals.fastestEtern.time]
+			[Globals.fastestEtern.epgain, Globals.format_time(Globals.fastestEtern.time * 3)]
 	else:
 		$Columns/Col3/PassiveEP.text += "Cost: %s EP" % \
 		Globals.int_to_string(Costs[2][3])

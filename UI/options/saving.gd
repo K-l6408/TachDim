@@ -109,6 +109,7 @@ func saveF(file : String = saveFilePath):
 			epgain = Globals.fastestEtern.epgain.to_bytes(),
 			eternities = Globals.fastestEtern.eternities.to_bytes()
 		}
+		DATA["time in eternity"] = Globals.eternTime
 		if Globals.Challenge == 10:
 			DATA["c10 power"] = Globals.TDHandler.C10Power
 		DATA["completed challenges"] = Globals.CompletedChallenges
@@ -127,6 +128,11 @@ func saveF(file : String = saveFilePath):
 		DATA["dilation buy limit"] = Globals.Automation.DilLimit
 		DATA["dilation limit ignore"] = Globals.Automation.DilIgnore
 		DATA["tach gal buy limit"] = Globals.Automation.GalLimit
+		
+		if Globals.EU12Timer != null:
+			DATA["eu12 timer"] = Globals.EU12Timer.time_left
+		else:
+			DATA["eu12 timer"] = 0
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -160,17 +166,21 @@ func loadF(file : String = saveFilePath):
 	if sf == null:						return
 	if sf.get_line() != "TachDimSave":	return
 	
-	Globals.progress = sf.get_8()
+	Globals.progress = sf.get_8() as GL.Progression
 	Globals.Challenge = sf.get_8()
 	
 	var DATA = sf.get_var()
 	if not DATA is Dictionary:
-		Globals.progress = 0
+		Globals.progress = GL.Progression.None
 		Globals.Challenge = 0
 		return
 	
 	Globals.existence = DATA["time played"]
 	# idle progress. uses "last time" to check.
+	
+	if not Globals.Achievemer.is_unlocked(3, 3) and \
+	(DATA["last time"] - Time.get_unix_time_from_system()) >= 3600 * 6:
+		Globals.Achievemer.set_unlocked(3, 3)
 	
 	Globals.Tachyons.from_bytes(DATA["tachyons"])
 	Globals.TachTotal.from_bytes(DATA["total tachyons"])
@@ -195,6 +205,7 @@ func loadF(file : String = saveFilePath):
 	if Globals.progress >= GL.Progression.Eternity:
 		Globals.EternityPts.from_bytes(DATA["eternity points"])
 		Globals.Eternities.from_bytes(DATA["eternities"])
+		Globals.eternTime = DATA["time in eternity"]
 		
 		Globals.fastestEtern.time				 = DATA["fastest eternity"].time
 		Globals.fastestEtern.epgain    .from_bytes(DATA["fastest eternity"].epgain)
@@ -218,9 +229,15 @@ func loadF(file : String = saveFilePath):
 		Globals.Automation.DilLimit = DATA["dilation buy limit"]
 		Globals.Automation.DilIgnore = DATA["dilation limit ignore"]
 		Globals.Automation.GalLimit = DATA["tach gal buy limit"]
+		
+		if DATA.has("eu12 timer"):
+			Globals.EU12Timer = get_tree().create_timer(DATA["eu12 timer"])
+	else:
+		Globals.eternTime = Globals.existence
 
 func gameReset():
 	Globals.progress = Globals.Progression.None
+	Globals.existence = 0
 	Globals.Tachyons  = largenum.new(10)
 	Globals.TachTotal = largenum.new(10)
 	Globals.Achievemer.unlocked = []
@@ -241,11 +258,8 @@ func gameReset():
 	Globals.Automation.Unlocked = 0
 	Globals.Automation.TDModes = 255
 	Globals.Automation.TDEnabl = 511
-	Globals.fastestEtern = {
-		time       = -1,
-		epgain     = largenum.new(1),
-		eternities = largenum.new(1)
-	}
+	Globals.fastestEtern = Globals.EternityData.new(-1, 1, 1)
+	Globals.eternTime = 0
 	Globals.EternityPts = largenum.new(0)
 	Globals.Eternities = largenum.new(0)
 	Globals.Challenge = 0

@@ -1,6 +1,19 @@
 extends Node
 class_name GL
 
+class EternityData:
+	var time := 0.0
+	var epgain := largenum.new(1)
+	var eternities := largenum.new(1)
+	func _init(t, ep, et):
+		time = t
+		epgain = largenum.new(ep)
+		eternities = largenum.new(et)
+	func to_bytes():
+		var D := {time = time}
+		D.epgain = epgain.to_bytes()
+		D.eternities = eternities.to_bytes()
+
 enum DisplayMode {
 	Scientific, Engineering, Logarithm, Letters, Dozenal, Strict_Logarithm, Roman,
 	toki_pona, sitelen_pona, Canonical_toki_pona, Evil
@@ -44,43 +57,25 @@ func animation(which):
 	if which == "bang" and not AnimOpt[0]: return
 	Animater.play(which)
 
-var existence := 0
-var eternTime := 0
+var existence = 0
+var eternTime = 0
 
-var fastestEtern := {
-	time       = -1,
-	epgain     = largenum.new(1),
-	eternities = largenum.new(1)
-}
+var fastestEtern := EternityData.new(-1, 1, 1)
+var EU12Timer : SceneTreeTimer = null
 
 func _process(delta):
-	existence += int(delta * 1000)
-	eternTime += int(delta * 1000)
-	if EUHandler.is_bought(12):
-		EternityPts.add2self(largenum.new(delta * fastestEtern / 2))
+	existence += delta
+	eternTime += delta
+	if EUHandler.is_bought(12) and EU12Timer == null:
+		EternityPts.add2self(fastestEtern.epgain)
+		EU12Timer = get_tree().create_timer(fastestEtern.time * 3)
 
 func int_to_string(i:int) -> String:
 	match display:
-		DisplayMode.Canonical_toki_pona:
-			if i < 1: return "ala"
-			if i < 2: return "wan"
-			if i < 3: return "tu"
-			return "mute"
-		DisplayMode.sitelen_pona:
-			return largenum.sitelen(i, true)
-		DisplayMode.toki_pona:
-			return largenum.sitelen(i, true)\
-			.replace("󱥳", " wan").replace("󱥮", " tu")\
-			.replace("󱤭", " luka").replace("󱤼", " mute")\
-			.replace("󱤄", " ale").replace("󱤂", " ala").trim_prefix(" ")
 		DisplayMode.Strict_Logarithm:
 			return "e" + String.num(log(i) / LOG10, 2).replace("inf", "∞")
-		DisplayMode.Dozenal:
-			return largenum.dozenal(i, 0)
-		DisplayMode.Roman:
-			return largenum.roman(i)
 		_:
-			return str(i)
+			return float_to_string(i, 0, true)
 
 func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 	match display:
@@ -99,7 +94,7 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 			.replace("󱥻", " kipisi").replace("󱤊", " en")\
 			.replace("󱤂", " ala").replace("󱦂", " meso").trim_prefix(" ")
 		DisplayMode.Strict_Logarithm:
-			return "e" + String.num(log(f) / LOG10, precision).pad_decimals(precision)
+			return "e" + String.num(log(f) / LOG10, precision).pad_decimals(precision).replace("inf", "∞")
 		DisplayMode.Logarithm:
 			if f < 1e5:
 				return String.num(f, precision).pad_decimals(precision)
@@ -111,10 +106,54 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 			return largenum.dozenal(f, precision)
 		DisplayMode.Roman:
 			return largenum.roman(f)
+		DisplayMode.Evil:
+			var ohno = log(abs(f)) / LOG10
+			ohno *= 1 + sin(ohno) / 10
+			if f != 0: f = 10 ** ohno * sign(f)
+			if f > 1000 and not force_dec:
+				return "%.2fe" % (f / (10.0 ** floor(log(f) / LOG10))) + String.num(log(f) / LOG10,0)
+			return String.num(f, precision).pad_decimals(precision)
 		_:
 			if f > 1000 and not force_dec:
 				return "%.2fe" % (f / (10.0 ** floor(log(f) / LOG10))) + String.num(log(f) / LOG10,0)
 			return String.num(f, precision).pad_decimals(precision)
+
+func format_time(f:float) -> String:
+	var hour = 3600
+	var day = hour * 24
+	var year = day * 365.2422
+	if f >= year * 10:	return "%s years" % float_to_string(f / year)
+	if f >=  day * 10:	return "%s days"  % float_to_string(f / day)
+	if f >=  day:		return "%s days, %s:%s:%s" % [
+		float_to_string(f / day),
+		pad_zeroes(int_to_string(f / hour)),
+		pad_zeroes(int_to_string(int(f / 60) % 60)),
+		pad_zeroes(int_to_string(int(f) % 60))]
+	if f >= hour:		return "%s:%s:%s" % [
+		pad_zeroes(int_to_string(f / hour)),
+		pad_zeroes(int_to_string(int(f / 60) % 60)),
+		pad_zeroes(int_to_string(int(f) % 60))]
+	if f >=   60:		return "%s:%s" % [
+		pad_zeroes(int_to_string(int(f / 60) % 60)),
+		pad_zeroes(int_to_string(int(f) % 60))]
+	if f >=    1:		return "%ss" % float_to_string(f)
+	return "%sms" % int_to_string(f * 1000)
+
+func pad_zeroes(s:String, howmany := 2):
+	var num = 0
+	for ch in s:
+		if ch.is_valid_int() or \
+		(display == DisplayMode.Dozenal and ch in "↊↋"):
+			num += 1
+		if ch in ".;":
+			break
+	if num >= howmany: return s
+	for ch in len(s):
+		if s[ch].is_valid_int():
+			for i in (howmany - num):
+				s = s.insert(ch, "0")
+			break
+	return s
 
 func percent_to_string(f:float, precision:=2) -> String:
 	match display:
@@ -141,18 +180,13 @@ func ordinal(n:int) -> String:
 			return int_to_string(n) + "°"
 		DisplayMode.Strict_Logarithm:
 			return int_to_string(n) + "th"
-		DisplayMode.Dozenal:
-			match n%12:
-				1: return int_to_string(n) + "st"
-				2: return int_to_string(n) + "nd"
-				3: return int_to_string(n) + "rd"
-				_: return int_to_string(n) + "th"
 		_:
-			if n%100-n%10 == 10: return int_to_string(n) + "th"
-			match n%10:
-				1: return int_to_string(n) + "st"
-				2: return int_to_string(n) + "nd"
-				3: return int_to_string(n) + "rd"
+			if display != DisplayMode.Dozenal and n%100-n%10 == 10:
+				return int_to_string(n) + "th"
+			match int_to_string(n)[-1]:
+				"1": return int_to_string(n) + "st"
+				"2": return int_to_string(n) + "nd"
+				"3": return int_to_string(n) + "rd"
 				_: return int_to_string(n) + "th"
 
 func notificate(type:String, text:String):
