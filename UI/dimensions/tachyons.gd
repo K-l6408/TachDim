@@ -49,6 +49,7 @@ var TSpeedCostIncrease : largenum :
 	get:
 		var base = largenum.new(10)
 		var costscaling = 10
+		if Globals.Challenge == 5: base.mult2self(1.5)
 		if TSpeedCount >= TSpeedScaleStart:
 			base.mult2self(largenum.new(costscaling).power(TSpeedCount - TSpeedScaleStart))
 		return base
@@ -89,6 +90,10 @@ func updateTSpeed():
 	TSpeedBoost.div2self(largenum.new(GalaxyBoost).power(Globals.TGalaxies * GalaxyMult))
 
 func rewind(score:float):
+	if not (
+		Globals.Achievemer.is_unlocked(3, 5) or
+		rewindBoost(score).divide(RewindMult).less(600)):
+			Globals.Achievemer.set_unlocked(3, 5)
 	RewindMult = rewindBoost(score)
 	if Globals.Challenge == 8:
 		if Globals.Achievemer.is_unlocked(2,1):
@@ -185,10 +190,19 @@ func galaxy():
 func eternity():
 	if Globals.Challenge != 0:
 		Globals.CompletedChallenges |= 1 << (Globals.Challenge - 1)
-	Globals.EternityPts.add2self(1)
+	
+	var epgain = largenum.new(1)
+	if Globals.Challenge == 15 or Globals.progress >= Globals.Progression.Overcome:
+		epgain = largenum.new(5).power((Globals.Tachyons.log2() / 1024) - 1)
+	
+	epgain.mult2self(largenum.new(2).power(Globals.EUHandler.EPMultBought))
+	
+	Globals.EternityPts.add2self(epgain)
 	Globals.Eternities .add2self(1)
+	
 	if Globals.progress < Globals.Progression.Eternity:
 		Globals.progress = Globals.Progression.Eternity
+	
 	if Globals.fastestEtern.time > Globals.eternTime \
 	or Globals.fastestEtern.time < 0:
 		Globals.fastestEtern.time		= Globals.eternTime
@@ -197,12 +211,21 @@ func eternity():
 	
 	if not Globals.Achievemer.is_unlocked(2, 8):
 		Globals.Achievemer.set_unlocked(2, 8)
-	if not Globals.Achievemer.is_unlocked(3, 4) and DimPurchase[7] == 0:
-		Globals.Achievemer.set_unlocked(3, 4)
+	if DimPurchase[7] == 0:
+		if not Globals.Achievemer.is_unlocked(3, 4):
+			Globals.Achievemer.set_unlocked(3, 4)
+		if not Globals.Achievemer.is_unlocked(4, 4) and DimPurchase[6] == 0:
+			Globals.Achievemer.set_unlocked(4, 4)
 	if not Globals.Achievemer.is_unlocked(3, 6) and Globals.eternTime <= 600:
 		Globals.Achievemer.set_unlocked(3, 6)
 	if not Globals.Achievemer.is_unlocked(3, 7) and Globals.TGalaxies == 1:
 		Globals.Achievemer.set_unlocked(3, 7)
+	
+	Globals.last10etern.insert(0, Globals.EternityData.new(
+		Globals.eternTime, epgain, 1
+	))
+	if Globals.last10etern.size() > 10:
+		Globals.last10etern.resize(10)
 	
 	await get_tree().process_frame
 	reset(2)
@@ -214,7 +237,7 @@ func reset(level := 0, challengeReset := true):
 	if Globals.Challenge == 14:  C14Divisor = 1.0
 	if Globals.Achievemer.is_unlocked(3,6):
 		Globals.Tachyons = largenum.new(5000)
-	if Globals.Achievemer.is_unlocked(2,8):
+	elif Globals.Achievemer.is_unlocked(2,8):
 		Globals.Tachyons = largenum.new(100)
 	else:
 		Globals.Tachyons = largenum.new(10)
@@ -231,11 +254,18 @@ func reset(level := 0, challengeReset := true):
 	TSpeedCount = 0
 	RewindMult = largenum.new(1)
 	if level >= 1:
-		Globals.TDilation = 0
-		if Globals.Challenge == 11: Globals.TDilation = -3
+		if   Globals.Challenge == 11:         Globals.TDilation = -3
+		elif Globals.Challenge !=  0:         Globals.TDilation = 0
+		elif Globals.EUHandler.is_bought(17): Globals.TDilation = 5
+		elif Globals.EUHandler.is_bought(16): Globals.TDilation = 4
+		elif Globals.EUHandler.is_bought(15): Globals.TDilation = 3
+		elif Globals.EUHandler.is_bought(14): Globals.TDilation = 2
+		elif Globals.EUHandler.is_bought(13): Globals.TDilation = 1
+		else:                                 Globals.TDilation = 0
 		if Globals.Challenge == 10: C10Power = 0
 	if level >= 2:
-		Globals.TGalaxies = 0
+		if Globals.EUHandler.is_bought(17): Globals.TGalaxies = 1
+		else:                               Globals.TGalaxies = 0
 		if Globals.Challenge == 10:
 			%Prestiges/DiButton.material = rewindNode.material.duplicate()
 			%Prestiges/DiButton.material.set_shader_parameter("pixelsize", 1./250.)
@@ -321,6 +351,9 @@ func _process(delta):
 		[Globals.ordinal(3), Globals.int_to_string(3)]
 		%Important.text += "\n[font_size=10]%s and %s Dimension: [/font_size]×%s" % \
 		[Globals.ordinal(2), Globals.ordinal(1), Globals.float_to_string(0.03)]
+	if Globals.Challenge == 9:
+		%Important.text += "\n \n[font_size=10]Production: [/font_size]/ " + \
+		Globals.Tachyons.power(0.1).to_string()
 	if Globals.Challenge == 14:
 		%Important.text += "\n \n[font_size=10]Production: [/font_size]/ " + \
 		Globals.float_to_string(C14Divisor)
@@ -542,11 +575,13 @@ func _process(delta):
 		if Globals.Challenge == 3:
 			if i == 3: mult.mult2self(3)
 			if i <= 2: mult.mult2self(0.03)
+		if Globals.Challenge ==  9: mult.div2self(Globals.Tachyons.power(0.1))
 		if Globals.Challenge == 14: mult.div2self(C14Divisor)
 		
 		if Globals.Achievemer.is_unlocked(2, 5): mult.mult2self(1.1)
 		if Globals.Achievemer.is_unlocked(2, 7) and i == 1: mult.mult2self(1.5)
 		if Globals.Achievemer.is_unlocked(3, 4) and i != 8: mult.mult2self(1.5)
+		if Globals.Achievemer.is_unlocked(4, 8): mult.mult2self(1.2)
 		
 		if not Globals.Achievemer.is_unlocked(3, 1) and mult.log10() >= 40:
 			Globals.Achievemer.set_unlocked(3, 1)

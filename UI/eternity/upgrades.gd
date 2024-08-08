@@ -2,8 +2,9 @@ extends Control
 
 var Bought := 0
 var Costs := [
-	[1, 1, 1, 2], [1, 1, 1, 2], [3, 5, 7, 10], [20, 35, 50, 75]
+	[1, 1, 1, 2], [1, 1, 1, 2], [3, 5, 7, 10], [20, 35, 50, 75], [300]
 ]
+var EPMultBought := 0
 
 func is_bought(which):
 	return ((Bought >> (which - 1)) & 1) == 1
@@ -26,6 +27,11 @@ func buy(which):
 		return
 	set_bought(which)
 
+func buyEPmult():
+	Globals.EternityPts.add2self(largenum.ten_to_the(EPMultBought + 1).neg())
+	if Globals.EternityPts.sign < 0:
+		Globals.EternityPts.add2self(largenum.ten_to_the(EPMultBought + 1))
+
 func _process(_delta):
 	for i in $Columns.get_child_count():
 		var k = $Columns.get_child(i)
@@ -45,16 +51,27 @@ func _process(_delta):
 			if is_bought(i*4+j+1):
 				k.get_child(j).disabled = true
 				k.get_child(j).add_theme_stylebox_override("disabled", \
-				load(ProjectSettings.get("gui/theme/custom")).\
-				get_stylebox("enabled", "ButtonEtern"))
+				get_theme_stylebox("enabled", "ButtonEtern"))
 				continue
 			else:
 				k.get_child(j).remove_theme_stylebox_override("disabled")
-			
-			k.get_child(j).disabled = \
-			Globals.EternityPts.less(Costs[i][j])
-			if j > 0 and not is_bought(i*4+j):
-				k.get_child(j).disabled = true
+				k.get_child(j).disabled = \
+				Globals.EternityPts.less(Costs[i][j])
+				if j > 0 and not is_bought(i*4+j):
+					k.get_child(j).disabled = true
+	
+	$AutoGal.visible = Globals.Achievemer.is_unlocked(4, 6)
+	$EPMult .visible = Globals.Achievemer.is_unlocked(4, 6)
+	
+	if is_bought(17):
+		$AutoGal.disabled = true
+		$AutoGal.add_theme_stylebox_override("disabled", \
+		get_theme_stylebox("enabled", "ButtonEtern"))
+	else:
+		$AutoGal.remove_theme_stylebox_override("disabled")
+		$AutoGal.disabled = Globals.EternityPts.less(Costs[4][0])
+	
+	$EPMult.disabled = Globals.EternityPts.less(largenum.ten_to_the(EPMultBought + 1))
 	
 	if is_bought(1) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col1/TimePlayed.text = \
@@ -178,3 +195,15 @@ func _process(_delta):
 			"Start every reset with %s\nDilation," % Globals.int_to_string(i + 1) + \
 			" automatically\nunlocking the %s\nTachyon Dimension.\n" % Globals.ordinal(i + 5) + \
 			"\nCost: %s EP" % Globals.int_to_string(Costs[3][i])
+	
+	$AutoGal.text = "%s %s\n%s\n%s\n%s" % [
+		"Start every reset with", Globals.int_to_string(5), "Dilation, automatically",
+		"unlocking Rewind, and", "a Tachyon Galaxy."
+	]
+	if is_bought(17) == Input.is_action_pressed("BuyOne"):
+		$AutoGal.text += "\n\nCost: %s EP" % Globals.int_to_string(Costs[4][0])
+	
+	$EPMult.text = "Multiply EP gained from\nBig Bangs by %s.\n\nCurrently: ×%s\n\nCost: %s" % [
+		Globals.int_to_string(2), largenum.new(2).power(EPMultBought),
+		largenum.ten_to_the(EPMultBought + 1)
+	]

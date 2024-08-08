@@ -7,19 +7,19 @@
 atlas = ExtResource("2_u7cvg")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lt0a3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yng2b"]
 atlas = ExtResource("2_u7cvg")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_odvcy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mv8r"]
 atlas = ExtResource("2_u7cvg")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gox1d"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5jah"]
 atlas = ExtResource("2_u7cvg")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qdndd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dbs5"]
 atlas = ExtResource("2_u7cvg")
 region = Rect2(0, 0, 32, 32)
 
@@ -72,7 +72,7 @@ button_pressed = true
 text = "Autosaving: ON"
 
 [node name="HSlider" type="HSlider" parent="HFlowContainer"]
-custom_minimum_size = Vector2(460, 0)
+custom_minimum_size = Vector2(460, 60)
 layout_mode = 2
 min_value = 10.0
 max_value = 120.0
@@ -91,7 +91,40 @@ offset_bottom = 45.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 20
 text = " 
+
 Every 60 seconds"
+horizontal_alignment = 1
+
+[node name="Idle" type="Button" parent="HFlowContainer"]
+custom_minimum_size = Vector2(230, 62)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+button_pressed = true
+text = "Idle progress: ON"
+
+[node name="Sidler" type="HSlider" parent="HFlowContainer"]
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+min_value = 10.0
+max_value = 600.0
+step = 10.0
+value = 300.0
+
+[node name="Label" type="Label" parent="HFlowContainer/Sidler"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -94.0
+offset_top = -8.0
+offset_right = 94.0
+offset_bottom = 45.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = " 
+Take 05:00 at most to calculate
+idle progress"
 horizontal_alignment = 1
 
 [node name="Files" type="VBoxContainer" parent="."]
@@ -146,14 +179,29 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -19.0
+offset_left = -211.0
+offset_top = -43.0
 offset_right = -24.0
-offset_bottom = 20.0
+offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 20
-text = "Choose"
+text = "Choose and save"
+
+[node name="Button2" type="Button" parent="Files/1"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_right = -24.0
+offset_bottom = 39.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Choose and load"
 
 [node name="Progress" type="TextureRect" parent="Files/1"]
 layout_mode = 1
@@ -200,14 +248,29 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -19.0
+offset_left = -211.0
+offset_top = -43.0
 offset_right = -24.0
-offset_bottom = 20.0
+offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 20
-text = "Choose"
+text = "Choose and save"
+
+[node name="Button2" type="Button" parent="Files/2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_right = -24.0
+offset_bottom = 39.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Choose and load"
 
 [node name="Progress" type="TextureRect" parent="Files/2"]
 layout_mode = 1
@@ -219,7 +282,7 @@ offset_top = -50.0
 offset_right = 242.0
 offset_bottom = -18.0
 grow_vertical = 0
-texture = SubResource("AtlasTexture_lt0a3")
+texture = SubResource("AtlasTexture_yng2b")
 
 [node name="3" type="Panel" parent="Files"]
 custom_minimum_size = Vector2(0, 100)
@@ -254,14 +317,29 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -19.0
+offset_left = -211.0
+offset_top = -43.0
 offset_right = -24.0
-offset_bottom = 20.0
+offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 20
-text = "Choose"
+text = "Choose and save"
+
+[node name="Button2" type="Button" parent="Files/3"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_right = -24.0
+offset_bottom = 39.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Choose and load"
 
 [node name="Progress" type="TextureRect" parent="Files/3"]
 layout_mode = 1
@@ -273,7 +351,7 @@ offset_top = -50.0
 offset_right = 242.0
 offset_bottom = -18.0
 grow_vertical = 0
-texture = SubResource("AtlasTexture_odvcy")
+texture = SubResource("AtlasTexture_8mv8r")
 
 [node name="4" type="Panel" parent="Files"]
 custom_minimum_size = Vector2(0, 100)
@@ -308,14 +386,29 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -19.0
+offset_left = -211.0
+offset_top = -43.0
 offset_right = -24.0
-offset_bottom = 20.0
+offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 20
-text = "Choose"
+text = "Choose and save"
+
+[node name="Button2" type="Button" parent="Files/4"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_right = -24.0
+offset_bottom = 39.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Choose and load"
 
 [node name="Progress" type="TextureRect" parent="Files/4"]
 layout_mode = 1
@@ -327,7 +420,7 @@ offset_top = -50.0
 offset_right = 242.0
 offset_bottom = -18.0
 grow_vertical = 0
-texture = SubResource("AtlasTexture_gox1d")
+texture = SubResource("AtlasTexture_v5jah")
 
 [node name="5" type="Panel" parent="Files"]
 custom_minimum_size = Vector2(0, 100)
@@ -362,14 +455,29 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -19.0
+offset_left = -211.0
+offset_top = -43.0
 offset_right = -24.0
-offset_bottom = 20.0
+offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 20
-text = "Choose"
+text = "Choose and save"
+
+[node name="Button2" type="Button" parent="Files/5"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_right = -24.0
+offset_bottom = 39.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Choose and load"
 
 [node name="Progress" type="TextureRect" parent="Files/5"]
 layout_mode = 1
@@ -381,12 +489,117 @@ offset_top = -50.0
 offset_right = 242.0
 offset_bottom = -18.0
 grow_vertical = 0
-texture = SubResource("AtlasTexture_qdndd")
+texture = SubResource("AtlasTexture_5dbs5")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="SaveTimer" type="Timer" parent="."]
 wait_time = 60.0
 autostart = true
 
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 300.0
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.647059)
+
+[node name="Panel" type="Panel" parent="CanvasLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/ColorRect/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[center]
+[font_size=20]Warning: The selected file is unsupported.
+This might be because it's corrupted, or from an older version of TachDim.
+
+If this isn't supposed to happen please follow the steps below and send the file to the developer(s) for testing.
+
+To avoid overwriting your file, the game will remain paused.
+
+
+[font_size=16]To recover your file: "
+fit_content = true
+
+[node name="Idle" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Idle"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.647059)
+
+[node name="Panel" type="Panel" parent="Idle/ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.3
+anchor_right = 0.8
+anchor_bottom = 0.7
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Idle/ColorRect/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[center]
+[font_size=20]Calculating idle progress…
+
+00:00:00 / 06:00:00 processed
+(00:00 / 05:00 real time)"
+fit_content = true
+
+[node name="ProgressBar" type="ProgressBar" parent="Idle/ColorRect/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 0.8
+offset_left = 23.0
+offset_top = -11.8
+offset_right = -21.0
+offset_bottom = 12.2
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="Idle/ColorRect/Panel/ProgressBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0.00%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="start_idle_progress" from="." to="." method="idle"]
 [connection signal="pressed" from="HFlowContainer/Save" to="." method="saveF"]
 [connection signal="pressed" from="HFlowContainer/ChooseSave" to="." method="openDialog"]
 [connection signal="pressed" from="HFlowContainer/ChooseSave" to="Files" method="show"]
@@ -395,12 +608,22 @@ autostart = true
 [connection signal="pressed" from="Files/Button" to="Files" method="hide"]
 [connection signal="pressed" from="Files/1/Button" to="Files" method="hide"]
 [connection signal="pressed" from="Files/1/Button" to="." method="choose_save" binds= [1]]
+[connection signal="pressed" from="Files/1/Button2" to="Files" method="hide"]
+[connection signal="pressed" from="Files/1/Button2" to="." method="choose_load" binds= [1]]
 [connection signal="pressed" from="Files/2/Button" to="Files" method="hide"]
 [connection signal="pressed" from="Files/2/Button" to="." method="choose_save" binds= [2]]
+[connection signal="pressed" from="Files/2/Button2" to="Files" method="hide"]
+[connection signal="pressed" from="Files/2/Button2" to="." method="choose_load" binds= [2]]
 [connection signal="pressed" from="Files/3/Button" to="Files" method="hide"]
 [connection signal="pressed" from="Files/3/Button" to="." method="choose_save" binds= [3]]
+[connection signal="pressed" from="Files/3/Button2" to="Files" method="hide"]
+[connection signal="pressed" from="Files/3/Button2" to="." method="choose_load" binds= [3]]
 [connection signal="pressed" from="Files/4/Button" to="Files" method="hide"]
 [connection signal="pressed" from="Files/4/Button" to="." method="choose_save" binds= [4]]
+[connection signal="pressed" from="Files/4/Button2" to="Files" method="hide"]
+[connection signal="pressed" from="Files/4/Button2" to="." method="choose_load" binds= [4]]
 [connection signal="pressed" from="Files/5/Button" to="Files" method="hide"]
 [connection signal="pressed" from="Files/5/Button" to="." method="choose_save" binds= [5]]
-[connection signal="timeout" from="Timer" to="." method="autosave"]
+[connection signal="pressed" from="Files/5/Button2" to="Files" method="hide"]
+[connection signal="pressed" from="Files/5/Button2" to="." method="choose_load" binds= [5]]
+[connection signal="timeout" from="SaveTimer" to="." method="autosave"]

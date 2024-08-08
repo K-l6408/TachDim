@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=36 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=39 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -180,6 +180,42 @@ content_margin_left = 7.0
 content_margin_top = 3.0
 content_margin_bottom = 3.0
 bg_color = Color(0.215686, 0.690196, 0.215686, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6hgu"]
+bg_color = Color(0.839025, 0.383091, 0.734026, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ety7p"]
+bg_color = Color(0.72549, 0.517647, 0.235294, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yrmls"]
+bg_color = Color(0.691936, 0.56756, 0.0760298, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -464,6 +500,10 @@ CheckButton/styles/hover = SubResource("StyleBoxFlat_uqs43")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_t4uyv")
 CheckButton/styles/normal = SubResource("StyleBoxFlat_peo40")
 CheckButton/styles/pressed = SubResource("StyleBoxFlat_ousmk")
+FourButton/base_type = &"Button"
+FourButton/styles/fouressed = SubResource("StyleBoxFlat_o6hgu")
+FourButton/styles/threevered = SubResource("StyleBoxFlat_ety7p")
+FourButton/styles/thressed = SubResource("StyleBoxFlat_yrmls")
 HSeparator/styles/separator = SubResource("StyleBoxEmpty_op31y")
 NotificationPanel/base_type = &"Panel"
 NotificationPanel/colors/achievement = Color(0.168, 0.7, 0.5138, 1)

@@ -9,10 +9,18 @@ class EternityData:
 		time = t
 		epgain = largenum.new(ep)
 		eternities = largenum.new(et)
-	func to_bytes():
+	func to_dict():
 		var D := {time = time}
 		D.epgain = epgain.to_bytes()
 		D.eternities = eternities.to_bytes()
+		return D
+	static func from_dict(D):
+		if D == null: return null
+		var e = new(-1,1,1)
+		e.time = D.time
+		e.epgain.from_bytes(D.epgain)
+		e.eternities.from_bytes(D.eternities)
+		return e
 
 enum DisplayMode {
 	Scientific, Engineering, Logarithm, Letters, Dozenal, Strict_Logarithm, Roman,
@@ -62,6 +70,8 @@ var eternTime = 0
 
 var fastestEtern := EternityData.new(-1, 1, 1)
 var EU12Timer : SceneTreeTimer = null
+
+var last10etern : Array[EternityData] = []
 
 func _process(delta):
 	existence += delta
@@ -124,9 +134,9 @@ func format_time(f:float) -> String:
 	var year = day * 365.2422
 	if f >= year * 10:	return "%s years" % float_to_string(f / year)
 	if f >=  day * 10:	return "%s days"  % float_to_string(f / day)
-	if f >=  day:		return "%s days, %s:%s:%s" % [
-		float_to_string(f / day),
-		pad_zeroes(int_to_string(f / hour)),
+	if f >=  day:		return "%s day%s, %s:%s:%s" % [
+		int_to_string(f / day), "s" if f >= day*2 else "",
+		pad_zeroes(int_to_string(int(f / hour) % 24)),
 		pad_zeroes(int_to_string(int(f / 60) % 60)),
 		pad_zeroes(int_to_string(int(f) % 60))]
 	if f >= hour:		return "%s:%s:%s" % [

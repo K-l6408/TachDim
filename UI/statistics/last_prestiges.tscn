@@ -1,0 +1,300 @@
+[gd_scene load_steps=4 format=3 uid="uid://ptwedehhp243"]
+
+[ext_resource type="Script" path="res://UI/statistics/last_prestiges.gd" id="1_0uncw"]
+[ext_resource type="Script" path="res://UI/statistics/table.gd" id="1_3cxhd"]
+[ext_resource type="Script" path="res://UI/4Button.gd" id="2_vup05"]
+
+[node name="Last Prestiges" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0uncw")
+
+[node name="Eternity" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.0
+offset_top = -148.0
+offset_right = 105.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="Eternity"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.5
+offset_right = 60.5
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_type_variation = &"FourButton"
+toggle_mode = true
+text = "Currently showing
+Eternity Points"
+script = ExtResource("2_vup05")
+
+[node name="Table" type="GridContainer" parent="Eternity"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -203.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/h_separation = 7
+columns = 4
+script = ExtResource("1_3cxhd")
+
+[node name="Pos" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Position"
+horizontal_alignment = 1
+
+[node name="Time" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Time"
+horizontal_alignment = 1
+
+[node name="E" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "EP"
+horizontal_alignment = 1
+
+[node name="S" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "EP/sec"
+horizontal_alignment = 1
+
+[node name="1" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 ago"
+horizontal_alignment = 1
+
+[node name="T1" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E1" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S1" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="2" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "2 ago"
+horizontal_alignment = 1
+
+[node name="T2" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E2" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S2" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="3" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "3 ago"
+horizontal_alignment = 1
+
+[node name="T3" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E3" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S3" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="4" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "4 ago"
+horizontal_alignment = 1
+
+[node name="T4" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E4" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S4" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="5" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "5 ago"
+horizontal_alignment = 1
+
+[node name="T5" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E5" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S5" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="6" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "6 ago"
+horizontal_alignment = 1
+
+[node name="T6" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E6" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S6" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="7" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "7 ago"
+horizontal_alignment = 1
+
+[node name="T7" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E7" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S7" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="8" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "8 ago"
+horizontal_alignment = 1
+
+[node name="T8" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E8" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S8" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="9" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "9 ago"
+horizontal_alignment = 1
+
+[node name="T9" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E9" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S9" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="10" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "10 ago"
+horizontal_alignment = 1
+
+[node name="T10" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="E10" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="S10" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1
+
+[node name="Av" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "Average"
+horizontal_alignment = 1
+
+[node name="TAv" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="EAv" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "1 EP"
+horizontal_alignment = 1
+
+[node name="SAv" type="Label" parent="Eternity/Table"]
+layout_mode = 2
+text = "0.00 EP/sec"
+horizontal_alignment = 1

@@ -697,7 +697,7 @@ offset_bottom = 0.25
 min_value = 1.0
 max_value = 1000.0
 step = 0.01
-value = 2.0
+value = 4.0
 prefix = "Rewind at ×"
 
 [node name="Accuracy" type="Button" parent="Auto/Buyers/Rewind"]
@@ -832,6 +832,7 @@ text = "Enabled"
 
 [node name="Timer" type="Timer" parent="Auto/Buyers/Dilation"]
 wait_time = 4.0
+one_shot = true
 
 [node name="Galaxy" type="Control" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(0, 45)
@@ -909,6 +910,7 @@ text = "Enabled"
 
 [node name="Timer" type="Timer" parent="Auto/Buyers/Galaxy"]
 wait_time = 10.0
+one_shot = true
 
 [node name="BigBang" type="Control" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(0, 45)
@@ -973,6 +975,7 @@ text = "Enabled"
 
 [node name="Timer" type="Timer" parent="Auto/Buyers/BigBang"]
 wait_time = 10.0
+one_shot = true
 
 [connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="Auto/Buyers/TimeSpeedLocked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="Auto/Buyers/TimeSpeed" method="show"]
@@ -1020,7 +1023,6 @@ wait_time = 10.0
 [connection signal="pressed" from="Auto/Buyers/TD8/Interval" to="." method="improve_interval" binds= [8]]
 [connection signal="timeout" from="Auto/Buyers/TD8/Timer" to="." method="buytdim" binds= [8]]
 [connection signal="pressed" from="Auto/Buyers/Rewind/Interval" to="." method="improve_interval" binds= [12]]
-[connection signal="timeout" from="Auto/Buyers/Rewind/Timer" to="." method="buyTSpeed"]
 [connection signal="pressed" from="Auto/Buyers/Dilation/Interval" to="." method="improve_interval" binds= [9]]
 [connection signal="pressed" from="Auto/Buyers/Galaxy/Interval" to="." method="improve_interval" binds= [10]]
 [connection signal="pressed" from="Auto/Buyers/BigBang/Interval" to="." method="improve_interval" binds= [11]]

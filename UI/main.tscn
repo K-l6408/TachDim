@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=19 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Script" path="res://UI/main.gd" id="1_qdidp"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
 [ext_resource type="PackedScene" uid="uid://damsts43cifm8" path="res://UI/statistics/statistics.tscn" id="10_whf7c"]
 [ext_resource type="PackedScene" uid="uid://ccgn0cmks56jk" path="res://UI/debug/debug.tscn" id="11_t3vch"]
+[ext_resource type="PackedScene" uid="uid://ptwedehhp243" path="res://UI/statistics/last_prestiges.tscn" id="11_t22am"]
 [ext_resource type="Script" path="res://UI/notifs.gd" id="12_ab4py"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
@@ -264,6 +265,10 @@ visible = false
 layout_mode = 2
 
 [node name="Statistics" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("10_whf7c")]
+layout_mode = 2
+
+[node name="Last Prestiges" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("11_t22am")]
+visible = false
 layout_mode = 2
 
 [node name="Options" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]

@@ -126,6 +126,11 @@ func BangInterval():
 	if i < 0.11: return MIN_INTERVAL
 	return i
 
+func TDBulk(which):
+	if TDUpgrades[which-1] <= IntervalCap[which-1]:
+		return 1
+	else:
+		return 2 ** (IntervalCap[which-1] - TDUpgrades[which-1])
 
 var TSUpgrades   := 0
 var TDUpgrades   := [0, 0, 0, 0, 0, 0, 0, 0]
@@ -155,6 +160,10 @@ func improve_interval(which = 0):
 	else:
 		Globals.EternityPts.add2self(-(2 ** TDUpgrades[which-1]))
 		TDUpgrades[which-1] += 1
+
+func improve_rewd_accuracy():
+	Globals.EternityPts.add2self(-(3 ** RewdAQups))
+	RewdAQups += 1
 
 func _process(_delta):
 	for i in 8:
@@ -211,8 +220,15 @@ func _process(_delta):
 		if Input.is_action_just_pressed("BuyTSpeed"):
 			$Auto/Buyers/TimeSpeed/Enabled.button_pressed = not $Auto/Buyers/TimeSpeed/Enabled.button_pressed
 	
+	$Auto/Buyers/Rewind/RichTextLabel.text = \
+	"[center]Rewind Autobuyer\n[font_size=10] Activates every %s seconds\nCurrent accuracy: ×%s" % \
+	[Globals.float_to_string(RewdInterval()), Globals.float_to_string(RewdAccuracy())]
+	if Globals.challengeCompleted(13):
+		$Auto/Buyers/Rewind/Interval.disabled = Globals.EternityPts.less(2 ** RewdUpgrades)
+		$Auto/Buyers/Rewind/Accuracy.disabled = Globals.EternityPts.less(3 ** RewdAQups)
+	
 	$Auto/Buyers/TimeSpeed/RichTextLabel.text = \
-	"[center]Timespeed Autobuyer\n[font_size=10] Activates every %s seconds\nCurrent bulk: ×1" % \
+	"[center]Timespeed Autobuyer\n[font_size=10] Activates every %s seconds" % \
 	Globals.float_to_string(TSpeedInterval())
 	if Globals.challengeCompleted(9):
 		$Auto/Buyers/TimeSpeed/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
@@ -226,19 +242,27 @@ func _process(_delta):
 		$Auto/Buyers/TimeSpeed/Interval.disabled = true
 		$Auto/Buyers/TimeSpeed/Mode.disabled = true
 		$Auto/Buyers/TimeSpeed/Mode.button_pressed = false
+	
 	for i in 8:
 		if Globals.challengeCompleted(i+1):
-			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).text = "Decrease interval by %s\nCost: %s EP" % \
-			[Globals.percent_to_string(0.4, 0),
-			Globals.float_to_string(2.0 ** TDUpgrades[i], 0)]
-			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).disabled = Globals.EternityPts.less(2 ** TDUpgrades[i])
+			if TDUpgrades[i] < IntervalCap[i]:
+				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).text = "Decrease interval by %s\nCost: %s EP" % \
+				[Globals.percent_to_string(0.4, 0),
+				Globals.float_to_string(2.0 ** TDUpgrades[i], 0)]
+			else:
+				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).text = "Increase bulk (%s → %s)\nCost: %s EP" % \
+				[Globals.int_to_string(TDBulk(i+1)), Globals.int_to_string(TDBulk(i+1) * 2),
+				Globals.float_to_string(2.0 ** TDUpgrades[i], 0)]
+			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).disabled = \
+			Globals.EternityPts.less(2 ** TDUpgrades[i])
 		else:
-			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).text = "Complete the challenge to\nupgrade the interval"
+			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).text = \
+			"Complete the challenge to\nupgrade the interval"
 			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).disabled = true
 		
 		get_node("Auto/Buyers/TD%d/RichTextLabel" % (i+1)).text = \
-		"[center]%s Tachyon Dim Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: ×1" % \
-		[Globals.ordinal(i+1), Globals.float_to_string(TDInterval(i))]
+		"[center]%s Tachyon Dim Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: ×%s" % \
+		[Globals.ordinal(i+1), Globals.float_to_string(TDInterval(i)), Globals.int_to_string(TDBulk(i+1))]
 	
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
@@ -282,7 +306,9 @@ func buytdim(which):
 	if get_node("Auto/Buyers/TD%d/Mode" % which).button_pressed:
 		Globals.TDHandler.buydim(which, 
 			Globals.TDHandler.buylim - \
-			Globals.TDHandler.DimPurchase[which-1] % Globals.TDHandler.buylim)
+			Globals.TDHandler.DimPurchase[which-1] % Globals.TDHandler.buylim + \
+			10 * (TDBulk(which) - 1)
+		)
 	else:
 		Globals.TDHandler.buydim(which, 1)
 	get_node("Auto/Buyers/TD%d/Timer" % which).start(TDInterval(which - 1))

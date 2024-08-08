@@ -4,9 +4,17 @@ var progressTexture := preload("res://images/progress.png")
 var currentFile := 1
 var saveFilePath :
 	get: return "user://save%d.txt" % currentFile
+var idleTimeSpent = 0
 
 func _ready():
 	start()
+	match OS.get_name():
+		"Windows", "UWP":
+			$CanvasLayer/ColorRect/Panel/RichTextLabel.text += "go to %APPDATA%\\Godot\\app_userdata" + \
+			"\\Tachyon Dimensions, and check the files for \"save%d.txt\"." % currentFile
+		"Linux", "X11", "FreeBSD", "NetBSD", "BSD":
+			$CanvasLayer/ColorRect/Panel/RichTextLabel.text += "go to ~/.local/share/godot/app_userdata" +\
+			"/Tachyon Dimensions, and check the files for \"save%d.txt\"." % currentFile
 
 func start():
 	await get_tree().process_frame
@@ -16,18 +24,41 @@ func start():
 	await get_tree().process_frame
 	loadF()
 
-func _process(_delta):
+func _process(delta):
 	$HFlowContainer/Autosave.text = "Autosave: %s" % ("ON" if $HFlowContainer/Autosave.button_pressed else "OFF")
-	$HFlowContainer/HSlider/Label.text = " \nAutosaves every %d seconds" % $HFlowContainer/HSlider.value
+	$HFlowContainer/HSlider/Label.text = "\n\nAutosaves every %s" % \
+	Globals.format_time($HFlowContainer/HSlider.value)
+	$HFlowContainer/Sidler/Label.text = "\nTake %s at most to calculate\nidle progress" % \
+	Globals.format_time($HFlowContainer/Sidler.value)
+	$HFlowContainer/Idle.visible = Globals.challengeCompleted(15)
+	$HFlowContainer/Sidler.visible = Globals.challengeCompleted(15)
+	
+	if $Idle.visible:
+		idleTimeSpent += delta
+		$Idle/ColorRect/Panel/RichTextLabel.text = "[center]\n[font_size=20]%s\n%s / %s %s\n(%s / %s %s)" % [
+			"Calculating idle progress…",
+			Globals.format_time(idleTimeSpent), Globals.format_time($IdleTimer.wait_time),
+			"processed",
+			Globals.format_time(idleTimeSpent / Engine.time_scale),
+			Globals.format_time($IdleTimer.wait_time / Engine.time_scale), "real time"
+		]
+		$Idle/ColorRect/Panel/ProgressBar.value = idleTimeSpent / $IdleTimer.wait_time
+		$Idle/ColorRect/Panel/ProgressBar/Label.text = Globals.percent_to_string(idleTimeSpent / $IdleTimer.wait_time)
 
 func _on_value_changed(val):
-	$Timer.wait_time = val
+	$SaveTimer.wait_time = val
 
 func autosave():
 	if $HFlowContainer/Autosave.button_pressed:
 		saveF()
 
 func choose_save(which):
+	currentFile = which
+	var sf = FileAccess.open("user://lastsave.txt", FileAccess.WRITE)
+	sf.store_string("%d" % which)
+	saveF()
+
+func choose_load(which):
 	currentFile = which
 	var sf = FileAccess.open("user://lastsave.txt", FileAccess.WRITE)
 	sf.store_string("%d" % which)
@@ -54,7 +85,9 @@ func saveF(file : String = saveFilePath):
 		"autosaving" : $HFlowContainer/Autosave.button_pressed,
 		"autosave interval" : int($HFlowContainer/HSlider.value),
 		"notation" : Globals.display,
-		"animation settings" : Globals.VisualSett.save_anim_settings()
+		"animation settings" : Globals.VisualSett.save_anim_settings(),
+		"idle progress" : $HFlowContainer/Idle.button_pressed,
+		"idle progress max time" : int($HFlowContainer/Sidler.value)
 	})
 	
 	settf.close()
@@ -125,14 +158,22 @@ func saveF(file : String = saveFilePath):
 		Globals.Automation.get_node("Auto/Buyers/Galaxy/Enabled").button_pressed
 		DATA["autobanger enabled"] = \
 		Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed
+		DATA["rewind buyer objective"] = \
+		Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value
 		DATA["dilation buy limit"] = Globals.Automation.DilLimit
 		DATA["dilation limit ignore"] = Globals.Automation.DilIgnore
 		DATA["tach gal buy limit"] = Globals.Automation.GalLimit
+		
+		DATA["ep multiplier buys"] = Globals.EUHandler.EPMultBought
 		
 		if Globals.EU12Timer != null:
 			DATA["eu12 timer"] = Globals.EU12Timer.time_left
 		else:
 			DATA["eu12 timer"] = 0
+		
+		DATA["last 10 eternities"] = []
+		for e in Globals.last10etern:
+			DATA["last 10 eternities"].append(e.to_dict())
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -141,6 +182,10 @@ func saveF(file : String = saveFilePath):
 	lsf.store_string("%d" % currentFile)
 
 func loadF(file : String = saveFilePath):
+	var pause = get_tree().paused
+	get_tree().paused = true
+	$CanvasLayer.visible = true
+	
 	var settf := FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.READ)
 	if settf != null:
 		
@@ -150,6 +195,10 @@ func loadF(file : String = saveFilePath):
 			$HFlowContainer/HSlider.value = d["autosave interval"]
 			Globals.display = d["notation"] as GL.DisplayMode
 			Globals.VisualSett.load_anim_settings(d["animation settings"])
+			if d.has("idle progress"):
+				$HFlowContainer/Sidler.value = d["idle progress"]
+			if d.has("idle progress max time"):
+				$HFlowContainer/Sidler.value = d["idle progress max time"]
 		else:
 			settf = FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.READ)
 			var autosavesettings = settf.get_8()
@@ -163,7 +212,10 @@ func loadF(file : String = saveFilePath):
 	
 	gameReset()
 	
-	if sf == null:						return
+	if sf == null:
+		get_tree().paused = pause
+		$CanvasLayer.visible = false
+		return
 	if sf.get_line() != "TachDimSave":	return
 	
 	Globals.progress = sf.get_8() as GL.Progression
@@ -176,11 +228,6 @@ func loadF(file : String = saveFilePath):
 		return
 	
 	Globals.existence = DATA["time played"]
-	# idle progress. uses "last time" to check.
-	
-	if not Globals.Achievemer.is_unlocked(3, 3) and \
-	(DATA["last time"] - Time.get_unix_time_from_system()) >= 3600 * 6:
-		Globals.Achievemer.set_unlocked(3, 3)
 	
 	Globals.Tachyons.from_bytes(DATA["tachyons"])
 	Globals.TachTotal.from_bytes(DATA["total tachyons"])
@@ -205,11 +252,16 @@ func loadF(file : String = saveFilePath):
 	if Globals.progress >= GL.Progression.Eternity:
 		Globals.EternityPts.from_bytes(DATA["eternity points"])
 		Globals.Eternities.from_bytes(DATA["eternities"])
-		Globals.eternTime = DATA["time in eternity"]
+		if DATA.has("time in eternity"):
+			Globals.eternTime = DATA["time in eternity"]
 		
-		Globals.fastestEtern.time				 = DATA["fastest eternity"].time
-		Globals.fastestEtern.epgain    .from_bytes(DATA["fastest eternity"].epgain)
-		Globals.fastestEtern.eternities.from_bytes(DATA["fastest eternity"].epgain)
+		if DATA.has("fastest eternity"):
+			if DATA["fastest eternity"] is Dictionary:
+				Globals.fastestEtern = Globals.EternityData.from_dict(DATA["fastest eternity"])
+			elif DATA["fastest eternity"] is int or DATA["fastest eternity"] is float:
+				Globals.fastestEtern.time       = DATA["fastest eternity"]
+				Globals.fastestEtern.epgain     = largenum.new(1)
+				Globals.fastestEtern.eternities = largenum.new(1)
 		
 		if Globals.Challenge == 10:
 			Globals.TDHandler.C10Power = DATA["c10 power"]
@@ -226,14 +278,36 @@ func loadF(file : String = saveFilePath):
 		= DATA["tach gal buyer enabled"]
 		Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed\
 		= DATA["autobanger enabled"]
+		if DATA.has("rewind buyer objective"):
+			Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value\
+			= DATA["rewind buyer objective"]
 		Globals.Automation.DilLimit = DATA["dilation buy limit"]
 		Globals.Automation.DilIgnore = DATA["dilation limit ignore"]
 		Globals.Automation.GalLimit = DATA["tach gal buy limit"]
 		
 		if DATA.has("eu12 timer"):
 			Globals.EU12Timer = get_tree().create_timer(DATA["eu12 timer"])
+		
+		if DATA.has("last 10 eternities"):
+			for e in DATA["last 10 eternities"]:
+				if Globals.EternityData.from_dict(e) != null:
+					Globals.last10etern.append(
+						Globals.EternityData.from_dict(e)
+					)
+		
+		if DATA.has("ep multiplier buys"):
+			Globals.EUHandler.EPMultBought = DATA["ep multiplier buys"]
+		
+		var idletime = Time.get_unix_time_from_system() - DATA["last time"]
+		if not Globals.Achievemer.is_unlocked(3, 3) and idletime >= 3600 * 6:
+			Globals.Achievemer.set_unlocked(3, 3)
+		if $HFlowContainer/Idle.button_pressed and Globals.challengeCompleted(15):
+			emit_signal("start_idle_progress", idletime)
 	else:
 		Globals.eternTime = Globals.existence
+	
+	get_tree().paused = pause
+	$CanvasLayer.visible = false
 
 func gameReset():
 	Globals.progress = Globals.Progression.None
@@ -267,4 +341,20 @@ func gameReset():
 	Globals.EUHandler.Bought = 0
 	Globals.Automation.TSUpgrades = 0
 	Globals.Automation.TDUpgrades = [0,0,0,0,0,0,0,0]
+	Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value = 4
+	Globals.EU12Timer = null
 
+func idle(idletime):
+	var idlerealtime = $HFlowContainer/Sidler.value
+	Engine.time_scale = 1. + max(idletime / idlerealtime, 10)
+	$SaveTimer.paused = true
+	$IdleTimer.start(idletime)
+	$Idle.show()
+	idleTimeSpent = 0
+	$IdleTimer.connect("timeout", func():
+		Engine.time_scale = 1
+		$SaveTimer.paused = false
+		$Idle.hide()
+	)
+
+signal start_idle_progress(time)

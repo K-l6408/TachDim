@@ -289,7 +289,6 @@ width = 194.0
 gradient = SubResource("Gradient_spnas")
 
 [node name="AutoGal" type="Button" parent="."]
-visible = false
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 1
 anchors_preset = 7
@@ -314,7 +313,6 @@ Cost: 300 EP"
 text_overrun_behavior = 2
 
 [node name="EPMult" type="Button" parent="."]
-visible = false
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 1
 anchors_preset = 7
@@ -346,13 +344,12 @@ text_overrun_behavior = 2
 [connection signal="pressed" from="Columns/Col2/Dim45mult" to="." method="buy" binds= [6]]
 [connection signal="pressed" from="Columns/Col2/Dim36mult" to="." method="buy" binds= [7]]
 [connection signal="pressed" from="Columns/Col2/GalaxyBoost" to="." method="buy" binds= [8]]
-[connection signal="pressed" from="Columns/Col3/AchMult" to="." method="buy" binds= [13]]
-[connection signal="pressed" from="Columns/Col3/DilaMult" to="." method="buy" binds= [14]]
-[connection signal="pressed" from="Columns/Col3/EPMult" to="." method="buy" binds= [15]]
-[connection signal="pressed" from="Columns/Col3/PassiveEP" to="." method="buy" binds= [16]]
-[connection signal="pressed" from="Columns/Col4/Dila1" to="." method="buy" binds= [9]]
-[connection signal="pressed" from="Columns/Col4/Dila2" to="." method="buy" binds= [10]]
-[connection signal="pressed" from="Columns/Col4/Dila3" to="." method="buy" binds= [11]]
-[connection signal="pressed" from="Columns/Col4/Dila4" to="." method="buy" binds= [12]]
-[connection signal="pressed" from="AutoGal" to="." method="buy" binds= [8]]
-[connection signal="pressed" from="EPMult" to="." method="buy" binds= [8]]
+[connection signal="pressed" from="Columns/Col3/AchMult" to="." method="buy" binds= [9]]
+[connection signal="pressed" from="Columns/Col3/DilaMult" to="." method="buy" binds= [10]]
+[connection signal="pressed" from="Columns/Col3/EPMult" to="." method="buy" binds= [11]]
+[connection signal="pressed" from="Columns/Col3/PassiveEP" to="." method="buy" binds= [12]]
+[connection signal="pressed" from="Columns/Col4/Dila1" to="." method="buy" binds= [13]]
+[connection signal="pressed" from="Columns/Col4/Dila2" to="." method="buy" binds= [14]]
+[connection signal="pressed" from="Columns/Col4/Dila3" to="." method="buy" binds= [15]]
+[connection signal="pressed" from="Columns/Col4/Dila4" to="." method="buy" binds= [16]]
+[connection signal="pressed" from="AutoGal" to="." method="buy" binds= [17]]

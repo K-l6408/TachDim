@@ -9,7 +9,7 @@ var tabSymbolRight = "⇢\uf1de⁉δ\uf091\uf0c9\uf0ad]"
 var dimensionSymbols = "Ψ"
 var challengeSymbols = "Ψ"
 var  eternitySymbols = "↑⭻"
-var     statsSymbols = "\uf036"
+var     statsSymbols = "\uf036\uf886"
 var   optionsSymbols = "\uf0c7\uf1fc"
 var celestialSymbols = "⏣⚴☾𝄽\uF1E0ɸΩ"
 

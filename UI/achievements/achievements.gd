@@ -1,7 +1,7 @@
 extends Control
 
 const MAXROWS = 20
-var loaded_rows = 3
+var loaded_rows = 4
 var unlocked : PackedByteArray = []
 var achgot : int :
 	get:
@@ -36,8 +36,17 @@ func achnames(r, c):
 			2: return "many"
 			3: return "Goodnight! :3"
 			4: return "I h-eight them ›:("
+			5: return "ɘmiT bniwɘЯ"
 			6: return "And… time!"
 			7: return "Too is two many"
+			8: return "(Not quite) Full upgrades!"
+		4: match c:
+			1: return "unChallenged"
+			4: return "I h-seven them…?"
+			5: return "Up and up and up"
+			6: return "(Actually) Full upgrades!"
+			7: return "A taste of Mastery"
+			8: return "I-XV"
 	return "TBD"
 
 func achreqs(r, c):
@@ -67,23 +76,40 @@ func achreqs(r, c):
 				Globals.int_to_string(1), Globals.int_to_string(7),
 				Globals.percent_to_string(.5)
 			]
+			5: return "Get at least a ×%s multiplier from a Rewind." % \
+			Globals.int_to_string(600)
 			6: return "Eternity in under %s.\n(Reward: Start with %s Tachyons.)" % \
 			[Globals.format_time(600), Globals.int_to_string(5000)]
 			7: return "Eternity with a single Tachyon Galaxy."
+			8: return "Purchase the first %s Eternity Upgrades." % Globals.int_to_string(12)
+		4: match c:
+			1: return "Complete a Challenge."
+			4: return "Eternity without any %s Dimensions." % Globals.ordinal(7)
+			5: return "Get to %s Tachyons with less than %s in your current Eternity." % [
+				largenum.ten_to_the(100).to_string(), Globals.format_time(30)
+			]
+			6: return "Purchase %s Eternity Upgrades." % Globals.int_to_string(16) + \
+			"\n(Reward: Unlock two more Eternity Upgrades)"
+			7: return "Complete Challenge %s." % Globals.int_to_string(15) + \
+			"\n(Reward: Gain %s more Eternity Points for each C%s completion.)" % [
+				Globals.int_to_string(4), Globals.int_to_string(15)
+			]
+			8: return "Complete all Challenges.\n(Reward: All TDs are %s stronger.)" % \
+			Globals.percent_to_string(0.2)
 	return "TBD"
 
 func is_unlocked(row, num):
-	return unlocked[row-1] & (2 ** (num - 1))
+	return (unlocked[row-1] & (2 ** (num - 1)) > 0)
 
 func set_unlocked(row, num, val := true):
 	if val:
-		unlocked[row-1] |= (2 ** (num - 1))
+		unlocked[row-1] |= (1 << (num - 1))
 		Globals.notificate(
 			"achievement",
 			"Achievement unlocked: \"%s\"" % achnames(row, num)
 		)
 	else:
-		unlocked[row-1] &= 255 - (2 ** (num - 1))
+		unlocked[row-1] &= 255 - (1 << (num - 1))
 
 func _ready():
 	unlocked.resize(MAXROWS)
@@ -131,3 +157,26 @@ func _process(_delta):
 	if not is_unlocked(3, 2):
 		if not Globals.Eternities.less(10):
 			set_unlocked(3, 2)
+	if not is_unlocked(3, 8):
+		if  Globals.EUHandler.is_bought(4) \
+		and Globals.EUHandler.is_bought(8) \
+		and Globals.EUHandler.is_bought(12):
+			set_unlocked(3, 8)
+	if not is_unlocked(4, 1):
+		if Globals.CompletedChallenges > 0:
+			set_unlocked(4, 1)
+	if not is_unlocked(4, 5):
+		if Globals.Tachyons.log10() >= 100 and Globals.eternTime < 30:
+			set_unlocked(4, 5)
+	if not is_unlocked(4, 6):
+		if  Globals.EUHandler.is_bought(4) \
+		and Globals.EUHandler.is_bought(8) \
+		and Globals.EUHandler.is_bought(12)\
+		and Globals.EUHandler.is_bought(16):
+			set_unlocked(4, 6)
+	if not is_unlocked(4, 7):
+		if Globals.challengeCompleted(15):
+			set_unlocked(4, 7)
+	if not is_unlocked(4, 8):
+		if Globals.CompletedChallenges == 65535:
+			set_unlocked(4, 8)

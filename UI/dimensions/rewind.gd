@@ -7,11 +7,11 @@ var score := 0.0
 
 func _process(delta):
 	if not Engine.is_editor_hint(): 
-		score = sin(Time.get_ticks_msec() / 2000.0)
+		score = sin(Globals.existence / 2.0)
 		
 		# sine changed sign (score reached maximum)
-		if sin(Time.get_ticks_msec() / 2000.0) * \
-		sin((Time.get_ticks_msec() - delta * 1000.0) / 2000.0) < 0:
+		if sin(Globals.existence / 2.0) * \
+		sin((Globals.existence - delta) / 2.0) < 0:
 			score = 0
 		
 		$Accuracy.position.x = (

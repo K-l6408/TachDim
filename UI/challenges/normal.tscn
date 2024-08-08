@@ -572,7 +572,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "TBD"
+text = "Tachyon Dimensions are less powerful the more Tachyons you have."
 
 [node name="Start" type="Button" parent="Chal/lenges/C9"]
 layout_mode = 1
@@ -587,7 +587,6 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
-disabled = true
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C9"]
