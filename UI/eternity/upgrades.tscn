@@ -353,3 +353,4 @@ text_overrun_behavior = 2
 [connection signal="pressed" from="Columns/Col4/Dila3" to="." method="buy" binds= [15]]
 [connection signal="pressed" from="Columns/Col4/Dila4" to="." method="buy" binds= [16]]
 [connection signal="pressed" from="AutoGal" to="." method="buy" binds= [17]]
+[connection signal="pressed" from="EPMult" to="." method="buyEPmult"]

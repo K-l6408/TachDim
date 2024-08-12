@@ -36,10 +36,15 @@ func _init(from = 0):
 			exponent -= 1
 			fix_mantissa()
 
-static func ten_to_the(xponent := 1.0):
-	return largenum.new(10).pow2self(xponent)
+static func two_to_the(xponent := 1.0) -> largenum:
+	var l = largenum.new(2 ** (xponent - floor(xponent)))
+	l.exponent = floor(xponent)
+	return l
 
-func neg():
+static func ten_to_the(xponent := 1.0) -> largenum:
+	return two_to_the(xponent * GL.LOG10 / GL.LOG2)
+
+func neg() -> largenum:
 	var result = largenum.new(self)
 	result.sign *= -1
 	return result
@@ -176,9 +181,9 @@ func less(b) -> bool:
 		b = largenum.new(b)
 	if sign < b.sign:
 		return true
-	if exponent < b.exponent:
+	if int(exponent) < int(b.exponent):
 		return true
-	if exponent == b.exponent and mantissa < b.mantissa:
+	if int(exponent) == int(b.exponent) and mantissa < b.mantissa:
 		return true
 	return false
 
@@ -201,15 +206,15 @@ func _to_string() -> String:
 				m = 1
 			if l > 1e5:
 				return "e%.2fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
-			return "%.2fe%.0f" % [m, floor(l)]
+			return "%.2fe%.0f" % [m*sign, floor(l)]
 		GL.DisplayMode.Engineering:
-			var l = log10()
+			var l = log10() / 3
 			if l == -INF:
 				return "0.00"
-			var m = 10 ** (l - floor(l))
+			var m = 1000 ** (l - floor(l))
 			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
 				return "%.2f" % to_float()
-			if m > 9.999:
+			if m > 999.99:
 				l = ceil(l)
 				m = 1
 			if l > 1e5:
@@ -217,7 +222,16 @@ func _to_string() -> String:
 					l/10**floor(log(l)/GL.LOG10),
 					log(l)/GL.LOG10
 				]
-			return "%.2fe%.0f" % [m * 10**fmod(floor(l),3), l-fmod(l,3)]
+			return "%.2fe%.0f" % [m*sign, floor(l) * 3]
+		GL.DisplayMode.Standard:
+			var l = log10() / 3
+			var m = 1000 ** (l - floor(l))
+			if abs(to_float()) < 1e3:
+				return "%.2f" % to_float()
+			if m > 999.99:
+				l = ceil(l)
+				m = 1
+			return "%.2f %s" % [m*sign, largenum.standard(l-1)]
 		GL.DisplayMode.Logarithm:
 			var l = log10()
 			if l == -INF:
@@ -285,7 +299,7 @@ func _to_string() -> String:
 			if m > 99.999:
 				l = ceil(l)
 				m = 1
-			if l >= 1e5:
+			if l >= 1e4:
 				return "󱤄󱥵" + largenum.sitelen(l, true)
 			elif l >= 5:
 				return (largenum.sitelen(m, true) if round(m) > 1 else "") + "󱤄󱥵" + largenum.sitelen(l, true)
@@ -318,9 +332,28 @@ func _to_string() -> String:
 			if l > 1e5:
 				return "e%.2fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
 			return "%.2fe%.0f" % [m, floor(l)]
+		GL.DisplayMode.Factorial:
+			if abs(to_float()) < 1000:
+				return "%.2f" % to_float()
+			return "%.2f!" % (sign * invfact())
 	return "N/A"
 
-static func dozenal(f:float, precision:=2):
+static func standard(e) -> String:
+	if e < 1: return "K"
+	if e < 2: return "M"
+	if e < 3: return "B"
+	var s = ""
+	while e > 1:
+		s += ["", "U",  "D",  "T",  "Qa", "Qt", "Sx", "Sp", "O",  "N" ][fmod(e, 10)]
+		e /= 10
+		s += ["", "Dc", "Vg", "Tg", "Qd", "Qi", "Se", "St", "Og", "Nn"][fmod(e, 10)]
+		e /= 10
+		s += ["", "Ce", "Dn", "Tc", "Qe", "Qu", "Sc", "Si", "Oe", "Ne"][fmod(e, 10)]
+		e /= 10
+		s += "MI-"
+	return s.trim_suffix("MI-")
+
+static func dozenal(f:float, precision:=2) -> String:
 	var S = \
 	String.num_int64(f * 12**precision, 12).\
 	replace("a", "↊").\
@@ -329,7 +362,7 @@ static func dozenal(f:float, precision:=2):
 	if S[0] == ";": S = "0" + S
 	return S
 
-static func roman(f:float):
+static func roman(f:float) -> String:
 	if f <= 0: return "N"
 	var s := ""
 	if f >= 10000:
@@ -384,7 +417,7 @@ static func roman(f:float):
 		5: s += "⁙"
 	return s
 
-static func sitelen(f:float, forceint := false):
+static func sitelen(f:float, forceint := false) -> String:
 	var s = ""
 	if forceint: f = round(f)
 	if   f >= 200: s += sitelen(floor(f / 100)) + "󱤄"
@@ -393,7 +426,7 @@ static func sitelen(f:float, forceint := false):
 	if   f >= 40: s += sitelen(floor(f / 20)) + "󱤼"
 	elif f >= 20: s += "󱤼"
 	f = fmod(f, 20)
-	if   f >= 10: s += sitelen(floor(f / 5)) + "󱤭"
+	if   f >= 10: s += sitelen(floor(f / 5)) + "󱤭‍"
 	elif f >=  5: s += "󱤭‍"
 	f = fmod(f, 5)
 	match int(f):
@@ -414,6 +447,10 @@ static func sitelen(f:float, forceint := false):
 			a = b
 			break
 	return s + sitelen(a * f, true) + "󱥻" + sitelen(a, true)
+
+func invfact() -> float: # approximation of ðe gamma function's inverse
+	var L = divide(sqrt(TAU)).log2() * GL.LOG2
+	return L / Globals.lambertw(L / exp(1)) - 0.5
 
 func from_bytes(data : PackedByteArray):
 	mantissa = data.decode_u64(0)

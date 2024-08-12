@@ -42,6 +42,8 @@ func achnames(r, c):
 			8: return "(Not quite) Full upgrades!"
 		4: match c:
 			1: return "unChallenged"
+			2: return "Particle Accelerator"
+			3: return "Autobuyerpillled Intervalmaxxer"
 			4: return "I h-seven them…?"
 			5: return "Up and up and up"
 			6: return "(Actually) Full upgrades!"
@@ -76,7 +78,7 @@ func achreqs(r, c):
 				Globals.int_to_string(1), Globals.int_to_string(7),
 				Globals.percent_to_string(.5)
 			]
-			5: return "Get at least a ×%s multiplier from a Rewind." % \
+			5: return "Get at least a ×%s multiplier from a single Rewind." % \
 			Globals.int_to_string(600)
 			6: return "Eternity in under %s.\n(Reward: Start with %s Tachyons.)" % \
 			[Globals.format_time(600), Globals.int_to_string(5000)]
@@ -84,6 +86,10 @@ func achreqs(r, c):
 			8: return "Purchase the first %s Eternity Upgrades." % Globals.int_to_string(12)
 		4: match c:
 			1: return "Complete a Challenge."
+			2: return "Eternity in under %s.\n(Reward: Start with %s Tachyons.)" % [
+				Globals.format_time(60), Globals.float_to_string(5e5)
+			]
+			3: return "Max the interval for all TD autobuyers, and Timespeed."
 			4: return "Eternity without any %s Dimensions." % Globals.ordinal(7)
 			5: return "Get to %s Tachyons with less than %s in your current Eternity." % [
 				largenum.ten_to_the(100).to_string(), Globals.format_time(30)
@@ -91,8 +97,8 @@ func achreqs(r, c):
 			6: return "Purchase %s Eternity Upgrades." % Globals.int_to_string(16) + \
 			"\n(Reward: Unlock two more Eternity Upgrades)"
 			7: return "Complete Challenge %s." % Globals.int_to_string(15) + \
-			"\n(Reward: Gain %s more Eternity Points for each C%s completion.)" % [
-				Globals.int_to_string(4), Globals.int_to_string(15)
+			"\n(Reward: Gain ×%s more Eternity Points for each C%s completion.)" % [
+				Globals.int_to_string(5), Globals.int_to_string(15)
 			]
 			8: return "Complete all Challenges.\n(Reward: All TDs are %s stronger.)" % \
 			Globals.percent_to_string(0.2)
@@ -178,5 +184,5 @@ func _process(_delta):
 		if Globals.challengeCompleted(15):
 			set_unlocked(4, 7)
 	if not is_unlocked(4, 8):
-		if Globals.CompletedChallenges == 65535:
+		if Globals.CompletedChallenges == 32767:
 			set_unlocked(4, 8)

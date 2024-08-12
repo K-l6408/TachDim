@@ -122,7 +122,7 @@ func GalInterval():
 	if i < 0.11: return MIN_INTERVAL
 	return i
 func BangInterval():
-	var i = 30 * (0.6 ** BangUpgrades)
+	var i = 60 * (0.6 ** BangUpgrades)
 	if i < 0.11: return MIN_INTERVAL
 	return i
 
@@ -130,7 +130,7 @@ func TDBulk(which):
 	if TDUpgrades[which-1] <= IntervalCap[which-1]:
 		return 1
 	else:
-		return 2 ** (IntervalCap[which-1] - TDUpgrades[which-1])
+		return 2 ** (TDUpgrades[which-1] - IntervalCap[which-1])
 
 var TSUpgrades   := 0
 var TDUpgrades   := [0, 0, 0, 0, 0, 0, 0, 0]
@@ -179,8 +179,9 @@ func _process(_delta):
 		if not (i is Button or i is HSeparator):
 			if i.has_node("Mode"): i.get_node("Mode").text = \
 				"Complete the challenge to\nchange the mode" if i.get_node("Mode").disabled else (
-					("Buys %ss" % Globals.int_to_string(Globals.TDHandler.buylim)) if \
-					i.get_node("Mode").button_pressed else "Buys singles"
+					("Buys %ss" % Globals.int_to_string(
+						Globals.TDHandler.buylim * TDBulk(i.name.trim_prefix("TD").to_int())
+					)) if i.get_node("Mode").button_pressed else "Buys singles"
 				)
 			i.get_node("Enabled").text = \
 				"Enabled" if i.get_node("Enabled").button_pressed else "Disabled"
@@ -220,12 +221,24 @@ func _process(_delta):
 		if Input.is_action_just_pressed("BuyTSpeed"):
 			$Auto/Buyers/TimeSpeed/Enabled.button_pressed = not $Auto/Buyers/TimeSpeed/Enabled.button_pressed
 	
+	$Auto/Buyers/TimeSpeed/Interval.visible = TSUpgrades < 3
+	$Auto/Buyers/Rewind/Interval.visible  = RewdUpgrades < 7
+	$Auto/Buyers/Dilation/Interval.visible = DilUpgrades < 8
+	$Auto/Buyers/Galaxy/Interval.visible   = GalUpgrades < 9
+	$Auto/Buyers/BigBang/Interval.visible = BangUpgrades < 13
+	
 	$Auto/Buyers/Rewind/RichTextLabel.text = \
-	"[center]Rewind Autobuyer\n[font_size=10] Activates every %s seconds\nCurrent accuracy: ×%s" % \
-	[Globals.float_to_string(RewdInterval()), Globals.float_to_string(RewdAccuracy())]
+	"[center]Rewind Autobuyer\n[font_size=10] Activates every %s seconds\nCurrent accuracy: %s" % \
+	[Globals.float_to_string(RewdInterval()), Globals.percent_to_string(RewdAccuracy())]
 	if Globals.challengeCompleted(13):
 		$Auto/Buyers/Rewind/Interval.disabled = Globals.EternityPts.less(2 ** RewdUpgrades)
 		$Auto/Buyers/Rewind/Accuracy.disabled = Globals.EternityPts.less(3 ** RewdAQups)
+		$Auto/Buyers/Rewind/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
+		[Globals.percent_to_string(0.4, 0),
+		Globals.float_to_string(2.0 ** RewdUpgrades, 0)]
+		$Auto/Buyers/Rewind/Accuracy.text = "Increase accuracy by %s\nCost: %s EP" % \
+		[Globals.percent_to_string(0.095, 1),
+		Globals.float_to_string(3.0 ** RewdAQups, 0)]
 	
 	$Auto/Buyers/TimeSpeed/RichTextLabel.text = \
 	"[center]Timespeed Autobuyer\n[font_size=10] Activates every %s seconds" % \

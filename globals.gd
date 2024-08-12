@@ -23,8 +23,8 @@ class EternityData:
 		return e
 
 enum DisplayMode {
-	Scientific, Engineering, Logarithm, Letters, Dozenal, Strict_Logarithm, Roman,
-	toki_pona, sitelen_pona, Canonical_toki_pona, Evil
+	Scientific, Engineering, Logarithm, Letters, Dozenal, Strict_Logarithm, Standard,
+	Roman, toki_pona, sitelen_pona, Canonical_toki_pona, Evil, Factorial
 }
 enum Progression {
 	None, Dilation, Galaxy, Eternity, Overcome
@@ -76,9 +76,13 @@ var last10etern : Array[EternityData] = []
 func _process(delta):
 	existence += delta
 	eternTime += delta
-	if EUHandler.is_bought(12) and EU12Timer == null:
-		EternityPts.add2self(fastestEtern.epgain)
-		EU12Timer = get_tree().create_timer(fastestEtern.time * 3)
+	if EUHandler is Node:
+		if EUHandler.is_bought(12) and (EU12Timer == null or EU12Timer.time_left == 0):
+			EternityPts.add2self(fastestEtern.epgain)
+			EU12Timer = get_tree().create_timer(fastestEtern.time * 3)
+	EternityPts.fix_mantissa()
+	if EternityPts.less(0.01):
+		EternityPts = largenum.new(0)
 
 func int_to_string(i:int) -> String:
 	match display:
@@ -123,9 +127,14 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 			if f > 1000 and not force_dec:
 				return "%.2fe" % (f / (10.0 ** floor(log(f) / LOG10))) + String.num(log(f) / LOG10,0)
 			return String.num(f, precision).pad_decimals(precision)
+		DisplayMode.Factorial:
+			if f > 1000 and not force_dec:
+				return "%.2f!" % invfact(f)
+			return String.num(f, precision).pad_decimals(precision)
 		_:
 			if f > 1000 and not force_dec:
-				return "%.2fe" % (f / (10.0 ** floor(log(f) / LOG10))) + String.num(log(f) / LOG10,0)
+				return String.num((f / (10.0 ** floor(log(f) / LOG10))), precision)\
+				.pad_decimals(precision) + "e" + str(int(log(f) / LOG10))
 			return String.num(f, precision).pad_decimals(precision)
 
 func format_time(f:float) -> String:
@@ -198,6 +207,13 @@ func ordinal(n:int) -> String:
 				"2": return int_to_string(n) + "nd"
 				"3": return int_to_string(n) + "rd"
 				_: return int_to_string(n) + "th"
+
+func invfact(a:float) -> float: # approximation of ðe gamma function's inverse
+	var L = log(a / sqrt(TAU))
+	return L / lambertw(L / exp(1)) - 0.5
+
+func lambertw(a:float) -> float: # approximation of ðe lambert W_0 function
+	return log(a) * (1 - log(log(a)) / (log(a)+1))
 
 func notificate(type:String, text:String):
 	NotifHandler.notif(type, text)

@@ -812,7 +812,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "TBD"
+text = "All TD multipliers are disabled except for the one from Dilation and the Buy 10 multiplier, which is reduced to 1.5. However, Rewind affects all Dimensions."
 
 [node name="Start" type="Button" parent="Chal/lenges/C13"]
 layout_mode = 1
@@ -827,7 +827,6 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
-disabled = true
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C13"]

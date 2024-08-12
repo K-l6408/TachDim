@@ -30,6 +30,329 @@ size_flags_vertical = 3
 [node name="HSeparator" type="HSeparator" parent="Auto/Buyers"]
 layout_mode = 2
 
+[node name="BigBang" type="Control" parent="Auto/Buyers"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/BigBang"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Big Bang Autobuyer
+[font_size=10] Activates every 30.00 seconds"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="Auto/Buyers/BigBang"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+text = "Decrease interval by 40%
+Cost: 1 EP"
+
+[node name="Amount" type="SpinBox" parent="Auto/Buyers/BigBang"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.699
+anchor_right = 0.699
+anchor_bottom = 1.0
+offset_left = -108.04
+offset_top = 11.0
+offset_right = 108.96
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+min_value = 1.0
+max_value = 1e+09
+value = 1.0
+prefix = "Big Bang at"
+suffix = "EP"
+
+[node name="Enabled" type="Button" parent="Auto/Buyers/BigBang"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="Auto/Buyers/BigBang"]
+wait_time = 10.0
+one_shot = true
+
+[node name="Galaxy" type="Control" parent="Auto/Buyers"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Galaxy"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Tachyon Galaxy Autobuyer
+[font_size=10] Activates every 10.00 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="Auto/Buyers/Galaxy"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+text = "Decrease interval by 40%
+Cost: 1 EP"
+
+[node name="Limit" type="SpinBox" parent="Auto/Buyers/Galaxy"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.699
+anchor_right = 0.699
+anchor_bottom = 1.0
+offset_left = -108.04
+offset_top = 11.0
+offset_right = 108.96
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+min_value = 1.0
+max_value = 127.0
+value = 1.0
+prefix = "Limit Galaxies to"
+
+[node name="Enabled" type="CheckBox" parent="Auto/Buyers/Galaxy/Limit"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.299988
+offset_top = 0.5
+offset_right = 20.3
+offset_bottom = 0.5
+grow_horizontal = 0
+grow_vertical = 2
+flat = true
+
+[node name="Enabled" type="Button" parent="Auto/Buyers/Galaxy"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="Auto/Buyers/Galaxy"]
+wait_time = 10.0
+one_shot = true
+
+[node name="Dilation" type="Control" parent="Auto/Buyers"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Dilation"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Time Dilation Autobuyer
+[font_size=10] Activates every 4.00 seconds
+Current bulk: ×1"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="Auto/Buyers/Dilation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+text = "Decrease interval by 40%
+Cost: 1 EP"
+
+[node name="Limit" type="SpinBox" parent="Auto/Buyers/Dilation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 0.5
+offset_left = -109.0
+offset_right = 108.0
+min_value = 1.0
+max_value = 127.0
+value = 1.0
+prefix = "Limit Dilation to"
+
+[node name="Enabled" type="CheckBox" parent="Auto/Buyers/Dilation/Limit"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.799988
+offset_right = 20.8
+grow_horizontal = 0
+grow_vertical = 2
+flat = true
+
+[node name="Ignore" type="SpinBox" parent="Auto/Buyers/Dilation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.699
+anchor_top = 0.5
+anchor_right = 0.699
+anchor_bottom = 1.044
+offset_left = -108.04
+offset_top = 0.5
+offset_right = 108.96
+offset_bottom = 0.0200005
+min_value = 1.0
+max_value = 127.0
+value = 1.0
+prefix = "Ignore the limit at"
+suffix = "TG"
+
+[node name="Enabled" type="CheckBox" parent="Auto/Buyers/Dilation/Ignore"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 21.0
+grow_horizontal = 0
+grow_vertical = 2
+flat = true
+
+[node name="Enabled" type="Button" parent="Auto/Buyers/Dilation"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="Auto/Buyers/Dilation"]
+wait_time = 4.0
+one_shot = true
+
+[node name="Rewind" type="Control" parent="Auto/Buyers"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Rewind"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 184.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Rewind Autobuyer
+[font_size=10] Activates every 1.50 seconds
+Current accuracy: 0.5"
+scroll_active = false
+
+[node name="Interval" type="Button" parent="Auto/Buyers/Rewind"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35
+anchor_right = 0.35
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the interval"
+
+[node name="Objective" type="SpinBox" parent="Auto/Buyers/Rewind"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.55
+anchor_top = 0.25
+anchor_right = 0.55
+anchor_bottom = 0.75
+offset_left = -61.5
+offset_top = -0.25
+offset_right = 61.5
+offset_bottom = 0.25
+min_value = 1.0
+max_value = 1000.0
+step = 0.01
+value = 4.0
+prefix = "Rewind at ×"
+
+[node name="Accuracy" type="Button" parent="Auto/Buyers/Rewind"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_right = 0.75
+anchor_bottom = 1.0
+offset_left = -108.56
+offset_right = 108.44
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Complete the challenge to
+upgrade the accuracy"
+
+[node name="Enabled" type="Button" parent="Auto/Buyers/Rewind"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Timer" type="Timer" parent="Auto/Buyers/Rewind"]
+wait_time = 0.5
+one_shot = true
+
 [node name="TimeSpeedLocked" type="Button" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
@@ -652,331 +975,11 @@ text = "Enabled"
 [node name="Timer" type="Timer" parent="Auto/Buyers/TD8"]
 wait_time = 0.8
 
-[node name="Rewind" type="Control" parent="Auto/Buyers"]
-clip_contents = true
-custom_minimum_size = Vector2(0, 45)
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Rewind"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 184.0
-grow_vertical = 2
-bbcode_enabled = true
-text = "[center]Rewind Autobuyer
-[font_size=10] Activates every 1.50 seconds
-Current accuracy: 0.5"
-scroll_active = false
-
-[node name="Interval" type="Button" parent="Auto/Buyers/Rewind"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.35
-anchor_right = 0.35
-anchor_bottom = 1.0
-offset_left = -108.56
-offset_right = 108.44
-grow_horizontal = 2
-grow_vertical = 2
-disabled = true
-text = "Complete the challenge to
-upgrade the interval"
-
-[node name="Objective" type="SpinBox" parent="Auto/Buyers/Rewind"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.55
-anchor_top = 0.25
-anchor_right = 0.55
-anchor_bottom = 0.75
-offset_left = -61.5
-offset_top = -0.25
-offset_right = 61.5
-offset_bottom = 0.25
-min_value = 1.0
-max_value = 1000.0
-step = 0.01
-value = 4.0
-prefix = "Rewind at ×"
-
-[node name="Accuracy" type="Button" parent="Auto/Buyers/Rewind"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.75
-anchor_right = 0.75
-anchor_bottom = 1.0
-offset_left = -108.56
-offset_right = 108.44
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"ToggleButton"
-disabled = true
-toggle_mode = true
-text = "Complete the challenge to
-upgrade the accuracy"
-
-[node name="Enabled" type="Button" parent="Auto/Buyers/Rewind"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -76.0
-offset_right = -5.0
-offset_bottom = 22.0
-grow_horizontal = 0
-toggle_mode = true
-button_pressed = true
-text = "Enabled"
-
-[node name="Timer" type="Timer" parent="Auto/Buyers/Rewind"]
-wait_time = 0.5
-one_shot = true
-
-[node name="Dilation" type="Control" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Dilation"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 184.0
-grow_vertical = 2
-bbcode_enabled = true
-text = "[center]Time Dilation Autobuyer
-[font_size=10] Activates every 4.00 seconds
-Current bulk: ×1"
-scroll_active = false
-
-[node name="Interval" type="Button" parent="Auto/Buyers/Dilation"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
-anchor_right = 0.4
-anchor_bottom = 1.0
-offset_left = -108.56
-offset_right = 108.44
-grow_horizontal = 2
-grow_vertical = 2
-text = "Decrease interval by 40%
-Cost: 1 EP"
-
-[node name="Limit" type="SpinBox" parent="Auto/Buyers/Dilation"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.7
-anchor_right = 0.7
-anchor_bottom = 0.5
-offset_left = -109.0
-offset_right = 108.0
-min_value = 1.0
-max_value = 127.0
-value = 1.0
-prefix = "Limit Dilation to"
-
-[node name="Enabled" type="CheckBox" parent="Auto/Buyers/Dilation/Limit"]
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 0.799988
-offset_right = 20.8
-grow_horizontal = 0
-grow_vertical = 2
-flat = true
-
-[node name="Ignore" type="SpinBox" parent="Auto/Buyers/Dilation"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.699
-anchor_top = 0.5
-anchor_right = 0.699
-anchor_bottom = 1.044
-offset_left = -108.04
-offset_top = 0.5
-offset_right = 108.96
-offset_bottom = 0.0200005
-min_value = 1.0
-max_value = 127.0
-value = 1.0
-prefix = "Ignore the limit at"
-suffix = "TG"
-
-[node name="Enabled" type="CheckBox" parent="Auto/Buyers/Dilation/Ignore"]
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1.0
-offset_right = 21.0
-grow_horizontal = 0
-grow_vertical = 2
-flat = true
-
-[node name="Enabled" type="Button" parent="Auto/Buyers/Dilation"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -76.0
-offset_right = -5.0
-offset_bottom = 22.0
-grow_horizontal = 0
-toggle_mode = true
-button_pressed = true
-text = "Enabled"
-
-[node name="Timer" type="Timer" parent="Auto/Buyers/Dilation"]
-wait_time = 4.0
-one_shot = true
-
-[node name="Galaxy" type="Control" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Galaxy"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 184.0
-grow_vertical = 2
-bbcode_enabled = true
-text = "[center]Tachyon Galaxy Autobuyer
-[font_size=10] Activates every 10.00 seconds
-Current bulk: ×1"
-scroll_active = false
-
-[node name="Interval" type="Button" parent="Auto/Buyers/Galaxy"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
-anchor_right = 0.4
-anchor_bottom = 1.0
-offset_left = -108.56
-offset_right = 108.44
-grow_horizontal = 2
-grow_vertical = 2
-text = "Decrease interval by 40%
-Cost: 1 EP"
-
-[node name="Limit" type="SpinBox" parent="Auto/Buyers/Galaxy"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.699
-anchor_right = 0.699
-anchor_bottom = 1.0
-offset_left = -108.04
-offset_top = 11.0
-offset_right = 108.96
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-min_value = 1.0
-max_value = 127.0
-value = 1.0
-prefix = "Limit Galaxies to"
-
-[node name="Enabled" type="CheckBox" parent="Auto/Buyers/Galaxy/Limit"]
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 0.299988
-offset_top = 0.5
-offset_right = 20.3
-offset_bottom = 0.5
-grow_horizontal = 0
-grow_vertical = 2
-flat = true
-
-[node name="Enabled" type="Button" parent="Auto/Buyers/Galaxy"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -76.0
-offset_right = -5.0
-offset_bottom = 22.0
-grow_horizontal = 0
-toggle_mode = true
-button_pressed = true
-text = "Enabled"
-
-[node name="Timer" type="Timer" parent="Auto/Buyers/Galaxy"]
-wait_time = 10.0
-one_shot = true
-
-[node name="BigBang" type="Control" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/BigBang"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 184.0
-grow_vertical = 2
-bbcode_enabled = true
-text = "[center]Big Bang Autobuyer
-[font_size=10] Activates every 30.00 seconds"
-scroll_active = false
-
-[node name="Interval" type="Button" parent="Auto/Buyers/BigBang"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
-anchor_right = 0.4
-anchor_bottom = 1.0
-offset_left = -108.56
-offset_right = 108.44
-grow_horizontal = 2
-grow_vertical = 2
-text = "Decrease interval by 40%
-Cost: 1 EP"
-
-[node name="Amount" type="SpinBox" parent="Auto/Buyers/BigBang"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.699
-anchor_right = 0.699
-anchor_bottom = 1.0
-offset_left = -108.04
-offset_top = 11.0
-offset_right = 108.96
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-min_value = 1.0
-max_value = 1e+09
-value = 1.0
-prefix = "Big Bang at"
-suffix = "EP"
-
-[node name="Enabled" type="Button" parent="Auto/Buyers/BigBang"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -76.0
-offset_right = -5.0
-offset_bottom = 22.0
-grow_horizontal = 0
-toggle_mode = true
-button_pressed = true
-text = "Enabled"
-
-[node name="Timer" type="Timer" parent="Auto/Buyers/BigBang"]
-wait_time = 10.0
-one_shot = true
-
+[connection signal="pressed" from="Auto/Buyers/BigBang/Interval" to="." method="improve_interval" binds= [11]]
+[connection signal="pressed" from="Auto/Buyers/Galaxy/Interval" to="." method="improve_interval" binds= [10]]
+[connection signal="pressed" from="Auto/Buyers/Dilation/Interval" to="." method="improve_interval" binds= [9]]
+[connection signal="pressed" from="Auto/Buyers/Rewind/Interval" to="." method="improve_interval" binds= [12]]
+[connection signal="pressed" from="Auto/Buyers/Rewind/Accuracy" to="." method="improve_rewd_accuracy"]
 [connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="Auto/Buyers/TimeSpeedLocked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="Auto/Buyers/TimeSpeed" method="show"]
 [connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="." method="unlock" binds= [0]]
@@ -1022,7 +1025,3 @@ one_shot = true
 [connection signal="pressed" from="Auto/Buyers/TD8Locked" to="." method="unlock" binds= [8]]
 [connection signal="pressed" from="Auto/Buyers/TD8/Interval" to="." method="improve_interval" binds= [8]]
 [connection signal="timeout" from="Auto/Buyers/TD8/Timer" to="." method="buytdim" binds= [8]]
-[connection signal="pressed" from="Auto/Buyers/Rewind/Interval" to="." method="improve_interval" binds= [12]]
-[connection signal="pressed" from="Auto/Buyers/Dilation/Interval" to="." method="improve_interval" binds= [9]]
-[connection signal="pressed" from="Auto/Buyers/Galaxy/Interval" to="." method="improve_interval" binds= [10]]
-[connection signal="pressed" from="Auto/Buyers/BigBang/Interval" to="." method="improve_interval" binds= [11]]

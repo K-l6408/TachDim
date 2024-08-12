@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=24 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Script" path="res://UI/main.gd" id="1_qdidp"]
@@ -11,15 +11,24 @@
 [ext_resource type="PackedScene" uid="uid://cy1o0vjg4sdbt" path="res://UI/achievements/achievements.tscn" id="6_mtmcd"]
 [ext_resource type="PackedScene" uid="uid://bb23v4wug50t3" path="res://UI/options/saving.tscn" id="6_rxys2"]
 [ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
+[ext_resource type="PackedScene" uid="uid://cbherf2m8xvad" path="res://UI/eternity/overcome.tscn" id="9_ug0mq"]
 [ext_resource type="PackedScene" uid="uid://damsts43cifm8" path="res://UI/statistics/statistics.tscn" id="10_whf7c"]
 [ext_resource type="PackedScene" uid="uid://ccgn0cmks56jk" path="res://UI/debug/debug.tscn" id="11_t3vch"]
 [ext_resource type="PackedScene" uid="uid://ptwedehhp243" path="res://UI/statistics/last_prestiges.tscn" id="11_t22am"]
 [ext_resource type="Script" path="res://UI/notifs.gd" id="12_ab4py"]
+[ext_resource type="Texture2D" uid="uid://d070fk356hwgi" path="res://images/glass.png" id="15_7ies4"]
+[ext_resource type="Shader" path="res://UI/eternity/glass.gdshader" id="15_hde6e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
 shader = ExtResource("3_o4cqe")
 shader_parameter/pixelsize = 0.00769231
 shader_parameter/zoom = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_itacs"]
+shader = ExtResource("15_hde6e")
+shader_parameter/refloffset = Vector2(20, 10)
+shader_parameter/refroffset = Vector2(1, 1)
+shader_parameter/refrcolor = Vector4(1, 1, 1, 0.7)
 
 [sub_resource type="Animation" id="Animation_m0sop"]
 resource_name = "bang"
@@ -49,9 +58,50 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_a3cka"]
+resource_name = "overcome"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D/CanvasLayer:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D/CanvasLayer/TextureRect:rotation")
+tracks/1/interp = 4
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 1.2, 2),
+"transitions": PackedFloat32Array(1, 1, 1, -0.5, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.523599, 1.5708]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera2D/CanvasLayer/TextureRect:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.2, 1.4, 2),
+"transitions": PackedFloat32Array(1, 0, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(200, -100), Vector2(400, 700)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8dv4p"]
 _data = {
-"bang": SubResource("Animation_m0sop")
+"bang": SubResource("Animation_m0sop"),
+"overcome": SubResource("Animation_a3cka")
 }
 
 [node name="Main" type="Control"]
@@ -207,6 +257,27 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
+[node name="Eternity" type="Panel" parent="HSplitContainer/Resources"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="EternityButton" type="Button" parent="HSplitContainer/Resources/Eternity"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 5.0
+offset_right = -7.0
+offset_bottom = -5.0
+grow_horizontal = 2
+theme_type_variation = &"ButtonEtern"
+text = "Eternity for
+1.75e4 EP
+(124 EP/s)"
+
 [node name="Panel2" type="Panel" parent="HSplitContainer/Resources"]
 clip_contents = true
 layout_mode = 2
@@ -252,7 +323,7 @@ layout_mode = 2
 [node name="Eternity Upgrades" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity" instance=ExtResource("6_0l55j")]
 layout_mode = 2
 
-[node name="Overcome Eternity" type="Control" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity"]
+[node name="Overcome Eternity" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity" instance=ExtResource("9_ug0mq")]
 visible = false
 layout_mode = 2
 
@@ -291,6 +362,26 @@ position = Vector2(480, 320)
 ignore_rotation = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Camera2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+layer = 2
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D/CanvasLayer"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_itacs")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 400.0
+offset_top = 700.0
+offset_right = 399.999
+offset_bottom = 700.001
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+texture = ExtResource("15_7ies4")
+expand_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -334,3 +425,4 @@ script = ExtResource("12_ab4py")
 
 [connection signal="pressed" from="HSplitContainer/Resources/Rewind/Button" to="HSplitContainer/Resources/Rewind/Button" method="_on_pressed"]
 [connection signal="rewind" from="HSplitContainer/Resources/Rewind/Button" to="." method="rewind"]
+[connection signal="pressed" from="HSplitContainer/Resources/Eternity/EternityButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" method="eternity"]

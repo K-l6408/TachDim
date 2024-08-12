@@ -1,6 +1,8 @@
 extends Node2D
 
 func _process(_delta):
+	Globals.display = GL.DisplayMode.Factorial
+	
 	var JJ = largenum.new(1)
 	JJ.exponent = 10 ** $SpinBox.value
 	var KK = largenum.new($SpinBox2.value)

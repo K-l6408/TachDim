@@ -72,7 +72,9 @@ var canDilate :
 var canGalaxy :
 	get: return (not %Prestiges/GaButton.disabled) and $VSplitContainer.visible
 var canBigBang:
-	get: return $ETERNITY.visible
+	get:
+		var logfinity = 2048 if Globals.Challenge == 15 else 1024
+		return (Globals.Tachyons.log2() >= logfinity)
 
 var buylim : int :
 	get:
@@ -112,6 +114,8 @@ func rewind(score:float):
 	else:
 		for i in 7:
 			DimAmount[i].pow2self(1 - score)
+			if DimAmount[i].less(DimPurchase[i]):
+				DimAmount[i] = largenum.new(DimPurchase[i])
 
 func rewindBoost(score := 1.0) -> largenum:
 	var RBoost = largenum.new(DimAmount[0].log10()).power(1.5).divide(10)
@@ -166,6 +170,9 @@ func buydim(which, bulkoverride := 0):
 func buytspeed(maxm:bool):
 	while TSpeedCost.less(Globals.Tachyons):
 		Globals.Tachyons.add2self(TSpeedCost.neg())
+		if Globals.Tachyons.sign < 0:
+			Globals.Tachyons.add2self(TSpeedCost)
+			return
 		TSpeedCost.mult2self(TSpeedCostIncrease)
 		TSpeedCount += 1
 		if Globals.Challenge == 2: C2Multiplier = 0.0
@@ -191,11 +198,7 @@ func eternity():
 	if Globals.Challenge != 0:
 		Globals.CompletedChallenges |= 1 << (Globals.Challenge - 1)
 	
-	var epgain = largenum.new(1)
-	if Globals.Challenge == 15 or Globals.progress >= Globals.Progression.Overcome:
-		epgain = largenum.new(5).power((Globals.Tachyons.log2() / 1024) - 1)
-	
-	epgain.mult2self(largenum.new(2).power(Globals.EUHandler.EPMultBought))
+	var epgain = epgained()
 	
 	Globals.EternityPts.add2self(epgain)
 	Globals.Eternities .add2self(1)
@@ -218,6 +221,8 @@ func eternity():
 			Globals.Achievemer.set_unlocked(4, 4)
 	if not Globals.Achievemer.is_unlocked(3, 6) and Globals.eternTime <= 600:
 		Globals.Achievemer.set_unlocked(3, 6)
+	if not Globals.Achievemer.is_unlocked(4, 2) and Globals.eternTime <= 60:
+		Globals.Achievemer.set_unlocked(4, 2)
 	if not Globals.Achievemer.is_unlocked(3, 7) and Globals.TGalaxies == 1:
 		Globals.Achievemer.set_unlocked(3, 7)
 	
@@ -230,6 +235,18 @@ func eternity():
 	await get_tree().process_frame
 	reset(2)
 	Globals.animation("bang")
+
+func epgained():
+	var epgain = largenum.new(1)
+	if Globals.Challenge == 15 or Globals.progress >= Globals.Progression.Overcome:
+		epgain = largenum.new(5).power((Globals.Tachyons.log2() / 1024) - 1)
+	
+	epgain.mult2self(largenum.new(2).power(Globals.EUHandler.EPMultBought))
+	
+	if epgain.to_float() < 1e10:
+		epgain = largenum.new(floor(epgain.to_float()))
+	
+	return epgain
 
 func reset(level := 0, challengeReset := true):
 	if level >= 2 and challengeReset: Globals.Challenge = 0
@@ -264,8 +281,9 @@ func reset(level := 0, challengeReset := true):
 		else:                                 Globals.TDilation = 0
 		if Globals.Challenge == 10: C10Power = 0
 	if level >= 2:
-		if Globals.EUHandler.is_bought(17): Globals.TGalaxies = 1
-		else:                               Globals.TGalaxies = 0
+		if Globals.Challenge != 0:            Globals.TGalaxies = 0
+		elif Globals.EUHandler.is_bought(17): Globals.TGalaxies = 1
+		else:                                 Globals.TGalaxies = 0
 		if Globals.Challenge == 10:
 			%Prestiges/DiButton.material = rewindNode.material.duplicate()
 			%Prestiges/DiButton.material.set_shader_parameter("pixelsize", 1./250.)
@@ -277,20 +295,21 @@ func reset(level := 0, challengeReset := true):
 func _process(delta):
 	var logfinity = 2048 if Globals.Challenge == 15 else 1024
 	
-	$VSplitContainer.visible = (Globals.Tachyons.log2() <= logfinity)
-	$ETERNITY.visible        = (Globals.Tachyons.log2() >= logfinity)
-	
-	if canBigBang:
-		custom_minimum_size.y = $ETERNITY.size.y
-	else:
-		custom_minimum_size.y = $VSplitContainer.size.y
-	
-	if Globals.Tachyons.log2() >= logfinity:
-		Globals.Tachyons.exponent = logfinity
-		Globals.Tachyons.mantissa = (1 << 62)
-		if Input.is_action_pressed("BBang"):
-			eternity()
-		return
+	if Globals.progress < GL.Progression.Overcome:
+		$VSplitContainer.visible = (Globals.Tachyons.log2() <= logfinity)
+		$ETERNITY.visible        = (Globals.Tachyons.log2() >= logfinity)
+		
+		if canBigBang:
+			custom_minimum_size.y = $ETERNITY.size.y
+		else:
+			custom_minimum_size.y = $VSplitContainer.size.y
+		
+		if Globals.Tachyons.log2() >= logfinity:
+			Globals.Tachyons.exponent = logfinity
+			Globals.Tachyons.mantissa = (1 << 62)
+			if Input.is_action_pressed("BBang"):
+				eternity()
+			return
 	
 	if Globals.Challenge == 6:
 		DimsUnlocked = min(Globals.TDilation + 4, 6)
@@ -303,13 +322,17 @@ func _process(delta):
 		else:					i.show()
 		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % \
 		[Globals.int_to_string(DimPurchase[k-1]), "" if DimPurchase[k-1] == 1 else "s"]
-		i.get_node("Buy/Progress").value = int(min((Globals.Tachyons.divide(DimCost[k-1])).to_float(), buylim))
+		var buyable = (Globals.Tachyons.divide(DimCost[k-1])).to_float()
+		if abs(buyable) > buylim:
+			buyable = buylim
+		buyable = int(buyable)
+		i.get_node("Buy/Progress").value = int(buyable)
 		i.get_node("Buy/Progress").max_value = buylim - DimPurchase[k-1] % buylim
 		i.get_node("Buy").disabled = Globals.Tachyons.less(DimCost[k-1])
 		i.get_node("A&G/Amount").text = DimAmount[k-1].to_string()
 		i.get_node("Buy").text = "Buy %s\nCost: %s TC" % [
-			Globals.int_to_string(min(Globals.Tachyons.divide(DimCost[k-1]).to_float(), buylim - DimPurchase[k-1] % buylim)),
-			DimCost[k-1].multiply(min(max(int((Globals.Tachyons.divide(DimCost[k-1])).to_float()), 1), buylim - DimPurchase[k-1] % buylim)).to_string()
+			Globals.int_to_string(min(buyable, buylim - DimPurchase[k-1] % buylim)),
+			DimCost[k-1].multiply(min(max(buyable, 1), buylim - DimPurchase[k-1] % buylim)).to_string()
 		]
 	%TopButtons/Timespeed.disabled = Globals.Tachyons.less(TSpeedCost)
 	%TopButtons/Timespeed/BuyMax.disabled = Globals.Tachyons.less(TSpeedCost)
@@ -330,6 +353,8 @@ func _process(delta):
 	var buy10mult = 2
 	if Globals.Challenge == 4: buy10mult = 1.0 + 0.2 * Globals.TDilation
 	elif Globals.EUHandler.is_bought(5): buy10mult = 2.2222222
+	if Globals.Challenge == 13:
+		buy10mult = 1.8
 	
 	%Important.text = \
 	"[center]You have [font_size=20]" + Globals.Tachyons.to_string() + \
@@ -353,16 +378,16 @@ func _process(delta):
 		[Globals.ordinal(2), Globals.ordinal(1), Globals.float_to_string(0.03)]
 	if Globals.Challenge == 9:
 		%Important.text += "\n \n[font_size=10]Production: [/font_size]/ " + \
-		Globals.Tachyons.power(0.1).to_string()
+		Globals.Tachyons.power(0.05).to_string()
 	if Globals.Challenge == 14:
 		%Important.text += "\n \n[font_size=10]Production: [/font_size]/ " + \
 		Globals.float_to_string(C14Divisor)
 	
-	if Globals.TDilation < 5:
+	if Globals.TDilation < 5 and Globals.Challenge != 13:
 		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (requires %s Time Dilation) " % \
 		Globals.int_to_string(5)
-	elif DimAmount[7].exponent == -INF:
+	elif DimAmount[7].exponent == -INF and Globals.Challenge != 13:
 		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (no %s TD)" % \
 		Globals.ordinal(8)
@@ -372,8 +397,14 @@ func _process(delta):
 		Globals.int_to_string(1)
 	else:
 		rewindNode.disabled = false
-		rewindNode.text = "Dimensional Rewind (×%s to %s TD)" % \
-		[rewindBoost(rewindNode.score).divide(RewindMult).to_string(), Globals.ordinal(8)]
+		if Globals.Challenge == 13:
+			rewindNode.text = "Dimensional Rewind (×%s to all TDs)" % [
+				rewindBoost(rewindNode.score).divide(RewindMult).to_string()
+			]
+		else:
+			rewindNode.text = "Dimensional Rewind (×%s to %s TD)" % [
+				rewindBoost(rewindNode.score).divide(RewindMult).to_string(), Globals.ordinal(8)
+			]
 		if Input.is_action_pressed("Rewind"):
 			rewind(rewindNode.score)
 	
@@ -557,31 +588,34 @@ func _process(delta):
 		else:
 			mult.mult2self(largenum.new(DilaBoost).power(max(Globals.TDilation - i + 1, 0)))
 		
-		if Globals.EUHandler.is_bought(1): mult.mult2self(Formulas.eternity_11())
-		if Globals.EUHandler.is_bought(2):
-			if i == 1 or i == 8: mult.mult2self(Formulas.eternity_23())
-		if Globals.EUHandler.is_bought(3):
-			if i == 2 or i == 7: mult.mult2self(Formulas.eternity_23())
-		if Globals.EUHandler.is_bought(7):
-			if i == 3 or i == 6: mult.mult2self(Formulas.eternity_23())
-		if Globals.EUHandler.is_bought(6):
-			if i == 4 or i == 5: mult.mult2self(Formulas.eternity_23())
-		if Globals.EUHandler.is_bought(9): mult.mult2self(Formulas.achievement_mult())
-		if Globals.EUHandler.is_bought(11): mult.mult2self(Globals.EternityPts.add(1))
+		if Globals.Challenge != 13:
+			if Globals.EUHandler.is_bought(1): mult.mult2self(Formulas.eternity_11())
+			if Globals.EUHandler.is_bought(2):
+				if i == 1 or i == 8: mult.mult2self(Formulas.eternity_23())
+			if Globals.EUHandler.is_bought(3):
+				if i == 2 or i == 7: mult.mult2self(Formulas.eternity_23())
+			if Globals.EUHandler.is_bought(7):
+				if i == 3 or i == 6: mult.mult2self(Formulas.eternity_23())
+			if Globals.EUHandler.is_bought(6):
+				if i == 4 or i == 5: mult.mult2self(Formulas.eternity_23())
+			if Globals.EUHandler.is_bought(9): mult.mult2self(Formulas.achievement_mult())
+			if Globals.EUHandler.is_bought(11): mult.mult2self(Globals.EternityPts.add(1))
 		
-		if i == 8: mult.mult2self(RewindMult)
+		if i == 8 or Globals.Challenge == 13:
+			mult.mult2self(RewindMult)
 		
 		if Globals.Challenge == 2: mult.mult2self(C2Multiplier)
 		if Globals.Challenge == 3:
 			if i == 3: mult.mult2self(3)
 			if i <= 2: mult.mult2self(0.03)
-		if Globals.Challenge ==  9: mult.div2self(Globals.Tachyons.power(0.1))
+		if Globals.Challenge ==  9: mult.div2self(Globals.Tachyons.power(0.05))
 		if Globals.Challenge == 14: mult.div2self(C14Divisor)
 		
-		if Globals.Achievemer.is_unlocked(2, 5): mult.mult2self(1.1)
-		if Globals.Achievemer.is_unlocked(2, 7) and i == 1: mult.mult2self(1.5)
-		if Globals.Achievemer.is_unlocked(3, 4) and i != 8: mult.mult2self(1.5)
-		if Globals.Achievemer.is_unlocked(4, 8): mult.mult2self(1.2)
+		if Globals.Challenge != 13:
+			if Globals.Achievemer.is_unlocked(2, 5): mult.mult2self(1.1)
+			if Globals.Achievemer.is_unlocked(2, 7) and i == 1: mult.mult2self(1.5)
+			if Globals.Achievemer.is_unlocked(3, 4) and i != 8: mult.mult2self(1.5)
+			if Globals.Achievemer.is_unlocked(4, 8): mult.mult2self(1.2)
 		
 		if not Globals.Achievemer.is_unlocked(3, 1) and mult.log10() >= 40:
 			Globals.Achievemer.set_unlocked(3, 1)

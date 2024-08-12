@@ -158,11 +158,15 @@ func saveF(file : String = saveFilePath):
 		Globals.Automation.get_node("Auto/Buyers/Galaxy/Enabled").button_pressed
 		DATA["autobanger enabled"] = \
 		Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed
+		DATA["rewind buyer int. updrades"] = Globals.Automation.RewdAQups
+		DATA["rewind buyer acc. updrades"] = Globals.Automation.RewdUpgrades
 		DATA["rewind buyer objective"] = \
 		Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value
 		DATA["dilation buy limit"] = Globals.Automation.DilLimit
 		DATA["dilation limit ignore"] = Globals.Automation.DilIgnore
 		DATA["tach gal buy limit"] = Globals.Automation.GalLimit
+		DATA["timespeed buyer mode"] = \
+		Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Mode").button_pressed
 		
 		DATA["ep multiplier buys"] = Globals.EUHandler.EPMultBought
 		
@@ -281,6 +285,13 @@ func loadF(file : String = saveFilePath):
 		if DATA.has("rewind buyer objective"):
 			Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value\
 			= DATA["rewind buyer objective"]
+		if DATA.has("rewind buyer int. updrades"):
+			Globals.Automation.RewdAQups = DATA["rewind buyer int. updrades"]
+		if DATA.has("rewind buyer acc. updrades"):
+			Globals.Automation.RewdUpgrades = DATA["rewind buyer acc. updrades"]
+		if DATA.has("timespeed buyer mode"):
+			Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Mode").button_pressed\
+			= DATA["timespeed buyer mode"]
 		Globals.Automation.DilLimit = DATA["dilation buy limit"]
 		Globals.Automation.DilIgnore = DATA["dilation limit ignore"]
 		Globals.Automation.GalLimit = DATA["tach gal buy limit"]

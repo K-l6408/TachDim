@@ -40,7 +40,7 @@ func _process(_delta):
 	$Chal/lenges/C5/Condition.text = "Tachyon Dimensions take " + \
 	"%s purchases instead of %s to increase their multiplier." % \
 	[Globals.int_to_string(15), Globals.int_to_string(10)] + \
-	" Dilation and Galaxies are more expensive."
+	" Dilation, Galaxies and Timespeed upgrades are more expensive."
 	
 	$Chal/lenges/C6/Condition.text = "The %s and %s Dimensions are " % \
 	[Globals.ordinal(7), Globals.ordinal(8)] + \
@@ -51,6 +51,13 @@ func _process(_delta):
 	
 	$Chal/lenges/C12/Condition.text = "Timespeed strength starts at %s instead of %s." % \
 	[Globals.float_to_string(1.1), Globals.float_to_string(1.13)]
+	
+	$Chal/lenges/C13/Condition.text = "%s %s %s %s. %s" % [
+		"All TD multipliers are disabled except for the one from Dilation and the Buy",
+		Globals.int_to_string(10),
+		"multiplier, which is reduced to", Globals.float_to_string(1.8),
+		"However, Rewind affects all Dimensions."
+	]
 	
 	if Globals.Challenge == 0:
 		$CurrentChallenge/Label.text = "You aren't in any challenge."

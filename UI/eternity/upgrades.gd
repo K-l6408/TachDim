@@ -31,6 +31,8 @@ func buyEPmult():
 	Globals.EternityPts.add2self(largenum.ten_to_the(EPMultBought + 1).neg())
 	if Globals.EternityPts.sign < 0:
 		Globals.EternityPts.add2self(largenum.ten_to_the(EPMultBought + 1))
+		return
+	EPMultBought += 1
 
 func _process(_delta):
 	for i in $Columns.get_child_count():
@@ -71,7 +73,8 @@ func _process(_delta):
 		$AutoGal.remove_theme_stylebox_override("disabled")
 		$AutoGal.disabled = Globals.EternityPts.less(Costs[4][0])
 	
-	$EPMult.disabled = Globals.EternityPts.less(largenum.ten_to_the(EPMultBought + 1))
+	$EPMult.disabled = \
+	Globals.EternityPts.less(largenum.ten_to_the(EPMultBought + 1))
 	
 	if is_bought(1) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col1/TimePlayed.text = \
@@ -203,7 +206,8 @@ func _process(_delta):
 	if is_bought(17) == Input.is_action_pressed("BuyOne"):
 		$AutoGal.text += "\n\nCost: %s EP" % Globals.int_to_string(Costs[4][0])
 	
-	$EPMult.text = "Multiply EP gained from\nBig Bangs by %s.\n\nCurrently: ×%s\n\nCost: %s" % [
+	$EPMult.text = \
+	"Multiply EP gained from\nBig Bangs by %s.\n\nCurrently: ×%s\n\nCost: %s EP" % [
 		Globals.int_to_string(2), largenum.new(2).power(EPMultBought),
 		largenum.ten_to_the(EPMultBought + 1)
 	]

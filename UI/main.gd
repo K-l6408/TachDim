@@ -51,21 +51,34 @@ func _process(_delta):
 	TBar.set_tab_hidden(TBar.tab_count - 1, not debugMode)
 	
 	%Resources/Rewind/Button.disabled = \
-	Globals.TDHandler.rewindNode.disabled
+	%Tabs/Dimensions/Tachyons.rewindNode.disabled
 	%Resources/Rewind.visible = \
-	Globals.TDHandler.rewindNode.visible
+	%Tabs/Dimensions/Tachyons.rewindNode.visible
 	
-	%Resources/EP.visible = (Globals.progress >= Globals.Progression.Eternity)
-	%Resources/Challenge.visible = (Globals.progress >= Globals.Progression.Eternity)
+	%Resources/Eternity.visible = Globals.progress >= GL.Progression.Overcome
+	%Resources/Eternity.disabled = not %Tabs/Dimensions/Tachyons.canBigBang
+	
+	%Resources/EP.visible = (Globals.progress >= GL.Progression.Eternity)
+	%Resources/Challenge.visible = (Globals.progress >= GL.Progression.Eternity)
 	
 	%Resources/Tachyons/Text.text = \
 	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Globals.Tachyons.to_string()
 	%Resources/EP/Text.text = \
-	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Points[/color][/center]" % \
-	[get_theme_color("font_color", "ButtonEtern").to_html(false), Globals.EternityPts.to_string()]
+	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Points[/color][/center]" % [
+		get_theme_color("font_color", "ButtonEtern").to_html(false),
+		Globals.EternityPts.to_string()
+	]
 	%Resources/Challenge/Text.text = \
 	"[center]Current Challenge:\n[font_size=16]%s[/font_size][/center]" % \
 	("C" + Globals.int_to_string(Globals.Challenge) if Globals.Challenge > 0 else "None")
+	if %Resources/Eternity/EternityButton.disabled:
+		%Resources/Eternity/EternityButton.text = "Reach %s Tachyons" % \
+		largenum.two_to_the(2048 if Globals.Challenge == 15 else 1024)
+	else:
+		%Resources/Eternity/EternityButton.text = "Eternity for\n%s EP\n(%s EP/s)" % [
+			%Tabs/Dimensions/Tachyons.epgained().to_string(),
+			%Tabs/Dimensions/Tachyons.epgained().divide(Globals.eternTime).to_string()
+		]
 
 func rewind(score):
-	Globals.TDHandler.rewind(score)
+	%Tabs/Dimensions/Tachyons.rewind(score)
