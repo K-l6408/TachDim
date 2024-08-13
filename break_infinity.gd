@@ -190,7 +190,7 @@ func less(b) -> bool:
 func _to_string() -> String:
 	var logfinity = 1024
 	if Globals.Challenge == 15: logfinity = 2048
-	if log2() >= logfinity and Globals.progress < GL.Progression.Overcome:
+	if log2() >= logfinity and (Globals.progress < GL.Progression.Overcome or Globals.Challenge != 0):
 		return "Infinite"
 	
 	match Globals.display:

@@ -9,3 +9,6 @@ static func eternity_23():
 
 static func achievement_mult():
 	return largenum.new(1.025).power(Globals.Achievemer.achgot)
+
+static func overcome_1():
+	return Globals.Tachyons.power(0.01)

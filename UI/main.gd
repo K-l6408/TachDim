@@ -21,6 +21,7 @@ func _ready():
 	Globals.Animater = $AnimationPlayer
 	Globals.VisualSett = %Tabs/Options/Visual
 	Globals.EUHandler = %"Tabs/Eternity/Eternity Upgrades"
+	Globals.OEUHandler = %"Tabs/Eternity/Overcome Eternity"
 	
 	for i in %Tabs.get_child_count():
 		TBar.set_tab_title(i, "%s %s %s" % \
@@ -55,8 +56,8 @@ func _process(_delta):
 	%Resources/Rewind.visible = \
 	%Tabs/Dimensions/Tachyons.rewindNode.visible
 	
-	%Resources/Eternity.visible = Globals.progress >= GL.Progression.Overcome
-	%Resources/Eternity.disabled = not %Tabs/Dimensions/Tachyons.canBigBang
+	%Resources/Eternity.visible = Globals.progress >= GL.Progression.Overcome and Globals.Challenge == 0
+	%Resources/Eternity/EternityButton.disabled = not %Tabs/Dimensions/Tachyons.canBigBang
 	
 	%Resources/EP.visible = (Globals.progress >= GL.Progression.Eternity)
 	%Resources/Challenge.visible = (Globals.progress >= GL.Progression.Eternity)
@@ -72,8 +73,7 @@ func _process(_delta):
 	"[center]Current Challenge:\n[font_size=16]%s[/font_size][/center]" % \
 	("C" + Globals.int_to_string(Globals.Challenge) if Globals.Challenge > 0 else "None")
 	if %Resources/Eternity/EternityButton.disabled:
-		%Resources/Eternity/EternityButton.text = "Reach %s Tachyons" % \
-		largenum.two_to_the(2048 if Globals.Challenge == 15 else 1024)
+		%Resources/Eternity/EternityButton.text = "Reach\n%s Tachyons" % largenum.two_to_the(1024)
 	else:
 		%Resources/Eternity/EternityButton.text = "Eternity for\n%s EP\n(%s EP/s)" % [
 			%Tabs/Dimensions/Tachyons.epgained().to_string(),

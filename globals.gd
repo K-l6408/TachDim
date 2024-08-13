@@ -55,6 +55,7 @@ var Automation : Control
 var Achievemer : Control
 var VisualSett : Control
 var EUHandler  : Control
+var OEUHandler : Control
 
 var NotifHandler : Control
 

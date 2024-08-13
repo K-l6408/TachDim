@@ -74,7 +74,8 @@ var canGalaxy :
 var canBigBang:
 	get:
 		var logfinity = 2048 if Globals.Challenge == 15 else 1024
-		return (Globals.Tachyons.log2() >= logfinity)
+		return (Globals.Tachyons.log2() >= logfinity) or (topTachyonsInEternity.log2() >= logfinity)
+var topTachyonsInEternity := largenum.new(0)
 
 var buylim : int :
 	get:
@@ -209,7 +210,7 @@ func eternity():
 	if Globals.fastestEtern.time > Globals.eternTime \
 	or Globals.fastestEtern.time < 0:
 		Globals.fastestEtern.time		= Globals.eternTime
-		Globals.fastestEtern.epgain		= largenum.new(1)
+		Globals.fastestEtern.epgain		= epgain
 		Globals.fastestEtern.eternities = largenum.new(1)
 	
 	if not Globals.Achievemer.is_unlocked(2, 8):
@@ -239,7 +240,7 @@ func eternity():
 func epgained():
 	var epgain = largenum.new(1)
 	if Globals.Challenge == 15 or Globals.progress >= Globals.Progression.Overcome:
-		epgain = largenum.new(5).power((Globals.Tachyons.log2() / 1024) - 1)
+		epgain = largenum.new(5).power((topTachyonsInEternity.log2() / 1024) - 1)
 	
 	epgain.mult2self(largenum.new(2).power(Globals.EUHandler.EPMultBought))
 	
@@ -290,12 +291,19 @@ func reset(level := 0, challengeReset := true):
 		else:
 			%Prestiges/DiButton.material = null
 		Globals.eternTime = 0
+		topTachyonsInEternity = largenum.new(0)
 	updateTSpeed()
 
 func _process(delta):
 	var logfinity = 2048 if Globals.Challenge == 15 else 1024
 	
-	if Globals.progress < GL.Progression.Overcome:
+	if canBigBang and Input.is_action_pressed("BBang"):
+		eternity()
+	
+	if topTachyonsInEternity.less(Globals.Tachyons):
+		topTachyonsInEternity = largenum.new(Globals.Tachyons)
+	
+	if Globals.progress < GL.Progression.Overcome or Globals.Challenge != 0:
 		$VSplitContainer.visible = (Globals.Tachyons.log2() <= logfinity)
 		$ETERNITY.visible        = (Globals.Tachyons.log2() >= logfinity)
 		
@@ -307,8 +315,6 @@ func _process(delta):
 		if Globals.Tachyons.log2() >= logfinity:
 			Globals.Tachyons.exponent = logfinity
 			Globals.Tachyons.mantissa = (1 << 62)
-			if Input.is_action_pressed("BBang"):
-				eternity()
 			return
 	
 	if Globals.Challenge == 6:
@@ -412,6 +418,7 @@ func _process(delta):
 	"Time Dilation to boost the power\nof Timespeed upgrades"
 	var DilaBoost = 2
 	if Globals.EUHandler.is_bought(10): DilaBoost = 2.5
+	if Globals.OEUHandler.is_bought(5): DilaBoost = 3.0
 	if Globals.Challenge == 10:
 		DilaBoost = 2.2 ** (1 - abs(C10Score()))
 	if Globals.Challenge == 8: DilaBoost = 1
@@ -616,6 +623,9 @@ func _process(delta):
 			if Globals.Achievemer.is_unlocked(2, 7) and i == 1: mult.mult2self(1.5)
 			if Globals.Achievemer.is_unlocked(3, 4) and i != 8: mult.mult2self(1.5)
 			if Globals.Achievemer.is_unlocked(4, 8): mult.mult2self(1.2)
+		
+		if Globals.OEUHandler.is_bought(1):
+			mult.mult2self(Formulas.overcome_1())
 		
 		if not Globals.Achievemer.is_unlocked(3, 1) and mult.log10() >= 40:
 			Globals.Achievemer.set_unlocked(3, 1)

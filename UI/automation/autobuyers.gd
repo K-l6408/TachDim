@@ -97,6 +97,17 @@ var GalLimit:
 		$Auto/Buyers/Galaxy/Limit.value = abs(value)
 		$Auto/Buyers/Galaxy/Limit/Enabled.button_pressed = (sign(value) > 0)
 
+var BigBangAtEP := largenum.new(1)
+
+@onready var sizechange = [
+	$Auto/Buyers/HSeparator, $Auto/Buyers/BigBang, $Auto/Buyers/Galaxy, $Auto/Buyers/Dilation,
+	$Auto/Buyers/TimeSpeedLocked, $Auto/Buyers/TimeSpeed, $Auto/Buyers/TD1Locked, $Auto/Buyers/TD1,
+	$Auto/Buyers/TD2Locked, $Auto/Buyers/TD2, $Auto/Buyers/TD3Locked, $Auto/Buyers/TD3,
+	$Auto/Buyers/TD4Locked, $Auto/Buyers/TD4, $Auto/Buyers/TD5Locked, $Auto/Buyers/TD5,
+	$Auto/Buyers/TD6Locked, $Auto/Buyers/TD6, $Auto/Buyers/TD7Locked, $Auto/Buyers/TD7,
+	$Auto/Buyers/TD8Locked, $Auto/Buyers/TD8, $Auto/Buyers
+]
+
 func TDInterval(which):
 	var i = (0.5 + which * 0.1) * (0.6 ** TDUpgrades[which])
 	if i < 0.11: return MIN_INTERVAL
@@ -209,10 +220,13 @@ func _process(_delta):
 		if $Auto/Buyers/Galaxy/Enabled.button_pressed:
 			buygala()
 			$Auto/Buyers/Galaxy/Timer.start(GalInterval())
-	if Globals.challengeCompleted(14) and $Auto/Buyers/BigBang/Timer.time_left == 0:
+	if Globals.challengeCompleted(14) and $Auto/Buyers/BigBang/Timer.time_left == 0 and (Globals.progress < GL.Progression.Overcome or Globals.Challenge != 0):
 		if $Auto/Buyers/BigBang/Enabled.button_pressed:
 			bigbang()
 			$Auto/Buyers/BigBang/Timer.start(BangInterval())
+	if Globals.progress >= GL.Progression.Overcome:
+		if $Auto/Buyers/BigBang/Enabled.button_pressed and BigBangAtEP.less(Globals.TDHandler.epgained()):
+			bigbang()
 	
 	if Input.is_action_pressed("ToggleAB"):
 		for i in range(1, 9):
@@ -221,11 +235,27 @@ func _process(_delta):
 		if Input.is_action_just_pressed("BuyTSpeed"):
 			$Auto/Buyers/TimeSpeed/Enabled.button_pressed = not $Auto/Buyers/TimeSpeed/Enabled.button_pressed
 	
+	if not Globals.Achievemer.is_unlocked(4, 3):
+		var do = true
+		for i in 8:
+			if TDUpgrades[i] < IntervalCap[i]:
+				do = false
+				break
+		if do and not $Auto/Buyers/TimeSpeed/Interval.visible:
+			Globals.Achievemer.set_unlocked(4, 3)
+	
 	$Auto/Buyers/TimeSpeed/Interval.visible = TSUpgrades < 3
 	$Auto/Buyers/Rewind/Interval.visible  = RewdUpgrades < 7
+	$Auto/Buyers/Rewind/Accuracy.visible     = RewdAQups < 8
 	$Auto/Buyers/Dilation/Interval.visible = DilUpgrades < 8
 	$Auto/Buyers/Galaxy/Interval.visible   = GalUpgrades < 9
 	$Auto/Buyers/BigBang/Interval.visible = BangUpgrades < 13
+	
+	for i in sizechange:
+		if i != null: i.custom_minimum_size.x = size.x - 10
+	if not ($Auto/Buyers/Rewind/Interval.visible or $Auto/Buyers/Rewind/Accuracy.visible):
+		$Auto/Buyers/Rewind.custom_minimum_size = Vector2(250, 80)
+	else: $Auto/Buyers/Rewind.custom_minimum_size = Vector2(size.x - 10, 45)
 	
 	$Auto/Buyers/Rewind/RichTextLabel.text = \
 	"[center]Rewind Autobuyer\n[font_size=10] Activates every %s seconds\nCurrent accuracy: %s" % \
@@ -298,7 +328,7 @@ func _process(_delta):
 	Globals.float_to_string(2.0 ** BangUpgrades, 0)]
 	$Auto/Buyers/BigBang/Interval.disabled = Globals.EternityPts.less(2 ** BangUpgrades)
 	$Auto/Buyers/BigBang/RichTextLabel.text = \
-	"[center]Big Bang Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: ×1" % \
+	"[center]Big Bang Autobuyer\n[font_size=10]Activates every %s seconds" % \
 	Globals.float_to_string(BangInterval())
 
 func unlock(which):
@@ -355,3 +385,10 @@ func buygala():
 func bigbang():
 	if Globals.TDHandler.canBigBang:
 		Globals.TDHandler.eternity()
+
+func update_bigbang_ep(epgain:String):
+	var tree = epgain.split("e")
+	var k = largenum.new(0)
+	for i in tree:
+		k = largenum.ten_to_the(k.to_float()).multiply(i.to_float())
+	BigBangAtEP = k

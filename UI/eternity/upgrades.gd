@@ -14,7 +14,7 @@ func set_bought(which, what := true):
 		Bought |= \
 		1 << (which - 1)
 	else:
-		Bought &= 65535 - \
+		Bought &= 262143 - \
 		1 << (which - 1)
 
 func buy(which):

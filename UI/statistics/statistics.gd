@@ -51,7 +51,7 @@ func _process(_delta):
 		elif years < 25800:
 			text += "%s average human life expectancies" % \
 			Globals.float_to_string(years / 73.17)
-		else:
+		elif years < 1e90:
 			text += "%s precessions of the Earth's axis" %\
 			Globals.float_to_string(years / 25800)
 		

@@ -21,17 +21,17 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="Buyers" type="VBoxContainer" parent="Auto"]
-custom_minimum_size = Vector2(870, 0)
+[node name="Buyers" type="HFlowContainer" parent="Auto"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="HSeparator" type="HSeparator" parent="Auto/Buyers"]
+custom_minimum_size = Vector2(952, 0)
 layout_mode = 2
 
 [node name="BigBang" type="Control" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -47,6 +47,7 @@ text = "[center]Big Bang Autobuyer
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/BigBang"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4
@@ -59,8 +60,7 @@ grow_vertical = 2
 text = "Decrease interval by 40%
 Cost: 1 EP"
 
-[node name="Amount" type="SpinBox" parent="Auto/Buyers/BigBang"]
-visible = false
+[node name="Amount" type="LineEdit" parent="Auto/Buyers/BigBang"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.699
@@ -72,11 +72,22 @@ offset_right = 108.96
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
-min_value = 1.0
-max_value = 1e+09
-value = 1.0
-prefix = "Big Bang at"
-suffix = "EP"
+text = "1.00"
+placeholder_text = "(EP amount)"
+
+[node name="Label" type="Label" parent="Auto/Buyers/BigBang/Amount"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -71.0
+offset_top = -14.0
+offset_right = -5.0
+offset_bottom = 14.0
+grow_vertical = 2
+text = "Big bang at
+EP"
+horizontal_alignment = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/BigBang"]
 layout_mode = 1
@@ -96,7 +107,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="Galaxy" type="Control" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -174,7 +185,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="Dilation" type="Control" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -276,7 +287,7 @@ one_shot = true
 
 [node name="Rewind" type="Control" parent="Auto/Buyers"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Rewind"]
@@ -309,13 +320,13 @@ upgrade the interval"
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.55
-anchor_top = 0.25
+anchor_top = 1.0
 anchor_right = 0.55
-anchor_bottom = 0.75
+anchor_bottom = 1.0
 offset_left = -61.5
-offset_top = -0.25
+offset_top = -34.0
 offset_right = 61.5
-offset_bottom = 0.25
+offset_bottom = -11.0
 min_value = 1.0
 max_value = 1000.0
 step = 0.01
@@ -354,7 +365,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="TimeSpeedLocked" type="Button" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "Timespeed Autobuyer locked
 (Requires 1e100 total Tachyons)"
@@ -362,7 +373,7 @@ text = "Timespeed Autobuyer locked
 [node name="TimeSpeed" type="Control" parent="Auto/Buyers"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TimeSpeed"]
@@ -424,7 +435,7 @@ text = "Enabled"
 wait_time = 0.5
 
 [node name="TD1Locked" type="Button" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "1st Tachyon Dimension Autobuyer locked
 (Requires 1e20 total Tachyons)"
@@ -432,7 +443,7 @@ text = "1st Tachyon Dimension Autobuyer locked
 [node name="TD1" type="Control" parent="Auto/Buyers"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD1"]
@@ -493,7 +504,7 @@ text = "Enabled"
 wait_time = 0.5
 
 [node name="TD2Locked" type="Button" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "2nd Tachyon Dimension Autobuyer locked
 (Requires 1e30 total Tachyons)"
@@ -501,7 +512,7 @@ text = "2nd Tachyon Dimension Autobuyer locked
 [node name="TD2" type="Control" parent="Auto/Buyers"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD2"]
@@ -562,7 +573,7 @@ text = "Enabled"
 wait_time = 0.6
 
 [node name="TD3Locked" type="Button" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "3rd Tachyon Dimension Autobuyer locked
 (Requires 1e40 total Tachyons)"
@@ -570,7 +581,7 @@ text = "3rd Tachyon Dimension Autobuyer locked
 [node name="TD3" type="Control" parent="Auto/Buyers"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD3"]
@@ -631,7 +642,7 @@ text = "Enabled"
 wait_time = 0.7
 
 [node name="TD4Locked" type="Button" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "4th Tachyon Dimension Autobuyer locked
 (Requires 1e50 total Tachyons)"
@@ -639,7 +650,7 @@ text = "4th Tachyon Dimension Autobuyer locked
 [node name="TD4" type="Control" parent="Auto/Buyers"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD4"]
@@ -700,7 +711,7 @@ text = "Enabled"
 wait_time = 0.8
 
 [node name="TD5Locked" type="Button" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "5th Tachyon Dimension Autobuyer locked
 (Requires 1e60 total Tachyons)"
@@ -708,7 +719,7 @@ text = "5th Tachyon Dimension Autobuyer locked
 [node name="TD5" type="Control" parent="Auto/Buyers"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD5"]
@@ -769,7 +780,7 @@ text = "Enabled"
 wait_time = 0.8
 
 [node name="TD6Locked" type="Button" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "6th Tachyon Dimension Autobuyer locked
 (Requires 1e70 total Tachyons)"
@@ -777,7 +788,7 @@ text = "6th Tachyon Dimension Autobuyer locked
 [node name="TD6" type="Control" parent="Auto/Buyers"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD6"]
@@ -838,7 +849,7 @@ text = "Enabled"
 wait_time = 0.8
 
 [node name="TD7Locked" type="Button" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "7th Tachyon Dimension Autobuyer locked
 (Requires 1e80 total Tachyons)"
@@ -846,7 +857,7 @@ text = "7th Tachyon Dimension Autobuyer locked
 [node name="TD7" type="Control" parent="Auto/Buyers"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD7"]
@@ -907,7 +918,7 @@ text = "Enabled"
 wait_time = 0.8
 
 [node name="TD8Locked" type="Button" parent="Auto/Buyers"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "8th Tachyon Dimension Autobuyer locked
 (Requires 1e90 total Tachyons)"
@@ -915,7 +926,7 @@ text = "8th Tachyon Dimension Autobuyer locked
 [node name="TD8" type="Control" parent="Auto/Buyers"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD8"]
@@ -976,6 +987,7 @@ text = "Enabled"
 wait_time = 0.8
 
 [connection signal="pressed" from="Auto/Buyers/BigBang/Interval" to="." method="improve_interval" binds= [11]]
+[connection signal="text_changed" from="Auto/Buyers/BigBang/Amount" to="." method="update_bigbang_ep"]
 [connection signal="pressed" from="Auto/Buyers/Galaxy/Interval" to="." method="improve_interval" binds= [10]]
 [connection signal="pressed" from="Auto/Buyers/Dilation/Interval" to="." method="improve_interval" binds= [9]]
 [connection signal="pressed" from="Auto/Buyers/Rewind/Interval" to="." method="improve_interval" binds= [12]]

@@ -426,3 +426,4 @@ script = ExtResource("12_ab4py")
 [connection signal="pressed" from="HSplitContainer/Resources/Rewind/Button" to="HSplitContainer/Resources/Rewind/Button" method="_on_pressed"]
 [connection signal="rewind" from="HSplitContainer/Resources/Rewind/Button" to="." method="rewind"]
 [connection signal="pressed" from="HSplitContainer/Resources/Eternity/EternityButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" method="eternity"]
+[connection signal="YEAAAH" from="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity/Overcome Eternity" to="AnimationPlayer" method="play" binds= ["overcome"]]

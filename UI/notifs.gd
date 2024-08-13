@@ -3,6 +3,7 @@ extends Control
 var last_y = 2
 
 func _process(delta):
+	delta /= Engine.time_scale
 	for i in get_children():
 		i.position.x -= delta * 100
 		if  i.position.x < -i.size.x - 10:

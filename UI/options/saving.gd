@@ -28,6 +28,7 @@ func _process(delta):
 	$HFlowContainer/Autosave.text = "Autosave: %s" % ("ON" if $HFlowContainer/Autosave.button_pressed else "OFF")
 	$HFlowContainer/HSlider/Label.text = "\n\nAutosaves every %s" % \
 	Globals.format_time($HFlowContainer/HSlider.value)
+	$HFlowContainer/Idle.text = "Idle progress: %s" % ("ON" if $HFlowContainer/Autosave.button_pressed else "OFF")
 	$HFlowContainer/Sidler/Label.text = "\nTake %s at most to calculate\nidle progress" % \
 	Globals.format_time($HFlowContainer/Sidler.value)
 	$HFlowContainer/Idle.visible = Globals.challengeCompleted(15)
@@ -167,6 +168,7 @@ func saveF(file : String = saveFilePath):
 		DATA["tach gal buy limit"] = Globals.Automation.GalLimit
 		DATA["timespeed buyer mode"] = \
 		Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Mode").button_pressed
+		DATA["big bang buyer amount"] = Globals.Automation.get_node("Auto/Buyers/BigBang/Amount").text
 		
 		DATA["ep multiplier buys"] = Globals.EUHandler.EPMultBought
 		
@@ -178,6 +180,9 @@ func saveF(file : String = saveFilePath):
 		DATA["last 10 eternities"] = []
 		for e in Globals.last10etern:
 			DATA["last 10 eternities"].append(e.to_dict())
+	
+	if Globals.progress >= GL.Progression.Overcome:
+		DATA["bought overcome upgrades"] = Globals.OEUHandler.Bought
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -200,7 +205,7 @@ func loadF(file : String = saveFilePath):
 			Globals.display = d["notation"] as GL.DisplayMode
 			Globals.VisualSett.load_anim_settings(d["animation settings"])
 			if d.has("idle progress"):
-				$HFlowContainer/Sidler.value = d["idle progress"]
+				$HFlowContainer/Idle.button_pressed = d["idle progress"]
 			if d.has("idle progress max time"):
 				$HFlowContainer/Sidler.value = d["idle progress max time"]
 		else:
@@ -292,6 +297,9 @@ func loadF(file : String = saveFilePath):
 		if DATA.has("timespeed buyer mode"):
 			Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Mode").button_pressed\
 			= DATA["timespeed buyer mode"]
+		if DATA.has("big bang buyer amount"):
+			Globals.Automation.get_node("Auto/Buyers/BigBang/Amount").text = DATA["big bang buyer amount"]
+			Globals.Automation.update_bigbang_ep(DATA["big bang buyer amount"])
 		Globals.Automation.DilLimit = DATA["dilation buy limit"]
 		Globals.Automation.DilIgnore = DATA["dilation limit ignore"]
 		Globals.Automation.GalLimit = DATA["tach gal buy limit"]
@@ -300,6 +308,7 @@ func loadF(file : String = saveFilePath):
 			Globals.EU12Timer = get_tree().create_timer(DATA["eu12 timer"])
 		
 		if DATA.has("last 10 eternities"):
+			Globals.last10etern = []
 			for e in DATA["last 10 eternities"]:
 				if Globals.EternityData.from_dict(e) != null:
 					Globals.last10etern.append(
@@ -316,6 +325,17 @@ func loadF(file : String = saveFilePath):
 			emit_signal("start_idle_progress", idletime)
 	else:
 		Globals.eternTime = Globals.existence
+	
+	if Globals.progress >= GL.Progression.Overcome:
+		if DATA.has("bought overcome upgrades"):
+			Globals.OEUHandler.Bought = DATA["bought overcome upgrades"]
+		
+		if DATA.has("tmsp scale bought"):
+			Globals.OEUHandler.TSpScBought = DATA["tmsp scale bought"]
+		if DATA.has("tdim scale bought"):
+			Globals.OEUHandler.TDmScBought = DATA["tdim scale bought"]
+		if DATA.has("passive ep bought"):
+			Globals.OEUHandler.PasEPBought = DATA["passive ep bought"]
 	
 	get_tree().paused = pause
 	$CanvasLayer.visible = false
@@ -354,6 +374,11 @@ func gameReset():
 	Globals.Automation.TDUpgrades = [0,0,0,0,0,0,0,0]
 	Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value = 4
 	Globals.EU12Timer = null
+	Globals.EUHandler.EPMultBought = 0
+	Globals.OEUHandler.Bought = 0
+	Globals.OEUHandler.TSpScBought = 0
+	Globals.OEUHandler.TDmScBought = 0
+	Globals.OEUHandler.PasEPBought = 0
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value

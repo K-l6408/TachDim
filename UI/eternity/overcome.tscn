@@ -12,6 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_b4j68")
 
 [node name="holy shit" type="Button" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -36,7 +37,157 @@ offset_top = -56.0
 offset_right = 1.0
 offset_bottom = -16.0
 grow_horizontal = 2
-text = "Max out the Big Bang Autobuyer to 0.1s
-to Overcome Eternity."
+text = "Max out the Big Bang Autobuyer Interval
+to 0.1s to Overcome Eternity."
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="upgrades" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -289.0
+offset_top = -226.0
+offset_right = 289.0
+offset_bottom = 226.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="TachMult" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Tachyon Dimensions get
+a multiplier based
+on current Tachyon amount.
+
+Cost: 1.00e3 EP"
+text_overrun_behavior = 2
+
+[node name="2" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "
+Unlock the Buy Max Dilation
+Autobuyer mode.
+
+
+Cost: 1.00e6 EP"
+text_overrun_behavior = 2
+
+[node name="3" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "
+All Galaxies are
+50% stronger.
+
+
+Cost: 1.00e9 EP"
+text_overrun_behavior = 2
+
+[node name="4" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text_overrun_behavior = 2
+
+[node name="DilaBoost" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Improve the Dilation
+multiplier further.
+
+(×2.5 → ×3.0)
+
+Cost: 1.00e4 EP"
+text_overrun_behavior = 2
+
+[node name="RewdFormula" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Improve the Rewind formula
+from being based on
+the 1st TD's logarithm
+to using a very low exponent
+
+Cost: 4.00e4 EP"
+text_overrun_behavior = 2
+
+[node name="7" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text_overrun_behavior = 2
+
+[node name="8" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text_overrun_behavior = 2
+
+[node name="9" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text_overrun_behavior = 2
+
+[node name="10" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Reduce Timespeed Upgrade
+cost scaling after 1.8e308.
+
+Currently: ×10
+Next: ×9
+Cost: 1.00e4 EP"
+text_overrun_behavior = 2
+
+[node name="11" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Reduce Tachyon Dimensions
+cost scaling after 1.8e308.
+
+Currently: ×10
+Next: ×9
+Cost: 5.00e5 EP"
+text_overrun_behavior = 2
+
+[node name="12" type="Button" parent="upgrades"]
+custom_minimum_size = Vector2(190, 110)
+layout_mode = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Passively generate 0% of
+your average EP gain
+over the last 10 Eternities.
+
+Next: 5%
+Cost: 1.00e5 EP"
+text_overrun_behavior = 2
+
+[connection signal="pressed" from="holy shit" to="." method="overcome"]
+[connection signal="pressed" from="upgrades/TachMult" to="." method="buy" binds= [1]]
+[connection signal="pressed" from="upgrades/DilaBoost" to="." method="buy" binds= [5]]
