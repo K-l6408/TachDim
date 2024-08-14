@@ -33,7 +33,7 @@ var DimCostMult : Array[largenum] :
 				largenum.ten_to_the(3),largenum.ten_to_the( 4),largenum.ten_to_the( 5),largenum.ten_to_the( 6),
 				largenum.ten_to_the(8),largenum.ten_to_the(10),largenum.ten_to_the(12),largenum.ten_to_the(15)
 			]
-			var costscaling = 10
+			var costscaling = 10 - Globals.OEUHandler.TDmScBought
 			for i in 8:
 				if DimPurchase[i] / buylim >= CostScaleStart[i]:
 					base[i].mult2self(largenum.new(10).power(
@@ -48,7 +48,7 @@ var TSpeedCost := largenum.new(1000)
 var TSpeedCostIncrease : largenum :
 	get:
 		var base = largenum.new(10)
-		var costscaling = 10
+		var costscaling = 10 - Globals.OEUHandler.TSpScBought
 		if Globals.Challenge == 5: base.mult2self(1.5)
 		if TSpeedCount >= TSpeedScaleStart:
 			base.mult2self(largenum.new(costscaling).power(TSpeedCount - TSpeedScaleStart))
@@ -122,6 +122,8 @@ func rewindBoost(score := 1.0) -> largenum:
 	var RBoost = largenum.new(DimAmount[0].log10()).power(1.5).divide(10)
 	if Globals.Challenge == 8:
 		RBoost = DimAmount[0].power(0.1)
+	if Globals.OEUHandler.is_bought(6):
+		RBoost = DimAmount[0].power(0.05)
 	
 	if Globals.Achievemer.is_unlocked(2, 4): RBoost.mult2self(2)
 	

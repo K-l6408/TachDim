@@ -96,6 +96,7 @@ Cost: 2 EP"
 text_overrun_behavior = 2
 
 [node name="Line" type="Line2D" parent="Columns/Col1"]
+modulate = Color(1, 1, 1, 0.313726)
 show_behind_parent = true
 position = Vector2(95, -4)
 points = PackedVector2Array(0, 2, 0, 59, 0, 173, 0, 287, 0, 401, 0, 458)
@@ -158,6 +159,7 @@ Cost: 2 EP"
 text_overrun_behavior = 2
 
 [node name="Line" type="Line2D" parent="Columns/Col2"]
+modulate = Color(1, 1, 1, 0.313726)
 show_behind_parent = true
 position = Vector2(95, -4)
 points = PackedVector2Array(0, 2, 0, 59, 0, 173, 0, 287, 0, 401, 0, 458)
@@ -220,6 +222,7 @@ Cost: 10 EP"
 text_overrun_behavior = 2
 
 [node name="Line" type="Line2D" parent="Columns/Col3"]
+modulate = Color(1, 1, 1, 0.313726)
 show_behind_parent = true
 position = Vector2(95, -4)
 points = PackedVector2Array(0, 2, 0, 59, 0, 173, 0, 287, 0, 401, 0, 458)
@@ -282,6 +285,7 @@ Cost: 75 EP"
 text_overrun_behavior = 2
 
 [node name="Line" type="Line2D" parent="Columns/Col4"]
+modulate = Color(1, 1, 1, 0.313726)
 show_behind_parent = true
 position = Vector2(95, -4)
 points = PackedVector2Array(0, 2, 0, 59, 0, 173, 0, 287, 0, 401, 0, 458)

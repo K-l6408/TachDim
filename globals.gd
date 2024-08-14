@@ -81,6 +81,12 @@ func _process(delta):
 		if EUHandler.is_bought(12) and (EU12Timer == null or EU12Timer.time_left == 0):
 			EternityPts.add2self(fastestEtern.epgain)
 			EU12Timer = get_tree().create_timer(fastestEtern.time * 3)
+	if OEUHandler is Node:
+		var avg = largenum.new(0)
+		for i in last10etern:
+			avg.add2self(i.epgain.divide(i.time))
+		avg.div2self(last10etern.size())
+		EternityPts.add2self(avg.mult2self(delta * OEUHandler.PasEPBought / 20))
 	EternityPts.fix_mantissa()
 	if EternityPts.less(0.01):
 		EternityPts = largenum.new(0)

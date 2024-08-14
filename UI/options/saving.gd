@@ -28,7 +28,7 @@ func _process(delta):
 	$HFlowContainer/Autosave.text = "Autosave: %s" % ("ON" if $HFlowContainer/Autosave.button_pressed else "OFF")
 	$HFlowContainer/HSlider/Label.text = "\n\nAutosaves every %s" % \
 	Globals.format_time($HFlowContainer/HSlider.value)
-	$HFlowContainer/Idle.text = "Idle progress: %s" % ("ON" if $HFlowContainer/Autosave.button_pressed else "OFF")
+	$HFlowContainer/Idle.text = "Idle progress: %s" % ("ON" if $HFlowContainer/Idle.button_pressed else "OFF")
 	$HFlowContainer/Sidler/Label.text = "\nTake %s at most to calculate\nidle progress" % \
 	Globals.format_time($HFlowContainer/Sidler.value)
 	$HFlowContainer/Idle.visible = Globals.challengeCompleted(15)
