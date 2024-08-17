@@ -128,11 +128,17 @@ to using a very low exponent.
 Cost: 4.00e4 EP"
 text_overrun_behavior = 2
 
-[node name="7" type="Button" parent="upgrades"]
+[node name="ChallengeMult" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"
 disabled = true
+text = "Tachyon Dimensions get a
+multiplier based on your
+slowest Challenge.
+
+Currently: ×1.00
+(Not all Challenges completed)"
 text_overrun_behavior = 2
 
 [node name="8" type="Button" parent="upgrades"]
@@ -192,6 +198,7 @@ text_overrun_behavior = 2
 [connection signal="pressed" from="upgrades/TachMult" to="." method="buy" binds= [1]]
 [connection signal="pressed" from="upgrades/DilaBoost" to="." method="buy" binds= [5]]
 [connection signal="pressed" from="upgrades/RewdFormula" to="." method="buy" binds= [6]]
+[connection signal="pressed" from="upgrades/ChallengeMult" to="." method="buy" binds= [7]]
 [connection signal="pressed" from="upgrades/TSpSc" to="." method="buy_rebuyable" binds= [1]]
 [connection signal="pressed" from="upgrades/TDmSc" to="." method="buy_rebuyable" binds= [2]]
 [connection signal="pressed" from="upgrades/PasEP" to="." method="buy_rebuyable" binds= [3]]

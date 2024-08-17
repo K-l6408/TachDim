@@ -365,13 +365,13 @@ wait_time = 0.5
 one_shot = true
 
 [node name="TimeSpeedLocked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "Timespeed Autobuyer locked
 (Requires 1e100 total Tachyons)"
 
 [node name="TimeSpeed" type="Control" parent="Auto/Buyers"]
-visible = false
 clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
@@ -435,13 +435,13 @@ text = "Enabled"
 wait_time = 0.5
 
 [node name="TD1Locked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "1st Tachyon Dimension Autobuyer locked
 (Requires 1e20 total Tachyons)"
 
 [node name="TD1" type="Control" parent="Auto/Buyers"]
-visible = false
 clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
@@ -504,6 +504,7 @@ text = "Enabled"
 wait_time = 0.5
 
 [node name="TD2Locked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "2nd Tachyon Dimension Autobuyer locked
@@ -573,6 +574,7 @@ text = "Enabled"
 wait_time = 0.6
 
 [node name="TD3Locked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "3rd Tachyon Dimension Autobuyer locked
@@ -642,6 +644,7 @@ text = "Enabled"
 wait_time = 0.7
 
 [node name="TD4Locked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "4th Tachyon Dimension Autobuyer locked
@@ -711,6 +714,7 @@ text = "Enabled"
 wait_time = 0.8
 
 [node name="TD5Locked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "5th Tachyon Dimension Autobuyer locked
@@ -780,6 +784,7 @@ text = "Enabled"
 wait_time = 0.8
 
 [node name="TD6Locked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "6th Tachyon Dimension Autobuyer locked
@@ -849,6 +854,7 @@ text = "Enabled"
 wait_time = 0.8
 
 [node name="TD7Locked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "7th Tachyon Dimension Autobuyer locked
@@ -918,6 +924,7 @@ text = "Enabled"
 wait_time = 0.8
 
 [node name="TD8Locked" type="Button" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 text = "8th Tachyon Dimension Autobuyer locked

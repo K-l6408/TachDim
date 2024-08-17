@@ -278,6 +278,29 @@ text = "Eternity for
 1.75e4 EP
 (124 EP/s)"
 
+[node name="EDunlock" type="Panel" parent="HSplitContainer/Resources"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="EDButton" type="Button" parent="HSplitContainer/Resources/EDunlock"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 5.0
+offset_right = -7.0
+offset_bottom = -5.0
+grow_horizontal = 2
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "Reach 1e2000 TC to
+unlock a new
+Eternity Dimension."
+
 [node name="Panel2" type="Panel" parent="HSplitContainer/Resources"]
 clip_contents = true
 layout_mode = 2

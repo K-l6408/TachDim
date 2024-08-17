@@ -180,9 +180,14 @@ func saveF(file : String = saveFilePath):
 		DATA["last 10 eternities"] = []
 		for e in Globals.last10etern:
 			DATA["last 10 eternities"].append(e.to_dict())
+		
+		DATA["challenge times"] = Globals.challengeTimes
 	
 	if Globals.progress >= GL.Progression.Overcome:
 		DATA["bought overcome upgrades"] = Globals.OEUHandler.Bought
+		DATA["tmsp scale bought"] = Globals.OEUHandler.TSpScBought
+		DATA["tdim scale bought"] = Globals.OEUHandler.TDmScBought
+		DATA["passive ep bought"] = Globals.OEUHandler.PasEPBought
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -323,6 +328,9 @@ func loadF(file : String = saveFilePath):
 			Globals.Achievemer.set_unlocked(3, 3)
 		if $HFlowContainer/Idle.button_pressed and Globals.challengeCompleted(15):
 			emit_signal("start_idle_progress", idletime)
+		
+		if DATA.has("challenge times"):
+			Globals.challengeTimes = DATA["challenge times"]
 	else:
 		Globals.eternTime = Globals.existence
 	
@@ -343,7 +351,7 @@ func loadF(file : String = saveFilePath):
 func gameReset():
 	Globals.progress = Globals.Progression.None
 	Globals.existence = 0
-	Globals.Tachyons  = largenum.new(10)
+	Globals.Tachyons  = largenum.new(10.001)
 	Globals.TachTotal = largenum.new(10)
 	Globals.Achievemer.unlocked = []
 	for i in Globals.Achievemer.MAXROWS:
@@ -379,6 +387,13 @@ func gameReset():
 	Globals.OEUHandler.TSpScBought = 0
 	Globals.OEUHandler.TDmScBought = 0
 	Globals.OEUHandler.PasEPBought = 0
+	Globals.challengeTimes = [
+		-1, -1, -1,
+		-1, -1, -1,
+		-1, -1, -1,
+		-1, -1, -1,
+		-1, -1, -1
+	]
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value

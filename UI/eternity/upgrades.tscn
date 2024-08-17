@@ -19,7 +19,7 @@ offsets = PackedFloat32Array(0, 0.125, 0.375, 0.625, 0.875, 1)
 colors = PackedColorArray(0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1)
 
 [node name="upgrades" type="Control"]
-custom_minimum_size = Vector2(800, 580)
+custom_minimum_size = Vector2(800, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -340,6 +340,15 @@ Currently: ×1
 Cost: 10 EP"
 text_overrun_behavior = 2
 
+[node name="Max" type="Button" parent="EPMult"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 189.0
+offset_bottom = -5.0
+theme_type_variation = &"ButtonEtern"
+disabled = true
+text = "(Buy max ↓)"
+
 [connection signal="pressed" from="Columns/Col1/TimePlayed" to="." method="buy" binds= [1]]
 [connection signal="pressed" from="Columns/Col1/Dim18mult" to="." method="buy" binds= [2]]
 [connection signal="pressed" from="Columns/Col1/Dim27mult" to="." method="buy" binds= [3]]
@@ -358,3 +367,4 @@ text_overrun_behavior = 2
 [connection signal="pressed" from="Columns/Col4/Dila4" to="." method="buy" binds= [16]]
 [connection signal="pressed" from="AutoGal" to="." method="buy" binds= [17]]
 [connection signal="pressed" from="EPMult" to="." method="buyEPmult"]
+[connection signal="pressed" from="EPMult/Max" to="." method="maxEPmult"]

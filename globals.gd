@@ -74,6 +74,14 @@ var EU12Timer : SceneTreeTimer = null
 
 var last10etern : Array[EternityData] = []
 
+var challengeTimes = [
+	-1, -1, -1,
+	-1, -1, -1,
+	-1, -1, -1,
+	-1, -1, -1,
+	-1, -1, -1
+]
+
 func _process(delta):
 	existence += delta
 	eternTime += delta
@@ -117,9 +125,7 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 		DisplayMode.Strict_Logarithm:
 			return "e" + String.num(log(f) / LOG10, precision).pad_decimals(precision).replace("inf", "∞")
 		DisplayMode.Logarithm:
-			if f < 1e5:
-				return String.num(f, precision).pad_decimals(precision)
-			else:
+			if f > 1000 and not force_dec:
 				return "e" + String.num(log(f) / LOG10, precision).pad_decimals(precision)
 		DisplayMode.Dozenal:
 			if f > 12**3:
@@ -137,12 +143,15 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 		DisplayMode.Factorial:
 			if f > 1000 and not force_dec:
 				return "%.2f!" % invfact(f)
-			return String.num(f, precision).pad_decimals(precision)
+		DisplayMode.Standard:
+			if f > 1000 and not force_dec:
+				return String.num((f / (1000.0 ** floor(log(f) / LOG10))), precision)\
+				.pad_decimals(precision) + " " + largenum.standard(int(log(f) / LOG10))
 		_:
 			if f > 1000 and not force_dec:
 				return String.num((f / (10.0 ** floor(log(f) / LOG10))), precision)\
 				.pad_decimals(precision) + "e" + str(int(log(f) / LOG10))
-			return String.num(f, precision).pad_decimals(precision)
+	return String.num(f, precision).pad_decimals(precision)
 
 func format_time(f:float) -> String:
 	var hour = 3600

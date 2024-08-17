@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=39 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=42 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -184,6 +184,44 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipoy4"]
+bg_color = Color(0.34628, 0.1276, 0.44, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7518, 0.546, 0.84, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b1s6s"]
+bg_color = Color(0.698039, 0.254902, 0.890196, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8am2u"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.698039, 0.254902, 0.890196, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -500,6 +538,10 @@ CheckButton/styles/hover = SubResource("StyleBoxFlat_uqs43")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_t4uyv")
 CheckButton/styles/normal = SubResource("StyleBoxFlat_peo40")
 CheckButton/styles/pressed = SubResource("StyleBoxFlat_ousmk")
+EDButton/base_type = &"Button"
+EDButton/styles/hover = SubResource("StyleBoxFlat_ipoy4")
+EDButton/styles/normal = SubResource("StyleBoxFlat_b1s6s")
+EDButton/styles/pressed = SubResource("StyleBoxFlat_8am2u")
 FourButton/base_type = &"Button"
 FourButton/styles/fouressed = SubResource("StyleBoxFlat_o6hgu")
 FourButton/styles/threevered = SubResource("StyleBoxFlat_ety7p")

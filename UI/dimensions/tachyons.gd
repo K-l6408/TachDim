@@ -200,6 +200,9 @@ func galaxy():
 func eternity():
 	if Globals.Challenge != 0:
 		Globals.CompletedChallenges |= 1 << (Globals.Challenge - 1)
+		if  Globals.challengeTimes[Globals.Challenge - 1] > Globals.eternTime \
+		or  Globals.challengeTimes[Globals.Challenge - 1] < 0:
+			Globals.challengeTimes[Globals.Challenge - 1] = Globals.eternTime
 	
 	var epgain = epgained()
 	
@@ -255,12 +258,14 @@ func reset(level := 0, challengeReset := true):
 	if level >= 2 and challengeReset: Globals.Challenge = 0
 	if Globals.Challenge == 2: C2Multiplier = 1.0
 	if Globals.Challenge == 14:  C14Divisor = 1.0
+	if Globals.Achievemer.is_unlocked(4,2):
+		Globals.Tachyons = largenum.new(5e5)
 	if Globals.Achievemer.is_unlocked(3,6):
 		Globals.Tachyons = largenum.new(5000)
 	elif Globals.Achievemer.is_unlocked(2,8):
 		Globals.Tachyons = largenum.new(100)
 	else:
-		Globals.Tachyons = largenum.new(10)
+		Globals.Tachyons = largenum.new(10.001)
 	DimPurchase = [0,0,0,0,0,0,0,0]
 	DimCost = [
 		largenum.new(10   ),largenum.new(100   ),largenum.new(10**4 ),largenum.new(10**6),

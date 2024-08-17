@@ -172,6 +172,27 @@ func _process(delta):
 		"Improve the Rewind formula\nfrom being based on\nthe %s TD's logarithm" % \
 		Globals.ordinal(1) + "\nto using a very low exponent.\n\nCost: %s EP" % \
 		Globals.float_to_string(Costs[5], 0)
+	
+	if is_bought(7) != Input.is_action_pressed("BuyOne"):
+		var worst = 0
+		var worsttime = -1
+		for ch in 15:
+			if Globals.challengeTimes[ch] > worsttime:
+				worsttime = Globals.challengeTimes[ch]
+				worst     =                        ch
+		$upgrades/ChallengeMult.text = \
+		"Tachyon Dimensions get a\nmultiplier based on your\nslowest Challenge." + \
+		"Currently: ×%s\n(%s)" % [
+			Globals.float_to_string(Formulas.overcome_7()),
+			"Not all Challenges completed" if (worsttime < 0 or worst == 0) else \
+			"Challenge %s: %s" % [
+				Globals.int_to_string(worst), Globals.format_time(worsttime)
+			]
+		]
+	else:
+		$upgrades/ChallengeMult.text = \
+		"Tachyon Dimensions get a\nmultiplier based on your\nslowest Challenge." + \
+		"Cost: %s EP" % Globals.float_to_string(Costs[6], 0)
 
 func overcome():
 	emit_signal("YEAAAH")

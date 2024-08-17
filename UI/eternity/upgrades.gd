@@ -34,6 +34,10 @@ func buyEPmult():
 		return
 	EPMultBought += 1
 
+func maxEPmult():
+	while not Globals.EternityPts.less(largenum.ten_to_the(EPMultBought + 1)):
+		buyEPmult()
+
 func _process(_delta):
 	for i in $Columns.get_child_count():
 		var k = $Columns.get_child(i)
@@ -62,8 +66,13 @@ func _process(_delta):
 				if j > 0 and not is_bought(i*4+j):
 					k.get_child(j).disabled = true
 	
-	$AutoGal.visible = Globals.Achievemer.is_unlocked(4, 6)
-	$EPMult .visible = Globals.Achievemer.is_unlocked(4, 6)
+	$AutoGal   .visible = Globals.Achievemer.is_unlocked(4, 6)
+	$EPMult    .visible = Globals.Achievemer.is_unlocked(4, 6)
+	$EPMult/Max.visible = Globals.Achievemer.is_unlocked(4, 6)
+	if Globals.Achievemer.is_unlocked(4, 6):
+		custom_minimum_size.y = 610
+	else:
+		custom_minimum_size.y = 470
 	
 	if is_bought(17):
 		$AutoGal.disabled = true
@@ -74,6 +83,8 @@ func _process(_delta):
 		$AutoGal.disabled = Globals.EternityPts.less(Costs[4][0])
 	
 	$EPMult.disabled = \
+	Globals.EternityPts.less(largenum.ten_to_the(EPMultBought + 1))
+	$EPMult/Max.disabled = \
 	Globals.EternityPts.less(largenum.ten_to_the(EPMultBought + 1))
 	
 	if is_bought(1) != Input.is_action_pressed("BuyOne"):
