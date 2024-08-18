@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://UI/dimensions/eternity.gd" id="1_bxmku"]
 
 [node name="Control" type="Control"]
+custom_minimum_size = Vector2(520, 404)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +17,7 @@ custom_minimum_size = Vector2(520, 0)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 601.0
+offset_bottom = 404.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -81,8 +82,7 @@ theme_type_variation = &"EDButton"
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
-text = "Buy 10
-Cost: 10 EP"
+text = "Cost: 10 EP"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension1"]
 layout_mode = 2
@@ -129,11 +129,11 @@ custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 size_flags_horizontal = 8
 theme_type_variation = &"EDButton"
+disabled = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
-text = "Buy 10
-Cost: 10 EP"
+text = "Cost: 10 EP"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension2"]
 layout_mode = 2
@@ -183,8 +183,7 @@ theme_type_variation = &"EDButton"
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
-text = "Buy 10
-Cost: 10 EP"
+text = "Cost: 10 EP"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension3"]
 layout_mode = 2
@@ -234,13 +233,13 @@ theme_type_variation = &"EDButton"
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
-text = "Buy 10
-Cost: 10 EP"
+text = "Cost: 10 EP"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension4"]
 layout_mode = 2
 
 [node name="Dimension5" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+visible = false
 layout_mode = 2
 alignment = 2
 
@@ -285,13 +284,13 @@ theme_type_variation = &"EDButton"
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
-text = "Buy 10
-Cost: 10 EP"
+text = "Cost: 10 EP"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension5"]
 layout_mode = 2
 
 [node name="Dimension6" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+visible = false
 layout_mode = 2
 alignment = 2
 
@@ -343,6 +342,7 @@ Cost: 10 EP"
 layout_mode = 2
 
 [node name="Dimension7" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+visible = false
 layout_mode = 2
 alignment = 2
 
@@ -394,6 +394,7 @@ Cost: 10 EP"
 layout_mode = 2
 
 [node name="Dimension8" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+visible = false
 layout_mode = 2
 alignment = 2
 
@@ -443,3 +444,12 @@ Cost: 10 EP"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension8"]
 layout_mode = 2
+
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension1/Buy" to="." method="buydim" binds= [1]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension2/Buy" to="." method="buydim" binds= [2]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension3/Buy" to="." method="buydim" binds= [3]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension4/Buy" to="." method="buydim" binds= [4]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension5/Buy" to="." method="buydim" binds= [5]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension6/Buy" to="." method="buydim" binds= [6]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension7/Buy" to="." method="unlocknewdim" binds= [7]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension8/Buy" to="." method="buydim" binds= [8]]

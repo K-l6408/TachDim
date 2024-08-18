@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=42 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=43 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -184,6 +184,19 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s54it"]
+bg_color = Color(0.654902, 0.223529, 0.435294, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.34628, 0.1276, 0.44, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -539,6 +552,7 @@ CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_t4uyv")
 CheckButton/styles/normal = SubResource("StyleBoxFlat_peo40")
 CheckButton/styles/pressed = SubResource("StyleBoxFlat_ousmk")
 EDButton/base_type = &"Button"
+EDButton/styles/disabled = SubResource("StyleBoxFlat_s54it")
 EDButton/styles/hover = SubResource("StyleBoxFlat_ipoy4")
 EDButton/styles/normal = SubResource("StyleBoxFlat_b1s6s")
 EDButton/styles/pressed = SubResource("StyleBoxFlat_8am2u")

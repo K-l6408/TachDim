@@ -18,4 +18,4 @@ static func overcome_7():
 	for ch in Globals.challengeTimes:
 		if ch > i: i = ch
 	if i < 0: return 1
-	return min(100 / i, 1)
+	return max(100 / i, 1)

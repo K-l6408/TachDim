@@ -344,10 +344,10 @@ static func standard(e) -> String:
 	if e < 3: return "B"
 	var s = ""
 	while e > 1:
-		s += ["", "Ce", "Dn", "Tc", "Qe", "Qu", "Sc", "Si", "Oe", "Ne"][fmod(e, 1000) / 100]
-		s += ["", "Dc", "Vg", "Tg", "Qd", "Qi", "Se", "St", "Og", "Nn"][fmod(e, 100 ) / 10 ]
 		s += ["", "U",  "D",  "T",  "Qa", "Qt", "Sx", "Sp", "O",  "N" ][fmod(e, 10  )      ]
-		e /= 100
+		s += ["", "Dc", "Vg", "Tg", "Qd", "Qi", "Se", "St", "Og", "Nn"][fmod(e, 100 ) / 10 ]
+		s += ["", "Ce", "Dn", "Tc", "Qe", "Qu", "Sc", "Si", "Oe", "Ne"][fmod(e, 1000) / 100]
+		e /= 1000
 		s += "MI-"
 	return s.trim_suffix("MI-")
 

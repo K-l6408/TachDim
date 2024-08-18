@@ -22,11 +22,11 @@ func set_bought(which, what := true):
 		1 << (which - 1)
 
 func tspsc_cost():
-	return largenum.ten_to_the(4+1.5     * TSpScBought)
+	return largenum.ten_to_the(4   + 1.5     * TSpScBought)
 func tdmsc_cost():
-	return largenum.ten_to_the(5+2.33333 * TDmScBought).mult2self(5)
+	return largenum.ten_to_the(4.5 + 2.33333 * TDmScBought)
 func pasep_cost():
-	return largenum.ten_to_the(5+0.66666 * PasEPBought)
+	return largenum.ten_to_the(5   + 0.66666 * PasEPBought)
 
 func buy(which):
 	var i : int = (which - 1)
@@ -179,10 +179,10 @@ func _process(delta):
 		for ch in 15:
 			if Globals.challengeTimes[ch] > worsttime:
 				worsttime = Globals.challengeTimes[ch]
-				worst     =                        ch
+				worst     =                    1 + ch
 		$upgrades/ChallengeMult.text = \
 		"Tachyon Dimensions get a\nmultiplier based on your\nslowest Challenge." + \
-		"Currently: ×%s\n(%s)" % [
+		"\n\nCurrently: ×%s\n(%s)" % [
 			Globals.float_to_string(Formulas.overcome_7()),
 			"Not all Challenges completed" if (worsttime < 0 or worst == 0) else \
 			"Challenge %s: %s" % [
@@ -192,7 +192,7 @@ func _process(delta):
 	else:
 		$upgrades/ChallengeMult.text = \
 		"Tachyon Dimensions get a\nmultiplier based on your\nslowest Challenge." + \
-		"Cost: %s EP" % Globals.float_to_string(Costs[6], 0)
+		"\n\n\nCost: %s EP" % Globals.float_to_string(Costs[6], 0)
 
 func overcome():
 	emit_signal("YEAAAH")

@@ -1,7 +1,7 @@
 extends Control
 
 const MAXROWS = 20
-var loaded_rows = 4
+var loaded_rows = 5
 var unlocked : PackedByteArray = []
 var achgot : int :
 	get:
@@ -49,6 +49,10 @@ func achnames(r, c):
 			6: return "(Actually) Full upgrades!"
 			7: return "A taste of Mastery"
 			8: return "I-XV"
+		5: match c:
+			1: return "Freedom!"
+			2: return "Frame Perfect"
+			3: return "I'll take your entire stock"
 	return "TBD"
 
 func achreqs(r, c):
@@ -102,6 +106,13 @@ func achreqs(r, c):
 			]
 			8: return "Complete all Challenges.\n(Reward: All TDs are %s stronger.)" % \
 			Globals.percent_to_string(0.2)
+		5: match c:
+			1: return "Overcome Eternity."
+			2: return "Fully improve the Rewind Autobuyer (interval and accuracy).\n" + \
+			"(Reward: Rewind is ×%s faster and its autobuyer activates every frame.)" % \
+			Globals.int_to_string(7)
+			3: return "Get all your TD autobuyers' bulks to %s." % \
+			Globals.int_to_string(512) + "\n(Reward: TD autobuyers have unlimited bulk.)"
 	return "TBD"
 
 func is_unlocked(row, num):
@@ -186,3 +197,6 @@ func _process(_delta):
 	if not is_unlocked(4, 8):
 		if Globals.CompletedChallenges == 32767:
 			set_unlocked(4, 8)
+	if not is_unlocked(5, 1):
+		if Globals.progress >= Globals.Progression.Overcome:
+			set_unlocked(5, 1)

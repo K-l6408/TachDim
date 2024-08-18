@@ -51,6 +51,7 @@ var CompletedChallenges := 0
 func challengeCompleted(which): return (CompletedChallenges >> (which - 1)) & 1
 
 var TDHandler  : Control
+var EDHandler  : Control
 var Automation : Control
 var Achievemer : Control
 var VisualSett : Control
@@ -128,7 +129,7 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 			if f > 1000 and not force_dec:
 				return "e" + String.num(log(f) / LOG10, precision).pad_decimals(precision)
 		DisplayMode.Dozenal:
-			if f > 12**3:
+			if f > 12**3 and not force_dec:
 				return largenum.dozenal(fmod(f, 12), precision) + "e" + largenum.dozenal(log(f) / LOG12,0)
 			return largenum.dozenal(f, precision)
 		DisplayMode.Roman:
@@ -145,8 +146,9 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 				return "%.2f!" % invfact(f)
 		DisplayMode.Standard:
 			if f > 1000 and not force_dec:
-				return String.num((f / (1000.0 ** floor(log(f) / LOG10))), precision)\
-				.pad_decimals(precision) + " " + largenum.standard(int(log(f) / LOG10))
+				var loga = floor(log(f) / 3 / LOG10)
+				return String.num((f / (1000.0 ** loga)), precision)\
+				.pad_decimals(precision) + " " + largenum.standard(int(loga / 3))
 		_:
 			if f > 1000 and not force_dec:
 				return String.num((f / (10.0 ** floor(log(f) / LOG10))), precision)\

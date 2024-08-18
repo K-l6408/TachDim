@@ -6,16 +6,17 @@ var debugMode := false
 var tabSymbolLeft  = "⇠\uf085⁈δ\uf091\uf0ca\uf1de["
 var tabSymbolRight = "⇢\uf1de⁉δ\uf091\uf0c9\uf0ad]"
 
-var dimensionSymbols = "Ψ"
-var challengeSymbols = "Ψ"
+var dimensionSymbols = "Ψδ"
+var challengeSymbols = "Ψδ"
 var  eternitySymbols = "↑⭻"
-var     statsSymbols = "\uf036\uf886"
+var     statsSymbols = "\uf036\uf886\uf0cb"
 var   optionsSymbols = "\uf0c7\uf1fc"
 var celestialSymbols = "⏣⚴☾𝄽\uF1E0ɸΩ"
 
 func _ready():
 	Globals.NotifHandler = $Notifs
 	Globals.TDHandler = %Tabs/Dimensions/Tachyons
+	Globals.EDHandler = %Tabs/Dimensions/Eternity
 	Globals.Automation = %Tabs/Automation
 	Globals.Achievemer = %Tabs/Achievements
 	Globals.Animater = $AnimationPlayer
@@ -48,6 +49,8 @@ func _process(_delta):
 	TBar.set_tab_hidden(2, Globals.progress < Globals.Progression.Eternity)
 	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Eternity)
 	
+	%Tabs/Dimensions.get_tab_bar().set_tab_hidden(1, Globals.EDHandler.DimsUnlocked == 0)
+	
 	if Input.is_action_just_pressed("Debug"): debugMode = not debugMode
 	TBar.set_tab_hidden(TBar.tab_count - 1, not debugMode)
 	
@@ -56,8 +59,15 @@ func _process(_delta):
 	%Resources/Rewind.visible = \
 	%Tabs/Dimensions/Tachyons.rewindNode.visible
 	
-	%Resources/Eternity.visible = Globals.progress >= GL.Progression.Overcome and Globals.Challenge == 0
+	%Resources/Eternity.visible = \
+	Globals.progress >= GL.Progression.Overcome and Globals.Challenge == 0
 	%Resources/Eternity/EternityButton.disabled = not %Tabs/Dimensions/Tachyons.canBigBang
+	
+	%Resources/EDunlock.visible = \
+	Globals.progress >= GL.Progression.Overcome and \
+	Globals.Challenge == 0 and \
+	Globals.EDHandler.DimsUnlocked < 8
+	%Resources/EDunlock/EDButton.disabled = true
 	
 	%Resources/EP.visible = (Globals.progress >= GL.Progression.Eternity)
 	%Resources/Challenge.visible = (Globals.progress >= GL.Progression.Eternity)

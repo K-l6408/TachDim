@@ -106,9 +106,9 @@ text = "Idle progress: ON"
 [node name="Sidler" type="HSlider" parent="HFlowContainer"]
 custom_minimum_size = Vector2(460, 0)
 layout_mode = 2
-min_value = 10.0
-max_value = 600.0
-step = 10.0
+min_value = 60.0
+max_value = 1800.0
+step = 60.0
 value = 300.0
 
 [node name="Label" type="Label" parent="HFlowContainer/Sidler"]

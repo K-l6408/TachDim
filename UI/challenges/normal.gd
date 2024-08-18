@@ -52,11 +52,10 @@ func _process(_delta):
 	$Chal/lenges/C12/Condition.text = "Timespeed strength starts at %s instead of %s." % \
 	[Globals.float_to_string(1.1), Globals.float_to_string(1.13)]
 	
-	$Chal/lenges/C13/Condition.text = "%s %s %s %s. %s" % [
+	$Chal/lenges/C13/Condition.text = "%s %s %s" % [
 		"All TD multipliers are disabled except for the one from Dilation and the Buy",
 		Globals.int_to_string(10),
-		"multiplier, which is reduced to", Globals.float_to_string(1.8),
-		"However, Rewind affects all Dimensions."
+		"multiplier. However, Rewind affects all Dimensions."
 	]
 	
 	if Globals.Challenge == 0:

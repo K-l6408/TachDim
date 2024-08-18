@@ -188,6 +188,33 @@ func saveF(file : String = saveFilePath):
 		DATA["tmsp scale bought"] = Globals.OEUHandler.TSpScBought
 		DATA["tdim scale bought"] = Globals.OEUHandler.TDmScBought
 		DATA["passive ep bought"] = Globals.OEUHandler.PasEPBought
+		
+		DATA["eter dim amounts"] = [
+			Globals.EDHandler.DimAmount[0].to_bytes(),
+			Globals.EDHandler.DimAmount[1].to_bytes(),
+			Globals.EDHandler.DimAmount[2].to_bytes(),
+			Globals.EDHandler.DimAmount[3].to_bytes(),
+			Globals.EDHandler.DimAmount[4].to_bytes(),
+			Globals.EDHandler.DimAmount[5].to_bytes(),
+			Globals.EDHandler.DimAmount[6].to_bytes(),
+			Globals.EDHandler.DimAmount[7].to_bytes()
+		]
+		DATA["eter dim purchases"] = Globals.EDHandler.DimPurchase
+		DATA["eter dim costs"] = [
+			Globals.EDHandler.DimCost[0].to_bytes(),
+			Globals.EDHandler.DimCost[1].to_bytes(),
+			Globals.EDHandler.DimCost[2].to_bytes(),
+			Globals.EDHandler.DimCost[3].to_bytes(),
+			Globals.EDHandler.DimCost[4].to_bytes(),
+			Globals.EDHandler.DimCost[5].to_bytes(),
+			Globals.EDHandler.DimCost[6].to_bytes(),
+			Globals.EDHandler.DimCost[7].to_bytes()
+		]
+		DATA["eter dims unlocked"] = Globals.EDHandler.DimsUnlocked
+		DATA["time shards"] = Globals.EDHandler.TimeShards.to_bytes()
+		DATA["free timespeed"] = Globals.EDHandler.FreeTSpeed
+		DATA["next timespeed"] = Globals.EDHandler.NextUpgrade.to_bytes()
+		DATA["TTIE"] = Globals.TDHandler.topTachyonsInEternity.to_bytes()
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -344,6 +371,19 @@ func loadF(file : String = saveFilePath):
 			Globals.OEUHandler.TDmScBought = DATA["tdim scale bought"]
 		if DATA.has("passive ep bought"):
 			Globals.OEUHandler.PasEPBought = DATA["passive ep bought"]
+		
+		if DATA.has("eter dim amounts"):
+			for i in 8:
+				Globals.EDHandler.DimAmount[i].from_bytes(DATA["eter dim amounts"][i])
+				Globals.EDHandler.DimCost[i].from_bytes(DATA["eter dim costs"][i])
+				Globals.EDHandler.DimPurchase[i] = DATA["eter dim purchases"][i]
+			Globals.EDHandler.DimsUnlocked = DATA["eter dims unlocked"]
+			Globals.EDHandler.TimeShards.from_bytes(DATA["time shards"])
+			Globals.EDHandler.FreeTSpeed = DATA["free timespeed"]
+			Globals.EDHandler.NextUpgrade.from_bytes(DATA["next timespeed"])
+		
+		if DATA.has("TTIE"):
+			Globals.TDHandler.topTachyonsInEternity.from_bytes(DATA["TTIE"])
 	
 	get_tree().paused = pause
 	$CanvasLayer.visible = false

@@ -89,6 +89,19 @@ text = "Big bang at
 EP"
 horizontal_alignment = 2
 
+[node name="Label2" type="Label" parent="Auto/Buyers/BigBang/Amount"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 218.0
+offset_top = -14.0
+offset_right = 320.0
+offset_bottom = 14.0
+grow_vertical = 2
+text = " (1.00)"
+vertical_alignment = 1
+
 [node name="Enabled" type="Button" parent="Auto/Buyers/BigBang"]
 layout_mode = 1
 anchors_preset = 1
@@ -459,6 +472,7 @@ Current bulk: ×1"
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TD1"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4
@@ -478,8 +492,8 @@ anchors_preset = -1
 anchor_left = 0.7
 anchor_right = 0.7
 anchor_bottom = 1.0
-offset_left = -108.56
-offset_right = 108.44
+offset_left = -109.0
+offset_right = 108.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"

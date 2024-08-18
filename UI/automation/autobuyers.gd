@@ -121,6 +121,7 @@ func RewdAccuracy():
 	if i > 1: return 1
 	return i
 func RewdInterval():
+	if Globals.Achievemer.is_unlocked(5, 2): return 0
 	var i = 3 * (0.6 ** RewdUpgrades)
 	if i < 0.11: return MIN_INTERVAL
 	return i
@@ -190,9 +191,12 @@ func _process(_delta):
 		if not (i is Button or i is HSeparator):
 			if i.has_node("Mode"): i.get_node("Mode").text = \
 				"Complete the challenge to\nchange the mode" if i.get_node("Mode").disabled else (
-					("Buys %ss" % Globals.int_to_string(
-						Globals.TDHandler.buylim * TDBulk(i.name.trim_prefix("TD").to_int())
-					)) if i.get_node("Mode").button_pressed else "Buys singles"
+					(
+						"Buys Max" if Globals.Achievemer.is_unlocked(5, 3) else
+						"Buys %ss" % Globals.int_to_string(
+							Globals.TDHandler.buylim * TDBulk(i.name.trim_prefix("TD").to_int())
+						)
+					) if i.get_node("Mode").button_pressed else "Buys singles"
 				)
 			i.get_node("Enabled").text = \
 				"Enabled" if i.get_node("Enabled").button_pressed else "Disabled"
@@ -257,9 +261,14 @@ func _process(_delta):
 		$Auto/Buyers/Rewind.custom_minimum_size = Vector2(250, 80)
 	else: $Auto/Buyers/Rewind.custom_minimum_size = Vector2(size.x - 10, 45)
 	
-	$Auto/Buyers/Rewind/RichTextLabel.text = \
-	"[center]Rewind Autobuyer\n[font_size=10] Activates every %s seconds\nCurrent accuracy: %s" % \
-	[Globals.float_to_string(RewdInterval()), Globals.percent_to_string(RewdAccuracy())]
+	if RewdInterval() == 0:
+		$Auto/Buyers/Rewind/RichTextLabel.text = \
+		"[center]Rewind Autobuyer\n[font_size=10] Activates instantly\nCurrent accuracy: %s" % \
+		Globals.percent_to_string(RewdAccuracy())
+	else:
+		$Auto/Buyers/Rewind/RichTextLabel.text = \
+		"[center]Rewind Autobuyer\n[font_size=10] Activates every %s seconds\nCurrent accuracy: %s" % \
+		[Globals.float_to_string(RewdInterval()), Globals.percent_to_string(RewdAccuracy())]
 	if Globals.challengeCompleted(13):
 		$Auto/Buyers/Rewind/Interval.disabled = Globals.EternityPts.less(2 ** RewdUpgrades)
 		$Auto/Buyers/Rewind/Accuracy.disabled = Globals.EternityPts.less(3 ** RewdAQups)
@@ -307,6 +316,31 @@ func _process(_delta):
 		"[center]%s Tachyon Dim Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: ×%s" % \
 		[Globals.ordinal(i+1), Globals.float_to_string(TDInterval(i)), Globals.int_to_string(TDBulk(i+1))]
 	
+	if not Globals.Achievemer.is_unlocked(5, 2):
+		if RewdAQups >= 8 and RewdUpgrades >= 7:
+			Globals.Achievemer.set_unlocked(5, 2)
+	
+	if not Globals.Achievemer.is_unlocked(5, 3):
+		var done = true
+		for i in 8:
+			if TDBulk(i+1) < 512:
+				done = false
+				break
+			else:
+				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).hide()
+			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size.y = 45
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 0.7
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 0.7
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 0.0
+		if done: Globals.Achievemer.set_unlocked(5, 3)
+	else:
+		for i in 8:
+			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).hide()
+			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size = Vector2(250, 80)
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 0.5
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 0.5
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 1.0
+	
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
 	Globals.float_to_string(2.0 ** DilUpgrades, 0)]
@@ -330,6 +364,7 @@ func _process(_delta):
 	$Auto/Buyers/BigBang/RichTextLabel.text = \
 	"[center]Big Bang Autobuyer\n[font_size=10]Activates every %s seconds" % \
 	Globals.float_to_string(BangInterval())
+	$Auto/Buyers/BigBang/Amount/Label2.text = " (%s)" % BigBangAtEP.to_string()
 
 func unlock(which):
 	if which == 0:
@@ -347,11 +382,14 @@ func buyTSpeed():
 
 func buytdim(which):
 	if get_node("Auto/Buyers/TD%d/Mode" % which).button_pressed:
-		Globals.TDHandler.buydim(which, 
-			Globals.TDHandler.buylim - \
-			Globals.TDHandler.DimPurchase[which-1] % Globals.TDHandler.buylim + \
-			10 * (TDBulk(which) - 1)
-		)
+		if Globals.Achievemer.is_unlocked(5, 3):
+			Globals.TDHandler.buydim(1e9)
+		else:
+			Globals.TDHandler.buydim(which, 
+				Globals.TDHandler.buylim - \
+				Globals.TDHandler.DimPurchase[which-1] % Globals.TDHandler.buylim + \
+				10 * (TDBulk(which) - 1)
+			)
 	else:
 		Globals.TDHandler.buydim(which, 1)
 	get_node("Auto/Buyers/TD%d/Timer" % which).start(TDInterval(which - 1))
@@ -389,6 +427,8 @@ func bigbang():
 func update_bigbang_ep(epgain:String):
 	var tree = epgain.split("e")
 	var k = largenum.new(0)
-	for i in tree:
-		k = largenum.ten_to_the(k.to_float()).multiply(i.to_float())
+	for i in range(tree.size()-1, -1, -1):
+		var j = tree[i].to_float()
+		if tree[i] == "": j = 1
+		k = largenum.ten_to_the(k.to_float()).multiply(j)
 	BigBangAtEP = k

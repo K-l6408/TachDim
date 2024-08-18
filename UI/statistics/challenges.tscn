@@ -1,0 +1,202 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0jbprr882fjc"]
+
+[ext_resource type="Script" path="res://UI/statistics/table.gd" id="1_brrwr"]
+[ext_resource type="Script" path="res://UI/statistics/challenges.gd" id="1_x67q2"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x67q2")
+
+[node name="Table" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.5
+offset_top = -144.0
+offset_right = 63.5
+offset_bottom = 144.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 7
+columns = 2
+script = ExtResource("1_brrwr")
+
+[node name="Chall" type="Label" parent="Table"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Challenge"
+horizontal_alignment = 1
+
+[node name="Time" type="Label" parent="Table"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Time"
+horizontal_alignment = 1
+
+[node name="C1" type="Label" parent="Table"]
+layout_mode = 2
+text = "C1"
+horizontal_alignment = 1
+
+[node name="T1" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C2" type="Label" parent="Table"]
+layout_mode = 2
+text = "C2"
+horizontal_alignment = 1
+
+[node name="T2" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C3" type="Label" parent="Table"]
+layout_mode = 2
+text = "C3"
+horizontal_alignment = 1
+
+[node name="T3" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C4" type="Label" parent="Table"]
+layout_mode = 2
+text = "C4"
+horizontal_alignment = 1
+
+[node name="T4" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C5" type="Label" parent="Table"]
+layout_mode = 2
+text = "C5"
+horizontal_alignment = 1
+
+[node name="T5" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C6" type="Label" parent="Table"]
+layout_mode = 2
+text = "C6"
+horizontal_alignment = 1
+
+[node name="T6" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C7" type="Label" parent="Table"]
+layout_mode = 2
+text = "C7"
+horizontal_alignment = 1
+
+[node name="T7" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C8" type="Label" parent="Table"]
+layout_mode = 2
+text = "C8"
+horizontal_alignment = 1
+
+[node name="T8" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C9" type="Label" parent="Table"]
+layout_mode = 2
+text = "C9"
+horizontal_alignment = 1
+
+[node name="T9" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C10" type="Label" parent="Table"]
+layout_mode = 2
+text = "C10"
+horizontal_alignment = 1
+
+[node name="T10" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C11" type="Label" parent="Table"]
+layout_mode = 2
+text = "C11"
+horizontal_alignment = 1
+
+[node name="T11" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C12" type="Label" parent="Table"]
+layout_mode = 2
+text = "C12"
+horizontal_alignment = 1
+
+[node name="T12" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C13" type="Label" parent="Table"]
+layout_mode = 2
+text = "C13"
+horizontal_alignment = 1
+
+[node name="T13" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C14" type="Label" parent="Table"]
+layout_mode = 2
+text = "C14"
+horizontal_alignment = 1
+
+[node name="T14" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C15" type="Label" parent="Table"]
+layout_mode = 2
+text = "C15"
+horizontal_alignment = 1
+
+[node name="T15" type="Label" parent="Table"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C+" type="Label" parent="Table"]
+layout_mode = 2
+text = "Sum"
+horizontal_alignment = 1
+
+[node name="T+" type="Label" parent="Table"]
+layout_mode = 2
+text = "08:30:00"
+horizontal_alignment = 1

@@ -6,13 +6,17 @@ extends Button
 var score := 0.0
 
 func _process(delta):
-	if not Engine.is_editor_hint(): 
-		score = sin(Globals.existence / 2.0)
+	if not Engine.is_editor_hint():
+		var rewspd = 0.5
+		if Globals.Achievemer.is_unlocked(5, 2):
+			rewspd *= 7
 		
+		score = sin(Globals.existence * rewspd)
 		# sine changed sign (score reached maximum)
-		if sin(Globals.existence / 2.0) * \
-		sin((Globals.existence - delta) / 2.0) < 0:
+		if sin(Globals.existence * rewspd) * \
+		sin((Globals.existence - delta) * rewspd) < 0:
 			score = 0
+		
 		
 		$Accuracy.position.x = (
 			(score * (size.x - 20)) + size.x - $Accuracy.size.x

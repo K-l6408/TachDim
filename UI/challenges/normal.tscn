@@ -812,7 +812,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "All TD multipliers are disabled except for the one from Dilation and the Buy 10 multiplier, which is reduced to 1.5. However, Rewind affects all Dimensions."
+text = "All TD multipliers are disabled except for the one from Dilation and the Buy 10 multiplier. However, Rewind affects all Dimensions."
 
 [node name="Start" type="Button" parent="Chal/lenges/C13"]
 layout_mode = 1
