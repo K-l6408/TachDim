@@ -85,7 +85,7 @@ func _process(_delta):
 	if %Resources/Eternity/EternityButton.disabled:
 		%Resources/Eternity/EternityButton.text = "Reach\n%s Tachyons" % largenum.two_to_the(1024)
 	else:
-		%Resources/Eternity/EternityButton.text = "Eternity for\n%s EP\n(%s EP/s)" % [
+		%Resources/Eternity/EternityButton.text = "Big Bang for\n%s EP\n(%s EP/s)" % [
 			%Tabs/Dimensions/Tachyons.epgained().to_string(),
 			%Tabs/Dimensions/Tachyons.epgained().divide(Globals.eternTime).to_string()
 		]

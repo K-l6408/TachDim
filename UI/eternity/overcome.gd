@@ -123,7 +123,7 @@ func _process(delta):
 		$upgrades/PasEP.add_theme_stylebox_override("disabled", \
 		get_theme_stylebox("enabled", "ButtonEtern"))
 		$upgrades/PasEP.text = "%s %s %s\n%s\n%s %s %s" % [
-			"Passively generate", Globals.percent_to_string(PasEPBought / 20.), "of",
+			"Passively generate", Globals.percent_to_string(PasEPBought / 20., 0), "of",
 			"your average EP gain", "over the last", Globals.int_to_string(10),
 			"Eternities."
 		]
@@ -131,9 +131,9 @@ func _process(delta):
 		$upgrades/PasEP.remove_theme_stylebox_override("disabled")
 		$upgrades/PasEP.disabled = Globals.EternityPts.less(pasep_cost())
 		$upgrades/PasEP.text = "%s %s %s\n%s\n%s %s %s\n\n%s %s\n%s %s %s" % [
-			"Passively generate", Globals.percent_to_string(PasEPBought / 20.), "of",
+			"Passively generate", Globals.percent_to_string(PasEPBought / 20., 0), "of",
 			"your average EP gain", "over the last", Globals.int_to_string(10),
-			"Eternities.", "Next:", Globals.percent_to_string((PasEPBought + 1) / 20.),
+			"Eternities.", "Next:", Globals.percent_to_string((PasEPBought + 1) / 20., 0),
 			"Cost:", pasep_cost(), "EP"
 		]
 	
@@ -149,6 +149,14 @@ func _process(delta):
 		$upgrades/TachMult.text = \
 		"Tachyon Dimensions\nget a multiplier\nbased on current Tachyon\namount.\n \nCost: %s EP" % \
 		Globals.float_to_string(Costs[0], 0)
+	
+	if is_bought(2) != Input.is_action_pressed("BuyOne"): # "BuyOne" is shift. ðis essentially makes ðe behavior "swappable"
+		$upgrades/MaxDila.text = \
+		"Unlock the Buy Max Dilation\nAutobuyer mode."
+	else:
+		$upgrades/MaxDila.text = \
+		"\nUnlock the Buy Max Dilation\nAutobuyer mode.\n\n\nCost: %s EP" % \
+		Globals.float_to_string(Costs[1], 0)
 	
 	
 	if is_bought(5) != Input.is_action_pressed("BuyOne"):

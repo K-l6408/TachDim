@@ -18,4 +18,9 @@ static func overcome_7():
 	for ch in Globals.challengeTimes:
 		if ch > i: i = ch
 	if i < 0: return 1
-	return max(100 / i, 1)
+	return max(300 / i, 1)
+
+static func achievement_56():
+	if Globals.eternTime < 120:
+		return (240.0 / (Globals.eternTime + 120)) ** 20
+	else: return 1

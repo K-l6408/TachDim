@@ -53,6 +53,9 @@ func achnames(r, c):
 			1: return "Freedom!"
 			2: return "Frame Perfect"
 			3: return "I'll take your entire stock"
+			4: return "New dimensions!"
+			5: return "ok i really should have nerfed it"
+			6: return "Take that!"
 	return "TBD"
 
 func achreqs(r, c):
@@ -113,6 +116,17 @@ func achreqs(r, c):
 			Globals.int_to_string(7)
 			3: return "Get all your TD autobuyers' bulks to %s." % \
 			Globals.int_to_string(512) + "\n(Reward: TD autobuyers have unlimited bulk.)"
+			4: return "Purchase a %s Eternity Dimension." % Globals.ordinal(1)
+			5: return "Complete Challenge %s in %s or less." % [
+				Globals.int_to_string(8), Globals.format_time(30)
+			] + "\n(Reward: Rewind multiplier is raised ^%s.)" % \
+			Globals.float_to_string(1.2)
+			6: return "Complete Challenge %s in %s or less." % [
+				Globals.int_to_string(2), Globals.format_time(30)
+			] + "\n(Reward: Tachyon Dimensions are WAY stronger" + \
+			"\nin the first %s each Eternity.)\n(Currently: ×%s)" % [
+				Globals.format_time(120), Globals.float_to_string(Formulas.achievement_56())
+			]
 	return "TBD"
 
 func is_unlocked(row, num):
@@ -200,3 +214,12 @@ func _process(_delta):
 	if not is_unlocked(5, 1):
 		if Globals.progress >= Globals.Progression.Overcome:
 			set_unlocked(5, 1)
+	if not is_unlocked(5, 4):
+		if Globals.EDHandler.DimPurchase[0] > 0:
+			set_unlocked(5, 4)
+	if not is_unlocked(5, 5):
+		if Globals.challengeTimes[8-1] <= 30 and Globals.challengeTimes[8-1] > 0:
+			set_unlocked(5, 5)
+	if not is_unlocked(5, 6):
+		if Globals.challengeTimes[2-1] <= 30 and Globals.challengeTimes[2-1] > 0:
+			set_unlocked(5, 6)

@@ -6,7 +6,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngcjy"]
 shader = ExtResource("2_5oiqa")
-shader_parameter/pixelsize = 0.0016276
+shader_parameter/pixelsize = 0.00210793
 shader_parameter/zoom = 1.0
 
 [node name="Tachyons" type="Control"]

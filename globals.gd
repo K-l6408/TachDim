@@ -126,7 +126,7 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 		DisplayMode.Strict_Logarithm:
 			return "e" + String.num(log(f) / LOG10, precision).pad_decimals(precision).replace("inf", "∞")
 		DisplayMode.Logarithm:
-			if f > 1000 and not force_dec:
+			if f >= 1000 and not force_dec:
 				return "e" + String.num(log(f) / LOG10, precision).pad_decimals(precision)
 		DisplayMode.Dozenal:
 			if f > 12**3 and not force_dec:
@@ -138,21 +138,24 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 			var ohno = log(abs(f)) / LOG10
 			ohno *= 1 + sin(ohno) / 10
 			if f != 0: f = 10 ** ohno * sign(f)
-			if f > 1000 and not force_dec:
+			if f >= 1000 and not force_dec:
 				return "%.2fe" % (f / (10.0 ** floor(log(f) / LOG10))) + String.num(log(f) / LOG10,0)
 			return String.num(f, precision).pad_decimals(precision)
 		DisplayMode.Factorial:
-			if f > 1000 and not force_dec:
+			if f >= 1000 and not force_dec:
 				return "%.2f!" % invfact(f)
 		DisplayMode.Standard:
-			if f > 1000 and not force_dec:
+			if f >= 1000 and not force_dec:
 				var loga = floor(log(f) / 3 / LOG10)
 				return String.num((f / (1000.0 ** loga)), precision)\
 				.pad_decimals(precision) + " " + largenum.standard(int(loga / 3))
 		_:
-			if f > 1000 and not force_dec:
-				return String.num((f / (10.0 ** floor(log(f) / LOG10))), precision)\
-				.pad_decimals(precision) + "e" + str(int(log(f) / LOG10))
+			if f >= 1000 and not force_dec:
+				var l = log(f) / LOG10
+				if f / (10.0 ** floor(l)) > 9.9:
+					l += 1
+				return String.num(f / (10.0 ** floor(l)), precision)\
+				.pad_decimals(precision) + "e" + str(int(l))
 	return String.num(f, precision).pad_decimals(precision)
 
 func format_time(f:float) -> String:

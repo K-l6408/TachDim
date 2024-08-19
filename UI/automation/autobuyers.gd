@@ -192,7 +192,7 @@ func _process(_delta):
 			if i.has_node("Mode"): i.get_node("Mode").text = \
 				"Complete the challenge to\nchange the mode" if i.get_node("Mode").disabled else (
 					(
-						"Buys Max" if Globals.Achievemer.is_unlocked(5, 3) else
+						"Buys max" if Globals.Achievemer.is_unlocked(5, 3) else
 						"Buys %ss" % Globals.int_to_string(
 							Globals.TDHandler.buylim * TDBulk(i.name.trim_prefix("TD").to_int())
 						)
@@ -219,7 +219,11 @@ func _process(_delta):
 	if Globals.challengeCompleted(11) and $Auto/Buyers/Dilation/Timer.time_left == 0:
 		if $Auto/Buyers/Dilation/Enabled.button_pressed:
 			buydila()
-			$Auto/Buyers/Dilation/Timer.start(DilInterval())
+			if Globals.OEUHandler.is_bought(2) and \
+			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed:
+				$Auto/Buyers/Dilation/Timer.start($Auto/Buyers/Dilation/BuyMax.value)
+			else:
+				$Auto/Buyers/Dilation/Timer.start(DilInterval())
 	if Globals.challengeCompleted(12) and $Auto/Buyers/Galaxy/Timer.time_left == 0:
 		if $Auto/Buyers/Galaxy/Enabled.button_pressed:
 			buygala()
@@ -295,6 +299,8 @@ func _process(_delta):
 		$Auto/Buyers/TimeSpeed/Mode.disabled = true
 		$Auto/Buyers/TimeSpeed/Mode.button_pressed = false
 	
+	$Auto/Buyers/Dilation/BuyMax.visible = Globals.OEUHandler.is_bought(2)
+	
 	for i in 8:
 		if Globals.challengeCompleted(i+1):
 			if TDUpgrades[i] < IntervalCap[i]:
@@ -312,9 +318,14 @@ func _process(_delta):
 			"Complete the challenge to\nupgrade the interval"
 			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).disabled = true
 		
-		get_node("Auto/Buyers/TD%d/RichTextLabel" % (i+1)).text = \
-		"[center]%s Tachyon Dim Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: ×%s" % \
-		[Globals.ordinal(i+1), Globals.float_to_string(TDInterval(i)), Globals.int_to_string(TDBulk(i+1))]
+		if Globals.Achievemer.is_unlocked(5, 3):
+			get_node("Auto/Buyers/TD%d/RichTextLabel" % (i+1)).text = \
+			"[center]%s Tachyon Dim Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: YES" % \
+			[Globals.ordinal(i+1), Globals.float_to_string(TDInterval(i))]
+		else:
+			get_node("Auto/Buyers/TD%d/RichTextLabel" % (i+1)).text = \
+			"[center]%s Tachyon Dim Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: ×%s" % \
+			[Globals.ordinal(i+1), Globals.float_to_string(TDInterval(i)), Globals.int_to_string(TDBulk(i+1))]
 	
 	if not Globals.Achievemer.is_unlocked(5, 2):
 		if RewdAQups >= 8 and RewdUpgrades >= 7:
@@ -325,7 +336,7 @@ func _process(_delta):
 		for i in 8:
 			if TDBulk(i+1) < 512:
 				done = false
-				break
+				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).show()
 			else:
 				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).hide()
 			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size.y = 45
@@ -339,7 +350,7 @@ func _process(_delta):
 			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size = Vector2(250, 80)
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 0.5
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 0.5
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 1.0
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 0.5
 	
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
@@ -362,8 +373,11 @@ func _process(_delta):
 	Globals.float_to_string(2.0 ** BangUpgrades, 0)]
 	$Auto/Buyers/BigBang/Interval.disabled = Globals.EternityPts.less(2 ** BangUpgrades)
 	$Auto/Buyers/BigBang/RichTextLabel.text = \
-	"[center]Big Bang Autobuyer\n[font_size=10]Activates every %s seconds" % \
-	Globals.float_to_string(BangInterval())
+	"[center]Big Bang Autobuyer"
+	if Globals.progress < GL.Progression.Overcome:
+		$Auto/Buyers/BigBang/RichTextLabel.text += \
+		"\n[font_size=10]Activates every %s seconds" % \
+		Globals.float_to_string(BangInterval())
 	$Auto/Buyers/BigBang/Amount/Label2.text = " (%s)" % BigBangAtEP.to_string()
 
 func unlock(which):
@@ -383,7 +397,7 @@ func buyTSpeed():
 func buytdim(which):
 	if get_node("Auto/Buyers/TD%d/Mode" % which).button_pressed:
 		if Globals.Achievemer.is_unlocked(5, 3):
-			Globals.TDHandler.buydim(1e9)
+			Globals.TDHandler.buydim(which, 1e9)
 		else:
 			Globals.TDHandler.buydim(which, 
 				Globals.TDHandler.buylim - \
@@ -410,7 +424,13 @@ func buydila():
 		if $Auto/Buyers/Dilation/Ignore/Enabled.button_pressed:
 			if Globals.TGalaxies >= DilIgnore:
 				doit = true
-		if doit: Globals.TDHandler.dilate()
+		if doit:
+			var dim8 = Globals.TDHandler.DimPurchase[Globals.TDHandler.DimsUnlocked - 1]
+			Globals.TDHandler.dilate()
+			if Globals.OEUHandler.is_bought(2) and \
+			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed:
+				while dim8 >= Globals.TDHandler.dilacost():
+					Globals.TDHandler.dilate()
 
 func buygala():
 	if Globals.TDHandler.canGalaxy:

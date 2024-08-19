@@ -69,7 +69,7 @@ on current Tachyon amount.
 Cost: 1.00e3 EP"
 text_overrun_behavior = 2
 
-[node name="2" type="Button" parent="upgrades"]
+[node name="MaxDila" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"
@@ -196,6 +196,7 @@ text_overrun_behavior = 2
 
 [connection signal="pressed" from="holy shit" to="." method="overcome"]
 [connection signal="pressed" from="upgrades/TachMult" to="." method="buy" binds= [1]]
+[connection signal="pressed" from="upgrades/MaxDila" to="." method="buy" binds= [2]]
 [connection signal="pressed" from="upgrades/DilaBoost" to="." method="buy" binds= [5]]
 [connection signal="pressed" from="upgrades/RewdFormula" to="." method="buy" binds= [6]]
 [connection signal="pressed" from="upgrades/ChallengeMult" to="." method="buy" binds= [7]]
