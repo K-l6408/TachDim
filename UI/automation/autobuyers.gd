@@ -402,7 +402,7 @@ func buytdim(which):
 			Globals.TDHandler.buydim(which, 
 				Globals.TDHandler.buylim - \
 				Globals.TDHandler.DimPurchase[which-1] % Globals.TDHandler.buylim + \
-				10 * (TDBulk(which) - 1)
+				Globals.TDHandler.buylim * (TDBulk(which) - 1)
 			)
 	else:
 		Globals.TDHandler.buydim(which, 1)
@@ -428,7 +428,8 @@ func buydila():
 			var dim8 = Globals.TDHandler.DimPurchase[Globals.TDHandler.DimsUnlocked - 1]
 			Globals.TDHandler.dilate()
 			if Globals.OEUHandler.is_bought(2) and \
-			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed:
+			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed and \
+			Globals.TDilation > (2 if Globals.Challenge in [6, 16] else 4):
 				while dim8 >= Globals.TDHandler.dilacost():
 					Globals.TDHandler.dilate()
 

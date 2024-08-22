@@ -82,7 +82,7 @@ Autobuyer mode.
 Cost: 1.00e6 EP"
 text_overrun_behavior = 2
 
-[node name="3" type="Button" parent="upgrades"]
+[node name="GalStr" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"
@@ -95,7 +95,7 @@ All Galaxies are
 Cost: 1.00e9 EP"
 text_overrun_behavior = 2
 
-[node name="4" type="Button" parent="upgrades"]
+[node name="EPForm" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"
@@ -197,6 +197,7 @@ text_overrun_behavior = 2
 [connection signal="pressed" from="holy shit" to="." method="overcome"]
 [connection signal="pressed" from="upgrades/TachMult" to="." method="buy" binds= [1]]
 [connection signal="pressed" from="upgrades/MaxDila" to="." method="buy" binds= [2]]
+[connection signal="pressed" from="upgrades/EPForm" to="." method="buy" binds= [4]]
 [connection signal="pressed" from="upgrades/DilaBoost" to="." method="buy" binds= [5]]
 [connection signal="pressed" from="upgrades/RewdFormula" to="." method="buy" binds= [6]]
 [connection signal="pressed" from="upgrades/ChallengeMult" to="." method="buy" binds= [7]]

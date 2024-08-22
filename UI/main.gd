@@ -3,8 +3,8 @@ extends Control
 @onready var TBar : TabBar = %Tabs.get_tab_bar()
 var debugMode := false
 
-var tabSymbolLeft  = "⇠\uf085⁈δ\uf091\uf0ca\uf1de["
-var tabSymbolRight = "⇢\uf1de⁉δ\uf091\uf0c9\uf0ad]"
+var tabSymbolLeft  = "⇠\uf085⁈δ\uf091\uf0ca\uf1de[!"
+var tabSymbolRight = "⇢\uf1de⁉δ\uf091\uf0c9\uf0ad]!"
 
 var dimensionSymbols = "Ψδ"
 var challengeSymbols = "Ψδ"
@@ -50,9 +50,12 @@ func _process(_delta):
 	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Eternity)
 	
 	%Tabs/Dimensions.get_tab_bar().set_tab_hidden(1, Globals.EDHandler.DimsUnlocked == 0)
+	%Tabs/Challenges.get_tab_bar().set_tab_hidden(
+		1, Globals.TachTotal.log10() < Globals.ECUnlocks[0]
+	)
 	
 	if Input.is_action_just_pressed("Debug"): debugMode = not debugMode
-	TBar.set_tab_hidden(TBar.tab_count - 1, not debugMode)
+	TBar.set_tab_hidden(TBar.tab_count - 2, not debugMode)
 	
 	%Resources/Rewind/Button.disabled = \
 	%Tabs/Dimensions/Tachyons.rewindNode.disabled
@@ -60,12 +63,13 @@ func _process(_delta):
 	%Tabs/Dimensions/Tachyons.rewindNode.visible
 	
 	%Resources/Eternity.visible = \
-	Globals.progress >= GL.Progression.Overcome and Globals.Challenge == 0
+	Globals.progress >= GL.Progression.Overcome and \
+	(Globals.Challenge == 0 or Globals.Challenge >= 15)
 	%Resources/Eternity/EternityButton.disabled = not %Tabs/Dimensions/Tachyons.canBigBang
 	
 	%Resources/EDunlock.visible = \
 	Globals.progress >= GL.Progression.Overcome and \
-	Globals.Challenge == 0 and \
+	(Globals.Challenge == 0 or Globals.Challenge >= 15) and \
 	Globals.EDHandler.DimsUnlocked < 8
 	%Resources/EDunlock/EDButton.disabled = true
 	
@@ -79,11 +83,26 @@ func _process(_delta):
 		get_theme_color("font_color", "ButtonEtern").to_html(false),
 		Globals.EternityPts.to_string()
 	]
-	%Resources/Challenge/Text.text = \
-	"[center]Current Challenge:\n[font_size=16]%s[/font_size][/center]" % \
-	("C" + Globals.int_to_string(Globals.Challenge) if Globals.Challenge > 0 else "None")
+	if Globals.Challenge > 15:
+		%Resources/Challenge/Text.text = \
+		"[center]Current Challenge:\n[font_size=16]EC%s[/font_size][/center]" % \
+		Globals.int_to_string(Globals.Challenge - 15)
+	elif Globals.Challenge > 0:
+		%Resources/Challenge/Text.text = \
+		"[center]Current Challenge:\n[font_size=16]C%s[/font_size][/center]" % \
+		Globals.int_to_string(Globals.Challenge)
+	else:
+		%Resources/Challenge/Text.text = \
+		"[center]Current Challenge:\n[font_size=16]None[/font_size][/center]"
+	
+	
 	if %Resources/Eternity/EternityButton.disabled:
-		%Resources/Eternity/EternityButton.text = "Reach\n%s Tachyons" % largenum.two_to_the(1024)
+		%Resources/Eternity/EternityButton.text = "Reach\n%s Tachyons" % (
+			largenum.two_to_the(1024) if Globals.Challenge <= 15 else
+			Globals.ECTargets[Globals.Challenge - 16]
+		).to_string()
+	elif Globals.Challenge > 15:
+		%Resources/Eternity/EternityButton.text = "Big Bang to\ncomplete the\nchallenge"
 	else:
 		%Resources/Eternity/EternityButton.text = "Big Bang for\n%s EP\n(%s EP/s)" % [
 			%Tabs/Dimensions/Tachyons.epgained().to_string(),

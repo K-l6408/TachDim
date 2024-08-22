@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=28 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Script" path="res://UI/main.gd" id="1_qdidp"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bb23v4wug50t3" path="res://UI/options/saving.tscn" id="6_rxys2"]
 [ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
 [ext_resource type="PackedScene" uid="uid://cbherf2m8xvad" path="res://UI/eternity/overcome.tscn" id="9_ug0mq"]
+[ext_resource type="PackedScene" uid="uid://d1v3rvuka8dmn" path="res://UI/challenges/eternity.tscn" id="10_s4e3g"]
 [ext_resource type="PackedScene" uid="uid://damsts43cifm8" path="res://UI/statistics/statistics.tscn" id="10_whf7c"]
 [ext_resource type="PackedScene" uid="uid://ccgn0cmks56jk" path="res://UI/debug/debug.tscn" id="11_t3vch"]
 [ext_resource type="PackedScene" uid="uid://ptwedehhp243" path="res://UI/statistics/last_prestiges.tscn" id="11_t22am"]
@@ -348,6 +349,10 @@ layout_mode = 2
 [node name="Regular Challenges" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("6_agbn0")]
 layout_mode = 2
 
+[node name="Eternity Challenges" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("10_s4e3g")]
+visible = false
+layout_mode = 2
+
 [node name="Eternity" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
@@ -392,6 +397,27 @@ layout_mode = 2
 [node name="Debug" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("11_t3vch")]
 visible = false
 layout_mode = 2
+
+[node name="New Unlocks" type="Control" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+visible = false
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/New Unlocks"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[font_size=300]WIP[/font_size]"
+fit_content = true
+autowrap_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(480, 320)

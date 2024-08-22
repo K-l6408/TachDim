@@ -47,8 +47,10 @@ var Eternities  := largenum.new(0)
 
 var Challenge := 0
 var CompletedChallenges := 0
+var CompletedECs := 0
 
 func challengeCompleted(which): return (CompletedChallenges >> (which - 1)) & 1
+func ECCompleted(which):		return (CompletedECs >> (which - 1)) & 1
 
 var TDHandler  : Control
 var EDHandler  : Control
@@ -81,6 +83,14 @@ var challengeTimes = [
 	-1, -1, -1,
 	-1, -1, -1,
 	-1, -1, -1
+]
+var ECTimes = [-1]
+
+var ECTargets = [
+	largenum.two_to_the(2048)
+]
+const ECUnlocks = [
+	1500, 9999
 ]
 
 func _process(delta):

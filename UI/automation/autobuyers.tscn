@@ -255,6 +255,7 @@ offset_left = 0.799988
 offset_right = 20.8
 grow_horizontal = 0
 grow_vertical = 2
+button_pressed = true
 flat = true
 
 [node name="Limit" type="SpinBox" parent="Auto/Buyers/Dilation"]

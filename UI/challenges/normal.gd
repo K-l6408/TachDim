@@ -15,7 +15,7 @@ func _process(_delta):
 			$Chal/lenges.get_child(i).get_node("Start").text = "Completed"
 			$Chal/lenges.get_child(i).get_node("Start").add_theme_stylebox_override(
 				"normal",
-				load(ProjectSettings.get("gui/theme/custom")).get_stylebox("pressed", "Button")
+				get_theme_stylebox("pressed", "Button")
 			)
 		else:
 			if Globals.Challenge == i:
@@ -62,6 +62,8 @@ func _process(_delta):
 		$CurrentChallenge/Label.text = "You aren't in any challenge."
 		$CurrentChallenge/Exit.visible = false
 	else:
-		$CurrentChallenge/Label.text = "You are currently in challenge %s." % \
-		Globals.int_to_string(Globals.Challenge)
+		$CurrentChallenge/Label.text = "You are currently in %schallenge %s." % [
+			"" if Globals.Challenge <= 15 else "eternity",
+			Globals.int_to_string((Globals.Challenge - 1) % 15 + 1)
+		]
 		$CurrentChallenge/Exit.visible = true

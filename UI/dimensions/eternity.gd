@@ -16,8 +16,8 @@ var DimAmount : Array[largenum] = [
 	largenum.new(0),largenum.new(0),largenum.new(0),largenum.new(0)
 ]
 var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
-var DimCost : Array[largenum] = [
-	largenum.ten_to_the( 4),largenum.ten_to_the( 8),
+var DimCostStart : Array[largenum] = [
+	largenum.ten_to_the( 4),largenum.ten_to_the( 6),
 	largenum.ten_to_the(15),largenum.ten_to_the(30),
 	largenum.ten_to_the(999),largenum.ten_to_the(999),
 	largenum.ten_to_the(999),largenum.ten_to_the(999)
@@ -32,7 +32,7 @@ var DimCostMult : Array[largenum] :
 		]
 
 const TachLogReq := [
-	1000, 2000, 4000, 1e100
+	1000, 1600, 4000, 1e100
 ]
 
 var DimsUnlocked := 0
@@ -43,15 +43,17 @@ var NextUpgrade  := largenum.new(1)
 var TreshMult    := 1.1
 var BuyMax : bool
 
+func dimcost(which):
+	return DimCostStart[which-1].multiply(DimCostMult[which-1].power(DimPurchase[which-1]))
+
 func buydim(which, bulk := 1):
 	if which > DimsUnlocked: return
-	Globals.EternityPts.add2self(DimCost[which-1].neg())
+	Globals.EternityPts.add2self(dimcost(which).neg())
 	if Globals.EternityPts.sign < 0:
-		Globals.EternityPts.add2self(DimCost[which-1])
+		Globals.EternityPts.add2self(dimcost(which))
 		return
-	DimPurchase[which-1] += bulk
+	DimPurchase[which-1] += 1
 	DimAmount[which-1].add2self(largenum.new(bulk))
-	DimCost[which-1].mult2self(DimCostMult[which-1])
 	if not Globals.Achievemer.is_unlocked(2, 7):
 		if bulk == 1 and which == 1 and DimAmount[which-1].log10() >= 100:
 			Globals.Achievemer.set_unlocked(2, 7)
@@ -70,9 +72,9 @@ func _process(delta):
 			i.modulate.a = 1
 		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % \
 		[Globals.int_to_string(DimPurchase[k-1]), "" if DimPurchase[k-1] == 1 else "s"]
-		i.get_node("Buy").disabled = Globals.EternityPts.less(DimCost[k-1])
+		i.get_node("Buy").disabled = Globals.EternityPts.less(dimcost(k))
 		i.get_node("A&G/Amount").text = DimAmount[k-1].to_string()
-		i.get_node("Buy").text = "Cost: %s EP" % DimCost[k-1].to_string()
+		i.get_node("Buy").text = "Cost: %s EP" % dimcost(k).to_string()
 	
 	var buy10mult = 4
 	
@@ -110,13 +112,19 @@ func _process(delta):
 	
 	if DimsUnlocked < 8:
 		dims[DimsUnlocked + 1].get_node("A&G/Growth").hide()
+		dims[DimsUnlocked + 1].get_node("N&M/Multiplier").hide()
+		dims[DimsUnlocked + 1].get_node("Buy").disabled = true
 	
 	for i in range(1, min(DimsUnlocked+1, len(dims))):
 		var mult := largenum.new(1)
 		
 		mult.mult2self(largenum.new(buy10mult).power(DimPurchase[i-1]))
 		
+		if Globals.ECCompleted(1):
+			mult.mult2self(Formulas.ec1_reward())
+		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
+		dims[i].get_node("N&M/Multiplier").show()
 		if i != 8:
 			if DimAmount[i].exponent == -INF:	dims[i].get_node("A&G/Growth").hide()
 			else:								dims[i].get_node("A&G/Growth").show()

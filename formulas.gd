@@ -24,3 +24,10 @@ static func achievement_56():
 	if Globals.eternTime < 120:
 		return (240.0 / (Globals.eternTime + 120)) ** 20
 	else: return 1
+
+static func ec1_reward():
+	var m : float = 1
+	for i in 15:
+		if Globals.ECCompleted(i + 1):
+			m *= 3
+	return m

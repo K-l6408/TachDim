@@ -200,21 +200,15 @@ func saveF(file : String = saveFilePath):
 			Globals.EDHandler.DimAmount[7].to_bytes()
 		]
 		DATA["eter dim purchases"] = Globals.EDHandler.DimPurchase
-		DATA["eter dim costs"] = [
-			Globals.EDHandler.DimCost[0].to_bytes(),
-			Globals.EDHandler.DimCost[1].to_bytes(),
-			Globals.EDHandler.DimCost[2].to_bytes(),
-			Globals.EDHandler.DimCost[3].to_bytes(),
-			Globals.EDHandler.DimCost[4].to_bytes(),
-			Globals.EDHandler.DimCost[5].to_bytes(),
-			Globals.EDHandler.DimCost[6].to_bytes(),
-			Globals.EDHandler.DimCost[7].to_bytes()
-		]
 		DATA["eter dims unlocked"] = Globals.EDHandler.DimsUnlocked
 		DATA["time shards"] = Globals.EDHandler.TimeShards.to_bytes()
 		DATA["free timespeed"] = Globals.EDHandler.FreeTSpeed
 		DATA["next timespeed"] = Globals.EDHandler.NextUpgrade.to_bytes()
 		DATA["TTIE"] = Globals.TDHandler.topTachyonsInEternity.to_bytes()
+		
+		DATA["dila buyer max time"] = Globals.Automation.get_node("Auto/Buyers/Dilation/BuyMax").value
+		DATA["ECcompl"] = Globals.CompletedECs
+		DATA["ECtimes"] = Globals.ECTimes
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -375,7 +369,6 @@ func loadF(file : String = saveFilePath):
 		if DATA.has("eter dim amounts"):
 			for i in 8:
 				Globals.EDHandler.DimAmount[i].from_bytes(DATA["eter dim amounts"][i])
-				Globals.EDHandler.DimCost[i].from_bytes(DATA["eter dim costs"][i])
 				Globals.EDHandler.DimPurchase[i] = DATA["eter dim purchases"][i]
 			Globals.EDHandler.DimsUnlocked = DATA["eter dims unlocked"]
 			Globals.EDHandler.TimeShards.from_bytes(DATA["time shards"])
@@ -384,6 +377,14 @@ func loadF(file : String = saveFilePath):
 		
 		if DATA.has("TTIE"):
 			Globals.TDHandler.topTachyonsInEternity.from_bytes(DATA["TTIE"])
+		
+		if DATA.has("dila buyer max time"):
+			Globals.Automation.get_node("Auto/Buyers/Dilation/BuyMax").value = \
+			DATA["dila buyer max time"]
+		
+		if DATA.has("ECcompl"):
+			Globals.CompletedECs = DATA["ECcompl"]
+			Globals.ECTimes = DATA["ECtimes"]
 	
 	get_tree().paused = pause
 	$CanvasLayer.visible = false
@@ -391,7 +392,7 @@ func loadF(file : String = saveFilePath):
 func gameReset():
 	Globals.progress = Globals.Progression.None
 	Globals.existence = 0
-	Globals.Tachyons  = largenum.new(10.001)
+	Globals.Tachyons  = largenum.new(10)
 	Globals.TachTotal = largenum.new(10)
 	Globals.Achievemer.unlocked = []
 	for i in Globals.Achievemer.MAXROWS:
@@ -400,8 +401,9 @@ func gameReset():
 		Globals.TDHandler.DimAmount[i] = largenum.new(0)
 		Globals.TDHandler.DimPurchase[i] = 0
 		Globals.TDHandler.DimCost[i] = [
-			largenum.ten_to_the(1),largenum.ten_to_the( 2),largenum.ten_to_the( 4),largenum.ten_to_the( 6),
-			largenum.ten_to_the(9),largenum.ten_to_the(13),largenum.ten_to_the(18),largenum.ten_to_the(24)
+			largenum.ten_to_the( 1),largenum.ten_to_the( 2),largenum.ten_to_the( 4),
+			largenum.ten_to_the( 6),largenum.ten_to_the( 9),largenum.ten_to_the(13),
+			largenum.ten_to_the(18),largenum.ten_to_the(24)
 		][i]
 	Globals.TDHandler.TSpeedCount = 0
 	Globals.TDHandler.TSpeedCost = largenum.new(1000)
@@ -434,6 +436,8 @@ func gameReset():
 		-1, -1, -1,
 		-1, -1, -1
 	]
+	Globals.CompletedECs = 0
+	Globals.ECTimes = [-1]
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value

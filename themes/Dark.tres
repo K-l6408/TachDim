@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=43 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=44 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -239,6 +239,19 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m01hr"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.133333, 0.133333, 0.133333, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.698039, 0.254902, 0.890196, 1)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6hgu"]
@@ -556,6 +569,8 @@ EDButton/styles/disabled = SubResource("StyleBoxFlat_s54it")
 EDButton/styles/hover = SubResource("StyleBoxFlat_ipoy4")
 EDButton/styles/normal = SubResource("StyleBoxFlat_b1s6s")
 EDButton/styles/pressed = SubResource("StyleBoxFlat_8am2u")
+EternPanel/base_type = &"Panel"
+EternPanel/styles/panel = SubResource("StyleBoxFlat_m01hr")
 FourButton/base_type = &"Button"
 FourButton/styles/fouressed = SubResource("StyleBoxFlat_o6hgu")
 FourButton/styles/threevered = SubResource("StyleBoxFlat_ety7p")

@@ -141,7 +141,8 @@ func _process(delta):
 	$"holy shit".visible  = Globals.progress <  GL.Progression.Overcome
 	$upgrades.visible     = Globals.progress >= GL.Progression.Overcome
 	
-	if is_bought(1) != Input.is_action_pressed("BuyOne"): # "BuyOne" is shift. ðis essentially makes ðe behavior "swappable"
+	# "BuyOne" is shift. ðis essentially makes ðe behavior "swappable"
+	if is_bought(1) != Input.is_action_pressed("BuyOne"):
 		$upgrades/TachMult.text = \
 		"Tachyon Dimensions\nget a multiplier\nbased on current Tachyon\namount.\n \nCurrently: ×%s" % \
 		Formulas.overcome_1().to_string()
@@ -150,7 +151,7 @@ func _process(delta):
 		"Tachyon Dimensions\nget a multiplier\nbased on current Tachyon\namount.\n \nCost: %s EP" % \
 		Globals.float_to_string(Costs[0], 0)
 	
-	if is_bought(2) != Input.is_action_pressed("BuyOne"): # "BuyOne" is shift. ðis essentially makes ðe behavior "swappable"
+	if is_bought(2) != Input.is_action_pressed("BuyOne"):
 		$upgrades/MaxDila.text = \
 		"Unlock the Buy Max Dilation\nAutobuyer mode."
 	else:
@@ -158,6 +159,17 @@ func _process(delta):
 		"\nUnlock the Buy Max Dilation\nAutobuyer mode.\n\n\nCost: %s EP" % \
 		Globals.float_to_string(Costs[1], 0)
 	
+	
+	if is_bought(4) != Input.is_action_pressed("BuyOne"):
+		$upgrades/EPForm.text = "Improve the EP gain formula\n" + \
+		"(log₂(x)/%s → log₂(x)/%s)" % [
+			Globals.int_to_string(1024), Globals.int_to_string(900)
+		]
+	else:
+		$upgrades/EPForm.text = "\nImprove the EP gain formula\n" + \
+		"(log₂(x)/%s → log₂(x)/%s)" % [
+			Globals.int_to_string(1024), Globals.int_to_string(900)
+		] + "\n\n\nCost: %s EP" % Globals.float_to_string(Costs[3], 0)
 	
 	if is_bought(5) != Input.is_action_pressed("BuyOne"):
 		$upgrades/DilaBoost.text = \
@@ -201,6 +213,8 @@ func _process(delta):
 		$upgrades/ChallengeMult.text = \
 		"Tachyon Dimensions get a\nmultiplier based on your\nslowest Challenge." + \
 		"\n\n\nCost: %s EP" % Globals.float_to_string(Costs[6], 0)
+	
+	
 
 func overcome():
 	emit_signal("YEAAAH")
