@@ -26,13 +26,13 @@ var DimCostMult : Array[largenum] :
 	get:
 		return [
 			largenum.ten_to_the( 3),largenum.ten_to_the( 5),
-			largenum.ten_to_the( 7),largenum.ten_to_the(10),
-			largenum.ten_to_the(15),largenum.ten_to_the(20),
-			largenum.ten_to_the(25),largenum.ten_to_the(30)
+			largenum.ten_to_the(10),largenum.ten_to_the(15),
+			largenum.ten_to_the(20),largenum.ten_to_the(25),
+			largenum.ten_to_the(30),largenum.ten_to_the(35)
 		]
 
 const TachLogReq := [
-	1000, 1600, 4000, 1e100
+	1000, 1600, 4000, 10000, 1e100
 ]
 
 var DimsUnlocked := 0
@@ -40,7 +40,12 @@ var TSperS       := largenum.new(0)
 var TimeShards   := largenum.new(0)
 var FreeTSpeed   := 0
 var NextUpgrade  := largenum.new(1)
-var TreshMult    := 1.1
+var TreshMult    : float :
+	get:
+		if FreeTSpeed < 200: return 1.1
+		else:
+			return 1.1 ** (softcap ** (FreeTSpeed - 200))
+var softcap := 1.02
 var BuyMax : bool
 
 func dimcost(which):
@@ -59,6 +64,8 @@ func buydim(which, bulk := 1):
 			Globals.Achievemer.set_unlocked(2, 7)
 
 func _process(delta):
+	#for i in 8:
+		#DimPurchase[i] = 0
 	for k in range(1, len(dims)):
 		var i = dims[k]
 		if i == null: continue
@@ -86,9 +93,13 @@ func _process(delta):
 		"Next upgrade at", NextUpgrade.to_string(), "Time Shards, increasing by",
 		Globals.float_to_string(TreshMult), "for each Upgrade."
 	]
-	%Important.text += "\n[font_size=10]%s [/font_size]%s[font_size=10] %s[/font_size]" % [
+	%Important.text += "\n[font_size=10]%s [/font_size]%s[font_size=10] %s" % [
 		"You're gaining", TSperS.to_string(), "Time Shards per second."
 	]
+	
+	if Globals.ECCompleted(2):
+		%Important.text += " | Timespeed: [/font_size]%s[font_size=10]/sec" % \
+		Globals.float_to_string(Formulas.ec2_reward())
 	
 	while not TimeShards.less(NextUpgrade):
 		NextUpgrade.mult2self(TreshMult)
@@ -123,8 +134,15 @@ func _process(delta):
 		if Globals.ECCompleted(1):
 			mult.mult2self(Formulas.ec1_reward())
 		
+		if Globals.Challenge == 17:
+			mult.pow2self(0.2)
+		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		dims[i].get_node("N&M/Multiplier").show()
+		
+		if Globals.ECCompleted(2):
+			mult.mult2self(Formulas.ec2_reward())
+		
 		if i != 8:
 			if DimAmount[i].exponent == -INF:	dims[i].get_node("A&G/Growth").hide()
 			else:								dims[i].get_node("A&G/Growth").show()

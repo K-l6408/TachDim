@@ -20,6 +20,9 @@ static func overcome_7():
 	if i < 0: return 1
 	return max(300 / i, 1)
 
+static func overcome_9():
+	return Globals.Eternities.power(2)
+
 static func achievement_56():
 	if Globals.eternTime < 120:
 		return (240.0 / (Globals.eternTime + 120)) ** 20
@@ -31,3 +34,8 @@ static func ec1_reward():
 		if Globals.ECCompleted(i + 1):
 			m *= 3
 	return m
+
+static func ec2_reward():
+	return Globals.TDHandler.TSpeedBoost.power(
+		Globals.TDHandler.TSpeedCount + Globals.EDHandler.FreeTSpeed
+	).log10()

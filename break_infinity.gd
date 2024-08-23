@@ -50,6 +50,9 @@ func neg() -> largenum:
 	return result
 
 func fix_mantissa():
+	if exponent != floor(exponent):
+		mantissa *= 2 ** (exponent - floor(exponent))
+		exponent = floor(exponent)
 	if mantissa == 0:
 		exponent = 1.0 / -0.0
 	if mantissa >= 1 << 62:

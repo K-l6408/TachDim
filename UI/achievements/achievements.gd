@@ -1,7 +1,7 @@
 extends Control
 
 const MAXROWS = 20
-var loaded_rows = 5
+var loaded_rows = 6
 var unlocked : PackedByteArray = []
 var achgot : int :
 	get:
@@ -56,6 +56,11 @@ func achnames(r, c):
 			4: return "New dimensions!"
 			5: return "ok i really should have nerfed it"
 			6: return "Take that!"
+			7: return "ununChallenged"
+			8: return "Google \"inflation\""
+		6: match c:
+			1: return "This achievement doesn't exist"
+			2: return "I??? h-two them???"
 	return "TBD"
 
 func achreqs(r, c):
@@ -127,6 +132,10 @@ func achreqs(r, c):
 			"\nin the first %s each Eternity.)\n(Currently: ×%s)" % [
 				Globals.format_time(120), Globals.float_to_string(Formulas.achievement_56())
 			]
+			7: return "Complete an Eternity Challenge."
+			8: return "Get the Overcome upgrade that powers up Galaxies."
+		6: match c:
+			1: return "Have over %s Tachyons." % largenum.ten_to_the(9999).multiply(9)
 	return "TBD"
 
 func is_unlocked(row, num):
@@ -223,3 +232,12 @@ func _process(_delta):
 	if not is_unlocked(5, 6):
 		if Globals.challengeTimes[2-1] <= 30 and Globals.challengeTimes[2-1] > 0:
 			set_unlocked(5, 6)
+	if not is_unlocked(5, 7):
+		if Globals.CompletedECs > 0:
+			set_unlocked(5, 7)
+	if not is_unlocked(5, 8):
+		if Globals.OEUHandler.is_bought(3):
+			set_unlocked(5, 8)
+	if not is_unlocked(6, 1):
+		if not Globals.Tachyons.less(largenum.ten_to_the(9999).multiply(9)):
+			set_unlocked(6, 1)

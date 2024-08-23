@@ -35,12 +35,20 @@ func _process(_delta):
 	] + "\n(Currently: ×%s)" % Globals.int_to_string(Formulas.ec1_reward())
 	$Chal/lenges/EC1.visible = Globals.TachTotal.log10() >= Globals.ECUnlocks[0]
 	
+	$Chal/lenges/EC2/Condition.text = \
+	"Eternity Dimensions' multipliers are raised ^%s." % Globals.float_to_string(0.2)
+	$Chal/lenges/EC2/ReqRew.text = \
+	"[center]Requirement: %s TC\n" % \
+	Globals.ECTargets[1].to_string() + \
+	"\nReward: Timespeed affects Eternity Dimensions with greatly reduced effeect."
+	$Chal/lenges/EC2.visible = Globals.TachTotal.log10() >= Globals.ECUnlocks[1]
+	
 	if Globals.Challenge == 0:
 		$CurrentChallenge/Label.text = "You aren't in any challenge."
 		$CurrentChallenge/Exit.visible = false
 	else:
 		$CurrentChallenge/Label.text = "You are currently in %schallenge %s." % [
-			"" if Globals.Challenge <= 15 else "eternity",
+			"" if Globals.Challenge <= 15 else "eternity ",
 			Globals.int_to_string((Globals.Challenge - 1) % 15 + 1)
 		]
 		$CurrentChallenge/Exit.visible = true

@@ -85,6 +85,8 @@ func updateTSpeed():
 	var GalaxyBoost = 0.975
 	var GalaxyMult = 1
 	if Globals.EUHandler.is_bought(8): GalaxyMult *= 2
+	if Globals.OEUHandler.is_bought(3): GalaxyMult *= 1.4
+	
 	if Globals.Challenge == 12:
 		TSpeedBoost = largenum.new(1.10)
 	else:
@@ -202,6 +204,8 @@ func eternity():
 			Globals.challengeTimes[Globals.Challenge - 1] = Globals.eternTime
 	if Globals.Challenge > 15:
 		Globals.CompletedECs |= 1 << (Globals.Challenge - 16)
+		if Globals.ECTimes.size() < Globals.Challenge - 15:
+			Globals.ECTimes.append(-1)
 		if  Globals.ECTimes[Globals.Challenge - 16] > Globals.eternTime \
 		or  Globals.ECTimes[Globals.Challenge - 16] < 0:
 			Globals.ECTimes[Globals.Challenge - 16] = Globals.eternTime
@@ -242,7 +246,6 @@ func eternity():
 	
 	await get_tree().process_frame
 	reset(2)
-	emit_signal("eternitied")
 	Globals.animation("bang")
 
 func epgained():
@@ -314,6 +317,7 @@ func reset(level := 0, challengeReset := true):
 			%Prestiges/DiButton.material = null
 		Globals.eternTime = 0
 		topTachyonsInEternity = largenum.new(0)
+		emit_signal("eternitied")
 	updateTSpeed()
 
 func _process(delta):
@@ -519,7 +523,9 @@ func _process(delta):
 		Globals.ordinal(DimsUnlocked)
 	]
 	
-	%Prestiges/GaButton.disabled = DimPurchase[DimsUnlocked - 1] < galacost()
+	%Prestiges/GaButton.disabled = DimPurchase[
+		5 if Globals.Challenge in [6, 16] else 7
+	] < galacost()
 	%Prestiges/GaLabel.text = "[center]Tachyon Galaxies (%s)\n[font_size=2] \n[font_size=10]Requires: %s %s Tachyon Dimensions" % [
 		Globals.int_to_string(Globals.TGalaxies),
 		Globals.int_to_string(galacost()),

@@ -63,7 +63,7 @@ func _process(_delta):
 		$CurrentChallenge/Exit.visible = false
 	else:
 		$CurrentChallenge/Label.text = "You are currently in %schallenge %s." % [
-			"" if Globals.Challenge <= 15 else "eternity",
+			"" if Globals.Challenge <= 15 else "eternity ",
 			Globals.int_to_string((Globals.Challenge - 1) % 15 + 1)
 		]
 		$CurrentChallenge/Exit.visible = true

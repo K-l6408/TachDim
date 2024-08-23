@@ -84,13 +84,15 @@ var challengeTimes = [
 	-1, -1, -1,
 	-1, -1, -1
 ]
-var ECTimes = [-1]
+var ECTimes = [
+	-1, -1
+]
 
 var ECTargets = [
-	largenum.two_to_the(2048)
+	largenum.two_to_the(2048), largenum.ten_to_the(1500)
 ]
 const ECUnlocks = [
-	1500, 9999
+	1500, 1900, 99999
 ]
 
 func _process(delta):
@@ -157,8 +159,28 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 		DisplayMode.Standard:
 			if f >= 1000 and not force_dec:
 				var loga = floor(log(f) / 3 / LOG10)
+				if f / (1000.0 ** loga) > 999.9:
+					loga += 1
 				return String.num((f / (1000.0 ** loga)), precision)\
-				.pad_decimals(precision) + " " + largenum.standard(int(loga / 3))
+				.pad_decimals(precision) + " " + largenum.standard(int(loga) - 1)
+		DisplayMode.Letters:
+			if f >= 1000 and not force_dec:
+				var l = log(f) / LOG10
+				if l == -INF:
+					return "0.00"
+				f = 10 ** (l - floor(l))
+				var s = ""
+				var alpha = "abcdefghijklmnopqrstuvwxyz"
+				if f > 9.99:
+					l += 1
+					f /= 10
+				var k = ceil(fmod(l, 3) - 0.9999999)
+				l = floor(l / 3)
+				while l >= 1:
+					s = alpha[(fmod(l, 26) as int) - 1] + s
+					l /= 27
+				return String.num(f * 10**k, precision)\
+				.pad_decimals(precision) + s
 		_:
 			if f >= 1000 and not force_dec:
 				var l = log(f) / LOG10

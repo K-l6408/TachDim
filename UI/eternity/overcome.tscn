@@ -66,7 +66,7 @@ text = "Tachyon Dimensions get
 a multiplier based
 on current Tachyon amount.
 
-Cost: 1.00e3 EP"
+Cost: 1e3 EP"
 text_overrun_behavior = 2
 
 [node name="MaxDila" type="Button" parent="upgrades"]
@@ -77,9 +77,8 @@ disabled = true
 text = "
 Unlock the Buy Max Dilation
 Autobuyer mode.
-(WIP)
 
-Cost: 1.00e6 EP"
+Cost: 1e6 EP"
 text_overrun_behavior = 2
 
 [node name="GalStr" type="Button" parent="upgrades"]
@@ -90,9 +89,8 @@ disabled = true
 text = "
 All Galaxies are
 50% stronger.
-(WIP)
 
-Cost: 1.00e9 EP"
+Cost: 1e9 EP"
 text_overrun_behavior = 2
 
 [node name="EPForm" type="Button" parent="upgrades"]
@@ -100,6 +98,12 @@ custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"
 disabled = true
+text = "
+Improve the EP gain formula
+(log₂(x)/1024 → log₂(x)/900)
+
+
+Cost: 3e6 EP"
 text_overrun_behavior = 2
 
 [node name="DilaBoost" type="Button" parent="upgrades"]
@@ -112,7 +116,7 @@ multiplier further.
 
 (×2.5 → ×3.0)
 
-Cost: 1.00e4 EP"
+Cost: 1e4 EP"
 text_overrun_behavior = 2
 
 [node name="RewdFormula" type="Button" parent="upgrades"]
@@ -125,7 +129,7 @@ from being based on
 the 1st TD's logarithm
 to using a very low exponent.
 
-Cost: 4.00e4 EP"
+Cost: 4e4 EP"
 text_overrun_behavior = 2
 
 [node name="ChallengeMult" type="Button" parent="upgrades"]
@@ -141,18 +145,30 @@ Currently: ×1.00
 (Not all Challenges completed)"
 text_overrun_behavior = 2
 
-[node name="8" type="Button" parent="upgrades"]
+[node name="PasEter" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"
 disabled = true
+text = "
+Gain Eternities passively
+based on your fastest
+Eternity.
+
+Cost: 2e8 EP"
 text_overrun_behavior = 2
 
-[node name="9" type="Button" parent="upgrades"]
+[node name="EterMult" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"
 disabled = true
+text = "
+Tachyon Dimensions get a
+multiplier based on
+Eternities.
+
+Cost: 1e7 EP"
 text_overrun_behavior = 2
 
 [node name="TSpSc" type="Button" parent="upgrades"]
@@ -197,10 +213,13 @@ text_overrun_behavior = 2
 [connection signal="pressed" from="holy shit" to="." method="overcome"]
 [connection signal="pressed" from="upgrades/TachMult" to="." method="buy" binds= [1]]
 [connection signal="pressed" from="upgrades/MaxDila" to="." method="buy" binds= [2]]
+[connection signal="pressed" from="upgrades/GalStr" to="." method="buy" binds= [3]]
 [connection signal="pressed" from="upgrades/EPForm" to="." method="buy" binds= [4]]
 [connection signal="pressed" from="upgrades/DilaBoost" to="." method="buy" binds= [5]]
 [connection signal="pressed" from="upgrades/RewdFormula" to="." method="buy" binds= [6]]
 [connection signal="pressed" from="upgrades/ChallengeMult" to="." method="buy" binds= [7]]
+[connection signal="pressed" from="upgrades/PasEter" to="." method="buy" binds= [8]]
+[connection signal="pressed" from="upgrades/EterMult" to="." method="buy" binds= [9]]
 [connection signal="pressed" from="upgrades/TSpSc" to="." method="buy_rebuyable" binds= [1]]
 [connection signal="pressed" from="upgrades/TDmSc" to="." method="buy_rebuyable" binds= [2]]
 [connection signal="pressed" from="upgrades/PasEP" to="." method="buy_rebuyable" binds= [3]]

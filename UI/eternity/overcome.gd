@@ -159,6 +159,13 @@ func _process(delta):
 		"\nUnlock the Buy Max Dilation\nAutobuyer mode.\n\n\nCost: %s EP" % \
 		Globals.float_to_string(Costs[1], 0)
 	
+	if is_bought(3) != Input.is_action_pressed("BuyOne"):
+		$upgrades/GalStr.text = \
+		"All Galaxies are\n%s stronger." % Globals.percent_to_string(.4, 0)
+	else:
+		$upgrades/GalStr.text = \
+		"\nAll Galaxies are\n%s stronger.\n\n\nCost: %s EP" % \
+		[Globals.percent_to_string(.4, 0), Globals.float_to_string(Costs[2], 0)]
 	
 	if is_bought(4) != Input.is_action_pressed("BuyOne"):
 		$upgrades/EPForm.text = "Improve the EP gain formula\n" + \
@@ -214,7 +221,31 @@ func _process(delta):
 		"Tachyon Dimensions get a\nmultiplier based on your\nslowest Challenge." + \
 		"\n\n\nCost: %s EP" % Globals.float_to_string(Costs[6], 0)
 	
+	if is_bought(8) != Input.is_action_pressed("BuyOne"):
+		$upgrades/PasEter.text = \
+		"\nGain Eternities passively\nbased on your fastest\nEternity." + \
+		"\n\nCurrently: %s/sec" % \
+		Globals.fastestEtern.eternities.divide(Globals.fastestEtern.time / 10)
+	else:
+		$upgrades/PasEter.text = \
+		"\nGain Eternities passively\nbased on your fastest\nEternity." + \
+		"\n\nCost: %s EP" % Globals.float_to_string(Costs[7], 0)
 	
+	if is_bought(9) != Input.is_action_pressed("BuyOne"):
+		$upgrades/EterMult.text = \
+		"\nTachyon Dimensions get a\nmultiplier based on\nEternities." + \
+		"\n\nCurrently: ×%s" % Formulas.overcome_9().to_string()
+	else:
+		$upgrades/EterMult.text = \
+		"\nTachyon Dimensions get a\nmultiplier based on\nEternities." + \
+		"\n\nCost: %s EP" % Globals.float_to_string(Costs[8], 0)
+	
+	if is_bought(8):
+		Globals.Eternities.add2self(
+			Globals.fastestEtern.eternities.divide(
+				Globals.fastestEtern.time / delta / 10
+			)
+		)
 
 func overcome():
 	emit_signal("YEAAAH")

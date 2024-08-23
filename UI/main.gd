@@ -64,12 +64,12 @@ func _process(_delta):
 	
 	%Resources/Eternity.visible = \
 	Globals.progress >= GL.Progression.Overcome and \
-	(Globals.Challenge == 0 or Globals.Challenge >= 15)
+	(Globals.Challenge == 0 or Globals.Challenge > 15)
 	%Resources/Eternity/EternityButton.disabled = not %Tabs/Dimensions/Tachyons.canBigBang
 	
 	%Resources/EDunlock.visible = \
 	Globals.progress >= GL.Progression.Overcome and \
-	(Globals.Challenge == 0 or Globals.Challenge >= 15) and \
+	(Globals.Challenge == 0 or Globals.Challenge > 15) and \
 	Globals.EDHandler.DimsUnlocked < 8
 	%Resources/EDunlock/EDButton.disabled = true
 	

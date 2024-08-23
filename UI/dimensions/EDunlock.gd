@@ -8,4 +8,5 @@ func _process(_delta):
 		text += "type of Dimension."
 	else:
 		text += "Eternity Dimension."
-	disabled = (Globals.Tachyons.log10() < Globals.EDHandler.TachLogReq[Globals.EDHandler.DimsUnlocked])
+	disabled = (Globals.Tachyons.log10() < \
+	Globals.EDHandler.TachLogReq[Globals.EDHandler.DimsUnlocked])
