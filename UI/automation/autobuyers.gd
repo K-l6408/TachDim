@@ -198,9 +198,10 @@ func _process(_delta):
 						)
 					) if i.get_node("Mode").button_pressed else "Buys singles"
 				)
-			i.get_node("Enabled").text = \
+			if i.has_node("Enabled"): i.get_node("Enabled").text = \
 				"Enabled" if i.get_node("Enabled").button_pressed else "Disabled"
-			i.get_node("Timer").set_paused(not i.get_node("Enabled").button_pressed)
+			if i.has_node("Timer"):
+				i.get_node("Timer").set_paused(not i.get_node("Enabled").button_pressed)
 	
 	$Auto/Buyers/Dilation/Enabled.disabled = Globals.Challenge == 10
 	if Globals.Challenge == 10:

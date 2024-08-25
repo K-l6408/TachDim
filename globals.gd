@@ -27,7 +27,7 @@ enum DisplayMode {
 	Roman, toki_pona, sitelen_pona, Canonical_toki_pona, Evil, Factorial
 }
 enum Progression {
-	None, Dilation, Galaxy, Eternity, Overcome
+	None, Dilation, Galaxy, Eternity, Overcome, Duplicantes
 }
 const LOG2  = log(2)
 const LOG10 = log(10)
@@ -45,6 +45,9 @@ var TGalaxies := 0
 var EternityPts := largenum.new(0)
 var Eternities  := largenum.new(0)
 
+var Duplicantes := largenum.new(1)
+var DupLimit    := largenum.two_to_the(2**4)
+
 var Challenge := 0
 var CompletedChallenges := 0
 var CompletedECs := 0
@@ -59,6 +62,7 @@ var Achievemer : Control
 var VisualSett : Control
 var EUHandler  : Control
 var OEUHandler : Control
+var DupHandler : Control
 
 var NotifHandler : Control
 
@@ -89,10 +93,11 @@ var ECTimes = [
 ]
 
 var ECTargets = [
-	largenum.two_to_the(2048), largenum.ten_to_the(1500)
+	largenum.two_to_the(2048), largenum.ten_to_the(1500),
+	largenum.ten_to_the(9000)
 ]
 const ECUnlocks = [
-	1500, 1900, 99999
+	1500, 1900, 10000, 99999
 ]
 
 func _process(delta):

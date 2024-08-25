@@ -762,6 +762,22 @@ text = "Reset your Dimensions and
 Time Dilation to increase the
 power of Timespeed upgrades"
 
+[node name="Reset" type="Button" parent="VSplitContainer/Prestiges"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -62.0
+offset_right = 125.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Perform a Dilation reset
+for no gain"
+
 [node name="ETERNITY" type="Button" parent="."]
 visible = false
 layout_mode = 1
@@ -804,5 +820,6 @@ horizontal_alignment = 1
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension8/Buy" to="." method="buydim" binds= [8]]
 [connection signal="pressed" from="VSplitContainer/Prestiges/DiButton" to="." method="dilate"]
 [connection signal="pressed" from="VSplitContainer/Prestiges/GaButton" to="." method="galaxy"]
+[connection signal="pressed" from="VSplitContainer/Prestiges/Reset" to="." method="reset" binds= [0]]
 [connection signal="pressed" from="ETERNITY" to="." method="eternity"]
 [connection signal="pressed" from="ETERNITY" to="ETERNITY" method="hide"]

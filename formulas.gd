@@ -39,3 +39,6 @@ static func ec2_reward():
 	return Globals.TDHandler.TSpeedBoost.power(
 		Globals.TDHandler.TSpeedCount + Globals.EDHandler.FreeTSpeed
 	).log10()
+
+static func duplicantes():
+	return Globals.Duplicantes.add(9).log10() ** 2

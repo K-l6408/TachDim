@@ -60,7 +60,8 @@ func achnames(r, c):
 			8: return "Google \"inflation\""
 		6: match c:
 			1: return "This achievement doesn't exist"
-			2: return "I??? h-two them???"
+			2: return "I h-five them???"
+			6: return "I??? h-two them???"
 	return "TBD"
 
 func achreqs(r, c):
@@ -136,6 +137,11 @@ func achreqs(r, c):
 			8: return "Get the Overcome upgrade that powers up Galaxies."
 		6: match c:
 			1: return "Have over %s Tachyons." % largenum.ten_to_the(9999).multiply(9)
+			2: return "Big Bang with at most %s Dilation, and no Galaxies." % \
+			Globals.int_to_string(0) + "\nReward: TDs %s-%s are ×%s stronger." % [
+				Globals.int_to_string(1), Globals.int_to_string(4),
+				Globals.int_to_string(3)
+			]
 	return "TBD"
 
 func is_unlocked(row, num):

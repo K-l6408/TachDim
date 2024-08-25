@@ -1,0 +1,117 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckigo0tgi2x53"]
+
+[ext_resource type="Script" path="res://UI/duplicantes/duplicantes.gd" id="1_y2w1t"]
+
+[node name="Duplicantes" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y2w1t")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+split_offset = 478
+dragger_visibility = 1
+
+[node name="DUpgrades" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="TextD" type="RichTextLabel" parent="HSplitContainer/DUpgrades"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]You have [font_size=20]2.00[/font_size] Duplicantes,
+giving a [font_size=20]×1.04[/font_size] multiplier to all Eternity Dimensions."
+fit_content = true
+scroll_active = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/DUpgrades"]
+layout_mode = 2
+
+[node name="Chance" type="Button" parent="HSplitContainer/DUpgrades/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DupliButton"
+text = "Improve Duplication
+chance (1% → 2%)
+Cost: /2.00 Dupl."
+
+[node name="Interval" type="Button" parent="HSplitContainer/DUpgrades/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DupliButton"
+disabled = true
+text = "Improve Duplication
+interval (500ms → 450ms)
+Cost: /3.00 Dupl."
+
+[node name="DupLimit" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="TextL" type="RichTextLabel" parent="HSplitContainer/DupLimit"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]You can hold only [font_size=20]6.55e4[/font_size] Duplicantes. (10.00%)"
+fit_content = true
+scroll_active = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/DupLimit"]
+layout_mode = 2
+
+[node name="Limit" type="Button" parent="HSplitContainer/DupLimit/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DupliButton"
+disabled = true
+text = "Square Duplicantes
+limit (6.55e4 → 4.29e9)
+Cost: 1e60 EP"
+
+[node name="MaxGal" type="Button" parent="HSplitContainer/DupLimit/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DupliButton"
+disabled = true
+text = "Max Duplicantes
+Galaxies: 0
+Cost: 1e80 EP"
+
+[node name="TextG" type="RichTextLabel" parent="HSplitContainer/DupLimit"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]You have [font_size=20]0[/font_size] Duplicantes Galaxies."
+fit_content = true
+scroll_active = false
+
+[node name="Galaxy" type="Button" parent="HSplitContainer/DupLimit"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DupliButton"
+disabled = true
+text = "Reset Duplicantes and Duplicantes Upgrades
+for a Duplicantes Galaxy
+(Requires 1.80e308 Duplicantes)"
+
+[connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Chance" to="." method="buy_chance"]
+[connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Interval" to="." method="buy_interval"]

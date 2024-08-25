@@ -70,12 +70,17 @@ func openDialog():
 		var sf = FileAccess.open("user://save%d.txt" % (f + 1), FileAccess.READ)
 		if sf == null: continue
 		if sf.get_line() != "TachDimSave": continue
-		get_node("Files/%d/Progress" % (f+1)).texture.region.position.x = sf.get_8() * 32
+		var progress = sf.get_8()
+		get_node("Files/%d/Progress" % (f+1)).texture.region.position.x = progress * 32
 		sf.get_8()
 		var D = sf.get_var()
 		if D is Dictionary:
-			get_node("Files/%d/Tachyons" % (f+1)).text = \
-			"%s Tachyons" % largenum.new().from_bytes(D["tachyons"]).to_string()
+			if progress < Globals.Progression.Eternity:
+				get_node("Files/%d/Tachyons" % (f+1)).text = \
+				"%s Tachyons" % largenum.new().from_bytes(D["tachyons"]).to_string()
+			else:
+				get_node("Files/%d/Tachyons" % (f+1)).text = \
+				"%s Eternity Points" % largenum.new().from_bytes(D["eternity points"]).to_string()
 		else:
 			get_node("Files/%d/Tachyons" % (f+1)).text = "Outdated or corrupted file"
 
@@ -209,6 +214,12 @@ func saveF(file : String = saveFilePath):
 		DATA["dila buyer max time"] = Globals.Automation.get_node("Auto/Buyers/Dilation/BuyMax").value
 		DATA["ECcompl"] = Globals.CompletedECs
 		DATA["ECtimes"] = Globals.ECTimes
+	
+	if Globals.progress >= GL.Progression.Duplicantes:
+		DATA["duplicantes"] = Globals.Duplicantes.to_bytes()
+		DATA["dupe chance"] = Globals.DupHandler.chance
+		DATA["dupe interv"] = Globals.DupHandler.intervUpgrades
+		DATA["dupe limit"]  = Globals.DupHandler.limitUpgrades
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -386,46 +397,54 @@ func loadF(file : String = saveFilePath):
 			Globals.CompletedECs = DATA["ECcompl"]
 			Globals.ECTimes = DATA["ECtimes"]
 	
+	if Globals.progress >= GL.Progression.Duplicantes:
+		Globals.Duplicantes.from_bytes(DATA["duplicantes"])
+		Globals.DupHandler.chance = DATA["dupe chance"]
+		Globals.DupHandler.intervUpgrades = DATA["dupe interv"]
+		Globals.DupHandler.limitUpgrades = DATA["dupe limit"]
+	
+	Globals.TDHandler.updateTSpeed()
 	get_tree().paused = pause
 	$CanvasLayer.visible = false
 
 func gameReset():
-	Globals.progress = Globals.Progression.None
+	Globals.progress  = Globals.Progression.None
 	Globals.existence = 0
-	Globals.Tachyons  = largenum.new(10)
-	Globals.TachTotal = largenum.new(10)
+	Globals.Tachyons  = largenum.ten_to_the(1)
+	Globals.TachTotal = largenum.ten_to_the(1)
 	Globals.Achievemer.unlocked = []
 	for i in Globals.Achievemer.MAXROWS:
 		Globals.Achievemer.unlocked.append(0)
 	for i in 8:
-		Globals.TDHandler.DimAmount[i] = largenum.new(0)
+		Globals.TDHandler.DimAmount[i]   = largenum.new(0)
 		Globals.TDHandler.DimPurchase[i] = 0
-		Globals.TDHandler.DimCost[i] = [
+		Globals.TDHandler.DimCost[i]     = [
 			largenum.ten_to_the( 1),largenum.ten_to_the( 2),largenum.ten_to_the( 4),
 			largenum.ten_to_the( 6),largenum.ten_to_the( 9),largenum.ten_to_the(13),
 			largenum.ten_to_the(18),largenum.ten_to_the(24)
 		][i]
 	Globals.TDHandler.TSpeedCount = 0
-	Globals.TDHandler.TSpeedCost = largenum.new(1000)
-	Globals.TDHandler.RewindMult = largenum.new(1)
+	Globals.TDHandler.TSpeedCost  = largenum.new(1000)
+	Globals.TDHandler.RewindMult  = largenum.new(1)
 	Globals.TDilation = 0
 	Globals.TGalaxies = 0
+	Globals.TDHandler.updateTSpeed()
 	Globals.Automation.Unlocked = 0
-	Globals.Automation.TDModes = 255
-	Globals.Automation.TDEnabl = 511
+	Globals.Automation.TDModes  = 255
+	Globals.Automation.TDEnabl  = 511
 	Globals.fastestEtern = Globals.EternityData.new(-1, 1, 1)
-	Globals.eternTime = 0
+	Globals.eternTime   = 0
 	Globals.EternityPts = largenum.new(0)
-	Globals.Eternities = largenum.new(0)
-	Globals.Challenge = 0
-	Globals.CompletedChallenges = 0
-	Globals.EUHandler.Bought = 0
+	Globals.Eternities  = largenum.new(0)
+	Globals.Challenge   = 0
+	Globals.CompletedChallenges   = 0
+	Globals.EUHandler.Bought      = 0
 	Globals.Automation.TSUpgrades = 0
 	Globals.Automation.TDUpgrades = [0,0,0,0,0,0,0,0]
 	Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value = 4
 	Globals.EU12Timer = null
 	Globals.EUHandler.EPMultBought = 0
-	Globals.OEUHandler.Bought = 0
+	Globals.OEUHandler.Bought      = 0
 	Globals.OEUHandler.TSpScBought = 0
 	Globals.OEUHandler.TDmScBought = 0
 	Globals.OEUHandler.PasEPBought = 0
@@ -437,7 +456,9 @@ func gameReset():
 		-1, -1, -1
 	]
 	Globals.CompletedECs = 0
-	Globals.ECTimes = [-1]
+	Globals.ECTimes      = [-1]
+	Globals.Duplicantes  = largenum.new(1)
+	Globals.DupLimit     = largenum.two_to_the(2**4)
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value

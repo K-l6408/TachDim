@@ -3,8 +3,8 @@ extends Control
 @onready var TBar : TabBar = %Tabs.get_tab_bar()
 var debugMode := false
 
-var tabSymbolLeft  = "⇠\uf085⁈δ\uf091\uf0ca\uf1de[!"
-var tabSymbolRight = "⇢\uf1de⁉δ\uf091\uf0c9\uf0ad]!"
+var tabSymbolLeft  = "⇠\uf085⁈δΞ\uf091\uf0ca\uf1de[!"
+var tabSymbolRight = "⇢\uf1de⁉δΞ\uf091\uf0c9\uf0ad]!"
 
 var dimensionSymbols = "Ψδ"
 var challengeSymbols = "Ψδ"
@@ -23,6 +23,7 @@ func _ready():
 	Globals.VisualSett = %Tabs/Options/Visual
 	Globals.EUHandler = %"Tabs/Eternity/Eternity Upgrades"
 	Globals.OEUHandler = %"Tabs/Eternity/Overcome Eternity"
+	Globals.DupHandler = %Tabs/Duplicantes
 	
 	for i in %Tabs.get_child_count():
 		TBar.set_tab_title(i, "%s %s %s" % \
@@ -48,6 +49,7 @@ func _process(_delta):
 	TBar.set_tab_hidden(1, Globals.TachTotal.less(largenum.new(10).pow2self(20)))
 	TBar.set_tab_hidden(2, Globals.progress < Globals.Progression.Eternity)
 	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Eternity)
+	TBar.set_tab_hidden(4, Globals.progress < Globals.Progression.Duplicantes)
 	
 	%Tabs/Dimensions.get_tab_bar().set_tab_hidden(1, Globals.EDHandler.DimsUnlocked == 0)
 	%Tabs/Challenges.get_tab_bar().set_tab_hidden(
@@ -65,7 +67,8 @@ func _process(_delta):
 	%Resources/Eternity.visible = \
 	Globals.progress >= GL.Progression.Overcome and \
 	(Globals.Challenge == 0 or Globals.Challenge > 15)
-	%Resources/Eternity/EternityButton.disabled = not %Tabs/Dimensions/Tachyons.canBigBang
+	%Resources/Eternity/EternityButton.disabled = \
+	not %Tabs/Dimensions/Tachyons.canBigBang
 	
 	%Resources/EDunlock.visible = \
 	Globals.progress >= GL.Progression.Overcome and \

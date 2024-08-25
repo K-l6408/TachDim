@@ -62,7 +62,7 @@ func _process(_delta):
 			else:
 				k.get_child(j).remove_theme_stylebox_override("disabled")
 				k.get_child(j).disabled = \
-				Globals.EternityPts.less(Costs[i][j])
+				Globals.EternityPts.less(Costs[i][j] - 0.001)
 				if j > 0 and not is_bought(i*4+j):
 					k.get_child(j).disabled = true
 	

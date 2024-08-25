@@ -180,13 +180,15 @@ func log10() -> float:
 	return log2() * GL.LOG2 / GL.LOG10
 
 func less(b) -> bool:
+	fix_mantissa()
 	if not b is largenum:
 		b = largenum.new(b)
+	b.fix_mantissa()
 	if sign < b.sign:
 		return true
-	if int(exponent) < int(b.exponent):
+	if floor(exponent) < floor(b.exponent):
 		return true
-	if int(exponent) == int(b.exponent) and mantissa <= b.mantissa:
+	if floor(exponent) == floor(b.exponent) and mantissa <= b.mantissa:
 		return true
 	return false
 

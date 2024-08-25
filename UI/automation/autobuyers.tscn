@@ -478,6 +478,33 @@ text = "Enabled"
 [node name="Timer" type="Timer" parent="Auto/Buyers/TimeSpeed"]
 wait_time = 0.5
 
+[node name="TDs" type="Control" parent="Auto/Buyers"]
+visible = false
+custom_minimum_size = Vector2(952, 25)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Auto/Buyers/TDs"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 288.0
+grow_vertical = 2
+text = "Tachyon Dimensions Autobuyers (just, in general)"
+vertical_alignment = 1
+
+[node name="Paused" type="Button" parent="Auto/Buyers/TDs"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -5.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
 [node name="TD1Locked" type="Button" parent="Auto/Buyers"]
 visible = false
 custom_minimum_size = Vector2(952, 45)

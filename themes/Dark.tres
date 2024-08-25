@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=44 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=48 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -184,6 +184,57 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w2f2r"]
+bg_color = Color(0.529412, 0.352941, 0.666667, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.117647, 0.227451, 0.47451, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cryg2"]
+bg_color = Color(0.117647, 0.227451, 0.47451, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.254902, 0.447059, 0.890196, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vb0ru"]
+bg_color = Color(0.254902, 0.447059, 0.890196, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mq78e"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.254902, 0.447059, 0.890196, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -564,6 +615,11 @@ CheckButton/styles/hover = SubResource("StyleBoxFlat_uqs43")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_t4uyv")
 CheckButton/styles/normal = SubResource("StyleBoxFlat_peo40")
 CheckButton/styles/pressed = SubResource("StyleBoxFlat_ousmk")
+DupliButton/base_type = &"Button"
+DupliButton/styles/disabled = SubResource("StyleBoxFlat_w2f2r")
+DupliButton/styles/hover = SubResource("StyleBoxFlat_cryg2")
+DupliButton/styles/normal = SubResource("StyleBoxFlat_vb0ru")
+DupliButton/styles/pressed = SubResource("StyleBoxFlat_mq78e")
 EDButton/base_type = &"Button"
 EDButton/styles/disabled = SubResource("StyleBoxFlat_s54it")
 EDButton/styles/hover = SubResource("StyleBoxFlat_ipoy4")

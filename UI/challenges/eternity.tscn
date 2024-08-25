@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1v3rvuka8dmn"]
+[gd_scene load_steps=5 format=3 uid="uid://d1v3rvuka8dmn"]
 
 [ext_resource type="Texture2D" uid="uid://cwydckjak8w1f" path="res://images/challenges/EC1.png" id="1_1j2kp"]
 [ext_resource type="Script" path="res://UI/challenges/eternity.gd" id="1_ow2ja"]
 [ext_resource type="Texture2D" uid="uid://bwavs07as2v2" path="res://images/challenges/EC2.png" id="3_1f1oy"]
+[ext_resource type="Texture2D" uid="uid://ky4p621e6ee2" path="res://images/challenges/EC3.png" id="4_vrk2f"]
 
 [node name="etern" type="Control"]
 layout_mode = 3
@@ -38,12 +39,27 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Exit challenge"
 
+[node name="Meow" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 33.0
+offset_right = 20.0
+offset_bottom = 55.0
+grow_horizontal = 2
+text = "You have seen 3 out of ?? Eternity Challenges.
+The next EC is unlocked at 1e99999 total Tachyons."
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Chal" type="ScrollContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 30.0
+offset_top = 61.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -106,7 +122,7 @@ grow_vertical = 0
 theme_override_font_sizes/normal_font_size = 10
 bbcode_enabled = true
 text = "[center]Requirement: 3.23e616 TC
-Reward: ×2 on all TDs for each EC completion.
+Reward: ×3 on all TDs for each EC completion.
 (Currently: ×1)"
 
 [node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC1"]
@@ -139,7 +155,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "Challenges 1, 2, 5, 6, 11 and 14's restrictions all apply at once."
+text = "Eternity Dimensions' multipliers are raised ^0.20"
 
 [node name="Start" type="Button" parent="Chal/lenges/EC2"]
 layout_mode = 1
@@ -165,9 +181,8 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/normal_font_size = 10
 bbcode_enabled = true
-text = "[center]Requirement: 3.23e616 TC
-Reward: ×2 on all TDs for each EC completion.
-(Currently: ×1)"
+text = "[center]Requirement: 1.00e1500 TC
+Reward: Timespeed affects Eternity Dimensions with greatly reduced effeect."
 
 [node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC2"]
 layout_mode = 0
@@ -177,5 +192,65 @@ offset_right = 297.0
 offset_bottom = 131.0
 texture = ExtResource("3_1f1oy")
 
+[node name="EC3" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+theme_type_variation = &"EternPanel"
+
+[node name="Name" type="Label" parent="Chal/lenges/EC3"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "EC3"
+vertical_alignment = 2
+
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/EC3"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "All Tachyon Dimensions except the latest purchased are raised ^0.2."
+
+[node name="Start" type="Button" parent="Chal/lenges/EC3"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = -48.0
+offset_right = 132.0
+offset_bottom = -13.0
+grow_vertical = 0
+text = "Start challenge"
+
+[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -65.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center]Requirement: 1.00e1500 TC
+Reward: Timespeed affects Eternity Dimensions with greatly reduced effeect."
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC3"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("4_vrk2f")
+
 [connection signal="pressed" from="Chal/lenges/EC1/Start" to="." method="challenge_start" binds= [16]]
 [connection signal="pressed" from="Chal/lenges/EC2/Start" to="." method="challenge_start" binds= [17]]
+[connection signal="pressed" from="Chal/lenges/EC3/Start" to="." method="challenge_start" binds= [18]]

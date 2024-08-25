@@ -42,10 +42,10 @@ var FreeTSpeed   := 0
 var NextUpgrade  := largenum.new(1)
 var TreshMult    : float :
 	get:
-		if FreeTSpeed < 200: return 1.1
+		if FreeTSpeed < 308:
+			return 1.1
 		else:
-			return 1.1 ** (softcap ** (FreeTSpeed - 200))
-var softcap := 1.02
+			return 2.0
 var BuyMax : bool
 
 func dimcost(which):
@@ -136,6 +136,9 @@ func _process(delta):
 		
 		if Globals.Challenge == 17:
 			mult.pow2self(0.2)
+		
+		if Globals.progress <= GL.Progression.Duplicantes:
+			mult.mult2self(Formulas.duplicantes())
 		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		dims[i].get_node("N&M/Multiplier").show()
