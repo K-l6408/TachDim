@@ -51,13 +51,23 @@ func _process(_delta):
 	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Eternity)
 	TBar.set_tab_hidden(4, Globals.progress < Globals.Progression.Duplicantes)
 	
-	%Tabs/Dimensions.get_tab_bar().set_tab_hidden(1, Globals.EDHandler.DimsUnlocked == 0)
-	%Tabs/Challenges.get_tab_bar().set_tab_hidden(
+	%Tabs/Dimensions.set_tab_hidden(1, Globals.EDHandler.DimsUnlocked == 0)
+	%Tabs/Challenges.set_tab_hidden(
 		1, Globals.TachTotal.log10() < Globals.ECUnlocks[0]
 	)
 	
+	$ETint.global_position = TBar.get_tab_rect(3).position + TBar.global_position\
+	+ Vector2(-1, 1)
+	$ETint.size            = TBar.get_tab_rect(3).size
+	$ETint.color           = get_theme_color("font_color", "ButtonEtern")
+	
+	$DTint.global_position = TBar.get_tab_rect(4).position + TBar.global_position\
+	+ Vector2(-1, 1)
+	$DTint.size            = TBar.get_tab_rect(4).size
+	$DTint.color           = get_theme_color("meow", "DupliButton")
+	
 	if Input.is_action_just_pressed("Debug"): debugMode = not debugMode
-	TBar.set_tab_hidden(TBar.tab_count - 2, not debugMode)
+	TBar.set_tab_hidden(TBar.tab_count - 1, not debugMode)
 	
 	%Resources/Rewind/Button.disabled = \
 	%Tabs/Dimensions/Tachyons.rewindNode.disabled
@@ -78,6 +88,7 @@ func _process(_delta):
 	
 	%Resources/EP.visible = (Globals.progress >= GL.Progression.Eternity)
 	%Resources/Challenge.visible = (Globals.progress >= GL.Progression.Eternity)
+	%Resources/Dupl.visible = (Globals.progress >= GL.Progression.Duplicantes)
 	
 	%Resources/Tachyons/Text.text = \
 	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Globals.Tachyons.to_string()
@@ -85,6 +96,11 @@ func _process(_delta):
 	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Points[/color][/center]" % [
 		get_theme_color("font_color", "ButtonEtern").to_html(false),
 		Globals.EternityPts.to_string()
+	]
+	%Resources/Dupl/Text.text = \
+	"[center][color=%s][font_size=16]%s[/font_size]\nDuplican%ss[/color][/center]" % [
+		get_theme_color("meow", "DupliButton").to_html(false),
+		Globals.Duplicantes.to_string(), "" if Globals.Duplicantes.less(1) else "te"
 	]
 	if Globals.Challenge > 15:
 		%Resources/Challenge/Text.text = \

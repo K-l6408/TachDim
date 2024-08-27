@@ -4,17 +4,18 @@ var tickFraction := 0.0
 
 var chance := 1
 func buy_chance():
-	Globals.Duplicantes.div2self(2 ** chance)
+	Globals.Duplicantes.div2self(2.0 ** chance)
 	if Globals.Duplicantes.exponent < 61:
 		Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
 		Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
 	chance += 1
 
 var intervUpgrades := 0
+const intervalCap = 0.05
 func interval():
-	return max(0.9 ** intervUpgrades, 0.01)
+	return max(0.9 ** intervUpgrades, intervalCap)
 func buy_interval():
-	Globals.Duplicantes.div2self(3 ** (intervUpgrades + 1))
+	Globals.Duplicantes.div2self(3.0 ** (intervUpgrades + 1))
 	if Globals.Duplicantes.exponent < 61:
 		Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
 		Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
@@ -23,6 +24,11 @@ func buy_interval():
 var limitUpgrades := 0
 func limit():
 	return largenum.two_to_the(2 ** (limitUpgrades + 4))
+func limit_cost():
+	return largenum.ten_to_the(45 + 15 * limitUpgrades)
+func buy_limit():
+	Globals.EternityPts.add2self(limit_cost().neg())
+	limitUpgrades += 1
 
 var maxGalaxies := 0
 
@@ -49,6 +55,12 @@ func _process(delta):
 		Globals.percent_to_string(Globals.Duplicantes.log2() / limit().log2())
 	]
 	
+	%Limit.text = "Square Duplicantes\nlimit (%s → %s)\nCost: %s EP" % [
+		limit().to_string(), limit().power(2).to_string(),
+		limit_cost().to_string().replace(".00", "")
+	]
+	%Limit.disabled = Globals.EternityPts.less(limit_cost())
+	
 	tickFraction += delta / interval()
 	if tickFraction >= 1 and not limit().less(Globals.Duplicantes):
 		if tickFraction > 10000 or Globals.Duplicantes.log10() > 3:
@@ -64,15 +76,32 @@ func _process(delta):
 	
 	tickFraction = fmod(tickFraction, 1.0)
 	
-	%Chance.disabled   = Globals.Duplicantes.less(2 ** chance - 0.001) or chance >= 100
-	%Interval.disabled = Globals.Duplicantes.less(3 ** (intervUpgrades + 1) - 0.001) or \
-	interval() <= 0.01
+	%Chance.disabled   = Globals.Duplicantes.less(2.0 ** chance - 0.001) or chance >= 100
+	%Interval.disabled = Globals.Duplicantes.less(3.0 ** (intervUpgrades + 1) - 0.001) or \
+	interval() <= intervalCap
 	
-	%Chance.text = "Improve Duplication\nchance (%s → %s)\nCost: /%s Dupl." % [
-		Globals.percent_to_string(chance / 100.0       , 0),
-		Globals.percent_to_string(chance / 100.0 + 0.01, 0),
-		Globals.int_to_string(2 ** chance)
-	]
-	%Interval.text = "Improve Duplication\ninterval (%s → %s)" % \
-	[Globals.format_time(interval()), Globals.format_time(interval() * 0.9)] + \
-	"\nCost: /%s Dupl." % Globals.int_to_string(3 ** (intervUpgrades + 1))
+	if chance >= 100:
+		%Chance.text = "Duplication chance:\n%s (capped)" % [
+			Globals.percent_to_string(chance / 100.0, 0),
+		]
+	else:
+		%Chance.text = "Improve Duplication\nchance (%s → %s)\nCost: /%s Dupl." % [
+			Globals.percent_to_string(chance / 100.0       , 0),
+			Globals.percent_to_string(chance / 100.0 + 0.01, 0),
+			Globals.int_to_string(2 ** chance) if 2.0**chance < 1e5 else
+			Globals.float_to_string(2.0 ** chance)
+		]
+	
+	if interval() <= intervalCap:
+		%Interval.text = "Duplication interval:\n%s (capped)" % \
+		Globals.format_time(interval())
+	else:
+		%Interval.text = "Improve Duplication\ninterval (%s → %s)" % [
+			Globals.format_time(interval()),
+			Globals.format_time(max(interval() * 0.9, intervalCap))
+		] + \
+		"\nCost: /%s Dupl." % (
+			Globals.int_to_string(3 ** (intervUpgrades + 1)) if
+			3.0 ** (intervUpgrades + 1) < 1e5 else
+			Globals.float_to_string(3.0 ** (intervUpgrades + 1))
+		)

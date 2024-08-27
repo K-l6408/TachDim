@@ -46,7 +46,6 @@ var EternityPts := largenum.new(0)
 var Eternities  := largenum.new(0)
 
 var Duplicantes := largenum.new(1)
-var DupLimit    := largenum.two_to_the(2**4)
 
 var Challenge := 0
 var CompletedChallenges := 0
@@ -89,15 +88,16 @@ var challengeTimes = [
 	-1, -1, -1
 ]
 var ECTimes = [
-	-1, -1
+	-1, -1, -1, -1
 ]
 
 var ECTargets = [
 	largenum.two_to_the(2048), largenum.ten_to_the(1500),
-	largenum.ten_to_the(9000)
+	largenum.ten_to_the(9000), largenum.ten_to_the(11500),
+	largenum.ten_to_the(7000), largenum.ten_to_the(1e100)
 ]
 const ECUnlocks = [
-	1500, 1900, 10000, 99999
+	1500, 1900, 10000, 13000, 24000, 1e100
 ]
 
 func _process(delta):

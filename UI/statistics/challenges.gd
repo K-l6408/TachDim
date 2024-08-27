@@ -9,3 +9,5 @@ func _process(_delta):
 		sum += Globals.challengeTimes[i]
 		if Globals.challengeTimes[i] < 0: sum = -999
 	$"Table/T+".text = Globals.format_time(sum) if sum > 0 else "N/A"
+	if not Globals.Achievemer.is_unlocked(6, 3) and sum <= 30 and sum > 0:
+		Globals.Achievemer.set_unlocked(6, 3)

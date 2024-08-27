@@ -458,7 +458,6 @@ func gameReset():
 	Globals.CompletedECs = 0
 	Globals.ECTimes      = [-1]
 	Globals.Duplicantes  = largenum.new(1)
-	Globals.DupLimit     = largenum.two_to_the(2**4)
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value

@@ -36,9 +36,9 @@ static func ec1_reward():
 	return m
 
 static func ec2_reward():
-	return Globals.TDHandler.TSpeedBoost.power(
+	return max(Globals.TDHandler.TSpeedBoost.power(
 		Globals.TDHandler.TSpeedCount + Globals.EDHandler.FreeTSpeed
-	).log10()
+	).log10(), 1)
 
 static func duplicantes():
 	return Globals.Duplicantes.add(9).log10() ** 2

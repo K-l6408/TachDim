@@ -46,7 +46,7 @@ func _process(_delta):
 	] + "\n(Currently: ×%s)" % Globals.int_to_string(Formulas.ec1_reward())
 	
 	$Chal/lenges/EC2/Condition.text = \
-	"Eternity Dimensions' multipliers are raised ^%s." % Globals.float_to_string(0.2)
+	"Eternity Dimensions' multipliers are raised ^%s." % Globals.float_to_string(0.2, 1)
 	$Chal/lenges/EC2/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
 	Globals.ECTargets[1].to_string() + \
@@ -60,11 +60,28 @@ func _process(_delta):
 	Globals.ECTargets[2].to_string() + \
 	"\nReward: Unlock Duplicantes."
 	
+	$Chal/lenges/EC4/ReqRew.text = \
+	"[center]Requirement: %s TC\n" % \
+	Globals.ECTargets[3].to_string() + \
+	"\nReward: Galaxies are %s stronger and Dilation is %s dimensions cheaper." % [
+		Globals.percent_to_string(0.15, 0), Globals.int_to_string(5)
+	]
+	
+	$Chal/lenges/EC5/Condition.text = \
+	"You cannot buy Timespeed Upgrades, but Eternity Dimensions are raised ^%s." % \
+	Globals.float_to_string(1.1, 1)
+	$Chal/lenges/EC5/ReqRew.text = \
+	"[center]Requirement: %s TC\n" % \
+	Globals.ECTargets[4].to_string() + \
+	"\nReward: Increase the multiplier for buying EDs.\n(×%s → ×%s)" % [
+		Globals.int_to_string(4), Globals.int_to_string(5)
+	]
+	
 	if Globals.Challenge == 0:
 		$CurrentChallenge/Label.text = "You aren't in any challenge."
 		$CurrentChallenge/Exit.visible = false
 	else:
-		$CurrentChallenge/Label.text = "You are currently in %schallenge %s." % [
+		$CurrentChallenge/Label.text = "You are currently in %schallenge %s.  " % [
 			"" if Globals.Challenge <= 15 else "eternity ",
 			Globals.int_to_string((Globals.Challenge - 1) % 15 + 1)
 		]

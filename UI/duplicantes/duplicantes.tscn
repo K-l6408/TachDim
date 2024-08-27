@@ -115,3 +115,4 @@ for a Duplicantes Galaxy
 
 [connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Chance" to="." method="buy_chance"]
 [connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Interval" to="." method="buy_interval"]
+[connection signal="pressed" from="HSplitContainer/DupLimit/HBoxContainer/Limit" to="." method="buy_limit"]

@@ -776,7 +776,7 @@ offset_right = 125.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Perform a Dilation reset
-for no gain"
+but lose a Time Dilation"
 
 [node name="ETERNITY" type="Button" parent="."]
 visible = false
@@ -820,6 +820,6 @@ horizontal_alignment = 1
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension8/Buy" to="." method="buydim" binds= [8]]
 [connection signal="pressed" from="VSplitContainer/Prestiges/DiButton" to="." method="dilate"]
 [connection signal="pressed" from="VSplitContainer/Prestiges/GaButton" to="." method="galaxy"]
-[connection signal="pressed" from="VSplitContainer/Prestiges/Reset" to="." method="reset" binds= [0]]
+[connection signal="pressed" from="VSplitContainer/Prestiges/Reset" to="." method="antisoftlock"]
 [connection signal="pressed" from="ETERNITY" to="." method="eternity"]
 [connection signal="pressed" from="ETERNITY" to="ETERNITY" method="hide"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=31 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Script" path="res://UI/main.gd" id="1_qdidp"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://ckigo0tgi2x53" path="res://UI/duplicantes/duplicantes.tscn" id="13_vhw6w"]
 [ext_resource type="Texture2D" uid="uid://d070fk356hwgi" path="res://images/glass.png" id="15_7ies4"]
 [ext_resource type="Shader" path="res://UI/eternity/glass.gdshader" id="15_hde6e"]
+[ext_resource type="Shader" path="res://UI/tint.gdshader" id="24_irn3s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
 shader = ExtResource("3_o4cqe")
@@ -109,6 +110,9 @@ _data = {
 "overcome": SubResource("Animation_a3cka")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sl1qb"]
+shader = ExtResource("24_irn3s")
+
 [node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -118,29 +122,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_uhadk")
 script = ExtResource("1_qdidp")
-
-[node name="News" type="Panel" parent="."]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-
-[node name="Text" type="RichTextLabel" parent="News"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -114.0
-offset_top = 4.0
-offset_right = 114.0
-grow_horizontal = 2
-grow_vertical = 0
-bbcode_enabled = true
-text = "news go here…… [rainbow]but maybe not only ðat?"
-fit_content = true
-autowrap_mode = 0
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -152,17 +133,23 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = 145
 
-[node name="Resources" type="VBoxContainer" parent="HSplitContainer"]
+[node name="ScrollContainer2" type="ScrollContainer" parent="HSplitContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Resources" type="VBoxContainer" parent="HSplitContainer/ScrollContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = -2
 
-[node name="Tachyons" type="Panel" parent="HSplitContainer/Resources"]
+[node name="Tachyons" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/Tachyons"]
+[node name="Text" type="RichTextLabel" parent="HSplitContainer/ScrollContainer2/Resources/Tachyons"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -179,12 +166,12 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Rewind" type="Panel" parent="HSplitContainer/Resources"]
+[node name="Rewind" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="HSplitContainer/Resources/Rewind"]
+[node name="Button" type="Button" parent="HSplitContainer/ScrollContainer2/Resources/Rewind"]
 material = SubResource("ShaderMaterial_qqelc")
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
@@ -198,7 +185,7 @@ grow_horizontal = 2
 script = ExtResource("2_4w04a")
 smol = true
 
-[node name="Accuracy" type="ColorRect" parent="HSplitContainer/Resources/Rewind/Button"]
+[node name="Accuracy" type="ColorRect" parent="HSplitContainer/ScrollContainer2/Resources/Rewind/Button"]
 layout_mode = 0
 offset_left = 10.0
 offset_right = 16.0
@@ -206,7 +193,7 @@ offset_bottom = 25.0
 mouse_filter = 2
 color = Color(0.8, 0.8, 0.8, 1)
 
-[node name="Label" type="Label" parent="HSplitContainer/Resources/Rewind"]
+[node name="Label" type="Label" parent="HSplitContainer/ScrollContainer2/Resources/Rewind"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -218,12 +205,12 @@ grow_vertical = 0
 text = "Rewind"
 horizontal_alignment = 1
 
-[node name="EP" type="Panel" parent="HSplitContainer/Resources"]
+[node name="EP" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/EP"]
+[node name="Text" type="RichTextLabel" parent="HSplitContainer/ScrollContainer2/Resources/EP"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 14
@@ -241,12 +228,12 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Challenge" type="Panel" parent="HSplitContainer/Resources"]
+[node name="Challenge" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/Challenge"]
+[node name="Text" type="RichTextLabel" parent="HSplitContainer/ScrollContainer2/Resources/Challenge"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -263,12 +250,12 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Eternity" type="Panel" parent="HSplitContainer/Resources"]
+[node name="Eternity" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
-[node name="EternityButton" type="Button" parent="HSplitContainer/Resources/Eternity"]
+[node name="EternityButton" type="Button" parent="HSplitContainer/ScrollContainer2/Resources/Eternity"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -284,13 +271,13 @@ text = "Eternity for
 1.75e4 EP
 (124 EP/s)"
 
-[node name="EDunlock" type="Panel" parent="HSplitContainer/Resources"]
+[node name="EDunlock" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="EDButton" type="Button" parent="HSplitContainer/Resources/EDunlock"]
+[node name="EDButton" type="Button" parent="HSplitContainer/ScrollContainer2/Resources/EDunlock"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -308,13 +295,13 @@ unlock a new
 Eternity Dimension."
 script = ExtResource("5_htsl0")
 
-[node name="Dupl" type="Panel" parent="HSplitContainer/Resources"]
+[node name="Dupl" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="HSplitContainer/Resources/Dupl"]
+[node name="Text" type="RichTextLabel" parent="HSplitContainer/ScrollContainer2/Resources/Dupl"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 14
@@ -332,7 +319,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Panel2" type="Panel" parent="HSplitContainer/Resources"]
+[node name="Panel2" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -427,27 +414,6 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="New Unlocks" type="Control" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
-visible = false
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/New Unlocks"]
-clip_contents = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -0.5
-offset_right = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-bbcode_enabled = true
-text = "[font_size=300]WIP[/font_size]"
-fit_content = true
-autowrap_mode = 0
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(480, 320)
 ignore_rotation = false
@@ -514,9 +480,64 @@ anchor_right = 1.0
 grow_horizontal = 0
 script = ExtResource("12_ab4py")
 
-[connection signal="pressed" from="HSplitContainer/Resources/Rewind/Button" to="HSplitContainer/Resources/Rewind/Button" method="_on_pressed"]
-[connection signal="rewind" from="HSplitContainer/Resources/Rewind/Button" to="." method="rewind"]
-[connection signal="pressed" from="HSplitContainer/Resources/Eternity/EternityButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" method="eternity"]
-[connection signal="button_down" from="HSplitContainer/Resources/EDunlock/EDButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="unlocknewdim"]
+[node name="ETint" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_sl1qb")
+layout_mode = 0
+offset_left = 368.0
+offset_top = 23.0
+offset_right = 426.0
+offset_bottom = 43.0
+mouse_filter = 2
+color = Color(0.698039, 0.254902, 0.890196, 1)
+
+[node name="DTint" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_sl1qb")
+layout_mode = 0
+offset_left = 426.0
+offset_top = 23.0
+offset_right = 502.0
+offset_bottom = 43.0
+mouse_filter = 2
+color = Color(0.254902, 0.447059, 0.890196, 1)
+
+[node name="HERE!" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_sl1qb")
+layout_mode = 0
+offset_left = 463.0
+offset_top = 30.0
+offset_right = 539.0
+offset_bottom = 50.0
+mouse_filter = 2
+color = Color(1, 1, 0, 1)
+
+[node name="News" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+
+[node name="Text" type="RichTextLabel" parent="News"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -114.0
+offset_top = 4.0
+offset_right = 114.0
+grow_horizontal = 2
+grow_vertical = 0
+bbcode_enabled = true
+text = "news go here…… [rainbow]but maybe not only ðat?"
+fit_content = true
+autowrap_mode = 0
+
+[connection signal="pressed" from="HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="HSplitContainer/ScrollContainer2/Resources/Rewind/Button" method="_on_pressed"]
+[connection signal="rewind" from="HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="." method="rewind"]
+[connection signal="pressed" from="HSplitContainer/ScrollContainer2/Resources/Eternity/EternityButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" method="eternity"]
+[connection signal="button_down" from="HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="unlocknewdim"]
 [connection signal="eternitied" from="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="eternitied"]
 [connection signal="YEAAAH" from="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity/Overcome Eternity" to="AnimationPlayer" method="play" binds= ["overcome"]]

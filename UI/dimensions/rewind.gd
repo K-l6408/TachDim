@@ -24,7 +24,7 @@ func _process(delta):
 		if Globals.Achievemer.is_unlocked(2, 4):
 			var B = Globals.TDHandler.rewindBoost().log2()
 			var M = Globals.TDHandler.RewindMult.log2()
-			material.set_shader_parameter("zoom", max(M / (B - M), 1))
+			material.set_shader_parameter("zoom", max(M / (B - M) + 1, 1))
 		else:
 			material.set_shader_parameter("zoom", 1.0)
 		score = 1 - abs(score)

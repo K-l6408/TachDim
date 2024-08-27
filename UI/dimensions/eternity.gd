@@ -19,7 +19,7 @@ var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
 var DimCostStart : Array[largenum] = [
 	largenum.ten_to_the( 4),largenum.ten_to_the( 6),
 	largenum.ten_to_the(15),largenum.ten_to_the(30),
-	largenum.ten_to_the(999),largenum.ten_to_the(999),
+	largenum.ten_to_the(45),largenum.ten_to_the(70),
 	largenum.ten_to_the(999),largenum.ten_to_the(999)
 ]
 var DimCostMult : Array[largenum] :
@@ -32,7 +32,8 @@ var DimCostMult : Array[largenum] :
 		]
 
 const TachLogReq := [
-	1000, 1600, 4000, 10000, 1e100
+	1000,  1600,  4000, 10000,
+	18000, 26000, 1e100
 ]
 
 var DimsUnlocked := 0
@@ -83,7 +84,9 @@ func _process(delta):
 		i.get_node("A&G/Amount").text = DimAmount[k-1].to_string()
 		i.get_node("Buy").text = "Cost: %s EP" % dimcost(k).to_string()
 	
-	var buy10mult = 4
+	var buymult = 4
+	if Globals.ECCompleted(5):
+		buymult = 5
 	
 	%Important.text = "[center]%s [font_size=20]%s[/font_size] %s [font_size=20]%s[/font_size] %s" % [
 		"You have", TimeShards.to_string(), "Time Shards, giving",
@@ -129,13 +132,16 @@ func _process(delta):
 	for i in range(1, min(DimsUnlocked+1, len(dims))):
 		var mult := largenum.new(1)
 		
-		mult.mult2self(largenum.new(buy10mult).power(DimPurchase[i-1]))
+		mult.mult2self(largenum.new(buymult).power(DimPurchase[i-1]))
 		
 		if Globals.ECCompleted(1):
 			mult.mult2self(Formulas.ec1_reward())
 		
 		if Globals.Challenge == 17:
 			mult.pow2self(0.2)
+		
+		if Globals.Challenge == 20:
+			mult.pow2self(1.1)
 		
 		if Globals.progress <= GL.Progression.Duplicantes:
 			mult.mult2self(Formulas.duplicantes())

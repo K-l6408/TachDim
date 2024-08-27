@@ -61,6 +61,7 @@ func achnames(r, c):
 		6: match c:
 			1: return "This achievement doesn't exist"
 			2: return "I h-five them???"
+			3: return "Can you even call these \"challenges\""
 			6: return "I??? h-two them???"
 	return "TBD"
 
@@ -142,6 +143,8 @@ func achreqs(r, c):
 				Globals.int_to_string(1), Globals.int_to_string(4),
 				Globals.int_to_string(3)
 			]
+			3: return "Get the sum of all Challenge times under %s." % \
+			Globals.format_time(30)
 	return "TBD"
 
 func is_unlocked(row, num):

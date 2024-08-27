@@ -89,7 +89,7 @@ func updateTSpeed():
 	var GalaxyMult = 1
 	if Globals.EUHandler.is_bought(8): GalaxyMult *= 2
 	if Globals.OEUHandler.is_bought(3): GalaxyMult *= 1.4
-	
+	if Globals.ECCompleted(4): GalaxyMult *= 1.15
 	if Globals.Challenge == 12:
 		TSpeedBoost = largenum.new(1.10)
 	else:
@@ -181,6 +181,7 @@ func buydim(which, bulkoverride := 0):
 			return
 
 func buytspeed(maxm:bool):
+	if Globals.Challenge == 20: return
 	while TSpeedCost.less(Globals.Tachyons):
 		Globals.Tachyons.add2self(TSpeedCost.neg())
 		if Globals.Tachyons.sign < 0:
@@ -191,6 +192,10 @@ func buytspeed(maxm:bool):
 		if Globals.Challenge == 2 or Globals.Challenge == 16: C2Multiplier = 0.0
 		if Globals.Challenge == 14:  C14Divisor = 1.0
 		if not maxm: break
+
+func antisoftlock():
+	reset(0)
+	Globals.TDilation -= 1
 
 func dilate():
 	reset(0)
@@ -378,7 +383,6 @@ func _process(delta):
 		buyable = int(buyable)
 		i.get_node("Buy/Progress").value = int(buyable)
 		i.get_node("Buy/Progress").max_value = buylim - DimPurchase[k-1] % buylim
-		#print(DimCost[k-1].less(Globals.Tachyons))
 		i.get_node("Buy").disabled = not DimCost[k-1].less(Globals.Tachyons)
 		if k < 8:
 			if DimAmount[k].exponent == -INF:
@@ -391,9 +395,14 @@ func _process(delta):
 			Globals.int_to_string(min(buyable, buylim - DimPurchase[k-1] % buylim)),
 			DimCost[k-1].multiply(min(max(buyable, 1), buylim - DimPurchase[k-1] % buylim)).to_string()
 		]
-	%TopButtons/Timespeed.disabled = Globals.Tachyons.less(TSpeedCost)
-	%TopButtons/Timespeed/BuyMax.disabled = Globals.Tachyons.less(TSpeedCost)
-	%TopButtons/Timespeed.text = "Timespeed (%s TC) " % TSpeedCost.to_string()
+	if Globals.Challenge == 20:
+		%TopButtons/Timespeed.disabled = true
+		%TopButtons/Timespeed/BuyMax.disabled = true
+		%TopButtons/Timespeed.text = "Timespeed disabled (EC5)"
+	else:
+		%TopButtons/Timespeed.disabled = Globals.Tachyons.less(TSpeedCost)
+		%TopButtons/Timespeed/BuyMax.disabled = Globals.Tachyons.less(TSpeedCost)
+		%TopButtons/Timespeed.text = "Timespeed (%s TC) " % TSpeedCost.to_string()
 	%TopButtons/Timespeed.tooltip_text = "Purchased %s time%s" % \
 	[Globals.int_to_string(TSpeedCount), "" if TSpeedCount == 1 else "s"]
 	if Globals.EDHandler.DimsUnlocked > 0:
@@ -565,7 +574,7 @@ func _process(delta):
 		C2Multiplier = min(C2Multiplier, 1)
 	if Globals.Challenge == 14 or Globals.Challenge == 16:
 		C14Divisor *= 1e9 ** delta
-	%Prestiges/Reset.visible = (Globals.Challenge in [18])
+	%Prestiges/Reset.visible = (Globals.Challenge in [18, 19])
 	
 	if not Input.is_action_pressed("ToggleAB"):
 		for i in range(8, 0, -1):
@@ -689,19 +698,27 @@ func dilacost():
 	
 	if (Globals.Challenge == 5 or Globals.Challenge == 16):
 		Cost = Cost * 3 / 2
+	if Globals.Challenge == 19:
+		Cost += Globals.TGalaxies * 15
 	if Globals.EUHandler.is_bought(4):
+		Cost -= 5
+	if Globals.ECCompleted(4):
 		Cost -= 5
 	
 	return Cost
 
 func galacost():
 	var Cost = 80 + 60 * Globals.TGalaxies
+	
 	if (Globals.Challenge == 6 or Globals.Challenge == 16):
 		Cost = 60 + 40 * Globals.TGalaxies
 	if (Globals.Challenge == 5 or Globals.Challenge == 16):
 		Cost = Cost * 3 / 2
+	if Globals.Challenge == 19:
+		Cost += Globals.TDilation * 5
 	if Globals.EUHandler.is_bought(4):
 		Cost -= 10
+	
 	return Cost
 
 signal eternitied()

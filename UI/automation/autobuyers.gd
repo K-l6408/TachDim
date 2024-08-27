@@ -344,21 +344,23 @@ func _process(_delta):
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 0.7
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 0.7
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 0.0
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).size = Vector2(217, 45)
 		if done: Globals.Achievemer.set_unlocked(5, 3)
 	else:
 		for i in 8:
 			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).hide()
-			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size = Vector2(250, 80)
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 0.5
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 0.5
+			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size = Vector2(250, 44)
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 1.13
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 1.13
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 0.5
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).size = Vector2(70, 22)
 	
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
 	Globals.float_to_string(2.0 ** DilUpgrades, 0)]
 	$Auto/Buyers/Dilation/Interval.disabled = Globals.EternityPts.less(2 ** DilUpgrades)
 	$Auto/Buyers/Dilation/RichTextLabel.text = \
-	"[center]Time Dilation Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: ×1" % \
+	"[center]Time Dilation Autobuyer\n[font_size=10]Activates every %s seconds" % \
 	Globals.float_to_string(DilInterval())
 	
 	$Auto/Buyers/Galaxy/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
@@ -366,7 +368,7 @@ func _process(_delta):
 	Globals.float_to_string(2.0 ** GalUpgrades, 0)]
 	$Auto/Buyers/Galaxy/Interval.disabled = Globals.EternityPts.less(2 ** GalUpgrades)
 	$Auto/Buyers/Galaxy/RichTextLabel.text = \
-	"[center]Tachyon Galaxy Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: ×1" % \
+	"[center]Tachyon Galaxy Autobuyer\n[font_size=10]Activates every %s seconds" % \
 	Globals.float_to_string(GalInterval())
 	
 	$Auto/Buyers/BigBang/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
