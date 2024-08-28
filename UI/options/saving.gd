@@ -77,10 +77,10 @@ func openDialog():
 		if D is Dictionary:
 			if progress < Globals.Progression.Eternity:
 				get_node("Files/%d/Tachyons" % (f+1)).text = \
-				"%s Tachyons" % largenum.new().from_bytes(D["tachyons"]).to_string()
+				"%s Tachyons" % largenum.new(0).from_bytes(D["tachyons"]).to_string()
 			else:
 				get_node("Files/%d/Tachyons" % (f+1)).text = \
-				"%s Eternity Points" % largenum.new().from_bytes(D["eternity points"]).to_string()
+				"%s Eternity Points" % largenum.new(0).from_bytes(D["eternity points"]).to_string()
 		else:
 			get_node("Files/%d/Tachyons" % (f+1)).text = "Outdated or corrupted file"
 
@@ -216,10 +216,12 @@ func saveF(file : String = saveFilePath):
 		DATA["ECtimes"] = Globals.ECTimes
 	
 	if Globals.progress >= GL.Progression.Duplicantes:
-		DATA["duplicantes"] = Globals.Duplicantes.to_bytes()
-		DATA["dupe chance"] = Globals.DupHandler.chance
-		DATA["dupe interv"] = Globals.DupHandler.intervUpgrades
-		DATA["dupe limit"]  = Globals.DupHandler.limitUpgrades
+		DATA["duplicantes"]  = Globals.Duplicantes.to_bytes()
+		DATA["dupe chance"]  = Globals.DupHandler.chance
+		DATA["dupe interv"]  = Globals.DupHandler.intervUpgrades
+		DATA["dupe limit"]   = Globals.DupHandler.limitUpgrades
+		DATA["dupe max gal"] = Globals.DupHandler.maxGalaxies
+		DATA["dupe galaxies"]= Globals.DupHandler.dupGalaxies
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -402,6 +404,9 @@ func loadF(file : String = saveFilePath):
 		Globals.DupHandler.chance = DATA["dupe chance"]
 		Globals.DupHandler.intervUpgrades = DATA["dupe interv"]
 		Globals.DupHandler.limitUpgrades = DATA["dupe limit"]
+		if DATA.has("dupe galaxies"):
+			Globals.DupHandler.maxGalaxies = DATA["dupe max gal"]
+			Globals.DupHandler.dupGalaxies = DATA["dupe galaxies"]
 	
 	Globals.TDHandler.updateTSpeed()
 	get_tree().paused = pause

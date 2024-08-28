@@ -77,6 +77,14 @@ func _process(_delta):
 		Globals.int_to_string(4), Globals.int_to_string(5)
 	]
 	
+	$Chal/lenges/EC6/ReqRew.text = \
+	"[center]Requirement: %s TC\n" % \
+	Globals.ECTargets[5].to_string() + \
+	"\nReward: Decrease free Timespeed requirement after %s. (×%s → ×%s)" % [
+		Globals.int_to_string(308),
+		Globals.float_to_string(2), Globals.float_to_string(1.8)
+	]
+	
 	if Globals.Challenge == 0:
 		$CurrentChallenge/Label.text = "You aren't in any challenge."
 		$CurrentChallenge/Exit.visible = false

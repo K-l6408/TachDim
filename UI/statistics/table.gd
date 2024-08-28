@@ -15,14 +15,14 @@ func _draw():
 			color, 2)
 		j += get_child(i).size.x + hs
 	draw_line(
-		Vector2(0,      get_child(0).size.y + vs/2 - 1),
-		Vector2(size.x, get_child(0).size.y + vs/2 - 1),
+		Vector2(0,      get_child(0).size.y + int(vs/2.) - 1),
+		Vector2(size.x, get_child(0).size.y + int(vs/2.) - 1),
 		color, 2)
 	if last:
 		draw_line(
-			Vector2(0,      size.y - get_child(get_child_count() - 1).size.y - vs/2),
-			Vector2(size.x, size.y - get_child(get_child_count() - 1).size.y - vs/2),
+			Vector2(0,      size.y - get_child(get_child_count() - 1).size.y - int(vs/2.)),
+			Vector2(size.x, size.y - get_child(get_child_count() - 1).size.y - int(vs/2.)),
 			color, 2)
 
-func _process(delta):
+func _process(_delta):
 	queue_redraw()

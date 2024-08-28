@@ -5,7 +5,7 @@ var mantissa : int = 0
 var exponent : float = 0
 var sign := 1
 
-func _init(from = 0):
+func _init(from):
 	if from is largenum:
 		mantissa = from.mantissa
 		exponent = from.exponent
@@ -66,7 +66,7 @@ func fix_mantissa():
 func add(b) -> largenum:
 	if not b is largenum:
 		b = largenum.new(b)
-	var result = largenum.new()
+	var result = largenum.new(0)
 	if abs(exponent - b.exponent) > 62:
 		return largenum.new(self) if (exponent > b.exponent) else b
 	var maxexp = max(exponent, b.exponent)
@@ -96,7 +96,7 @@ func add2self(b) -> largenum:
 func multiply(b) -> largenum:
 	if not b is largenum:
 		b = largenum.new(b)
-	var result = largenum.new()
+	var result = largenum.new(0)
 	var m1 = float(mantissa)
 	var m2 = float(b.mantissa)
 	var mm = m1 * m2 / (2**61)
@@ -111,7 +111,7 @@ func multiply(b) -> largenum:
 func divide(b) -> largenum:
 	if not b is largenum:
 		b = largenum.new(b)
-	var result = largenum.new()
+	var result = largenum.new(0)
 	var m1 = mantissa
 	var m2 = b.mantissa >> 31
 	if m2 == 0:
@@ -135,7 +135,7 @@ func mult2self(b) -> largenum:
 func div2self(b) -> largenum:
 	if not b is largenum:
 		b = largenum.new(b)
-	var result = largenum.new()
+	var result = largenum.new(0)
 	var m1 = mantissa
 	var m2 = b.mantissa >> 31
 	if m2 == 0:
@@ -147,7 +147,7 @@ func div2self(b) -> largenum:
 
 func power(b:float) -> largenum:
 	if b == 0: return largenum.new(1)
-	var result = largenum.new()
+	var result = largenum.new(0)
 	result.exponent = exponent * float(b)
 	var M = (log(mantissa) / GL.LOG2 - 61) * float(b)
 	result.exponent += floor(M)

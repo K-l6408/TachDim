@@ -540,4 +540,5 @@ autowrap_mode = 0
 [connection signal="pressed" from="HSplitContainer/ScrollContainer2/Resources/Eternity/EternityButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" method="eternity"]
 [connection signal="button_down" from="HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="unlocknewdim"]
 [connection signal="eternitied" from="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="eternitied"]
+[connection signal="eternitied" from="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Duplicantes" method="on_eternity"]
 [connection signal="YEAAAH" from="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity/Overcome Eternity" to="AnimationPlayer" method="play" binds= ["overcome"]]

@@ -451,5 +451,5 @@ layout_mode = 2
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension4/Buy" to="." method="buydim" binds= [4]]
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension5/Buy" to="." method="buydim" binds= [5]]
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension6/Buy" to="." method="buydim" binds= [6]]
-[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension7/Buy" to="." method="unlocknewdim" binds= [7]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension7/Buy" to="." method="buydim" binds= [7]]
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension8/Buy" to="." method="buydim" binds= [8]]

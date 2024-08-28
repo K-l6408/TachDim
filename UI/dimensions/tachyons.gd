@@ -94,7 +94,9 @@ func updateTSpeed():
 		TSpeedBoost = largenum.new(1.10)
 	else:
 		TSpeedBoost = largenum.new(1.13)
-	TSpeedBoost.div2self(largenum.new(GalaxyBoost).power(Globals.TGalaxies * GalaxyMult))
+	TSpeedBoost.div2self(largenum.new(GalaxyBoost).power(
+		(Globals.TGalaxies + Globals.DupHandler.dupGalaxies) * GalaxyMult
+	))
 
 func rewind(score:float):
 	if not (
@@ -277,7 +279,7 @@ func epgained():
 	epgain.mult2self(largenum.new(2).power(Globals.EUHandler.EPMultBought))
 	
 	if epgain.to_float() < 1e10:
-		epgain = largenum.new(floor(epgain.to_float()))
+		epgain = largenum.new(floor(epgain.to_float() + 0.1))
 	
 	return epgain
 
@@ -287,7 +289,7 @@ func reset(level := 0, challengeReset := true):
 	if Globals.Challenge == 14 or Globals.Challenge == 16:  C14Divisor = 1.0
 	if Globals.Achievemer.is_unlocked(4,2):
 		Globals.Tachyons = largenum.new(5e5)
-	if Globals.Achievemer.is_unlocked(3,6):
+	elif Globals.Achievemer.is_unlocked(3,6):
 		Globals.Tachyons = largenum.new(5000)
 	elif Globals.Achievemer.is_unlocked(2,8):
 		Globals.Tachyons = largenum.ten_to_the(2)
@@ -557,11 +559,18 @@ func _process(delta):
 	%Prestiges/GaButton.disabled = DimPurchase[
 		5 if Globals.Challenge in [6, 16] else 7
 	] < galacost()
-	%Prestiges/GaLabel.text = "[center]Tachyon Galaxies (%s)\n[font_size=2] \n[font_size=10]Requires: %s %s Tachyon Dimensions" % [
-		Globals.int_to_string(Globals.TGalaxies),
-		Globals.int_to_string(galacost()),
-		Globals.ordinal(6 if (Globals.Challenge == 6 or Globals.Challenge == 16) else 8)
-	]
+	if Globals.DupHandler.dupGalaxies > 0:
+		%Prestiges/GaLabel.text = "[center]Tachyon Galaxies (%s + %s)\n[font_size=2] \n[font_size=10]Requires: %s %s Tachyon Dimensions" % [
+			Globals.int_to_string(Globals.TGalaxies), Globals.int_to_string(Globals.DupHandler.dupGalaxies),
+			Globals.int_to_string(galacost()),
+			Globals.ordinal(6 if (Globals.Challenge == 6 or Globals.Challenge == 16) else 8)
+		]
+	else:
+		%Prestiges/GaLabel.text = "[center]Tachyon Galaxies (%s)\n[font_size=2] \n[font_size=10]Requires: %s %s Tachyon Dimensions" % [
+			Globals.int_to_string(Globals.TGalaxies),
+			Globals.int_to_string(galacost()),
+			Globals.ordinal(6 if (Globals.Challenge == 6 or Globals.Challenge == 16) else 8)
+		]
 	
 	if Globals.Challenge == 8:
 		if Globals.TDilation >= 5:

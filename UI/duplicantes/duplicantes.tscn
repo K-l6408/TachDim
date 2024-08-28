@@ -92,7 +92,7 @@ theme_type_variation = &"DupliButton"
 disabled = true
 text = "Max Duplicantes
 Galaxies: 0
-Cost: 1e80 EP"
+Cost: 1e140 EP"
 
 [node name="TextG" type="RichTextLabel" parent="HSplitContainer/DupLimit"]
 unique_name_in_owner = true
@@ -104,15 +104,18 @@ scroll_active = false
 
 [node name="Galaxy" type="Button" parent="HSplitContainer/DupLimit"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DupliButton"
 disabled = true
 text = "Reset Duplicantes and Duplicantes Upgrades
 for a Duplicantes Galaxy
-(Requires 1.80e308 Duplicantes)"
+(Requires 1.80e308 Duplicantes
+and maxed out upgrades)"
 
 [connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Chance" to="." method="buy_chance"]
 [connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Interval" to="." method="buy_interval"]
 [connection signal="pressed" from="HSplitContainer/DupLimit/HBoxContainer/Limit" to="." method="buy_limit"]
+[connection signal="pressed" from="HSplitContainer/DupLimit/HBoxContainer/MaxGal" to="." method="buy_maxgal"]
+[connection signal="pressed" from="HSplitContainer/DupLimit/Galaxy" to="." method="buy_galaxy"]

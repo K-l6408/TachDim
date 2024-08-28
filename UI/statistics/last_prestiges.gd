@@ -1,6 +1,6 @@
 extends Control
 
-func _process(delta):
+func _process(_delta):
 	for i in 11:
 		for j in range(1,4):
 			$Eternity/Table.get_child(i*4+4+j).text = "Not done yet"

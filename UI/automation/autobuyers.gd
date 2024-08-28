@@ -279,10 +279,10 @@ func _process(_delta):
 		$Auto/Buyers/Rewind/Accuracy.disabled = Globals.EternityPts.less(3 ** RewdAQups)
 		$Auto/Buyers/Rewind/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 		[Globals.percent_to_string(0.4, 0),
-		Globals.float_to_string(2.0 ** RewdUpgrades, 0)]
+		Globals.float_to_string(2.0 ** RewdUpgrades, 1)]
 		$Auto/Buyers/Rewind/Accuracy.text = "Increase accuracy by %s\nCost: %s EP" % \
 		[Globals.percent_to_string(0.095, 1),
-		Globals.float_to_string(3.0 ** RewdAQups, 0)]
+		Globals.float_to_string(3.0 ** RewdAQups, 1)]
 	
 	$Auto/Buyers/TimeSpeed/RichTextLabel.text = \
 	"[center]Timespeed Autobuyer\n[font_size=10] Activates every %s seconds" % \
@@ -290,7 +290,7 @@ func _process(_delta):
 	if Globals.challengeCompleted(9):
 		$Auto/Buyers/TimeSpeed/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 		[Globals.percent_to_string(0.4, 0),
-		Globals.float_to_string(2.0 ** TSUpgrades, 0)]
+		Globals.float_to_string(2.0 ** TSUpgrades, 1)]
 		$Auto/Buyers/TimeSpeed/Interval.disabled = Globals.EternityPts.less(2 ** TSUpgrades)
 		$Auto/Buyers/TimeSpeed/Mode.disabled = false
 		if $Auto/Buyers/TimeSpeed/Mode.button_pressed:
@@ -307,7 +307,7 @@ func _process(_delta):
 			if TDUpgrades[i] < IntervalCap[i]:
 				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).text = "Decrease interval by %s\nCost: %s EP" % \
 				[Globals.percent_to_string(0.4, 0),
-				Globals.float_to_string(2.0 ** TDUpgrades[i], 0)]
+				Globals.float_to_string(2.0 ** TDUpgrades[i], 1)]
 			else:
 				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).text = "Increase bulk (%s → %s)\nCost: %s EP" % \
 				[Globals.int_to_string(TDBulk(i+1)), Globals.int_to_string(TDBulk(i+1) * 2),
@@ -357,7 +357,7 @@ func _process(_delta):
 	
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
-	Globals.float_to_string(2.0 ** DilUpgrades, 0)]
+	Globals.float_to_string(2.0 ** DilUpgrades, 1)]
 	$Auto/Buyers/Dilation/Interval.disabled = Globals.EternityPts.less(2 ** DilUpgrades)
 	$Auto/Buyers/Dilation/RichTextLabel.text = \
 	"[center]Time Dilation Autobuyer\n[font_size=10]Activates every %s seconds" % \
@@ -365,7 +365,7 @@ func _process(_delta):
 	
 	$Auto/Buyers/Galaxy/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
-	Globals.float_to_string(2.0 ** GalUpgrades, 0)]
+	Globals.float_to_string(2.0 ** GalUpgrades, 1)]
 	$Auto/Buyers/Galaxy/Interval.disabled = Globals.EternityPts.less(2 ** GalUpgrades)
 	$Auto/Buyers/Galaxy/RichTextLabel.text = \
 	"[center]Tachyon Galaxy Autobuyer\n[font_size=10]Activates every %s seconds" % \
@@ -373,7 +373,7 @@ func _process(_delta):
 	
 	$Auto/Buyers/BigBang/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
-	Globals.float_to_string(2.0 ** BangUpgrades, 0)]
+	Globals.float_to_string(2.0 ** BangUpgrades, 1)]
 	$Auto/Buyers/BigBang/Interval.disabled = Globals.EternityPts.less(2 ** BangUpgrades)
 	$Auto/Buyers/BigBang/RichTextLabel.text = \
 	"[center]Big Bang Autobuyer"
@@ -382,6 +382,7 @@ func _process(_delta):
 		"\n[font_size=10]Activates every %s seconds" % \
 		Globals.float_to_string(BangInterval())
 	$Auto/Buyers/BigBang/Amount/Label2.text = " (%s)" % BigBangAtEP.to_string()
+	$Auto/Buyers/BigBang/Amount.visible = Globals.progress >= GL.Progression.Overcome
 
 func unlock(which):
 	if which == 0:
@@ -419,7 +420,8 @@ func buyrewd():
 
 func buydila():
 	if Globals.Challenge == 10: return
-	if Globals.TDHandler.canDilate:
+	if Globals.TDHandler.canDilate \
+	and not ($Auto/Buyers/Galaxy/Enabled.pressed and Globals.TDHandler.canGalaxy):
 		var doit = true
 		if $Auto/Buyers/Dilation/Limit/Enabled.button_pressed:
 			if Globals.TDilation >= DilLimit:

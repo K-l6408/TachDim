@@ -17,10 +17,10 @@ var DimAmount : Array[largenum] = [
 ]
 var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
 var DimCostStart : Array[largenum] = [
-	largenum.ten_to_the( 4),largenum.ten_to_the( 6),
-	largenum.ten_to_the(15),largenum.ten_to_the(30),
-	largenum.ten_to_the(45),largenum.ten_to_the(70),
-	largenum.ten_to_the(999),largenum.ten_to_the(999)
+	largenum.ten_to_the(  4),largenum.ten_to_the( 6),
+	largenum.ten_to_the( 15),largenum.ten_to_the(30),
+	largenum.ten_to_the( 45),largenum.ten_to_the(70),
+	largenum.ten_to_the(130),largenum.ten_to_the(200)
 ]
 var DimCostMult : Array[largenum] :
 	get:
@@ -32,8 +32,8 @@ var DimCostMult : Array[largenum] :
 		]
 
 const TachLogReq := [
-	1000,  1600,  4000, 10000,
-	18000, 26000, 1e100
+	1000,  1600,  4000,  10000,
+	18000, 26000, 42069, 1e100
 ]
 
 var DimsUnlocked := 0
@@ -43,8 +43,12 @@ var FreeTSpeed   := 0
 var NextUpgrade  := largenum.new(1)
 var TreshMult    : float :
 	get:
+		if Globals.Challenge == 21:
+			return .09 + 1.01 ** FreeTSpeed
 		if FreeTSpeed < 308:
 			return 1.1
+		if Globals.ECCompleted(6):
+			return 1.75
 		else:
 			return 2.0
 var BuyMax : bool
