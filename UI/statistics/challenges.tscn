@@ -200,3 +200,113 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "08:30:00"
 horizontal_alignment = 1
+
+[node name="ETable" type="GridContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -144.0
+offset_right = 64.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 7
+columns = 2
+script = ExtResource("1_brrwr")
+
+[node name="Chall" type="Label" parent="ETable"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Challenge"
+horizontal_alignment = 1
+
+[node name="Time" type="Label" parent="ETable"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Time"
+horizontal_alignment = 1
+
+[node name="C1" type="Label" parent="ETable"]
+layout_mode = 2
+text = "C1"
+horizontal_alignment = 1
+
+[node name="T1" type="Label" parent="ETable"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C2" type="Label" parent="ETable"]
+layout_mode = 2
+text = "C2"
+horizontal_alignment = 1
+
+[node name="T2" type="Label" parent="ETable"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C3" type="Label" parent="ETable"]
+layout_mode = 2
+text = "C3"
+horizontal_alignment = 1
+
+[node name="T3" type="Label" parent="ETable"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C4" type="Label" parent="ETable"]
+layout_mode = 2
+text = "C4"
+horizontal_alignment = 1
+
+[node name="T4" type="Label" parent="ETable"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C5" type="Label" parent="ETable"]
+layout_mode = 2
+text = "C5"
+horizontal_alignment = 1
+
+[node name="T5" type="Label" parent="ETable"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C6" type="Label" parent="ETable"]
+layout_mode = 2
+text = "C6"
+horizontal_alignment = 1
+
+[node name="T6" type="Label" parent="ETable"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C7" type="Label" parent="ETable"]
+layout_mode = 2
+text = "C7"
+horizontal_alignment = 1
+
+[node name="T7" type="Label" parent="ETable"]
+layout_mode = 2
+text = "30:00"
+horizontal_alignment = 1
+
+[node name="C+" type="Label" parent="ETable"]
+layout_mode = 2
+text = "Sum"
+horizontal_alignment = 1
+
+[node name="T+" type="Label" parent="ETable"]
+layout_mode = 2
+text = "08:30:00"
+horizontal_alignment = 1

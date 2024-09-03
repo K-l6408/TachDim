@@ -89,7 +89,7 @@ var challengeTimes = [
 ]
 var ECTimes = [
 	-1, -1, -1,
-	-1, -1, -1
+	-1, -1, -1, -1
 ]
 
 var ECTargets = [
@@ -99,7 +99,8 @@ var ECTargets = [
 	largenum.ten_to_the(1e100)
 ]
 const ECUnlocks = [
-	1500, 1900, 10000, 12500, 22222, 33333, 1e100
+	1500,  1900,  10000, 12500,
+	22222, 33333, 70000, 80000
 ]
 
 func _process(delta):

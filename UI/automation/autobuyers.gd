@@ -421,7 +421,7 @@ func buyrewd():
 func buydila():
 	if Globals.Challenge == 10: return
 	if Globals.TDHandler.canDilate \
-	and not ($Auto/Buyers/Galaxy/Enabled.pressed and Globals.TDHandler.canGalaxy):
+	and not ($Auto/Buyers/Galaxy/Enabled.button_pressed and Globals.TDHandler.canGalaxy):
 		var doit = true
 		if $Auto/Buyers/Dilation/Limit/Enabled.button_pressed:
 			if Globals.TDilation >= DilLimit:

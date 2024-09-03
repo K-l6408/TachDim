@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=48 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=50 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -343,6 +343,37 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_op31y"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmhkl"]
+content_margin_left = 7.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.133333, 0.133333, 0.133333, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qb8dl"]
+content_margin_left = 7.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.133333, 0.133333, 0.133333, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.48, 0.48, 0.48, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8rtc"]
 content_margin_left = 5.0
 content_margin_top = 5.0
@@ -404,7 +435,10 @@ corner_radius_bottom_left = 10
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nkrl1"]
+content_margin_left = 5.0
 content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
 bg_color = Color(0.133333, 0.133333, 0.133333, 1)
 border_width_left = 2
 border_width_top = 2
@@ -623,6 +657,8 @@ FourButton/styles/fouressed = SubResource("StyleBoxFlat_o6hgu")
 FourButton/styles/threevered = SubResource("StyleBoxFlat_ety7p")
 FourButton/styles/thressed = SubResource("StyleBoxFlat_yrmls")
 HSeparator/styles/separator = SubResource("StyleBoxEmpty_op31y")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_qmhkl")
+LineEdit/styles/read_only = SubResource("StyleBoxFlat_qb8dl")
 NotificationPanel/base_type = &"Panel"
 NotificationPanel/colors/achievement = Color(0.168, 0.7, 0.5138, 1)
 NotificationPanel/colors/autobuyers = Color(0.609387, 0.5952, 0.64, 1)

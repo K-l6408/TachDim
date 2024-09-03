@@ -370,7 +370,7 @@ static func dozenal(f:float, precision:=2) -> String:
 	return S
 
 static func roman(f:float) -> String:
-	if f <= 0: return "N"
+	if f < 1./12.: return "N"
 	var s := ""
 	if f >= 10000:
 		var k = roman(int(f/1000))

@@ -21,6 +21,9 @@ func _process(delta):
 		$Accuracy.position.x = (
 			(score * (size.x - 20)) + size.x - $Accuracy.size.x
 		) / 2
+		$Accuracy.color = get_theme_stylebox("normal").border_color
+		material.set_shader_parameter("ignore", get_theme_stylebox("normal").border_color)
+		material.set_shader_parameter("disabled", disabled)
 		if Globals.Achievemer.is_unlocked(2, 4):
 			var B = Globals.TDHandler.rewindBoost().log2()
 			var M = Globals.TDHandler.RewindMult.log2()

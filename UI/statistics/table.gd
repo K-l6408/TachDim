@@ -1,12 +1,12 @@
 @tool
 extends GridContainer
 
-@export var color := Color(1,1,1)
 @export var last  := true
 
 func _draw():
 	var hs = get_theme_constant("h_separation")
 	var vs = get_theme_constant("v_separation")
+	var color = get_theme_stylebox("panel", "Panel").border_color
 	var j = hs / 2
 	for i in columns-1:
 		draw_line(

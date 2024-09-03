@@ -6,8 +6,10 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngcjy"]
 shader = ExtResource("2_5oiqa")
-shader_parameter/pixelsize = 0.00210793
+shader_parameter/pixelsize = 0.00222816
 shader_parameter/zoom = 1.0
+shader_parameter/ignore = null
+shader_parameter/disabled = null
 
 [node name="Tachyons" type="Control"]
 custom_minimum_size = Vector2(520, 604)

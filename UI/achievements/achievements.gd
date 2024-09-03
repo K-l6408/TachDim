@@ -1,7 +1,7 @@
 extends Control
 
 const MAXROWS = 20
-var loaded_rows = 6
+var loaded_rows = 7
 var unlocked : PackedByteArray = []
 var achgot : int :
 	get:
@@ -62,7 +62,12 @@ func achnames(r, c):
 			1: return "This achievement doesn't exist"
 			2: return "I h-five them???"
 			3: return "Can you even call these \"challenges\""
+			5: return "Is this safe?"
 			6: return "I??? h-two them???"
+		7: match c:
+			1: return "New Galaxies!"
+			7: return "Galaxy III (the %squel)" % \
+			Globals.int_to_string(3).to_pascal_case()
 	return "TBD"
 
 func achreqs(r, c):
@@ -87,24 +92,24 @@ func achreqs(r, c):
 			1: return "Get any TD multiplier above %s." % largenum.ten_to_the(40)
 			2: return "Big Bang %s times." % Globals.int_to_string(10)
 			3: return "Keep the game closed for more than %s." % Globals.format_time(3600*6)
-			4: return "Eternity with no %s TDs." % Globals.ordinal(8) + \
+			4: return "Big Bang with no %s TDs." % Globals.ordinal(8) + \
 			"\n(Reward: TDs %s-%s are %s stronger.)" % [
 				Globals.int_to_string(1), Globals.int_to_string(7),
 				Globals.percent_to_string(.5)
 			]
 			5: return "Get at least a ×%s multiplier from a single Rewind." % \
 			Globals.int_to_string(600)
-			6: return "Eternity in under %s.\n(Reward: Start with %s Tachyons.)" % \
+			6: return "Big Bang in under %s.\n(Reward: Start with %s Tachyons.)" % \
 			[Globals.format_time(600), Globals.int_to_string(5000)]
-			7: return "Eternity with a single Tachyon Galaxy."
+			7: return "Big Bang with a single Tachyon Galaxy."
 			8: return "Purchase the first %s Eternity Upgrades." % Globals.int_to_string(12)
 		4: match c:
 			1: return "Complete a Challenge."
-			2: return "Eternity in under %s.\n(Reward: Start with %s Tachyons.)" % [
+			2: return "Big Bang in under %s.\n(Reward: Start with %s Tachyons.)" % [
 				Globals.format_time(60), Globals.float_to_string(5e5)
 			]
 			3: return "Max the interval for all TD autobuyers, and Timespeed."
-			4: return "Eternity without any %s Dimensions." % Globals.ordinal(7)
+			4: return "Big Bang without any %s Dimensions." % Globals.ordinal(7)
 			5: return "Get to %s Tachyons with less than %s in your current Eternity." % [
 				largenum.ten_to_the(100).to_string(), Globals.format_time(30)
 			]
@@ -145,6 +150,12 @@ func achreqs(r, c):
 			]
 			3: return "Get the sum of all Challenge times under %s." % \
 			Globals.format_time(30)
+			5: return "Have more Duplicantes than Eternity Points."
+			6: return "Big Bang with -%s Dilation and no Tachyon Galaxies." % \
+			Globals.int_to_string(3)
+		7: match c:
+			7: return "Have %s Duplicantes Galaxies." % \
+			Globals.int_to_string(3)
 	return "TBD"
 
 func is_unlocked(row, num):
@@ -250,3 +261,12 @@ func _process(_delta):
 	if not is_unlocked(6, 1):
 		if not Globals.Tachyons.less(largenum.ten_to_the(9999).multiply(9)):
 			set_unlocked(6, 1)
+	if not is_unlocked(6, 5):
+		if not Globals.Duplicantes.less(Globals.EternityPts):
+			set_unlocked(6, 5)
+	if not is_unlocked(7, 1):
+		if Globals.DupHandler.dupGalaxies >= 1:
+			set_unlocked(7, 1)
+	if not is_unlocked(7, 7):
+		if Globals.DupHandler.dupGalaxies >= 3:
+			set_unlocked(7, 7)

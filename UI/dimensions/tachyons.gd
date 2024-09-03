@@ -69,7 +69,9 @@ var RewindMult := largenum.new(1)
 var canDilate :
 	get: return (not %Prestiges/DiButton.disabled) and $VSplitContainer.visible
 var canGalaxy :
-	get: return (not %Prestiges/GaButton.disabled) and $VSplitContainer.visible
+	get:
+		if Globals.Challenge == 22: return false
+		return (not %Prestiges/GaButton.disabled) and $VSplitContainer.visible
 var canBigBang:
 	get:
 		if Globals.Challenge > 15:
@@ -119,7 +121,7 @@ func rewind(score:float):
 				DimAmount[i] = largenum.new(DimPurchase[i])
 
 func rewindBoost(score := 1.0) -> largenum:
-	var RBoost = largenum.new(DimAmount[0].log10()).power(1.5).divide(10)
+	var RBoost = largenum.new(DimAmount[0].log10()).pow2self(1.5).div2self(10)
 	if Globals.Challenge == 8:
 		RBoost = DimAmount[0].power(0.1)
 	if Globals.OEUHandler.is_bought(6):
@@ -144,7 +146,7 @@ func buydim(which, bulkoverride := 0):
 			and not Input.is_action_pressed("BuyOne"))
 			or bulkoverride != 0
 		):
-			if is_inf(Globals.Tachyons.divide(DimCost[which-1]).to_float()):
+			if Globals.Tachyons.divide(DimCost[which-1]).to_float() >= buylim:
 				bulk = buylim - DimPurchase[which-1] % buylim
 			else:
 				bulk = min(
@@ -160,12 +162,9 @@ func buydim(which, bulkoverride := 0):
 				return
 			bulk = min(bulk, bulkoverride)
 		
-		Globals.Tachyons.add2self(DimCost[which-1].neg().multiply(largenum.new(bulk)))
-		if Globals.Tachyons.sign < 0:
-			Globals.Tachyons.add2self(DimCost[which-1].multiply(largenum.new(bulk)))
-			return
+		Globals.Tachyons.add2self(DimCost[which-1].neg().mult2self(bulk))
 		DimPurchase[which-1] += bulk
-		DimAmount[which-1].add2self(largenum.new(bulk))
+		DimAmount[which-1].add2self(bulk)
 		if DimPurchase[which-1] % buylim == 0:
 			DimCost[which-1].mult2self(DimCostMult[which-1])
 		if not Globals.Achievemer.is_unlocked(2, 7):
@@ -173,7 +172,8 @@ func buydim(which, bulkoverride := 0):
 				Globals.Achievemer.set_unlocked(2, 7)
 		
 		if Globals.Challenge == 2 or Globals.Challenge == 16: C2Multiplier = 0.0
-		if Globals.Challenge == 7: for i in which - 1: DimAmount[i] = largenum.new(DimPurchase[i])
+		if Globals.Challenge == 7:
+			for i in which - 1: DimAmount[i] = largenum.new(DimPurchase[i])
 		if Globals.Challenge == 14 or Globals.Challenge == 16: C14Divisor = 1.0
 		latest_purchased = which
 		
@@ -197,7 +197,8 @@ func buytspeed(maxm:bool):
 
 func antisoftlock():
 	reset(0)
-	Globals.TDilation -= 1
+	if Globals.TDilation > -3:
+		Globals.TDilation -= 1
 
 func dilate():
 	reset(0)
@@ -208,6 +209,7 @@ func dilate():
 		Globals.progress = Globals.Progression.Dilation
 
 func galaxy():
+	if Globals.Challenge == 22: return
 	reset(1)
 	Globals.TGalaxies += 1
 	updateTSpeed()
@@ -258,6 +260,9 @@ func eternity():
 	if not Globals.Achievemer.is_unlocked(6, 2) and Globals.TGalaxies == 0 and \
 	Globals.TDilation <= 0:
 		Globals.Achievemer.set_unlocked(6, 2)
+	if not Globals.Achievemer.is_unlocked(6, 6) and Globals.TGalaxies == 0 and \
+	Globals.TDilation <= -3:
+		Globals.Achievemer.set_unlocked(6, 6)
 	
 	Globals.last10etern.insert(0, Globals.EternityData.new(
 		Globals.eternTime, epgain, 1
@@ -287,7 +292,7 @@ func reset(level := 0, challengeReset := true):
 	if level >= 2 and challengeReset: Globals.Challenge = 0
 	if Globals.Challenge == 2  or Globals.Challenge == 16: C2Multiplier = 1.0
 	if Globals.Challenge == 14 or Globals.Challenge == 16:  C14Divisor = 1.0
-	if Globals.Achievemer.is_unlocked(4,2):
+	if   Globals.Achievemer.is_unlocked(4,2):
 		Globals.Tachyons = largenum.new(5e5)
 	elif Globals.Achievemer.is_unlocked(3,6):
 		Globals.Tachyons = largenum.new(5000)
@@ -297,16 +302,15 @@ func reset(level := 0, challengeReset := true):
 		Globals.Tachyons = largenum.ten_to_the(1)
 	DimPurchase = [0,0,0,0,0,0,0,0]
 	DimCost = [
-		largenum.new(10    ),largenum.new(100   ),
-		largenum.new(10**4 ),largenum.new(10**6 ),
-		largenum.new(10**9 ),largenum.new(10**13),
-		largenum.new(10**18),largenum.new(10).power(24)
+		largenum.ten_to_the( 1),largenum.ten_to_the( 2),
+		largenum.ten_to_the( 4),largenum.ten_to_the( 6),
+		largenum.ten_to_the( 9),largenum.ten_to_the(13),
+		largenum.ten_to_the(18),largenum.ten_to_the(24)
 	]
-	DimAmount = [
-		largenum.new(0),largenum.new(0),largenum.new(0),largenum.new(0),
-		largenum.new(0),largenum.new(0),largenum.new(0),largenum.new(0)
-	]
-	TSpeedCost = largenum.new(1000)
+	for i in DimAmount:
+		i.exponent = -INF # set to zero
+		i.fix_mantissa()
+	TSpeedCost = largenum.ten_to_the(3)
 	TSpeedCount = 0
 	RewindMult = largenum.new(1)
 	if level >= 1:
@@ -339,7 +343,6 @@ func reset(level := 0, challengeReset := true):
 		Globals.eternTime = 0
 		topTachyonsInEternity = largenum.new(0)
 		emit_signal("eternitied")
-	updateTSpeed()
 
 func _process(delta):
 	
@@ -487,9 +490,11 @@ func _process(delta):
 	var DilaBoost = 2
 	if Globals.EUHandler.is_bought(10): DilaBoost = 2.5
 	if Globals.OEUHandler.is_bought(5): DilaBoost = 3.0
+	if Globals.ECCompleted(7): DilaBoost = 5.0
 	if Globals.Challenge == 10:
 		DilaBoost = 2.2 ** (1 - abs(C10Score()))
 	if Globals.Challenge == 8: DilaBoost = 1
+	if Globals.Challenge == 22: DilaBoost = 10
 	
 	if Globals.Challenge == 6 or Globals.Challenge == 16:
 		if DimsUnlocked < 6:
@@ -583,6 +588,10 @@ func _process(delta):
 		C2Multiplier = min(C2Multiplier, 1)
 	if Globals.Challenge == 14 or Globals.Challenge == 16:
 		C14Divisor *= 1e9 ** delta
+	if Globals.Challenge == 22:
+		%Prestiges/GaButton.disabled = true
+		%Prestiges/GaButton.text = "Tachyon Galaxies disabled\n(Eternity Challenge %s)" % \
+		Globals.int_to_string(7)
 	%Prestiges/Reset.visible = (Globals.Challenge in [18, 19])
 	
 	if not Input.is_action_pressed("ToggleAB"):

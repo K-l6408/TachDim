@@ -85,6 +85,16 @@ func _process(_delta):
 		Globals.float_to_string(2), Globals.float_to_string(1.8)
 	]
 	
+	$Chal/lenges/EC7/Condition.text = \
+	"Tachyon Galaxies are disabled, but Time Dilation's multiplier is ×%s." % \
+	Globals.float_to_string(10)
+	$Chal/lenges/EC7/ReqRew.text = \
+	"[center]Requirement: %s TC\n" % \
+	Globals.ECTargets[6].to_string() + \
+	"\nReward: Increase the Dilation multiplier further.\n(×%s → ×%s)" % [
+		Globals.int_to_string(3), Globals.int_to_string(5)
+	]
+	
 	if Globals.Challenge == 0:
 		$CurrentChallenge/Label.text = "You aren't in any challenge."
 		$CurrentChallenge/Exit.visible = false

@@ -35,7 +35,7 @@ func buy_limit():
 
 var maxGalaxies := 0
 func buy_maxgal():
-	Globals.EternityPts.add2self(largenum.ten_to_the(140 + 40 * maxGalaxies).neg())
+	Globals.EternityPts.add2self(largenum.ten_to_the(140 + 60 * maxGalaxies).neg())
 	maxGalaxies += 1
 
 var dupGalaxies := 0
@@ -87,10 +87,10 @@ func _process(delta):
 	
 	%MaxGal.text = "Max Duplicantes\nGalaxies: %s\nCost: %s EP" % [
 		Globals.int_to_string(maxGalaxies),
-		largenum.ten_to_the(140 + 40 * maxGalaxies).to_string().replace(".00", "")
+		largenum.ten_to_the(140 + 60 * maxGalaxies).to_string().replace(".00", "")
 	]
 	%MaxGal.disabled = Globals.EternityPts.less(
-		largenum.ten_to_the(140 + 40 * maxGalaxies)
+		largenum.ten_to_the(140 + 60 * maxGalaxies)
 	)
 	
 	%Galaxy.text = "Reset Duplicantes and Duplicantes Upgrades\nfor a Duplicantes" + \

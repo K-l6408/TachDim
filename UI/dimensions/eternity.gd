@@ -17,9 +17,9 @@ var DimAmount : Array[largenum] = [
 ]
 var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
 var DimCostStart : Array[largenum] = [
-	largenum.ten_to_the(  4),largenum.ten_to_the( 6),
-	largenum.ten_to_the( 15),largenum.ten_to_the(30),
-	largenum.ten_to_the( 45),largenum.ten_to_the(70),
+	largenum.ten_to_the(  4),largenum.ten_to_the(  6),
+	largenum.ten_to_the( 15),largenum.ten_to_the( 30),
+	largenum.ten_to_the( 45),largenum.ten_to_the( 70),
 	largenum.ten_to_the(130),largenum.ten_to_the(200)
 ]
 var DimCostMult : Array[largenum] :
@@ -33,7 +33,7 @@ var DimCostMult : Array[largenum] :
 
 const TachLogReq := [
 	1000,  1600,  4000,  10000,
-	18000, 26000, 42069, 1e100
+	18000, 26000, 42069, 80000.903
 ]
 
 var DimsUnlocked := 0

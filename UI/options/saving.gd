@@ -461,7 +461,11 @@ func gameReset():
 		-1, -1, -1
 	]
 	Globals.CompletedECs = 0
-	Globals.ECTimes      = [-1]
+	Globals.ECTimes      = [
+		-1, -1, -1,
+		-1, -1, -1,
+		-1
+	]
 	Globals.Duplicantes  = largenum.new(1)
 
 func idle(idletime):

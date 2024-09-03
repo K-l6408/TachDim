@@ -2,18 +2,20 @@ shader_type canvas_item;
 
 uniform float pixelsize = 0.01;
 uniform float zoom = 1.0;
+uniform vec4 ignore : source_color;
+uniform bool disabled;
 
 void fragment() {
 	float uvx = (UV.x - 0.5) / zoom + 0.5;
 	float psize = pixelsize / zoom;
 	
-	if ((COLOR.r + COLOR.g + COLOR.b) / 3.0 < 0.7 && 1.0 / (COLOR.r / COLOR.b / COLOR.g) > 0.1) {
-		vec3 RED = vec3(.9,.1,.1), YELLOW = vec3(.9,.8,.1), GREEN = vec3(.1,.8,.1);
+	if (distance(COLOR, ignore) > 0.5 && !disabled) {
+		vec3 RED = vec3(.9,.1,.1), YELLOW = vec3(.9,.9,.1), GREEN = vec3(.1,.9,.1);
 		
-		COLOR.rgb = COLOR.rgb * 0.9 + vec3(
+		COLOR.rgb = COLOR.rgb * 0.7 + vec3(
 			min(min(max(4.0*abs(uvx-.25),.5),max(4.0*abs(uvx-.75),.5)),4.0*abs(uvx-.5)),
 			1.0-min(min(max(4.0*abs(uvx-.25),.5),max(4.0*abs(uvx-.75),.5)),4.0*abs(uvx-.5)),
-			0)*0.2;
+			0)*0.3;
 		
 		if(abs(uvx - 0.1) < psize * 3.0)
 			COLOR.rgb = RED;

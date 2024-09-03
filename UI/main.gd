@@ -46,6 +46,9 @@ func _ready():
 
 func _process(_delta):
 	$Camera2D.position = get_viewport_rect().size / 2
+	RenderingServer.set_default_clear_color(
+		get_theme_stylebox("panel", "Panel").bg_color
+	)
 	TBar.set_tab_hidden(1, Globals.TachTotal.less(largenum.new(10).pow2self(20)))
 	TBar.set_tab_hidden(2, Globals.progress < Globals.Progression.Eternity)
 	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Eternity)
@@ -60,11 +63,17 @@ func _process(_delta):
 	+ Vector2(-1, 1)
 	$ETint.size            = TBar.get_tab_rect(3).size
 	$ETint.color           = get_theme_color("font_color", "ButtonEtern")
+	$ETint.material.set_shader_parameter(
+		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
+	)
 	
 	$DTint.global_position = TBar.get_tab_rect(4).position + TBar.global_position\
 	+ Vector2(-1, 1)
 	$DTint.size            = TBar.get_tab_rect(4).size
 	$DTint.color           = get_theme_color("meow", "DupliButton")
+	$DTint.material.set_shader_parameter(
+		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
+	)
 	
 	if Input.is_action_just_pressed("Debug"): debugMode = not debugMode
 	TBar.set_tab_hidden(TBar.tab_count - 1, not debugMode)
