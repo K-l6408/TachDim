@@ -3,7 +3,8 @@ extends Control
 var tickFraction := 0.0
 
 func on_eternity():
-	Globals.Duplicantes = largenum.new(1)
+	if not Globals.Achievemer.is_unlocked(6, 8):
+		Globals.Duplicantes = largenum.new(1)
 
 var chance := 1
 func buy_chance():
@@ -46,12 +47,14 @@ func buy_galaxy():
 	dupGalaxies += 1
 
 func _process(delta):
-	if Globals.progress < Globals.Progression.Duplicantes:
+	if Globals.progressBL < Globals.Progression.Duplicantes:
 		if not Globals.Duplicantes.less(0):
 			Globals.Duplicantes = largenum.new(0)
 		if Globals.ECCompleted(3):
-			Globals.progress = Globals.Progression.Duplicantes
-		else: return
+			if  Globals.progress < Globals.Progression.Duplicantes:
+				Globals.progress = Globals.Progression.Duplicantes
+			Globals.progressBL   = Globals.Progression.Duplicantes
+		return
 	
 	$HSplitContainer.split_offset = size.x / 2 - 2
 	
@@ -102,13 +105,15 @@ func _process(delta):
 	)
 	
 	tickFraction += delta / interval()
-	if tickFraction >= 1 and not limit().less(Globals.Duplicantes):
-		if tickFraction > 10000 or Globals.Duplicantes.log10() > 3:
+	if limit().less(Globals.Duplicantes):
+		Globals.Duplicantes = limit()
+	elif tickFraction >= 1:
+		if chance == 100:
+			Globals.Duplicantes.exponent += floor(tickFraction)
+		elif tickFraction > 10000 or Globals.Duplicantes.log10() > 3:
 			Globals.Duplicantes.mult2self(
 				largenum.new(chance / 100.0 + 1).power(floor(tickFraction))
 			)
-			if limit().less(Globals.Duplicantes):
-				Globals.Duplicantes = limit()
 		else:
 			for d in int(Globals.Duplicantes.to_float()):
 				for t in int(tickFraction):

@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Blobmoji.ttf-7eb7a58df0d558ae75d5e5e287a0e011
 [params]
 
 Rendering=null
-antialiasing=1
+antialiasing=0
 generate_mipmaps=false
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
@@ -24,7 +24,7 @@ hinting=1
 subpixel_positioning=1
 oversampling=0.0
 Fallbacks=null
-fallbacks=[]
+fallbacks=[Resource("res://fonts/BlobEmoji-Bold.ttf")]
 Compress=null
 compress=true
 preload=[]

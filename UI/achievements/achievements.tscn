@@ -24,17 +24,19 @@ anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -280.0
-offset_top = 51.0
-offset_right = 280.0
+offset_left = -5.0
+offset_right = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-vertical_scroll_mode = 0
+horizontal_scroll_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="Control"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_top = 9
+theme_override_constants/margin_bottom = 9
 
 [node name="GridContainer" type="GridContainer" parent="Control/MarginContainer"]
 unique_name_in_owner = true

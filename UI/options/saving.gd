@@ -7,7 +7,6 @@ var saveFilePath :
 var idleTimeSpent = 0
 
 func _ready():
-	start()
 	match OS.get_name():
 		"Windows", "UWP":
 			$CanvasLayer/ColorRect/Panel/RichTextLabel.text += "go to %APPDATA%\\Godot\\app_userdata" + \
@@ -15,14 +14,13 @@ func _ready():
 		"Linux", "X11", "FreeBSD", "NetBSD", "BSD":
 			$CanvasLayer/ColorRect/Panel/RichTextLabel.text += "go to ~/.local/share/godot/app_userdata" +\
 			"/Tachyon Dimensions, and check the files for \"save%d.txt\"." % currentFile
+	get_tree().create_timer(0.1).connect("timeout", start)
 
 func start():
-	await get_tree().process_frame
 	var sf = FileAccess.open("user://lastsave.txt", FileAccess.READ)
 	if sf == null: return gameReset()
-	currentFile = sf.get_as_text().to_int()
-	await get_tree().process_frame
-	loadF()
+	print(sf.get_as_text())
+	choose_load(sf.get_as_text().to_int())
 
 func _process(delta):
 	$HFlowContainer/Autosave.text = "Autosave: %s" % ("ON" if $HFlowContainer/Autosave.button_pressed else "OFF")
@@ -77,10 +75,10 @@ func openDialog():
 		if D is Dictionary:
 			if progress < Globals.Progression.Eternity:
 				get_node("Files/%d/Tachyons" % (f+1)).text = \
-				"%s Tachyons" % largenum.new(0).from_bytes(D["tachyons"]).to_string()
+				"%s Tachyons" % largenum.new(1).from_bytes(D["tachyons"]).to_string()
 			else:
 				get_node("Files/%d/Tachyons" % (f+1)).text = \
-				"%s Eternity Points" % largenum.new(0).from_bytes(D["eternity points"]).to_string()
+				"%s Eternity Points" % largenum.new(1).from_bytes(D["eternity points"]).to_string()
 		else:
 			get_node("Files/%d/Tachyons" % (f+1)).text = "Outdated or corrupted file"
 
@@ -93,7 +91,10 @@ func saveF(file : String = saveFilePath):
 		"notation" : Globals.display,
 		"animation settings" : Globals.VisualSett.save_anim_settings(),
 		"idle progress" : $HFlowContainer/Idle.button_pressed,
-		"idle progress max time" : int($HFlowContainer/Sidler.value)
+		"idle progress max time" : int($HFlowContainer/Sidler.value),
+		"theme" : Globals.VisualSett.theme_txt,
+		"ui scaling" : Globals.VisualSett.get_node("HFlow/Scaling").value,
+		"blobflakes" : Globals.VisualSett.get_node("%AnimOptions/Blobs").value
 	})
 	
 	settf.close()
@@ -247,6 +248,14 @@ func loadF(file : String = saveFilePath):
 				$HFlowContainer/Idle.button_pressed = d["idle progress"]
 			if d.has("idle progress max time"):
 				$HFlowContainer/Sidler.value = d["idle progress max time"]
+			if d.has("theme"):
+				Globals.VisualSett.change_theme(d["theme"])
+			if d.has("ui scaling"):
+				Globals.VisualSett.get_node("HFlow/Scaling").value = d["ui scaling"]
+				Globals.VisualSett.change_ui_scaling(true)
+			if d.has("blobflakes"):
+				Globals.VisualSett.get_node("%AnimOptions/Blobs").value = \
+				d["blobflakes"]
 		else:
 			settf = FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.READ)
 			var autosavesettings = settf.get_8()
@@ -267,6 +276,8 @@ func loadF(file : String = saveFilePath):
 	if sf.get_line() != "TachDimSave":	return
 	
 	Globals.progress = sf.get_8() as GL.Progression
+	if Globals.progress < GL.Progression.Boundlessness:
+		Globals.progressBL = Globals.progress
 	Globals.Challenge = sf.get_8()
 	
 	var DATA = sf.get_var()

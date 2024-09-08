@@ -1,9 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=39 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
-[ext_resource type="Theme" uid="uid://dr5oqthf5he20" path="res://themes/Light.tres" id="1_8v861"]
+[ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_fid5e"]
 [ext_resource type="Script" path="res://UI/main.gd" id="1_qdidp"]
 [ext_resource type="Script" path="res://UI/dimensions/rewind.gd" id="2_4w04a"]
+[ext_resource type="Script" path="res://UI/newsticker/newsticker.gd" id="3_7hxj0"]
+[ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="3_ky8nc"]
 [ext_resource type="Shader" path="res://UI/dimensions/rewind.gdshader" id="3_o4cqe"]
 [ext_resource type="PackedScene" uid="uid://di8p3xe1w45pw" path="res://UI/automation/autobuyers.tscn" id="5_f3s3t"]
 [ext_resource type="Script" path="res://UI/dimensions/EDunlock.gd" id="5_htsl0"]
@@ -24,10 +26,11 @@
 [ext_resource type="Texture2D" uid="uid://d070fk356hwgi" path="res://images/glass.png" id="15_7ies4"]
 [ext_resource type="Shader" path="res://UI/eternity/glass.gdshader" id="15_hde6e"]
 [ext_resource type="Shader" path="res://UI/tint.gdshader" id="24_irn3s"]
+[ext_resource type="FontFile" uid="uid://bbb4ct4acdbbl" path="res://fonts/Blobmoji.ttf" id="25_na6n0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
 shader = ExtResource("3_o4cqe")
-shader_parameter/pixelsize = 0.00769231
+shader_parameter/pixelsize = 0.0333333
 shader_parameter/zoom = 1.0
 shader_parameter/ignore = Color(0.8, 0.8, 0.8, 1)
 shader_parameter/disabled = null
@@ -116,6 +119,43 @@ _data = {
 shader = ExtResource("24_irn3s")
 shader_parameter/replace = null
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cee3c"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 4
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_ddpyb"]
+min_value = -20.0
+max_value = 20.0
+_data = [Vector2(0, 20), 0.0, 0.0, 0, 0, Vector2(0.25, -20), 0.0, 0.0, 0, 0, Vector2(0.5, 20), 0.0, 0.0, 0, 0, Vector2(0.75, -20), 0.0, 0.0, 0, 0, Vector2(1, 20), 0.0, 0.0, 0, 0]
+point_count = 5
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_lv1mt"]
+curve_x = SubResource("Curve_ddpyb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a3tro"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(500, 1, 0)
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+directional_velocity_min = 0.8
+directional_velocity_max = 1.2
+directional_velocity_curve = SubResource("CurveXYZTexture_lv1mt")
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.4
+anim_offset_max = 1.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_db5x6"]
+viewport_path = NodePath("Blobs")
+
 [node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -123,36 +163,62 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_8v861")
+theme = ExtResource("1_fid5e")
 script = ExtResource("1_qdidp")
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
+[node name="Background" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+dragger_visibility = 2
+
+[node name="News" type="PanelContainer" parent="VSplitContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+script = ExtResource("3_7hxj0")
+
+[node name="DialogueLabel" parent="VSplitContainer/News" instance=ExtResource("3_ky8nc")]
+clip_contents = false
+layout_mode = 2
+text = "[center]news go here…… [rainbow]but maybe not only ðat?"
+autowrap_mode = 0
+meta_underlined = true
+hint_underlined = true
+skip_action = &""
+seconds_per_step = 0.1
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VSplitContainer"]
+layout_mode = 2
 split_offset = 145
 
-[node name="ScrollContainer2" type="ScrollContainer" parent="HSplitContainer"]
+[node name="ScrollContainer2" type="ScrollContainer" parent="VSplitContainer/HSplitContainer"]
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="Resources" type="VBoxContainer" parent="HSplitContainer/ScrollContainer2"]
+[node name="Resources" type="VBoxContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = -2
 
-[node name="Tachyons" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
+[node name="Tachyons" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="HSplitContainer/ScrollContainer2/Resources/Tachyons"]
+[node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Tachyons"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -169,13 +235,13 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Rewind" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
+[node name="Rewind" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="HSplitContainer/ScrollContainer2/Resources/Rewind"]
+[node name="Button" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind"]
 material = SubResource("ShaderMaterial_qqelc")
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
@@ -189,7 +255,7 @@ grow_horizontal = 2
 script = ExtResource("2_4w04a")
 smol = true
 
-[node name="Accuracy" type="ColorRect" parent="HSplitContainer/ScrollContainer2/Resources/Rewind/Button"]
+[node name="Accuracy" type="ColorRect" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button"]
 layout_mode = 0
 offset_left = 10.0
 offset_right = 16.0
@@ -197,7 +263,7 @@ offset_bottom = 25.0
 mouse_filter = 2
 color = Color(0.8, 0.8, 0.8, 1)
 
-[node name="Label" type="Label" parent="HSplitContainer/ScrollContainer2/Resources/Rewind"]
+[node name="Label" type="Label" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -209,12 +275,12 @@ grow_vertical = 0
 text = "Rewind"
 horizontal_alignment = 1
 
-[node name="EP" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
+[node name="EP" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="HSplitContainer/ScrollContainer2/Resources/EP"]
+[node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EP"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 14
@@ -232,12 +298,12 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Challenge" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
+[node name="Challenge" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="HSplitContainer/ScrollContainer2/Resources/Challenge"]
+[node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Challenge"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -254,12 +320,12 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Eternity" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
+[node name="Eternity" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
-[node name="EternityButton" type="Button" parent="HSplitContainer/ScrollContainer2/Resources/Eternity"]
+[node name="EternityButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Eternity"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -275,12 +341,12 @@ text = "Eternity for
 1.75e4 EP
 (124 EP/s)"
 
-[node name="Dupl" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
+[node name="Dupl" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="HSplitContainer/ScrollContainer2/Resources/Dupl"]
+[node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Dupl"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 14
@@ -298,13 +364,13 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="EDunlock" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
+[node name="EDunlock" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="EDButton" type="Button" parent="HSplitContainer/ScrollContainer2/Resources/EDunlock"]
+[node name="EDButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EDunlock"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -322,98 +388,99 @@ unlock a new
 Eternity Dimension."
 script = ExtResource("5_htsl0")
 
-[node name="Panel2" type="Panel" parent="HSplitContainer/ScrollContainer2/Resources"]
+[node name="Panel2" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VSplitContainer/HSplitContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_bottom = -2
 
-[node name="Tabs" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer"]
+[node name="Tabs" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Dimensions" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+[node name="Dimensions" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 layout_mode = 2
 
-[node name="Tachyons" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("1_8gea7")]
+[node name="Tachyons" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("1_8gea7")]
 clip_contents = true
 layout_mode = 2
 
-[node name="Eternity" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("6_eboqi")]
+[node name="Eternity" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("6_eboqi")]
 visible = false
 layout_mode = 2
 
-[node name="Automation" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("5_f3s3t")]
+[node name="Automation" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("5_f3s3t")]
 visible = false
 layout_mode = 2
 
-[node name="Challenges" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+[node name="Challenges" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="Regular Challenges" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("6_agbn0")]
+[node name="Regular Challenges" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("6_agbn0")]
 layout_mode = 2
 
-[node name="Eternity Challenges" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("10_s4e3g")]
+[node name="Eternity Challenges" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("10_s4e3g")]
 visible = false
 layout_mode = 2
 
-[node name="Eternity" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+[node name="Eternity" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="Eternity Upgrades" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity" instance=ExtResource("6_0l55j")]
+[node name="Eternity Upgrades" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity" instance=ExtResource("6_0l55j")]
 layout_mode = 2
 
-[node name="Overcome Eternity" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity" instance=ExtResource("9_ug0mq")]
+[node name="Overcome Eternity" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity" instance=ExtResource("9_ug0mq")]
 visible = false
 layout_mode = 2
 
-[node name="Duplicantes" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("13_vhw6w")]
+[node name="Duplicantes" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("13_vhw6w")]
 visible = false
 layout_mode = 2
 
-[node name="Achievements" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("6_mtmcd")]
+[node name="Boundlessness" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="Statistics" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+[node name="Achievements" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("6_mtmcd")]
 visible = false
 layout_mode = 2
 
-[node name="Statistics" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("10_whf7c")]
-layout_mode = 2
-
-[node name="Last Prestiges" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("11_t22am")]
+[node name="Statistics" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="Challenge Records" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("13_1u8bp")]
+[node name="Statistics" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("10_whf7c")]
+layout_mode = 2
+
+[node name="Last Prestiges" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("11_t22am")]
 visible = false
 layout_mode = 2
 
-[node name="Options" type="TabContainer" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+[node name="Challenge Records" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("13_1u8bp")]
 visible = false
 layout_mode = 2
 
-[node name="Saving" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options" instance=ExtResource("6_rxys2")]
-layout_mode = 2
-
-[node name="Visual" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options" instance=ExtResource("7_qd5si")]
+[node name="Options" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="Debug" parent="HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("11_t3vch")]
+[node name="Saving" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options" instance=ExtResource("6_rxys2")]
+layout_mode = 2
+
+[node name="Visual" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options" instance=ExtResource("7_qd5si")]
+visible = false
+layout_mode = 2
+
+[node name="Debug" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("11_t3vch")]
 visible = false
 layout_mode = 2
 
@@ -488,9 +555,9 @@ script = ExtResource("12_ab4py")
 material = SubResource("ShaderMaterial_sl1qb")
 layout_mode = 0
 offset_left = 368.0
-offset_top = 23.0
+offset_top = 25.0
 offset_right = 426.0
-offset_bottom = 43.0
+offset_bottom = 45.0
 mouse_filter = 2
 color = Color(0.698039, 0.254902, 0.890196, 1)
 
@@ -498,9 +565,9 @@ color = Color(0.698039, 0.254902, 0.890196, 1)
 material = SubResource("ShaderMaterial_sl1qb")
 layout_mode = 0
 offset_left = 426.0
-offset_top = 23.0
+offset_top = 25.0
 offset_right = 502.0
-offset_bottom = 43.0
+offset_bottom = 45.0
 mouse_filter = 2
 color = Color(0.254902, 0.447059, 0.890196, 1)
 
@@ -515,34 +582,36 @@ offset_bottom = 50.0
 mouse_filter = 2
 color = Color(1, 1, 0, 1)
 
-[node name="News" type="Panel" parent="."]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 20.0
-grow_horizontal = 2
+[node name="Blobs" type="SubViewport" parent="."]
+transparent_bg = true
 
-[node name="Text" type="RichTextLabel" parent="News"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -114.0
-offset_top = 4.0
-offset_right = 114.0
-grow_horizontal = 2
-grow_vertical = 0
-bbcode_enabled = true
-text = "news go here…… [rainbow]but maybe not only ðat?"
-fit_content = true
-autowrap_mode = 0
+[node name="Label" type="Label" parent="Blobs"]
+offset_top = -25.0
+offset_right = 512.0
+offset_bottom = 507.0
+theme_override_fonts/font = ExtResource("25_na6n0")
+theme_override_font_sizes/font_size = 128
+text = "
+😊😎😏😇
+😛😣🤠🤩
+🥰😵😴🥺"
 
-[connection signal="pressed" from="HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="HSplitContainer/ScrollContainer2/Resources/Rewind/Button" method="_on_pressed"]
-[connection signal="rewind" from="HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="." method="rewind"]
-[connection signal="pressed" from="HSplitContainer/ScrollContainer2/Resources/Eternity/EternityButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" method="eternity"]
-[connection signal="button_down" from="HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="unlocknewdim"]
-[connection signal="eternitied" from="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="eternitied"]
-[connection signal="eternitied" from="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Duplicantes" method="on_eternity"]
-[connection signal="YEAAAH" from="HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity/Overcome Eternity" to="AnimationPlayer" method="play" binds= ["overcome"]]
+[node name="Blobrain" type="GPUParticles2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_cee3c")
+position = Vector2(480, -37)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_a3tro")
+texture = SubResource("ViewportTexture_db5x6")
+lifetime = 15.0
+preprocess = 10.0
+visibility_rect = Rect2(-5000, -1000, 9999, 9999)
+
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" method="_on_pressed"]
+[connection signal="rewind" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="." method="rewind"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Eternity/EternityButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" method="eternity"]
+[connection signal="button_down" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="unlocknewdim"]
+[connection signal="eternitied" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="eternitied"]
+[connection signal="eternitied" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Duplicantes" method="on_eternity"]
+[connection signal="YEAAAH" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity/Overcome Eternity" to="AnimationPlayer" method="play" binds= ["overcome"]]
+[connection signal="theme_change" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options/Visual" to="." method="theme_change"]

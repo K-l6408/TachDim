@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://bp261bobuyjdt"
+path="res://.godot/imported/news.dialogue-cf30ea59af50eaf48693bc180f95ed8b.tres"
+
+[deps]
+
+source_file="res://UI/newsticker/news.dialogue"
+dest_files=["res://.godot/imported/news.dialogue-cf30ea59af50eaf48693bc180f95ed8b.tres"]
+
+[params]
+
+defaults=true

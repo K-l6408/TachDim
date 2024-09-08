@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=50 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=54 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -13,6 +13,8 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tfc3u"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_snsx0"]
 bg_color = Color(0.2244, 0.34, 0.2244, 1)
@@ -343,6 +345,8 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_op31y"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b5csx"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmhkl"]
 content_margin_left = 7.0
 content_margin_top = 3.0
@@ -391,6 +395,18 @@ corner_radius_bottom_left = 10
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_se75g"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.133333, 0.133333, 0.133333, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmisl"]
 content_margin_left = 5.0
 content_margin_top = 5.0
 content_margin_right = 5.0
@@ -459,6 +475,8 @@ border_width_bottom = 2
 expand_margin_left = 2.0
 expand_margin_bottom = 2.0
 anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7rj6v"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdd37"]
 content_margin_left = 4.0
@@ -621,6 +639,7 @@ default_font = ExtResource("1_6475w")
 default_font_size = 12
 Button/colors/font_disabled_color = Color(1, 1, 1, 1)
 Button/styles/disabled = SubResource("StyleBoxFlat_4kiek")
+Button/styles/focus = SubResource("StyleBoxEmpty_tfc3u")
 Button/styles/hover = SubResource("StyleBoxFlat_snsx0")
 Button/styles/normal = SubResource("StyleBoxFlat_wvhmr")
 Button/styles/pressed = SubResource("StyleBoxFlat_wj2sw")
@@ -657,19 +676,24 @@ FourButton/styles/fouressed = SubResource("StyleBoxFlat_o6hgu")
 FourButton/styles/threevered = SubResource("StyleBoxFlat_ety7p")
 FourButton/styles/thressed = SubResource("StyleBoxFlat_yrmls")
 HSeparator/styles/separator = SubResource("StyleBoxEmpty_op31y")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_b5csx")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_qmhkl")
 LineEdit/styles/read_only = SubResource("StyleBoxFlat_qb8dl")
+MarginContainer/constants/margin_left = 2
+MarginContainer/constants/margin_top = 2
 NotificationPanel/base_type = &"Panel"
 NotificationPanel/colors/achievement = Color(0.168, 0.7, 0.5138, 1)
 NotificationPanel/colors/autobuyers = Color(0.609387, 0.5952, 0.64, 1)
 NotificationPanel/styles/panel = SubResource("StyleBoxFlat_u8rtc")
 Panel/styles/panel = SubResource("StyleBoxFlat_se75g")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_qmisl")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_1qft0")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_5m7tm")
 TabContainer/colors/font_unselected_color = Color(1, 1, 1, 1)
 TabContainer/constants/side_margin = 0
 TabContainer/styles/panel = SubResource("StyleBoxFlat_nkrl1")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_erfm0")
+TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_7rj6v")
 TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_hdd37")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_t2pti")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_43fna")

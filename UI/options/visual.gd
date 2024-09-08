@@ -3,6 +3,12 @@ extends Control
 const ANIMATION = [
 	"Big Bang"
 ]
+const THEMES = {
+	"Dark" : preload("res://themes/Dark.tres"),
+	"Light": preload("res://themes/Light.tres"),
+	"Blob" : preload("res://themes/Blob.tres"),
+}
+var theme_txt = "Dark"
 
 func save_anim_settings():
 	var mask = 1
@@ -22,7 +28,9 @@ func load_anim_settings(current : int):
 
 func _ready():
 	for i in GL.DisplayMode.keys():
-		$HFlow/Notation.add_item(i.replace("_", " "))
+		$HFlow/Notation.add_item("Notation: " + i.replace("_", " "))
+	for key in THEMES:
+		$HFlow/Theme.add_item("Theme: " + key)
 	for i in ANIMATION.size():
 		var C = ANIMATION[i]
 		var ck = $Check.duplicate()
@@ -44,7 +52,21 @@ func _process(_delta):
 			0: j = (Globals.progress >= Globals.Progression.Eternity)
 		%AnimOptions.get_node(ANIMATION[i]).visible = j
 	$HFlow/Notation.select(Globals.display)
-	$HFlow/Scaling/Label.text = " \nUI Scaling: ×%.2f" % $HFlow/Scaling.value
+	$HFlow/Scaling/Label.text = "UI Scaling: ×%s" % \
+	Globals.float_to_string($HFlow/Scaling.value)
+	%AnimOptions/Blobs.visible = (theme_txt == "Blob")
 
 func change_ui_scaling(_value_changed):
 	get_node("/root").content_scale_factor = $HFlow/Scaling.value
+
+func change_theme(index):
+	if index is int:
+		theme_txt = $HFlow/Theme.get_item_text(index).trim_prefix("Theme: ")
+	if index is String:
+		theme_txt = index
+		$HFlow/Theme.selected = THEMES.keys().find(index)
+	if not THEMES.has(theme_txt):
+		theme_txt = "Dark"
+	emit_signal("theme_change", THEMES[theme_txt])
+
+signal theme_change(which : Theme)

@@ -32,6 +32,34 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 alignment = 1
 
+[node name="Theme" type="OptionButton" parent="HFlow"]
+custom_minimum_size = Vector2(203, 62)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+alignment = 1
+
+[node name="Scaling" type="HSlider" parent="HFlow"]
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+min_value = 0.25
+max_value = 4.0
+step = 0.05
+value = 1.0
+exp_edit = true
+
+[node name="Label" type="Label" parent="HFlow/Scaling"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -94.0
+offset_right = 94.0
+offset_bottom = 21.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "UI Scaling: ×1.00"
+horizontal_alignment = 1
+
 [node name="Animations" type="Button" parent="HFlow"]
 custom_minimum_size = Vector2(230, 62)
 layout_mode = 2
@@ -64,29 +92,14 @@ mouse_filter = 0
 layout_mode = 2
 text = " Close "
 
-[node name="Scaling" type="HSlider" parent="HFlow"]
-custom_minimum_size = Vector2(300, 0)
+[node name="Blobs" type="SpinBox" parent="HFlow/Animations/Panel/AnimOptions"]
+visible = false
+custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
-min_value = 0.25
-max_value = 4.0
-step = 0.05
-value = 1.0
-exp_edit = true
-
-[node name="Label" type="Label" parent="HFlow/Scaling"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -94.0
-offset_top = -8.0
-offset_right = 94.0
-offset_bottom = 45.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 20
-text = " 
-UI Scaling: ×1.00"
-horizontal_alignment = 1
+min_value = 1.0
+max_value = 9999.0
+value = 50.0
+suffix = " blobflakes"
 
 [node name="Check" type="CheckButton" parent="."]
 visible = false
@@ -97,6 +110,7 @@ button_pressed = true
 text = "Aaaaa"
 
 [connection signal="item_selected" from="HFlow/Notation" to="." method="change_notation"]
+[connection signal="item_selected" from="HFlow/Theme" to="." method="change_theme"]
+[connection signal="drag_ended" from="HFlow/Scaling" to="." method="change_ui_scaling"]
 [connection signal="pressed" from="HFlow/Animations" to="HFlow/Animations/Panel" method="show"]
 [connection signal="pressed" from="HFlow/Animations/Panel/AnimOptions/Close" to="HFlow/Animations/Panel" method="hide"]
-[connection signal="drag_ended" from="HFlow/Scaling" to="." method="change_ui_scaling"]

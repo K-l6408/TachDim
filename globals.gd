@@ -27,14 +27,15 @@ enum DisplayMode {
 	Roman, toki_pona, sitelen_pona, Canonical_toki_pona, Evil, Factorial
 }
 enum Progression {
-	None, Dilation, Galaxy, Eternity, Overcome, Duplicantes
+	None, Dilation, Galaxy, Eternity, Overcome, Duplicantes, Boundlessness
 }
 const LOG2  = log(2)
 const LOG10 = log(10)
 const LOG12 = log(12)
 
-var display  : DisplayMode = DisplayMode.Scientific
-var progress : Progression = Progression.None
+var display    : DisplayMode = DisplayMode.Scientific
+var progress   : Progression = Progression.None
+var progressBL : Progression = Progression.None
 
 var Tachyons  := largenum.new(10)
 var TachTotal := largenum.new(10)
@@ -44,6 +45,10 @@ var TGalaxies := 0
 
 var EternityPts := largenum.new(0)
 var Eternities  := largenum.new(0)
+
+var TachTotalBL     := largenum.new(10)
+var BoundlessPts    := largenum.new(0)
+var Boundlessnesses := largenum.new(0)
 
 var Duplicantes := largenum.new(1)
 
@@ -74,6 +79,7 @@ func animation(which):
 
 var existence = 0
 var eternTime = 0
+var boundTime = 0
 
 var fastestEtern := EternityData.new(-1, 1, 1)
 var EU12Timer : SceneTreeTimer = null
@@ -96,7 +102,7 @@ var ECTargets = [
 	largenum.two_to_the(2048), largenum.ten_to_the(1500),
 	largenum.ten_to_the(9000), largenum.ten_to_the(11500),
 	largenum.ten_to_the(7000), largenum.ten_to_the(13000),
-	largenum.ten_to_the(1e100)
+	largenum.ten_to_the(30000)
 ]
 const ECUnlocks = [
 	1500,  1900,  10000, 12500,
@@ -119,6 +125,15 @@ func _process(delta):
 	EternityPts.fix_mantissa()
 	if EternityPts.less(0.01):
 		EternityPts = largenum.new(0)
+
+func boundlessnessreset():
+	TDHandler.reset(2)
+	boundTime = 0
+	CompletedChallenges = 0
+	CompletedECs = 0
+	EternityPts = largenum.new(0)
+	Eternities  = largenum.new(0)
+	progressBL = Progression.None
 
 func int_to_string(i:int) -> String:
 	match display:
@@ -274,7 +289,13 @@ func invfact(a:float) -> float: # approximation of ðe gamma function's inverse
 	return L / lambertw(L / exp(1)) - 0.5
 
 func lambertw(a:float) -> float: # approximation of ðe lambert W_0 function
-	return log(a) * (1 - log(log(a)) / (log(a)+1))
+	var lg = log(a)
+	var w = lg * (1 - log(lg) / (lg + 1))
+	var ew = exp(w)
+	w = w - (w * ew - a) / ew / (w + 1)
+	ew = exp(w)
+	w = w - (w * ew - a) / ew / (w + 1)
+	return w
 
 func notificate(type:String, text:String):
 	NotifHandler.notif(type, text)

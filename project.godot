@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Globals="*res://globals.gd"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [display]
 
@@ -30,6 +31,10 @@ window/vsync/vsync_mode=0
 [editor]
 
 movie_writer/movie_file="/home/ale/Desktop/TachDym.avi"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
 [gui]
 
@@ -153,8 +158,11 @@ Zoom+={
 ]
 }
 
+[internationalization]
+
+locale/translations_pot_files=PackedStringArray("res://UI/newsticker/news.dialogue")
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.34, 0.34, 0.34, 1)
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

@@ -250,5 +250,7 @@ func _process(delta):
 func overcome():
 	emit_signal("YEAAAH")
 	Globals.progress = GL.Progression.Overcome
+	if Globals.Achievemer.is_unlocked(5, 1):
+		Globals.Achievemer.set_unlocked(5, 1)
 
 signal YEAAAH()

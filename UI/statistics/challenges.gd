@@ -30,7 +30,7 @@ func _process(_delta):
 			if Globals.ECTimes[i] < 0: sum = -999
 		$"ETable/T+".text = Globals.format_time(sum) if sum > 0 else "N/A"
 		
-		$Table.anchor_right = 0.4
-		$Table.anchor_left  = 0.4
-		$ETable.anchor_right = 0.6
-		$ETable.anchor_left  = 0.6
+		$Table.anchor_right = 0.3
+		$Table.anchor_left  = 0.3
+		$ETable.anchor_right = 0.7
+		$ETable.anchor_left  = 0.7

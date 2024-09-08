@@ -14,15 +14,20 @@ func _process(delta):
 		score = sin(Globals.existence * rewspd)
 		# sine changed sign (score reached maximum)
 		if sin(Globals.existence * rewspd) * \
-		sin((Globals.existence - delta) * rewspd) < 0:
+		sin((Globals.existence - delta) * rewspd) < 0 or \
+		(Globals.existence * rewspd) - \
+		((Globals.existence - delta) * rewspd) >= PI:
 			score = 0
 		
 		
 		$Accuracy.position.x = (
 			(score * (size.x - 20)) + size.x - $Accuracy.size.x
 		) / 2
-		$Accuracy.color = get_theme_stylebox("normal").border_color
-		material.set_shader_parameter("ignore", get_theme_stylebox("normal").border_color)
+		if get_theme_stylebox("normal") is StyleBoxFlat:
+			$Accuracy.color = get_theme_stylebox("normal").border_color
+			material.set_shader_parameter("ignore", get_theme_stylebox("normal").border_color)
+		else:
+			$Accuracy.color = Color.WHITE
 		material.set_shader_parameter("disabled", disabled)
 		if Globals.Achievemer.is_unlocked(2, 4):
 			var B = Globals.TDHandler.rewindBoost().log2()

@@ -42,6 +42,9 @@ var DimCostMult : Array[largenum] :
 const CostScaleStart := [103, 77, 61, 51, 38, 30, 25, 19]
 const TSpeedScaleStart := 305
 
+var DistantScaling :
+	get: return 75
+
 var TSpeedBoost := largenum.new(1.13)
 var TSpeedCost := largenum.new(1000)
 var TSpeedCostIncrease : largenum :
@@ -137,6 +140,9 @@ func rewindBoost(score := 1.0) -> largenum:
 	return RBoost
 
 func buydim(which, bulkoverride := 0):
+	if which > 1:
+		if DimAmount[which - 2].exponent == -INF:
+			return
 	while true:
 		if which > DimsUnlocked:
 			return
@@ -205,16 +211,20 @@ func dilate():
 	Globals.TDilation += 1
 	if Globals.Challenge == 10:
 		C10Power += 1 - abs(C10Score())
-	if  Globals.progress < Globals.Progression.Dilation:
-		Globals.progress = Globals.Progression.Dilation
+	if  Globals.progress   < Globals.Progression.Dilation:
+		Globals.progress   = Globals.Progression.Dilation
+	if  Globals.progressBL < Globals.Progression.Dilation:
+		Globals.progressBL = Globals.Progression.Dilation
 
 func galaxy():
 	if Globals.Challenge == 22: return
 	reset(1)
 	Globals.TGalaxies += 1
 	updateTSpeed()
-	if  Globals.progress < Globals.Progression.Galaxy:
-		Globals.progress = Globals.Progression.Galaxy
+	if  Globals.progress   < Globals.Progression.Galaxy:
+		Globals.progress   = Globals.Progression.Galaxy
+	if  Globals.progressBL < Globals.Progression.Galaxy:
+		Globals.progressBL = Globals.Progression.Galaxy
 
 func eternity():
 	if Globals.Challenge != 0 and Globals.Challenge <= 15:
@@ -230,13 +240,15 @@ func eternity():
 		or  Globals.ECTimes[Globals.Challenge - 16] < 0:
 			Globals.ECTimes[Globals.Challenge - 16] = Globals.eternTime
 	
-	var epgain = epgained()
+	var epgain = Formulas.epgained()
 	
 	Globals.EternityPts.add2self(epgain)
 	Globals.Eternities .add2self(1)
 	
-	if Globals.progress < Globals.Progression.Eternity:
-		Globals.progress = Globals.Progression.Eternity
+	if  Globals.progress   < Globals.Progression.Eternity:
+		Globals.progress   = Globals.Progression.Eternity
+	if  Globals.progressBL < Globals.Progression.Eternity:
+		Globals.progressBL = Globals.Progression.Eternity
 	
 	if Globals.fastestEtern.time > Globals.eternTime \
 	or Globals.fastestEtern.time < 0:
@@ -255,6 +267,8 @@ func eternity():
 		Globals.Achievemer.set_unlocked(3, 6)
 	if not Globals.Achievemer.is_unlocked(4, 2) and Globals.eternTime <= 60:
 		Globals.Achievemer.set_unlocked(4, 2)
+	if not Globals.Achievemer.is_unlocked(6, 4) and Globals.eternTime <= 0.5:
+		Globals.Achievemer.set_unlocked(6, 4)
 	if not Globals.Achievemer.is_unlocked(3, 7) and Globals.TGalaxies == 1:
 		Globals.Achievemer.set_unlocked(3, 7)
 	if not Globals.Achievemer.is_unlocked(6, 2) and Globals.TGalaxies == 0 and \
@@ -263,6 +277,8 @@ func eternity():
 	if not Globals.Achievemer.is_unlocked(6, 6) and Globals.TGalaxies == 0 and \
 	Globals.TDilation <= -3:
 		Globals.Achievemer.set_unlocked(6, 6)
+	if not Globals.Achievemer.is_unlocked(7, 5) and epgain.log10() >= 200:
+		Globals.Achievemer.set_unlocked(7, 5)
 	
 	Globals.last10etern.insert(0, Globals.EternityData.new(
 		Globals.eternTime, epgain, 1
@@ -274,28 +290,16 @@ func eternity():
 	reset(2)
 	Globals.animation("bang")
 
-func epgained():
-	var epgain = largenum.new(1)
-	if Globals.Challenge == 15 or Globals.progress >= Globals.Progression.Overcome:
-		epgain = largenum.new(5).power((topTachyonsInEternity.log2() / 1024) - 1)
-		if Globals.OEUHandler.is_bought(4):
-			epgain = largenum.new(5).power((topTachyonsInEternity.log2() / 900) - 1)
-	
-	epgain.mult2self(largenum.new(2).power(Globals.EUHandler.EPMultBought))
-	
-	if epgain.to_float() < 1e10:
-		epgain = largenum.new(floor(epgain.to_float() + 0.1))
-	
-	return epgain
-
 func reset(level := 0, challengeReset := true):
 	if level >= 2 and challengeReset: Globals.Challenge = 0
 	if Globals.Challenge == 2  or Globals.Challenge == 16: C2Multiplier = 1.0
 	if Globals.Challenge == 14 or Globals.Challenge == 16:  C14Divisor = 1.0
-	if   Globals.Achievemer.is_unlocked(4,2):
-		Globals.Tachyons = largenum.new(5e5)
+	if   Globals.Achievemer.is_unlocked(6,4):
+		Globals.Tachyons = largenum.ten_to_the(25.6989)
+	elif Globals.Achievemer.is_unlocked(4,2):
+		Globals.Tachyons = largenum.ten_to_the(5.6989)
 	elif Globals.Achievemer.is_unlocked(3,6):
-		Globals.Tachyons = largenum.new(5000)
+		Globals.Tachyons = largenum.ten_to_the(3.6989)
 	elif Globals.Achievemer.is_unlocked(2,8):
 		Globals.Tachyons = largenum.ten_to_the(2)
 	else:
@@ -354,7 +358,7 @@ func _process(delta):
 	if topTachyonsInEternity.less(Globals.Tachyons):
 		topTachyonsInEternity = largenum.new(Globals.Tachyons)
 	
-	if Globals.progress < GL.Progression.Overcome or \
+	if Globals.progressBL < GL.Progression.Overcome or \
 	(Globals.Challenge != 0 and Globals.Challenge <= 15):
 		$VSplitContainer.visible = (Globals.Tachyons.log2() <= logfinity)
 		$ETERNITY.visible        = (Globals.Tachyons.log2() >= logfinity)
@@ -417,13 +421,16 @@ func _process(delta):
 		]
 	%TopButtons/BuyMode.text = \
 	"Buy until %s" % Globals.int_to_string(buylim) if %TopButtons/BuyMode.button_pressed else "Buy singles"
-	%Progress.value = Globals.Tachyons.log2()
-	%Progress.max_value = logfinity
 	if Globals.display == Globals.DisplayMode.Dozenal:
-		%Progress.tooltip_text = "Pergrossage to Eternity"
+		%Progress.tooltip_text = "Pergrossage to "
 	else:
-		%Progress.tooltip_text = "Percentage to Eternity"
+		%Progress.tooltip_text = "Percentage to "
+	if Globals.Challenge <= 15:
+		%Progress.value = Globals.Tachyons.log2()
+		%Progress.max_value = logfinity
+		%Progress.tooltip_text += "Eternity"
 	%Progress/Label.text = Globals.percent_to_string(%Progress.value / %Progress.max_value, 1)
+	%Progress/Label.add_theme_color_override("font_color", get_theme_color("font_color", "ProgressBar"))
 	rewindNode.visible = (Globals.TDilation >= 5) or (Globals.progress >= Globals.Progression.Galaxy)
 	
 	var buy10mult = 2
@@ -564,18 +571,24 @@ func _process(delta):
 	%Prestiges/GaButton.disabled = DimPurchase[
 		5 if Globals.Challenge in [6, 16] else 7
 	] < galacost()
-	if Globals.DupHandler.dupGalaxies > 0:
-		%Prestiges/GaLabel.text = "[center]Tachyon Galaxies (%s + %s)\n[font_size=2] \n[font_size=10]Requires: %s %s Tachyon Dimensions" % [
-			Globals.int_to_string(Globals.TGalaxies), Globals.int_to_string(Globals.DupHandler.dupGalaxies),
-			Globals.int_to_string(galacost()),
-			Globals.ordinal(6 if (Globals.Challenge == 6 or Globals.Challenge == 16) else 8)
-		]
-	else:
-		%Prestiges/GaLabel.text = "[center]Tachyon Galaxies (%s)\n[font_size=2] \n[font_size=10]Requires: %s %s Tachyon Dimensions" % [
-			Globals.int_to_string(Globals.TGalaxies),
-			Globals.int_to_string(galacost()),
-			Globals.ordinal(6 if (Globals.Challenge == 6 or Globals.Challenge == 16) else 8)
-		]
+	%Prestiges/GaLabel.text = "[center]%sTachyon Galaxies (%s)\n%s[font_size=10]Requires: %s %s Tachyon Dimensions%s" % [
+		("" if Globals.TGalaxies < DistantScaling else "Distant "),
+		(
+			"%s + %s" % [
+				Globals.int_to_string(Globals.TGalaxies),
+				Globals.int_to_string(Globals.DupHandler.dupGalaxies)
+			]
+			if Globals.DupHandler.dupGalaxies > 0 else
+			"%s" % Globals.int_to_string(Globals.TGalaxies)
+		),
+		("[font_size=2] \n" if Globals.TGalaxies < DistantScaling else ""),
+		Globals.int_to_string(galacost()),
+		Globals.ordinal(
+			6 if (Globals.Challenge == 6 or Globals.Challenge == 16) else 8),
+		("" if Globals.TGalaxies < DistantScaling else 
+		"\nEvery Galaxy is more expensive after %s Galaxies" %
+		Globals.int_to_string(DistantScaling))
+	]
 	
 	if Globals.Challenge == 8:
 		if Globals.TDilation >= 5:
@@ -693,6 +706,10 @@ func _process(delta):
 		if i != 8:
 			if DimAmount[i].exponent == -INF:	dims[i].get_node("A&G/Growth").hide()
 			else:								dims[i].get_node("A&G/Growth").show()
+			if DimAmount[i-1].exponent == -INF:
+				dims[i+1].modulate.a = 0.5
+			else:
+				dims[i+1].modulate.a = 1.0
 		if i == 1:
 			TCperS = DimAmount[i-1].multiply(mult)
 			Globals.Tachyons .add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
@@ -736,6 +753,12 @@ func galacost():
 		Cost += Globals.TDilation * 5
 	if Globals.EUHandler.is_bought(4):
 		Cost -= 10
+	if Globals.TGalaxies > DistantScaling:
+		var the = (Globals.TGalaxies - DistantScaling)
+		Cost += the * (the + 1)
+	if Globals.TGalaxies > 600:
+		var the = (Globals.TGalaxies - 600)
+		Cost *= 1.002 ** the
 	
 	return Cost
 

@@ -358,7 +358,7 @@ func _process(_delta):
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
 	Globals.float_to_string(2.0 ** DilUpgrades, 1)]
-	$Auto/Buyers/Dilation/Interval.disabled = Globals.EternityPts.less(2 ** DilUpgrades)
+	$Auto/Buyers/Dilation/Interval.disabled = not largenum.two_to_the(DilUpgrades).less(Globals.EternityPts)
 	$Auto/Buyers/Dilation/RichTextLabel.text = \
 	"[center]Time Dilation Autobuyer\n[font_size=10]Activates every %s seconds" % \
 	Globals.float_to_string(DilInterval())
@@ -366,7 +366,7 @@ func _process(_delta):
 	$Auto/Buyers/Galaxy/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
 	Globals.float_to_string(2.0 ** GalUpgrades, 1)]
-	$Auto/Buyers/Galaxy/Interval.disabled = Globals.EternityPts.less(2 ** GalUpgrades)
+	$Auto/Buyers/Galaxy/Interval.disabled = not largenum.two_to_the(GalUpgrades).less(Globals.EternityPts)
 	$Auto/Buyers/Galaxy/RichTextLabel.text = \
 	"[center]Tachyon Galaxy Autobuyer\n[font_size=10]Activates every %s seconds" % \
 	Globals.float_to_string(GalInterval())
@@ -374,15 +374,15 @@ func _process(_delta):
 	$Auto/Buyers/BigBang/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
 	Globals.float_to_string(2.0 ** BangUpgrades, 1)]
-	$Auto/Buyers/BigBang/Interval.disabled = Globals.EternityPts.less(2 ** BangUpgrades)
+	$Auto/Buyers/BigBang/Interval.disabled = not largenum.two_to_the(BangUpgrades).less(Globals.EternityPts)
 	$Auto/Buyers/BigBang/RichTextLabel.text = \
 	"[center]Big Bang Autobuyer"
-	if Globals.progress < GL.Progression.Overcome:
+	if Globals.progressBL < GL.Progression.Overcome:
 		$Auto/Buyers/BigBang/RichTextLabel.text += \
 		"\n[font_size=10]Activates every %s seconds" % \
 		Globals.float_to_string(BangInterval())
 	$Auto/Buyers/BigBang/Amount/Label2.text = " (%s)" % BigBangAtEP.to_string()
-	$Auto/Buyers/BigBang/Amount.visible = Globals.progress >= GL.Progression.Overcome
+	$Auto/Buyers/BigBang/Amount.visible = Globals.progressBL >= GL.Progression.Overcome
 
 func unlock(which):
 	if which == 0:
@@ -454,7 +454,22 @@ func update_bigbang_ep(epgain:String):
 	var tree = epgain.split("e")
 	var k = largenum.new(0)
 	for i in range(tree.size()-1, -1, -1):
-		var j = tree[i].to_float()
-		if tree[i] == "": j = 1
-		k = largenum.ten_to_the(k.to_float()).multiply(j)
+		if ";" in tree[i]:
+			var j = 0
+			var mag = 12.0 ** len(tree[i].split(";")[0])
+			var T = tree[i]\
+			.replace("X", "↊").replace("T", "↊").replace("A", "↊").replace("τ", "↊")\
+			.replace("E", "↋").replace("Ɛ", "↋").replace("B", "↋").replace("ε", "↋")
+			for w in T:
+				mag /= 12
+				match w:
+					"↊": j += 10 * mag
+					"↋": j += 11 * mag
+					";": mag *= 12
+					_  : j += w.to_int() * mag
+			k = largenum.dozen_to_the(k.to_float()).multiply(j)
+		else:
+			var j = tree[i].to_float()
+			if tree[i] == "": j = 1
+			k = largenum.ten_to_the(k.to_float()).multiply(j)
 	BigBangAtEP = k

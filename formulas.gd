@@ -10,6 +10,24 @@ static func eternity_23():
 static func achievement_mult():
 	return largenum.new(1.025).power(Globals.Achievemer.achgot)
 
+static func epgained():
+	var epgain = largenum.new(1)
+	if Globals.Challenge == 15 or Globals.progressBL >= Globals.Progression.Overcome:
+		epgain = largenum.five_to_the((
+			Globals.TDHandler.topTachyonsInEternity.log2() / 1024
+		) - 1)
+		if Globals.OEUHandler.is_bought(4):
+			epgain = largenum.five_to_the((
+				Globals.TDHandler.topTachyonsInEternity.log2() / 900
+			) - 1)
+	
+	epgain.mult2self(largenum.two_to_the(Globals.EUHandler.EPMultBought))
+	
+	if epgain.to_float() < 1e10:
+		epgain = largenum.new(floor(epgain.to_float() + 0.1))
+	
+	return epgain
+
 static func overcome_1():
 	return Globals.Tachyons.power(0.01)
 

@@ -3,13 +3,13 @@ extends Control
 @onready var TBar : TabBar = %Tabs.get_tab_bar()
 var debugMode := false
 
-var tabSymbolLeft  = "⇠\uf085⁈δΞ\uf091\uf0ca\uf1de[!"
-var tabSymbolRight = "⇢\uf1de⁉δΞ\uf091\uf0c9\uf0ad]!"
+var tabSymbolLeft  = "⇠\uf085⁈δΞ∀\uf091\uf0ca\uf1de[!"
+var tabSymbolRight = "⇢\uf1de⁉δΞ∀\uf091\uf0c9\uf0ad]!"
 
-var dimensionSymbols = "Ψδ"
-var challengeSymbols = "Ψδ"
+var dimensionSymbols = "Ψδ∀"
+var challengeSymbols = "Ψδ∀"
 var  eternitySymbols = "↑⭻"
-var     statsSymbols = "\uf036\uf886\uf0cb"
+var     statsSymbols = "\uf036\uf162\uf0cb"
 var   optionsSymbols = "\uf0c7\uf1fc"
 var celestialSymbols = "⏣⚴☾𝄽\uF1E0ɸΩ"
 
@@ -46,9 +46,16 @@ func _ready():
 
 func _process(_delta):
 	$Camera2D.position = get_viewport_rect().size / 2
-	RenderingServer.set_default_clear_color(
-		get_theme_stylebox("panel", "Panel").bg_color
-	)
+	$Blobrain.position.x = size.x / 2
+	$Blobrain.process_material.emission_box_extents.x = \
+	size.x / 2
+	$Blobrain.visible = (%Tabs/Options/Visual.theme_txt == "Blob")
+	$Blobrain.amount = Globals.VisualSett.get_node("%AnimOptions/Blobs").value
+	if "BGPanel" in theme.get_type_list():
+		$Background.theme_type_variation = "BGPanel"
+	else:
+		$Background.theme_type_variation = ""
+	
 	TBar.set_tab_hidden(1, Globals.TachTotal.less(largenum.new(10).pow2self(20)))
 	TBar.set_tab_hidden(2, Globals.progress < Globals.Progression.Eternity)
 	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Eternity)
@@ -66,6 +73,7 @@ func _process(_delta):
 	$ETint.material.set_shader_parameter(
 		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
 	)
+	$ETint.visible = (Globals.progress >= GL.Progression.Eternity)
 	
 	$DTint.global_position = TBar.get_tab_rect(4).position + TBar.global_position\
 	+ Vector2(-1, 1)
@@ -74,6 +82,7 @@ func _process(_delta):
 	$DTint.material.set_shader_parameter(
 		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
 	)
+	$DTint.visible = (Globals.progress >= GL.Progression.Duplicantes)
 	
 	if Input.is_action_just_pressed("Debug"): debugMode = not debugMode
 	TBar.set_tab_hidden(TBar.tab_count - 1, not debugMode)
@@ -123,7 +132,6 @@ func _process(_delta):
 		%Resources/Challenge/Text.text = \
 		"[center]Current Challenge:\n[font_size=16]None[/font_size][/center]"
 	
-	
 	if %Resources/Eternity/EternityButton.disabled:
 		%Resources/Eternity/EternityButton.text = "Reach\n%s Tachyons" % (
 			largenum.two_to_the(1024) if Globals.Challenge <= 15 else
@@ -133,9 +141,12 @@ func _process(_delta):
 		%Resources/Eternity/EternityButton.text = "Big Bang to\ncomplete the\nchallenge"
 	else:
 		%Resources/Eternity/EternityButton.text = "Big Bang for\n%s EP\n(%s EP/s)" % [
-			%Tabs/Dimensions/Tachyons.epgained().to_string(),
-			%Tabs/Dimensions/Tachyons.epgained().divide(Globals.eternTime).to_string()
+			Formulas.epgained().to_string(),
+			Formulas.epgained().divide(Globals.eternTime).to_string()
 		]
 
 func rewind(score):
 	%Tabs/Dimensions/Tachyons.rewind(score)
+
+func theme_change(which):
+	theme = which

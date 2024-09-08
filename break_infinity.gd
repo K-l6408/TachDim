@@ -10,39 +10,31 @@ func _init(from):
 		mantissa = from.mantissa
 		exponent = from.exponent
 		return
-	if from < 0:
-		sign = -1
-		from *= -1
-	match typeof(from):
-		TYPE_INT:
-			if from == 0:
-				mantissa = 0
-				exponent = -INF
-				return
-			var k = 0
-			var check = from
-			while check > 0:
-				check >>= 1
-				k += 1
-			mantissa = from << (62-k)
-			exponent = k - 1
-		TYPE_FLOAT:
-			if from == 0:
-				mantissa = 0
-				exponent = -INF
-				return
-			exponent = floor(log(from) / GL.LOG2)
-			mantissa = from * 2 ** (62 - exponent)
-			exponent -= 1
-			fix_mantissa()
+	
+	sign = sign(from)
+	from = abs(from)
+	if from == 0:
+		mantissa = 0
+		exponent = -INF
+		return
+	exponent = floor(log(from) / GL.LOG2)
+	mantissa = from * 2 ** (62 - exponent)
+	exponent -= 1
+	fix_mantissa()
 
 static func two_to_the(xponent := 1.0) -> largenum:
 	var l = largenum.new(2 ** (xponent - floor(xponent)))
 	l.exponent = floor(xponent)
 	return l
 
+static func five_to_the(xponent := 1.0) -> largenum:
+	return two_to_the(xponent * (GL.LOG10 - GL.LOG2) / GL.LOG2)
+
 static func ten_to_the(xponent := 1.0) -> largenum:
 	return two_to_the(xponent * GL.LOG10 / GL.LOG2)
+
+static func dozen_to_the(xponent := 1.0) -> largenum:
+	return two_to_the(xponent * GL.LOG12 / GL.LOG2)
 
 func neg() -> largenum:
 	var result = largenum.new(self)
@@ -196,7 +188,7 @@ func _to_string() -> String:
 	var logfinity = 1024
 	if Globals.Challenge == 15: logfinity = 2048
 	if log2() >= logfinity and (
-		Globals.progress < GL.Progression.Overcome or (
+		Globals.progressBL < GL.Progression.Overcome or (
 			Globals.Challenge != 0 and Globals.Challenge <= 15
 		)
 	):
@@ -344,7 +336,7 @@ func _to_string() -> String:
 		GL.DisplayMode.Factorial:
 			if abs(to_float()) < 1000:
 				return "%.2f" % to_float()
-			return "%.2f!" % (sign * invfact())
+			return "%.3f!" % (sign * invfact())
 	return "N/A"
 
 static func standard(e) -> String:

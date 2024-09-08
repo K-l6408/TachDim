@@ -62,12 +62,20 @@ func achnames(r, c):
 			1: return "This achievement doesn't exist"
 			2: return "I h-five them???"
 			3: return "Can you even call these \"challenges\""
+			4: return "That wasn't an eternity"
 			5: return "Is this safe?"
 			6: return "I??? h-two them???"
+			
+			
 		7: match c:
 			1: return "New Galaxies!"
+			2: return "not so challenging now"
+			
+			5: return "Going out with a bang"
+			
 			7: return "Galaxy III (the %squel)" % \
 			Globals.int_to_string(3).to_pascal_case()
+			8: return "…AND BEYOND!"
 	return "TBD"
 
 func achreqs(r, c):
@@ -150,12 +158,28 @@ func achreqs(r, c):
 			]
 			3: return "Get the sum of all Challenge times under %s." % \
 			Globals.format_time(30)
+			4: return "Big Bang in under %s.\n(Reward: Start with %s Tachyons.)" % [
+				Globals.format_time(0.5),
+				Globals.float_to_string(5e25)
+			]
 			5: return "Have more Duplicantes than Eternity Points."
 			6: return "Big Bang with -%s Dilation and no Tachyon Galaxies." % \
 			Globals.int_to_string(3)
+			
+			8: return "Max out the Duplicantes limit." + \
+			"\n(Reward: Duplicantes don't reset on Eternity.)"
 		7: match c:
+			1: return "Get a Duplicantes Galaxy."
+			2: return "Complete Eternity Challenge %s in %s or less." % [
+				Globals.int_to_string(3), Globals.format_time(30)
+			]
+			
+			5: return "Big Bang for %s Eternity Points." % \
+			Globals.float_to_string(1e200)
+			
 			7: return "Have %s Duplicantes Galaxies." % \
 			Globals.int_to_string(3)
+			8: return "Go Boundless."
 	return "TBD"
 
 func is_unlocked(row, num):
@@ -240,9 +264,6 @@ func _process(_delta):
 	if not is_unlocked(4, 8):
 		if Globals.CompletedChallenges == 32767:
 			set_unlocked(4, 8)
-	if not is_unlocked(5, 1):
-		if Globals.progress >= Globals.Progression.Overcome:
-			set_unlocked(5, 1)
 	if not is_unlocked(5, 4):
 		if Globals.EDHandler.DimPurchase[0] > 0:
 			set_unlocked(5, 4)
@@ -264,9 +285,15 @@ func _process(_delta):
 	if not is_unlocked(6, 5):
 		if not Globals.Duplicantes.less(Globals.EternityPts):
 			set_unlocked(6, 5)
+	if not is_unlocked(6, 8):
+		if Globals.DupHandler.limitUpgrades >= 6:
+			set_unlocked(6, 8)
 	if not is_unlocked(7, 1):
 		if Globals.DupHandler.dupGalaxies >= 1:
 			set_unlocked(7, 1)
+	if not is_unlocked(7, 2):
+		if Globals.ECTimes[3-1] <= 30 and Globals.ECTimes[3-1] > 0:
+			set_unlocked(7, 2)
 	if not is_unlocked(7, 7):
 		if Globals.DupHandler.dupGalaxies >= 3:
 			set_unlocked(7, 7)
