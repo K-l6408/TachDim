@@ -17,40 +17,19 @@ var DimAmount : Array[largenum] = [
 ]
 var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
 var DimCostStart : Array[largenum] = [
-	largenum.ten_to_the(  4),largenum.ten_to_the(  6),
-	largenum.ten_to_the( 15),largenum.ten_to_the( 30),
-	largenum.ten_to_the( 45),largenum.ten_to_the( 70),
-	largenum.ten_to_the(130),largenum.ten_to_the(200)
+	largenum.new( 1),largenum.new(20),
+	largenum.ten_to_the(3)
 ]
 var DimCostMult : Array[largenum] :
 	get:
 		return [
-			largenum.ten_to_the( 3),largenum.ten_to_the( 5),
-			largenum.ten_to_the(10),largenum.ten_to_the(15),
-			largenum.ten_to_the(20),largenum.ten_to_the(25),
-			largenum.ten_to_the(30),largenum.ten_to_the(35)
+			largenum.new( 3),largenum.ten_to_the(),
+			largenum.new(27)
 		]
 
-const TachLogReq := [
-	1000,  1600,  4000,  10000,
-	18000, 26000, 42069, 80000.903
-]
-
 var DimsUnlocked := 0
-var TSperS       := largenum.new(0)
-var TimeShards   := largenum.new(0)
-var FreeTSpeed   := 0
-var NextUpgrade  := largenum.new(1)
-var TreshMult    : float :
-	get:
-		if Globals.Challenge == 21:
-			return .09 + 1.01 ** FreeTSpeed
-		if FreeTSpeed < 308:
-			return 1.1
-		if Globals.ECCompleted(6):
-			return 1.75
-		else:
-			return 2.0
+var BLPperS        := largenum.new(0)
+var BoundlessPower := largenum.new(0)
 var BuyMax : bool
 
 func dimcost(which):
@@ -69,6 +48,8 @@ func buydim(which, bulk := 1):
 			Globals.Achievemer.set_unlocked(2, 7)
 
 func _process(delta):
+	#for i in 8:
+		#DimPurchase[i] = 0
 	for k in range(1, len(dims)):
 		var i = dims[k]
 		if i == null: continue
@@ -86,29 +67,15 @@ func _process(delta):
 		i.get_node("A&G/Amount").text = DimAmount[k-1].to_string()
 		i.get_node("Buy").text = "Cost: %s EP" % dimcost(k).to_string()
 	
-	var buymult = 4
-	if Globals.ECCompleted(5):
-		buymult = 5
+	var buymult = 5
 	
-	%Important.text = "[center]%s [font_size=20]%s[/font_size] %s [font_size=20]%s[/font_size] %s" % [
-		"You have", TimeShards.to_string(), "Time Shards, giving",
-		Globals.int_to_string(FreeTSpeed), "free Timespeed Upgrades."
-	]
-	%Important.text += "\n%s [font_size=20]%s[/font_size] %s [font_size=20]×%s[/font_size] %s" % [
-		"Next upgrade at", NextUpgrade.to_string(), "Time Shards, increasing by",
-		Globals.float_to_string(TreshMult), "for each Upgrade."
+	%Important.text = "[center]%s [font_size=20]%s[/font_size] %s [font_size=20]/ %s[/font_size]." % [
+		"You have", BoundlessPower.to_string(), "Boundless Power, dividing Tachyon Dimensions' costs by",
+		BoundlessPower.add(1).to_string()
 	]
 	%Important.text += "\n[font_size=10]%s [/font_size]%s[font_size=10] %s" % [
-		"You're gaining", TSperS.to_string(), "Time Shards per second."
+		"You're gaining", BLPperS.to_string(), "Boundless Power per second."
 	]
-	
-	if Globals.ECCompleted(2):
-		%Important.text += " | Timespeed: [/font_size]%s[font_size=10]/sec" % \
-		Globals.float_to_string(Formulas.ec2_reward())
-	
-	while not TimeShards.less(NextUpgrade):
-		NextUpgrade.mult2self(TreshMult)
-		FreeTSpeed += 1
 	
 	if false:
 		if not Input.is_action_pressed("ToggleAB"):
@@ -124,7 +91,7 @@ func _process(delta):
 	BuyMax = Input.is_action_pressed("BuyMax")
 	
 	for i in 8:
-		dims[i+1].get_node("N&M/Name").text = "%s Eternity Dimension" % Globals.ordinal(i+1)
+		dims[i+1].get_node("N&M/Name").text = "%s Space Dimension" % Globals.ordinal(i+1)
 	
 	if DimsUnlocked < 8:
 		dims[DimsUnlocked + 1].get_node("A&G/Growth").hide()
@@ -135,15 +102,6 @@ func _process(delta):
 		var mult := largenum.new(1)
 		
 		mult.mult2self(largenum.new(buymult).power(DimPurchase[i-1]))
-		
-		if Globals.ECCompleted(1):
-			mult.mult2self(Formulas.ec1_reward())
-		
-		if Globals.Challenge == 17:
-			mult.pow2self(0.2)
-		
-		if Globals.Challenge == 20:
-			mult.pow2self(1.1)
 		
 		if Globals.progress <= GL.Progression.Duplicantes:
 			mult.mult2self(Formulas.duplicantes())
@@ -158,8 +116,8 @@ func _process(delta):
 			if DimAmount[i].exponent == -INF:	dims[i].get_node("A&G/Growth").hide()
 			else:								dims[i].get_node("A&G/Growth").show()
 		if i == 1:
-			TSperS = DimAmount[i-1].multiply(mult)
-			TimeShards.add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
+			BLPperS = DimAmount[i-1].multiply(mult)
+			BoundlessPower.add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
 		else:
 			if DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).less(10):
 				dims[i-1].get_node("A&G/Growth").text = "(+%s/s)" % \
@@ -169,16 +127,10 @@ func _process(delta):
 				DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).to_string()
 			DimAmount[i-2].add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
 
-func eternitied():
-	TimeShards = largenum.new(0)
-	FreeTSpeed = 0
-	NextUpgrade = largenum.new(1)
+func boundlessed():
+	BoundlessPower = largenum.new(0)
 	for i in 8:
 		DimAmount[i] = largenum.new(DimPurchase[i])
 
 func unlocknewdim():
 	DimsUnlocked += 1
-
-func reset():
-	for i in 8:
-		DimPurchase[i] = 0

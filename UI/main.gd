@@ -60,6 +60,7 @@ func _process(_delta):
 	TBar.set_tab_hidden(2, Globals.progress < Globals.Progression.Eternity)
 	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Eternity)
 	TBar.set_tab_hidden(4, Globals.progress < Globals.Progression.Duplicantes)
+	TBar.set_tab_hidden(5, Globals.progress < Globals.Progression.Boundlessness)
 	
 	%Tabs/Dimensions.set_tab_hidden(1, Globals.EDHandler.DimsUnlocked == 0)
 	%Tabs/Challenges.set_tab_hidden(
@@ -93,16 +94,37 @@ func _process(_delta):
 	%Tabs/Dimensions/Tachyons.rewindNode.visible
 	
 	%Resources/Eternity.visible = \
-	Globals.progress >= GL.Progression.Overcome and \
+	Globals.progressBL >= GL.Progression.Overcome and \
 	(Globals.Challenge == 0 or Globals.Challenge > 15)
 	%Resources/Eternity/EternityButton.disabled = \
 	not %Tabs/Dimensions/Tachyons.canBigBang
 	
 	%Resources/EDunlock.visible = \
-	Globals.progress >= GL.Progression.Overcome and \
+	Globals.progressBL >= GL.Progression.Overcome and \
 	(Globals.Challenge == 0 or Globals.Challenge > 15) and \
 	Globals.EDHandler.DimsUnlocked < 8
 	%Resources/EDunlock/EDButton.disabled = true
+	
+	%Resources/Boundlessness.visible = Globals.EDHandler.DimsUnlocked == 8
+	if Globals.EternityPts.exponent < 1024:
+		%Resources/Boundlessness/BoundlessButton.disabled = true
+		%Resources/Boundlessness/BoundlessButton.text = "Reach\n%s EP"
+	else:
+		%Resources/Boundlessness/BoundlessButton.disabled = false
+		%Resources/Boundlessness/BoundlessButton.text = "%s\n%s %s %s\n%s" % [
+			"Other lands await…",
+			"gain", Formulas.bpgained(), "BP",
+			(
+				"(%s%s %s)" % (
+					[
+						"next at ", Formulas.next_bp(), "EP"
+					] if Formulas.bpgained().to_float() < 1000 else [
+						"", Formulas.bpgained().divide(Globals.boundTime),
+						"BP/s"
+					]
+				)
+			)
+		]
 	
 	%Resources/EP.visible = (Globals.progress >= GL.Progression.Eternity)
 	%Resources/Challenge.visible = (Globals.progress >= GL.Progression.Eternity)

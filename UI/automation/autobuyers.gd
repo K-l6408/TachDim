@@ -108,6 +108,9 @@ var BigBangAtEP := largenum.new(1)
 	$Auto/Buyers/TD8Locked, $Auto/Buyers/TD8, $Auto/Buyers
 ]
 
+func reset():
+	pass
+
 func TDInterval(which):
 	var i = (0.5 + which * 0.1) * (0.6 ** TDUpgrades[which])
 	if i < 0.11: return MIN_INTERVAL
@@ -180,10 +183,10 @@ func improve_rewd_accuracy():
 func _process(_delta):
 	for i in 8:
 		var k = get_node("Auto/Buyers/TD%dLocked" % (i+1))
-		k.disabled = Globals.TachTotal.less(largenum.new(10).pow2self((i+2) * 10))
+		k.disabled = Globals.TachTotalBL.less(largenum.new(10).pow2self((i+2) * 10))
 		k.text = "%s Tachyon Dimension Autobuyer disabled\n(Requires %s total Tachyons)" % \
 		[Globals.ordinal(i+1), largenum.new(10).pow2self((i+2) * 10).to_string()]
-	$Auto/Buyers/TimeSpeedLocked.disabled = Globals.TachTotal.less(largenum.new(10).pow2self(100))
+	$Auto/Buyers/TimeSpeedLocked.disabled = Globals.TachTotalBL.less(largenum.new(10).pow2self(100))
 	$Auto/Buyers/TimeSpeedLocked.text = "Timespeed Autobuyer disabled\n(Requires %s total Tachyons)" % \
 	largenum.new(10).pow2self(100).to_string()
 	
@@ -275,8 +278,10 @@ func _process(_delta):
 		"[center]Rewind Autobuyer\n[font_size=10] Activates every %s seconds\nCurrent accuracy: %s" % \
 		[Globals.float_to_string(RewdInterval()), Globals.percent_to_string(RewdAccuracy())]
 	if Globals.challengeCompleted(13):
-		$Auto/Buyers/Rewind/Interval.disabled = Globals.EternityPts.less(2 ** RewdUpgrades)
-		$Auto/Buyers/Rewind/Accuracy.disabled = Globals.EternityPts.less(3 ** RewdAQups)
+		if $Auto/Buyers/Rewind/Interval.visible:
+			$Auto/Buyers/Rewind/Interval.disabled = not largenum.two_to_the(RewdUpgrades).less(Globals.EternityPts)
+		if $Auto/Buyers/Rewind/Accuracy.visible:
+			$Auto/Buyers/Rewind/Accuracy.disabled = not largenum.new(3 ** RewdAQups).less(Globals.EternityPts)
 		$Auto/Buyers/Rewind/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 		[Globals.percent_to_string(0.4, 0),
 		Globals.float_to_string(2.0 ** RewdUpgrades, 1)]
@@ -313,7 +318,7 @@ func _process(_delta):
 				[Globals.int_to_string(TDBulk(i+1)), Globals.int_to_string(TDBulk(i+1) * 2),
 				Globals.float_to_string(2.0 ** TDUpgrades[i], 0)]
 			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).disabled = \
-			Globals.EternityPts.less(2 ** TDUpgrades[i])
+			not largenum.two_to_the(TDUpgrades[i]).less(Globals.EternityPts)
 		else:
 			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).text = \
 			"Complete the challenge to\nupgrade the interval"

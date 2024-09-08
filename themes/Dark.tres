@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=54 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=56 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -48,6 +48,32 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3q06"]
+bg_color = Color(0, 0, 0, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.713726, 0.498039, 0.2, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nkibb"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.713726, 0.498039, 0.2, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -643,6 +669,12 @@ Button/styles/focus = SubResource("StyleBoxEmpty_tfc3u")
 Button/styles/hover = SubResource("StyleBoxFlat_snsx0")
 Button/styles/normal = SubResource("StyleBoxFlat_wvhmr")
 Button/styles/pressed = SubResource("StyleBoxFlat_wj2sw")
+ButtonBLess/base_type = &"Button"
+ButtonBLess/colors/font_color = Color(0.713726, 0.498039, 0.2, 1)
+ButtonBLess/colors/font_hover_color = Color(0, 0, 0, 1)
+ButtonBLess/colors/font_pressed_color = Color(0, 0, 0, 1)
+ButtonBLess/styles/disabled = SubResource("StyleBoxFlat_l3q06")
+ButtonBLess/styles/normal = SubResource("StyleBoxFlat_nkibb")
 ButtonEtern/base_type = &"Button"
 ButtonEtern/colors/disabled_color = Color(0.133333, 0.133333, 0.133333, 1)
 ButtonEtern/colors/font_color = Color(0.698039, 0.254902, 0.890196, 1)

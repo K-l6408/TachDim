@@ -128,12 +128,26 @@ func _process(delta):
 
 func boundlessnessreset():
 	TDHandler.reset(2)
+	TDHandler.updateTSpeed()
 	boundTime = 0
 	CompletedChallenges = 0
 	CompletedECs = 0
+	TachTotalBL = largenum.new(Tachyons)
 	EternityPts = largenum.new(0)
 	Eternities  = largenum.new(0)
 	progressBL = Progression.None
+	last10etern = []
+	fastestEtern = EternityData.new(-1, 1, 1)
+	Automation.reset()
+	EUHandler.Bought = 0
+	EUHandler.EPMultBought = 0
+	OEUHandler.Bought = 0
+	OEUHandler.TSpScBought = 0
+	OEUHandler.TDmScBought = 0
+	OEUHandler.PasEPBought = 0
+	EDHandler.DimsUnlocked = 0
+	EDHandler.reset()
+	DupHandler.reset()
 
 func int_to_string(i:int) -> String:
 	match display:

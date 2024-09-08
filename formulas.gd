@@ -28,6 +28,21 @@ static func epgained():
 	
 	return epgain
 
+static func bpgained():
+	var bpgain = largenum.ten_to_the((
+			Globals.EternityPts.log2() / 1024
+		) - 1)
+	
+	#bpgain.mult2self(largenum.two_to_the(Globals.EUHandler.EPMultBought))
+	
+	if bpgain.to_float() < 1e10:
+		bpgain = largenum.new(floor(bpgain.to_float()))
+	
+	return bpgain
+
+static func next_bp():
+	return largenum.two_to_the(1024 * (bpgained().add(1).log10() + 1))
+
 static func overcome_1():
 	return Globals.Tachyons.power(0.01)
 
@@ -59,4 +74,4 @@ static func ec2_reward():
 	).log10(), 1)
 
 static func duplicantes():
-	return Globals.Duplicantes.add(9).log10() ** 2
+	return max(Globals.Duplicantes.add(9).log10() ** 2, 1)

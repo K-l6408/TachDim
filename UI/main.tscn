@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=40 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_fid5e"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cy1o0vjg4sdbt" path="res://UI/achievements/achievements.tscn" id="6_mtmcd"]
 [ext_resource type="PackedScene" uid="uid://bb23v4wug50t3" path="res://UI/options/saving.tscn" id="6_rxys2"]
 [ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
+[ext_resource type="Script" path="res://UI/boundlessness/resetbutton.gd" id="8_x0h36"]
 [ext_resource type="PackedScene" uid="uid://cbherf2m8xvad" path="res://UI/eternity/overcome.tscn" id="9_ug0mq"]
 [ext_resource type="PackedScene" uid="uid://d1v3rvuka8dmn" path="res://UI/challenges/eternity.tscn" id="10_s4e3g"]
 [ext_resource type="PackedScene" uid="uid://damsts43cifm8" path="res://UI/statistics/statistics.tscn" id="10_whf7c"]
@@ -30,7 +31,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
 shader = ExtResource("3_o4cqe")
-shader_parameter/pixelsize = 0.0333333
+shader_parameter/pixelsize = 0.00740741
 shader_parameter/zoom = 1.0
 shader_parameter/ignore = Color(0.8, 0.8, 0.8, 1)
 shader_parameter/disabled = null
@@ -200,7 +201,7 @@ seconds_per_step = 0.1
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VSplitContainer"]
 layout_mode = 2
-split_offset = 145
+split_offset = 150
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="VSplitContainer/HSplitContainer"]
 layout_mode = 2
@@ -215,7 +216,7 @@ theme_override_constants/separation = -2
 
 [node name="Tachyons" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 36)
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Tachyons"]
@@ -236,7 +237,6 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="Rewind" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
-visible = false
 clip_contents = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
@@ -277,7 +277,7 @@ horizontal_alignment = 1
 
 [node name="EP" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EP"]
@@ -300,7 +300,7 @@ autowrap_mode = 0
 
 [node name="Challenge" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 36)
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Challenge"]
@@ -337,13 +337,13 @@ offset_right = -7.0
 offset_bottom = -5.0
 grow_horizontal = 2
 theme_type_variation = &"ButtonEtern"
-text = "Eternity for
+text = "Big Bang for
 1.75e4 EP
 (124 EP/s)"
 
 [node name="Dupl" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Dupl"]
@@ -365,6 +365,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="EDunlock" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+visible = false
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
@@ -387,6 +388,51 @@ text = "Reach 1e2000 TC to
 unlock a new
 Eternity Dimension."
 script = ExtResource("5_htsl0")
+
+[node name="Boundlessness" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="BoundlessButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 5.0
+offset_right = -7.0
+offset_bottom = -5.0
+grow_horizontal = 2
+theme_type_variation = &"ButtonBLess"
+text = "Other lands await…
+gain 1.00 BP
+(next at 3.33e401 EP)"
+script = ExtResource("8_x0h36")
+
+[node name="BP" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/BP"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -13.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center][color=b67f33][font_size=16]1.80e308[/font_size]
+Boundlessness Points[/color][/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="Panel2" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
@@ -554,9 +600,9 @@ script = ExtResource("12_ab4py")
 [node name="ETint" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_sl1qb")
 layout_mode = 0
-offset_left = 368.0
+offset_left = 373.0
 offset_top = 25.0
-offset_right = 426.0
+offset_right = 431.0
 offset_bottom = 45.0
 mouse_filter = 2
 color = Color(0.698039, 0.254902, 0.890196, 1)
@@ -564,12 +610,23 @@ color = Color(0.698039, 0.254902, 0.890196, 1)
 [node name="DTint" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_sl1qb")
 layout_mode = 0
-offset_left = 426.0
+offset_left = 431.0
 offset_top = 25.0
-offset_right = 502.0
+offset_right = 507.0
 offset_bottom = 45.0
 mouse_filter = 2
 color = Color(0.254902, 0.447059, 0.890196, 1)
+
+[node name="BTint" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_sl1qb")
+layout_mode = 0
+offset_left = 507.0
+offset_top = 25.0
+offset_right = 595.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.713726, 0.498039, 0.2, 1)
 
 [node name="HERE!" type="ColorRect" parent="."]
 visible = false
@@ -611,6 +668,7 @@ visibility_rect = Rect2(-5000, -1000, 9999, 9999)
 [connection signal="rewind" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="." method="rewind"]
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Eternity/EternityButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" method="eternity"]
 [connection signal="button_down" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="unlocknewdim"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" method="boundlessness"]
 [connection signal="eternitied" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="eternitied"]
 [connection signal="eternitied" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Duplicantes" method="on_eternity"]
 [connection signal="YEAAAH" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity/Overcome Eternity" to="AnimationPlayer" method="play" binds= ["overcome"]]

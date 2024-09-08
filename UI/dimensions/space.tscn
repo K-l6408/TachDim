@@ -1,0 +1,455 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7ilo43kpte1u"]
+
+[ext_resource type="Script" path="res://UI/dimensions/space.gd" id="1_i73f7"]
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(520, 404)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i73f7")
+
+[node name="VSplitContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 404.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Important" type="RichTextLabel" parent="VSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]You have [font_size=20]1.80e308[/font_size] Time Shards, giving [font_size=20]999[/font_size] free Timespeed Upgrades.
+Next upgrade at [font_size=20]3.60e308[/font_size] Time Shards, increasing by [font_size=20]×2[/font_size] for each Upgrade.
+[font_size=10]You're gaining [/font_size]1.80e308[font_size=10] Time Shards per second.[/font_size]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Dimensions" type="VBoxContainer" parent="VSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Dimension1" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension1"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="VSplitContainer/Dimensions/Dimension1/N&M"]
+layout_mode = 2
+text = "1st Eternity Dimension"
+
+[node name="Multiplier" type="Label" parent="VSplitContainer/Dimensions/Dimension1/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="VSplitContainer/Dimensions/Dimension1/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="VSplitContainer/Dimensions/Dimension1/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="VSplitContainer/Dimensions/Dimension1"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"EDButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Cost: 10 EP"
+
+[node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension1"]
+layout_mode = 2
+
+[node name="Dimension2" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension2"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="VSplitContainer/Dimensions/Dimension2/N&M"]
+layout_mode = 2
+text = "2nd Eternity Dimension"
+
+[node name="Multiplier" type="Label" parent="VSplitContainer/Dimensions/Dimension2/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="VSplitContainer/Dimensions/Dimension2/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="VSplitContainer/Dimensions/Dimension2/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="VSplitContainer/Dimensions/Dimension2"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"EDButton"
+disabled = true
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Cost: 10 EP"
+
+[node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension2"]
+layout_mode = 2
+
+[node name="Dimension3" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension3"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="VSplitContainer/Dimensions/Dimension3/N&M"]
+layout_mode = 2
+text = "3rd Eternity Dimension"
+
+[node name="Multiplier" type="Label" parent="VSplitContainer/Dimensions/Dimension3/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="VSplitContainer/Dimensions/Dimension3/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="VSplitContainer/Dimensions/Dimension3/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="VSplitContainer/Dimensions/Dimension3"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"EDButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Cost: 10 EP"
+
+[node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension3"]
+layout_mode = 2
+
+[node name="Dimension4" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension4"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="VSplitContainer/Dimensions/Dimension4/N&M"]
+layout_mode = 2
+text = "4th Eternity Dimension"
+
+[node name="Multiplier" type="Label" parent="VSplitContainer/Dimensions/Dimension4/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="VSplitContainer/Dimensions/Dimension4/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="VSplitContainer/Dimensions/Dimension4/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="VSplitContainer/Dimensions/Dimension4"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"EDButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Cost: 10 EP"
+
+[node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension4"]
+layout_mode = 2
+
+[node name="Dimension5" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+visible = false
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension5"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension5"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="VSplitContainer/Dimensions/Dimension5/N&M"]
+layout_mode = 2
+text = "5th Eternity Dimension"
+
+[node name="Multiplier" type="Label" parent="VSplitContainer/Dimensions/Dimension5/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension5"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="VSplitContainer/Dimensions/Dimension5/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="VSplitContainer/Dimensions/Dimension5/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="VSplitContainer/Dimensions/Dimension5"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"EDButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Cost: 10 EP"
+
+[node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension5"]
+layout_mode = 2
+
+[node name="Dimension6" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+visible = false
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension6"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension6"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="VSplitContainer/Dimensions/Dimension6/N&M"]
+layout_mode = 2
+text = "6th Eternity Dimension"
+
+[node name="Multiplier" type="Label" parent="VSplitContainer/Dimensions/Dimension6/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension6"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="VSplitContainer/Dimensions/Dimension6/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="VSplitContainer/Dimensions/Dimension6/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="VSplitContainer/Dimensions/Dimension6"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"EDButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 10
+Cost: 10 EP"
+
+[node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension6"]
+layout_mode = 2
+
+[node name="Dimension7" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+visible = false
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension7"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension7"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="VSplitContainer/Dimensions/Dimension7/N&M"]
+layout_mode = 2
+text = "7th Eternity Dimension"
+
+[node name="Multiplier" type="Label" parent="VSplitContainer/Dimensions/Dimension7/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension7"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="VSplitContainer/Dimensions/Dimension7/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="VSplitContainer/Dimensions/Dimension7/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="VSplitContainer/Dimensions/Dimension7"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"EDButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 10
+Cost: 10 EP"
+
+[node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension7"]
+layout_mode = 2
+
+[node name="Dimension8" type="HBoxContainer" parent="VSplitContainer/Dimensions"]
+visible = false
+layout_mode = 2
+alignment = 2
+
+[node name="VSeparator1" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension8"]
+layout_mode = 2
+
+[node name="N&M" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension8"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Name" type="Label" parent="VSplitContainer/Dimensions/Dimension8/N&M"]
+layout_mode = 2
+text = "8th Eternity Dimension"
+
+[node name="Multiplier" type="Label" parent="VSplitContainer/Dimensions/Dimension8/N&M"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "x1.00"
+
+[node name="A&G" type="VBoxContainer" parent="VSplitContainer/Dimensions/Dimension8"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Amount" type="Label" parent="VSplitContainer/Dimensions/Dimension8/A&G"]
+layout_mode = 2
+text = "10  "
+
+[node name="Growth" type="Label" parent="VSplitContainer/Dimensions/Dimension8/A&G"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "(+0.00%/s)"
+
+[node name="Buy" type="Button" parent="VSplitContainer/Dimensions/Dimension8"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"EDButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy 10
+Cost: 10 EP"
+
+[node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension8"]
+layout_mode = 2
+
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension1/Buy" to="." method="buydim" binds= [1]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension2/Buy" to="." method="buydim" binds= [2]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension3/Buy" to="." method="buydim" binds= [3]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension4/Buy" to="." method="buydim" binds= [4]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension5/Buy" to="." method="buydim" binds= [5]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension6/Buy" to="." method="buydim" binds= [6]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension7/Buy" to="." method="buydim" binds= [7]]
+[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension8/Buy" to="." method="buydim" binds= [8]]

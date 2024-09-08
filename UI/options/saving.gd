@@ -278,6 +278,7 @@ func loadF(file : String = saveFilePath):
 	Globals.progress = sf.get_8() as GL.Progression
 	if Globals.progress < GL.Progression.Boundlessness:
 		Globals.progressBL = Globals.progress
+		Globals.boundTime = Globals.existence
 	Globals.Challenge = sf.get_8()
 	
 	var DATA = sf.get_var()

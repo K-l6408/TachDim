@@ -129,9 +129,10 @@ func rewindBoost(score := 1.0) -> largenum:
 		RBoost = DimAmount[0].power(0.1)
 	if Globals.OEUHandler.is_bought(6):
 		RBoost = DimAmount[0].power(0.05)
-	if Globals.Achievemer.is_unlocked(5, 4): RBoost.pow2self(1.2)
 	
 	if Globals.Achievemer.is_unlocked(2, 4): RBoost.mult2self(2)
+	
+	if Globals.Achievemer.is_unlocked(5, 4): RBoost.pow2self(1.2)
 	
 	if Globals.Achievemer.is_unlocked(2, 4): RBoost.div2self(RewindMult)
 	RBoost.pow2self(score)
@@ -288,6 +289,7 @@ func eternity():
 	
 	await get_tree().process_frame
 	reset(2)
+	updateTSpeed()
 	Globals.animation("bang")
 
 func reset(level := 0, challengeReset := true):
@@ -712,8 +714,9 @@ func _process(delta):
 				dims[i+1].modulate.a = 1.0
 		if i == 1:
 			TCperS = DimAmount[i-1].multiply(mult)
-			Globals.Tachyons .add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
-			Globals.TachTotal.add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
+			Globals.Tachyons   .add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
+			Globals.TachTotalBL.add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
+			Globals.TachTotal  .add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
 		else:
 			if DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).less(10):
 				dims[i-1].get_node("A&G/Growth").text = "(+%s/s)" % \

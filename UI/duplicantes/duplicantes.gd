@@ -6,6 +6,13 @@ func on_eternity():
 	if not Globals.Achievemer.is_unlocked(6, 8):
 		Globals.Duplicantes = largenum.new(1)
 
+func reset():
+	chance = 1
+	intervUpgrades = 0
+	limitUpgrades = 0
+	maxGalaxies = 0
+	dupGalaxies = 0
+
 var chance := 1
 func buy_chance():
 	Globals.Duplicantes.div2self(2.0 ** chance)
@@ -54,12 +61,11 @@ func _process(delta):
 			if  Globals.progress < Globals.Progression.Duplicantes:
 				Globals.progress = Globals.Progression.Duplicantes
 			Globals.progressBL   = Globals.Progression.Duplicantes
-		return
+	elif Globals.Duplicantes.less(1):
+		Globals.Duplicantes = largenum.new(1)
+
 	
 	$HSplitContainer.split_offset = size.x / 2 - 2
-	
-	if Globals.Duplicantes.less(1):
-		Globals.Duplicantes = largenum.new(1)
 	
 	%TextD.text = "[center]You have [font_size=20]%s[/font_size] Duplican%ss,\n" % [
 		Globals.Duplicantes.to_string().trim_suffix(".00"),
