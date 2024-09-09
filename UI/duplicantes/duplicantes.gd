@@ -24,7 +24,10 @@ func buy_chance():
 var intervUpgrades := 0
 const intervalCap = 0.05
 func interval():
-	return max(0.9 ** intervUpgrades, intervalCap)
+	var interv = max(0.9 ** intervUpgrades, intervalCap)
+	if "1×2" in Globals.Studies.purchased:
+		interv /= 3
+	return interv
 func buy_interval():
 	Globals.Duplicantes.div2self(3.0 ** (intervUpgrades + 1))
 	if Globals.Duplicantes.exponent < 61:

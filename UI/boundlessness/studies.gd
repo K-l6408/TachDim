@@ -61,7 +61,7 @@ func _process(_delta):
 	
 	$ST/Amount.text = "%s Space Theorems" % ST.to_string()
 	
-	%StudyTree1/SD1.text = "\n\nUnlock the %s\nSpace Dimension.\n\n" % \
+	%StudyTree1/SD1.text = "\nUnlock the %s\nSpace Dimension.\n\n\n" % \
 	Globals.ordinal(1)
 	
 	%StudyTree1/DupM.text = "\nImprove Duplicantes'\nmultiplier.\n\n" + \
@@ -85,6 +85,9 @@ func _process(_delta):
 	%StudyTree1/TG2EP.text = \
 	"\nEach Tachyon Galaxy\ngives a ×%s\nmultiplier to\nEP gained.\n\n" % \
 	Globals.float_to_string(1.4)
+	
+	%StudyTree1/SD2.text = "\nUnlock the %s\nSpace Dimension.\n\n\n" % \
+	Globals.ordinal(2)
 	
 	for i in %StudyTree1.get_children():
 		if i is Study:

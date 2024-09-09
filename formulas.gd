@@ -5,7 +5,10 @@ static func eternity_11():
 	return max((Globals.eternTime / 6.0) ** 0.1 * 2, 1)
 
 static func eternity_23():
-	return Globals.Eternities.multiply(0.2).add(1)
+	var base = Globals.Eternities.multiply(0.2).add(1)
+	if "2×2" in Globals.Studies.purchased:
+		base.pow2self(4)
+	return base
 
 static func achievement_mult():
 	return largenum.new(1.025).power(Globals.Achievemer.achgot)
@@ -22,6 +25,9 @@ static func epgained():
 			) - 1)
 	
 	epgain.mult2self(largenum.two_to_the(Globals.EUHandler.EPMultBought))
+	
+	if "3×2" in Globals.Studies.purchased:
+		epgain.mult2self(1.4 ** Globals.TGalaxies)
 	
 	if epgain.to_float() < 1e10:
 		epgain = largenum.new(floor(epgain.to_float() + 0.1))
@@ -54,7 +60,10 @@ static func overcome_7():
 	return max(300 / i, 1)
 
 static func overcome_9():
-	return Globals.Eternities.power(2)
+	var base = Globals.Eternities.power(2)
+	if "2×2" in Globals.Studies.purchased:
+		base.pow2self(4)
+	return base
 
 static func achievement_56():
 	if Globals.eternTime < 120:
@@ -63,7 +72,7 @@ static func achievement_56():
 
 static func ec1_reward():
 	var m : float = 1
-	for i in 15:
+	for i in 7:
 		if Globals.ECCompleted(i + 1):
 			m *= 3
 	return m

@@ -151,8 +151,10 @@ func BangInterval():
 func TDBulk(which):
 	if TDUpgrades[which-1] <= IntervalCap[which-1]:
 		return 1
+	elif Globals.Achievemer.is_unlocked(5, 3):
+		return 1e9
 	else:
-		return 2 ** (TDUpgrades[which-1] - IntervalCap[which-1])
+		return max(2 ** (TDUpgrades[which-1] - IntervalCap[which-1]), 512)
 
 var TSUpgrades   := 0
 var TDUpgrades   := [0, 0, 0, 0, 0, 0, 0, 0]
@@ -202,7 +204,7 @@ func _process(_delta):
 			if i.has_node("Mode"): i.get_node("Mode").text = \
 				"Complete the challenge to\nchange the mode" if i.get_node("Mode").disabled else (
 					(
-						"Buys max" if Globals.Achievemer.is_unlocked(5, 3) else
+						"Buys max" if TDBulk(i.name.trim_prefix("TD").to_int()) > 512 else
 						"Buys %ss" % Globals.int_to_string(
 							Globals.TDHandler.buylim * TDBulk(i.name.trim_prefix("TD").to_int())
 						)
@@ -334,7 +336,7 @@ func _process(_delta):
 		
 		if Globals.Achievemer.is_unlocked(5, 3):
 			get_node("Auto/Buyers/TD%d/RichTextLabel" % (i+1)).text = \
-			"[center]%s Tachyon Dim Autobuyer\n[font_size=10]Activates every %s seconds\nCurrent bulk: YES" % \
+			"[center]%s Tachyon Dim Autobuyer\n[font_size=10]Activates every %s seconds" % \
 			[Globals.ordinal(i+1), Globals.float_to_string(TDInterval(i))]
 		else:
 			get_node("Auto/Buyers/TD%d/RichTextLabel" % (i+1)).text = \
@@ -413,14 +415,11 @@ func buyTSpeed():
 
 func buytdim(which):
 	if get_node("Auto/Buyers/TD%d/Mode" % which).button_pressed:
-		if Globals.Achievemer.is_unlocked(5, 3):
-			Globals.TDHandler.buydim(which, 1e9)
-		else:
-			Globals.TDHandler.buydim(which, 
-				Globals.TDHandler.buylim - \
-				Globals.TDHandler.DimPurchase[which-1] % Globals.TDHandler.buylim + \
-				Globals.TDHandler.buylim * (TDBulk(which) - 1)
-			)
+		Globals.TDHandler.buydim(which,
+			Globals.TDHandler.buylim - \
+			Globals.TDHandler.DimPurchase[which-1] % Globals.TDHandler.buylim + \
+			Globals.TDHandler.buylim * (TDBulk(which) - 1)
+		)
 	else:
 		Globals.TDHandler.buydim(which, 1)
 	get_node("Auto/Buyers/TD%d/Timer" % which).start(TDInterval(which - 1))

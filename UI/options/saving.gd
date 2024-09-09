@@ -19,7 +19,6 @@ func _ready():
 func start():
 	var sf = FileAccess.open("user://lastsave.txt", FileAccess.READ)
 	if sf == null: return gameReset()
-	print(sf.get_as_text())
 	choose_load(sf.get_as_text().to_int())
 
 func _process(delta):

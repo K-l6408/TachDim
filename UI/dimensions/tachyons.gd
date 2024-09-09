@@ -760,9 +760,14 @@ func dilacost():
 
 func galacost():
 	var Cost = 80 + 60 * Globals.TGalaxies
+	if "3×1" in Globals.Studies.purchased:
+		Cost -= 20 * Globals.TGalaxies
 	
 	if (Globals.Challenge == 6 or Globals.Challenge == 16):
 		Cost = 60 + 40 * Globals.TGalaxies
+		if "3×1" in Globals.Studies.purchased:
+			Cost -= 10 * Globals.TGalaxies
+	
 	if (Globals.Challenge == 5 or Globals.Challenge == 16):
 		Cost = Cost * 3 / 2
 	if Globals.Challenge == 19:
