@@ -135,7 +135,7 @@ func div2self(b) -> largenum:
 	mantissa = (m1 / m2) << 30
 	exponent = exponent - b.exponent
 	fix_mantissa()
-	return result
+	return self
 
 func power(b:float) -> largenum:
 	if b == 0: return largenum.new(1)
