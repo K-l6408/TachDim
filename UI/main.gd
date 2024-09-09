@@ -17,6 +17,7 @@ func _ready():
 	Globals.NotifHandler = $Notifs
 	Globals.TDHandler = %Tabs/Dimensions/Tachyons
 	Globals.EDHandler = %Tabs/Dimensions/Eternity
+	Globals.SDHandler = %Tabs/Dimensions/Space
 	Globals.Automation = %Tabs/Automation
 	Globals.Achievemer = %Tabs/Achievements
 	Globals.Animater = $AnimationPlayer
@@ -24,6 +25,7 @@ func _ready():
 	Globals.EUHandler = %"Tabs/Eternity/Eternity Upgrades"
 	Globals.OEUHandler = %"Tabs/Eternity/Overcome Eternity"
 	Globals.DupHandler = %Tabs/Duplicantes
+	Globals.Studies = %Tabs/Boundlessness/Studies
 	
 	for i in %Tabs.get_child_count():
 		TBar.set_tab_title(i, "%s %s %s" % \
@@ -62,7 +64,9 @@ func _process(_delta):
 	TBar.set_tab_hidden(4, Globals.progress < Globals.Progression.Duplicantes)
 	TBar.set_tab_hidden(5, Globals.progress < Globals.Progression.Boundlessness)
 	
-	%Tabs/Dimensions.set_tab_hidden(1, Globals.EDHandler.DimsUnlocked == 0)
+	%Tabs/Dimensions.set_tab_hidden(1,
+	Globals.EDHandler.DimsUnlocked == 0 and Globals.progress < GL.Progression.Boundlessness)
+	%Tabs/Dimensions.set_tab_hidden(2, Globals.SDHandler.DimsUnlocked == 0)
 	%Tabs/Challenges.set_tab_hidden(
 		1, Globals.TachTotal.log10() < Globals.ECUnlocks[0]
 	)
@@ -84,6 +88,15 @@ func _process(_delta):
 		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
 	)
 	$DTint.visible = (Globals.progress >= GL.Progression.Duplicantes)
+	
+	$BTint.global_position = TBar.get_tab_rect(5).position + TBar.global_position\
+	+ Vector2(-1, 1)
+	$BTint.size            = TBar.get_tab_rect(5).size
+	$BTint.color           = get_theme_color("font_color", "ButtonBLess")
+	$BTint.material.set_shader_parameter(
+		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
+	)
+	$BTint.visible = (Globals.progress >= GL.Progression.Boundlessness)
 	
 	if Input.is_action_just_pressed("Debug"): debugMode = not debugMode
 	TBar.set_tab_hidden(TBar.tab_count - 1, not debugMode)
@@ -129,6 +142,7 @@ func _process(_delta):
 	%Resources/EP.visible = (Globals.progress >= GL.Progression.Eternity)
 	%Resources/Challenge.visible = (Globals.progress >= GL.Progression.Eternity)
 	%Resources/Dupl.visible = (Globals.progress >= GL.Progression.Duplicantes)
+	%Resources/BP.visible = (Globals.progress >= GL.Progression.Boundlessness)
 	
 	%Resources/Tachyons/Text.text = \
 	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Globals.Tachyons.to_string()
@@ -141,6 +155,11 @@ func _process(_delta):
 	"[center][color=%s][font_size=16]%s[/font_size]\nDuplican%ss[/color][/center]" % [
 		get_theme_color("meow", "DupliButton").to_html(false),
 		Globals.Duplicantes.to_string(), "" if Globals.Duplicantes.less(1) else "te"
+	]
+	%Resources/BP/Text.text = \
+	"[center][color=%s][font_size=16]%s[/font_size]\nBoundlessness Points[/color][/center]" % [
+		get_theme_color("font_color", "ButtonBLess").to_html(false),
+		Globals.BoundlessPts.to_string()
 	]
 	if Globals.Challenge > 15:
 		%Resources/Challenge/Text.text = \

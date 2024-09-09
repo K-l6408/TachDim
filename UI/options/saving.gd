@@ -122,14 +122,14 @@ func saveF(file : String = saveFilePath):
 		],
 		"tach dim purchases" : Globals.TDHandler.DimPurchase,
 		"tach dim costs" : [
-			Globals.TDHandler.DimCost[0].to_bytes(),
-			Globals.TDHandler.DimCost[1].to_bytes(),
-			Globals.TDHandler.DimCost[2].to_bytes(),
-			Globals.TDHandler.DimCost[3].to_bytes(),
-			Globals.TDHandler.DimCost[4].to_bytes(),
-			Globals.TDHandler.DimCost[5].to_bytes(),
-			Globals.TDHandler.DimCost[6].to_bytes(),
-			Globals.TDHandler.DimCost[7].to_bytes()
+			Globals.TDHandler.DimBaseCost[0].to_bytes(),
+			Globals.TDHandler.DimBaseCost[1].to_bytes(),
+			Globals.TDHandler.DimBaseCost[2].to_bytes(),
+			Globals.TDHandler.DimBaseCost[3].to_bytes(),
+			Globals.TDHandler.DimBaseCost[4].to_bytes(),
+			Globals.TDHandler.DimBaseCost[5].to_bytes(),
+			Globals.TDHandler.DimBaseCost[6].to_bytes(),
+			Globals.TDHandler.DimBaseCost[7].to_bytes()
 		],
 		"timespeed amount" : Globals.TDHandler.TSpeedCount,
 		"timespeed cost" : Globals.TDHandler.TSpeedCost.to_bytes(),
@@ -224,6 +224,35 @@ func saveF(file : String = saveFilePath):
 		DATA["dupe max gal"] = Globals.DupHandler.maxGalaxies
 		DATA["dupe galaxies"]= Globals.DupHandler.dupGalaxies
 	
+	if Globals.progress >= GL.Progression.Boundlessness:
+		DATA["bln-es"] = Globals.Boundlessnesses.to_bytes()
+		DATA["bln points"] = Globals.BoundlessPts.to_bytes()
+		DATA["top tachyons in bln"] = Globals.TachTotalBL.to_bytes()
+		DATA["time in bln"] = Globals.boundTime
+		DATA["space theorems"] = [
+			Globals.Studies.TCST,
+			Globals.Studies.EPST,
+			Globals.Studies.BPST
+		]
+		
+		DATA["studies bought"] = ""
+		for i in Globals.Studies.purchased:
+			DATA["studies bought"] += i + ","
+		DATA["studies bought"].trim_suffix(",")
+		
+		DATA["space dim amounts"] = [
+			Globals.SDHandler.DimAmount[0].to_bytes(),
+			Globals.SDHandler.DimAmount[1].to_bytes(),
+			Globals.SDHandler.DimAmount[2].to_bytes(),
+			Globals.SDHandler.DimAmount[3].to_bytes(),
+			Globals.SDHandler.DimAmount[4].to_bytes(),
+			Globals.SDHandler.DimAmount[5].to_bytes(),
+			Globals.SDHandler.DimAmount[6].to_bytes(),
+			Globals.SDHandler.DimAmount[7].to_bytes()
+		]
+		DATA["space purchases"] = Globals.SDHandler.DimPurchase
+		DATA["boundless power"] = Globals.SDHandler.BoundlessPower.to_bytes()
+	
 	sf.store_var(DATA)
 	sf.close()
 	
@@ -276,9 +305,6 @@ func loadF(file : String = saveFilePath):
 	if sf.get_line() != "TachDimSave":	return
 	
 	Globals.progress = sf.get_8() as GL.Progression
-	if Globals.progress < GL.Progression.Boundlessness:
-		Globals.progressBL = Globals.progress
-		Globals.boundTime = Globals.existence
 	Globals.Challenge = sf.get_8()
 	
 	var DATA = sf.get_var()
@@ -295,7 +321,7 @@ func loadF(file : String = saveFilePath):
 	Globals.Achievemer.unlocked = DATA["achievements"]
 	for i in 8:
 		Globals.TDHandler.DimAmount[i].from_bytes(DATA["tach dim amounts"][i])
-		Globals.TDHandler.DimCost[i].from_bytes(DATA["tach dim costs"][i])
+		Globals.TDHandler.DimBaseCost[i].from_bytes(DATA["tach dim costs"][i])
 		Globals.TDHandler.DimPurchase[i] = DATA["tach dim purchases"][i]
 	
 	Globals.TDHandler.TSpeedCount = DATA["timespeed amount"]
@@ -410,6 +436,8 @@ func loadF(file : String = saveFilePath):
 		if DATA.has("ECcompl"):
 			Globals.CompletedECs = DATA["ECcompl"]
 			Globals.ECTimes = DATA["ECtimes"]
+			while Globals.ECTimes.size() < 7:
+				Globals.ECTimes.append(-1)
 	
 	if Globals.progress >= GL.Progression.Duplicantes:
 		Globals.Duplicantes.from_bytes(DATA["duplicantes"])
@@ -419,6 +447,27 @@ func loadF(file : String = saveFilePath):
 		if DATA.has("dupe galaxies"):
 			Globals.DupHandler.maxGalaxies = DATA["dupe max gal"]
 			Globals.DupHandler.dupGalaxies = DATA["dupe galaxies"]
+	
+	if Globals.progress >= GL.Progression.Boundlessness:
+		Globals.Boundlessnesses.from_bytes(DATA["bln-es"])
+		Globals.BoundlessPts.from_bytes(DATA["bln points"])
+		Globals.TachTotalBL.from_bytes(DATA["top tachyons in bln"])
+		Globals.boundTime = DATA["time in bln"]
+		Globals.Studies.TCST = DATA["space theorems"][0]
+		Globals.Studies.EPST = DATA["space theorems"][1]
+		Globals.Studies.BPST = DATA["space theorems"][2]
+		
+		for i in DATA["studies bought"].split(","):
+			Globals.Studies.buy_study(i)
+		for i in 8:
+			Globals.SDHandler.DimAmount[i].from_bytes(DATA["space dim amounts"][i])
+			Globals.SDHandler.DimPurchase[i] = DATA["space purchases"][i]
+		
+		Globals.SDHandler.BoundlessPower.from_bytes(DATA["boundless power"])
+	else:
+		Globals.progressBL = Globals.progress
+		Globals.boundTime = Globals.existence
+		Globals.TachTotalBL = largenum.new(Globals.TachTotal)
 	
 	Globals.TDHandler.updateTSpeed()
 	get_tree().paused = pause
@@ -435,7 +484,7 @@ func gameReset():
 	for i in 8:
 		Globals.TDHandler.DimAmount[i]   = largenum.new(0)
 		Globals.TDHandler.DimPurchase[i] = 0
-		Globals.TDHandler.DimCost[i]     = [
+		Globals.TDHandler.DimBaseCost[i] = [
 			largenum.ten_to_the( 1),largenum.ten_to_the( 2),largenum.ten_to_the( 4),
 			largenum.ten_to_the( 6),largenum.ten_to_the( 9),largenum.ten_to_the(13),
 			largenum.ten_to_the(18),largenum.ten_to_the(24)
@@ -478,7 +527,25 @@ func gameReset():
 		-1, -1, -1,
 		-1
 	]
-	Globals.Duplicantes  = largenum.new(1)
+	Globals.Duplicantes  = largenum.new(0)
+	Globals.DupHandler.chance = 1
+	Globals.DupHandler.intervUpgrades = 0
+	Globals.DupHandler.limitUpgrades  = 0
+	Globals.DupHandler.maxGalaxies    = 0
+	Globals.DupHandler.dupGalaxies    = 0
+	Globals.Boundlessnesses = largenum.new(0)
+	Globals.BoundlessPts = largenum.new(0)
+	Globals.TachTotalBL  = Globals.TachTotal
+	Globals.boundTime    = 0
+	Globals.Studies.TCST = 0
+	Globals.Studies.EPST = 0
+	Globals.Studies.BPST = 0
+	Globals.Studies.respec()
+	for i in 8:
+		Globals.SDHandler.DimAmount[i] = largenum.new(0)
+		Globals.SDHandler.DimPurchase[i] = 0
+	Globals.SDHandler.BoundlessPower = largenum.new(0)
+	
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value

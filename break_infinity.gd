@@ -71,11 +71,13 @@ func add(b) -> largenum:
 
 func add2self(b) -> largenum:
 	if not b is largenum:
+		if b == 0: return self
 		b = largenum.new(b)
 	if abs(exponent - b.exponent) > 62:
 		if (b.exponent > exponent):
 			mantissa = b.mantissa
 			exponent = b.exponent
+			sign = b.sign
 		return self
 	var maxexp = max(exponent, b.exponent)
 	mantissa = (sign * mantissa >> int(maxexp - exponent)) + (b.sign * b.mantissa >> int(maxexp - b.exponent))
@@ -127,7 +129,6 @@ func mult2self(b) -> largenum:
 func div2self(b) -> largenum:
 	if not b is largenum:
 		b = largenum.new(b)
-	var result = largenum.new(0)
 	var m1 = mantissa
 	var m2 = b.mantissa >> 31
 	if m2 == 0:
@@ -135,7 +136,7 @@ func div2self(b) -> largenum:
 	mantissa = (m1 / m2) << 30
 	exponent = exponent - b.exponent
 	fix_mantissa()
-	return result
+	return self
 
 func power(b:float) -> largenum:
 	if b == 0: return largenum.new(1)
@@ -196,10 +197,12 @@ func _to_string() -> String:
 	
 	match Globals.display:
 		GL.DisplayMode.Scientific:
-			var l = log10()
-			if l == -INF:
+			if exponent == -INF:
 				return "0.00"
+			var l = log10()
 			var m = 10 ** (l - floor(l))
+			if exponent == 0:
+				pass
 			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
 				return "%.2f" % to_float()
 			if m > 9.999:

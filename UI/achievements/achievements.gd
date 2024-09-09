@@ -143,7 +143,7 @@ func achreqs(r, c):
 			Globals.float_to_string(1.2)
 			6: return "Complete Challenge %s in %s or less." % [
 				Globals.int_to_string(2), Globals.format_time(30)
-			] + "\n(Reward: Tachyon Dimensions are WAY stronger" + \
+			] + "\n(Reward: Tachyon Dimensions are stronger" + \
 			"\nin the first %s each Eternity.)\n(Currently: ×%s)" % [
 				Globals.format_time(120), Globals.float_to_string(Formulas.achievement_56())
 			]

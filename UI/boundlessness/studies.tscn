@@ -1,0 +1,243 @@
+[gd_scene load_steps=4 format=3 uid="uid://br0msw23i7kmv"]
+
+[ext_resource type="Script" path="res://UI/boundlessness/tree_container.gd" id="1_cryta"]
+[ext_resource type="Script" path="res://UI/boundlessness/studies.gd" id="1_rlv08"]
+[ext_resource type="Script" path="res://UI/boundlessness/study.gd" id="2_egti4"]
+
+[node name="Studies" type="Control"]
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rlv08")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Trees" type="HBoxContainer" parent="ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StudyTree1" type="Container" parent="ScrollContainer/Trees"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(377, 1045)
+layout_mode = 2
+size_flags_horizontal = 6
+script = ExtResource("1_cryta")
+
+[node name="SD1" type="Button" parent="ScrollContainer/Trees/StudyTree1"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+action_mode = 0
+text = "
+
+Unlock the 1st
+Space Dimension.
+
+
+Cost: 0 ST"
+script = ExtResource("2_egti4")
+id_override = "SD1"
+
+[node name="DupM" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+Improve Duplicantes'
+multiplier.
+
+Currently: ×?.??e????
+
+Cost: 2 ST"
+script = ExtResource("2_egti4")
+row = 1
+studies_required = [NodePath("../SD1")]
+cost = 2
+
+[node name="DupSp" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+
+You gain Duplicantes
+3 times faster.
+
+
+Cost: 2 ST"
+script = ExtResource("2_egti4")
+row = 1
+studies_required = [NodePath("../SD1")]
+cost = 2
+
+[node name="Dila2Eter" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+Time Dilation boosts
+Eternity gain.
+
+Currently: ×1.00
+
+Cost: 1 ST"
+script = ExtResource("2_egti4")
+row = 2
+studies_required = [NodePath("../DupM")]
+cost = 1
+
+[node name="EtMultPow" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+Multipliers based on
+Eternities are
+raised ^4.00.
+
+
+Cost: 3 ST"
+script = ExtResource("2_egti4")
+row = 2
+studies_required = [NodePath("../DupSp")]
+cost = 3
+
+[node name="TGScaling" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+Tachyon Galaxy costs
+scale by 40 Dimensions
+instead of 60.
+
+
+Cost: 6 ST"
+script = ExtResource("2_egti4")
+row = 3
+studies_required = [NodePath("../Dila2Eter")]
+cost = 6
+
+[node name="TG2EP" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+Each Tachyon Galaxy
+gives a ×1.40
+multiplier to
+EP gained.
+
+Cost: 4 ST"
+script = ExtResource("2_egti4")
+row = 3
+studies_required = [NodePath("../EtMultPow")]
+cost = 4
+
+[node name="SD2" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+
+Unlock the 2nd
+Space Dimension.
+
+
+Cost: 6 ST"
+script = ExtResource("2_egti4")
+row = 4
+id_override = "SD2"
+studies_required = [NodePath("../TGScaling"), NodePath("../TG2EP")]
+cost = 6
+
+[node name="ST" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -217.0
+offset_top = -74.0
+offset_right = 217.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Amount" type="Label" parent="ST"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 170.0
+offset_bottom = 29.0
+theme_override_font_sizes/font_size = 20
+text = "0 Space Theorems"
+
+[node name="Buy" type="HBoxContainer" parent="ST"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -157.0
+offset_top = -38.0
+offset_right = 157.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TC" type="Button" parent="ST/Buy"]
+layout_mode = 2
+text = " Cost: 1e20000 TC "
+
+[node name="EP" type="Button" parent="ST/Buy"]
+layout_mode = 2
+text = " Cost: 1e100 EP "
+
+[node name="BP" type="Button" parent="ST/Buy"]
+layout_mode = 2
+text = " Cost: 2.00 BP "
+
+[node name="Max" type="Button" parent="ST/Buy"]
+layout_mode = 2
+text = " Buy Max "
+
+[connection signal="pressed" from="ST/Buy/TC" to="." method="theorem_buy" binds= [0]]
+[connection signal="pressed" from="ST/Buy/EP" to="." method="theorem_buy" binds= [1]]
+[connection signal="pressed" from="ST/Buy/BP" to="." method="theorem_buy" binds= [2]]
+[connection signal="pressed" from="ST/Buy/Max" to="." method="theorem_buy" binds= [3]]

@@ -56,17 +56,14 @@ var BuyMax : bool
 func dimcost(which):
 	return DimCostStart[which-1].multiply(DimCostMult[which-1].power(DimPurchase[which-1]))
 
-func buydim(which, bulk := 1):
+func buydim(which):
 	if which > DimsUnlocked: return
 	Globals.EternityPts.add2self(dimcost(which).neg())
 	if Globals.EternityPts.sign < 0:
 		Globals.EternityPts.add2self(dimcost(which))
 		return
 	DimPurchase[which-1] += 1
-	DimAmount[which-1].add2self(largenum.new(bulk))
-	if not Globals.Achievemer.is_unlocked(2, 7):
-		if bulk == 1 and which == 1 and DimAmount[which-1].log10() >= 100:
-			Globals.Achievemer.set_unlocked(2, 7)
+	DimAmount[which-1].add2self(1)
 
 func _process(delta):
 	for k in range(1, len(dims)):
@@ -110,18 +107,14 @@ func _process(delta):
 		NextUpgrade.mult2self(TreshMult)
 		FreeTSpeed += 1
 	
-	if false:
-		if not Input.is_action_pressed("ToggleAB"):
-			for i in range(8, 0, -1):
-				if Input.is_action_pressed("BuyTD%d" % i) or BuyMax:
-					if Input.is_action_pressed("BuyOne"):
-						buydim(i, 1)
-					elif dims[i].get_node("Buy/Progress").value >= \
-					dims[i].get_node("Buy/Progress").max_value:
-						buydim(i, 0)
-						if BuyMax:
-							buydim(i, 1e9)
-	BuyMax = Input.is_action_pressed("BuyMax")
+	#if false:
+		#if not Input.is_action_pressed("ToggleAB"):
+			#for i in range(8, 0, -1):
+				#if Input.is_action_pressed("BuyTD%d" % i) or BuyMax:
+					#buydim(i)
+					#if BuyMax:
+						#buydim(i)
+	#BuyMax = Input.is_action_pressed("BuyMax")
 	
 	for i in 8:
 		dims[i+1].get_node("N&M/Name").text = "%s Eternity Dimension" % Globals.ordinal(i+1)

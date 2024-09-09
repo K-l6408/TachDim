@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=42 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_fid5e"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cbherf2m8xvad" path="res://UI/eternity/overcome.tscn" id="9_ug0mq"]
 [ext_resource type="PackedScene" uid="uid://d1v3rvuka8dmn" path="res://UI/challenges/eternity.tscn" id="10_s4e3g"]
 [ext_resource type="PackedScene" uid="uid://damsts43cifm8" path="res://UI/statistics/statistics.tscn" id="10_whf7c"]
+[ext_resource type="PackedScene" uid="uid://b7ilo43kpte1u" path="res://UI/dimensions/space.tscn" id="11_m4fhr"]
 [ext_resource type="PackedScene" uid="uid://ccgn0cmks56jk" path="res://UI/debug/debug.tscn" id="11_t3vch"]
 [ext_resource type="PackedScene" uid="uid://ptwedehhp243" path="res://UI/statistics/last_prestiges.tscn" id="11_t22am"]
 [ext_resource type="Script" path="res://UI/notifs.gd" id="12_ab4py"]
@@ -26,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://ckigo0tgi2x53" path="res://UI/duplicantes/duplicantes.tscn" id="13_vhw6w"]
 [ext_resource type="Texture2D" uid="uid://d070fk356hwgi" path="res://images/glass.png" id="15_7ies4"]
 [ext_resource type="Shader" path="res://UI/eternity/glass.gdshader" id="15_hde6e"]
+[ext_resource type="PackedScene" uid="uid://br0msw23i7kmv" path="res://UI/boundlessness/studies.tscn" id="17_uosw5"]
 [ext_resource type="Shader" path="res://UI/tint.gdshader" id="24_irn3s"]
 [ext_resource type="FontFile" uid="uid://bbb4ct4acdbbl" path="res://fonts/Blobmoji.ttf" id="25_na6n0"]
 
@@ -338,8 +340,8 @@ offset_bottom = -5.0
 grow_horizontal = 2
 theme_type_variation = &"ButtonEtern"
 text = "Big Bang for
-1.75e4 EP
-(124 EP/s)"
+1.75e115 EP
+(1.24e114 EP/s)"
 
 [node name="Dupl" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
@@ -428,7 +430,7 @@ offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
-text = "[center][color=b67f33][font_size=16]1.80e308[/font_size]
+text = "[center][color=b67f33][font_size=16]0.00[/font_size]
 Boundlessness Points[/color][/center]"
 fit_content = true
 scroll_active = false
@@ -455,10 +457,13 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Tachyons" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("1_8gea7")]
-clip_contents = true
 layout_mode = 2
 
 [node name="Eternity" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("6_eboqi")]
+visible = false
+layout_mode = 2
+
+[node name="Space" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("11_m4fhr")]
 visible = false
 layout_mode = 2
 
@@ -494,6 +499,9 @@ layout_mode = 2
 
 [node name="Boundlessness" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
+layout_mode = 2
+
+[node name="Studies" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Boundlessness" instance=ExtResource("17_uosw5")]
 layout_mode = 2
 
 [node name="Achievements" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("6_mtmcd")]
@@ -618,7 +626,6 @@ mouse_filter = 2
 color = Color(0.254902, 0.447059, 0.890196, 1)
 
 [node name="BTint" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_sl1qb")
 layout_mode = 0
 offset_left = 507.0
@@ -655,13 +662,14 @@ text = "
 
 [node name="Blobrain" type="GPUParticles2D" parent="."]
 visible = false
+z_index = 1
 material = SubResource("CanvasItemMaterial_cee3c")
 position = Vector2(480, -37)
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_a3tro")
 texture = SubResource("ViewportTexture_db5x6")
-lifetime = 15.0
-preprocess = 10.0
+lifetime = 30.0
+preprocess = 20.0
 visibility_rect = Rect2(-5000, -1000, 9999, 9999)
 
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" method="_on_pressed"]

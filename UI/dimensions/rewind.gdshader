@@ -9,7 +9,7 @@ void fragment() {
 	float uvx = (UV.x - 0.5) / zoom + 0.5;
 	float psize = pixelsize / zoom;
 	
-	if (distance(COLOR, ignore) > 0.5 && !disabled) {
+	if (distance(COLOR, ignore) > 0.7 && !disabled) {
 		vec3 RED = vec3(.9,.1,.1), YELLOW = vec3(.9,.9,.1), GREEN = vec3(.1,.9,.1);
 		
 		COLOR.rgb = COLOR.rgb * 0.7 + vec3(

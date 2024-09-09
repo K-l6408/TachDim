@@ -58,7 +58,7 @@ static func overcome_9():
 
 static func achievement_56():
 	if Globals.eternTime < 120:
-		return (240.0 / (Globals.eternTime + 120)) ** 20
+		return (240.0 / (Globals.eternTime + 120)) ** 5
 	else: return 1
 
 static func ec1_reward():
@@ -73,5 +73,13 @@ static func ec2_reward():
 		Globals.TDHandler.TSpeedCount + Globals.EDHandler.FreeTSpeed
 	).log10(), 1)
 
-static func duplicantes():
+static func dupli_no11():
 	return max(Globals.Duplicantes.add(9).log10() ** 2, 1)
+static func dupli_yes11():
+	return Globals.Duplicantes.power(0.03).add2self(dupli_no11())
+
+static func duplicantes():
+	if "1×1" not in Globals.Studies.purchased:
+		return dupli_no11()
+	else:
+		return dupli_yes11()

@@ -18,13 +18,17 @@ var DimAmount : Array[largenum] = [
 var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
 var DimCostStart : Array[largenum] = [
 	largenum.new( 1),largenum.new(20),
-	largenum.ten_to_the(3)
+	largenum.ten_to_the(3),
+	largenum.new(0),largenum.new(0),
+	largenum.new(0),largenum.new(0),largenum.new(0),
 ]
 var DimCostMult : Array[largenum] :
 	get:
 		return [
 			largenum.new( 3),largenum.ten_to_the(),
-			largenum.new(27)
+			largenum.new(27),
+			largenum.new(0),largenum.new(0),
+			largenum.new(0),largenum.new(0),largenum.new(0),
 		]
 
 var DimsUnlocked := 0
@@ -35,21 +39,20 @@ var BuyMax : bool
 func dimcost(which):
 	return DimCostStart[which-1].multiply(DimCostMult[which-1].power(DimPurchase[which-1]))
 
-func buydim(which, bulk := 1):
+func buydim(which):
 	if which > DimsUnlocked: return
-	Globals.EternityPts.add2self(dimcost(which).neg())
-	if Globals.EternityPts.sign < 0:
-		Globals.EternityPts.add2self(dimcost(which))
+	Globals.BoundlessPts.add2self(dimcost(which).neg())
+	if Globals.BoundlessPts.sign < 0:
+		Globals.BoundlessPts.add2self(dimcost(which))
 		return
 	DimPurchase[which-1] += 1
-	DimAmount[which-1].add2self(largenum.new(bulk))
-	if not Globals.Achievemer.is_unlocked(2, 7):
-		if bulk == 1 and which == 1 and DimAmount[which-1].log10() >= 100:
-			Globals.Achievemer.set_unlocked(2, 7)
+	DimAmount[which-1].add2self(1)
 
 func _process(delta):
-	#for i in 8:
-		#DimPurchase[i] = 0
+	DimsUnlocked = 0
+	for i in 8:
+		if "SD%d"%(i+1) in Globals.Studies.purchased:
+			DimsUnlocked = i+1
 	for k in range(1, len(dims)):
 		var i = dims[k]
 		if i == null: continue
@@ -63,13 +66,14 @@ func _process(delta):
 			i.modulate.a = 1
 		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % \
 		[Globals.int_to_string(DimPurchase[k-1]), "" if DimPurchase[k-1] == 1 else "s"]
-		i.get_node("Buy").disabled = Globals.EternityPts.less(dimcost(k))
+		i.get_node("Buy").disabled = not dimcost(k).less(Globals.BoundlessPts)
 		i.get_node("A&G/Amount").text = DimAmount[k-1].to_string()
-		i.get_node("Buy").text = "Cost: %s EP" % dimcost(k).to_string()
+		#print(DimAmount[k-1].to_float())
+		i.get_node("Buy").text = "Cost: %s BP" % dimcost(k).to_string()
 	
 	var buymult = 5
 	
-	%Important.text = "[center]%s [font_size=20]%s[/font_size] %s [font_size=20]/ %s[/font_size]." % [
+	%Important.text = "[center]%s [font_size=20]%s[/font_size] %s [font_size=20]/%s[/font_size]." % [
 		"You have", BoundlessPower.to_string(), "Boundless Power, dividing Tachyon Dimensions' costs by",
 		BoundlessPower.add(1).to_string()
 	]
@@ -77,18 +81,14 @@ func _process(delta):
 		"You're gaining", BLPperS.to_string(), "Boundless Power per second."
 	]
 	
-	if false:
-		if not Input.is_action_pressed("ToggleAB"):
-			for i in range(8, 0, -1):
-				if Input.is_action_pressed("BuyTD%d" % i) or BuyMax:
-					if Input.is_action_pressed("BuyOne"):
-						buydim(i, 1)
-					elif dims[i].get_node("Buy/Progress").value >= \
-					dims[i].get_node("Buy/Progress").max_value:
-						buydim(i, 0)
-						if BuyMax:
-							buydim(i, 1e9)
-	BuyMax = Input.is_action_pressed("BuyMax")
+	#if false:
+		#if not Input.is_action_pressed("ToggleAB"):
+			#for i in range(8, 0, -1):
+				#if Input.is_action_pressed("BuyTD%d" % i) or BuyMax:
+					#buydim(i)
+					#if BuyMax:
+						#buydim(i)
+	#BuyMax = Input.is_action_pressed("BuyMax")
 	
 	for i in 8:
 		dims[i+1].get_node("N&M/Name").text = "%s Space Dimension" % Globals.ordinal(i+1)
@@ -103,14 +103,8 @@ func _process(delta):
 		
 		mult.mult2self(largenum.new(buymult).power(DimPurchase[i-1]))
 		
-		if Globals.progress <= GL.Progression.Duplicantes:
-			mult.mult2self(Formulas.duplicantes())
-		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		dims[i].get_node("N&M/Multiplier").show()
-		
-		if Globals.ECCompleted(2):
-			mult.mult2self(Formulas.ec2_reward())
 		
 		if i != 8:
 			if DimAmount[i].exponent == -INF:	dims[i].get_node("A&G/Growth").hide()
@@ -131,6 +125,3 @@ func boundlessed():
 	BoundlessPower = largenum.new(0)
 	for i in 8:
 		DimAmount[i] = largenum.new(DimPurchase[i])
-
-func unlocknewdim():
-	DimsUnlocked += 1

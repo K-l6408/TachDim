@@ -61,12 +61,14 @@ func ECCompleted(which):		return (CompletedECs >> (which - 1)) & 1
 
 var TDHandler  : Control
 var EDHandler  : Control
+var SDHandler  : Control
 var Automation : Control
 var Achievemer : Control
 var VisualSett : Control
 var EUHandler  : Control
 var OEUHandler : Control
 var DupHandler : Control
+var Studies    : Control
 
 var NotifHandler : Control
 
@@ -127,12 +129,9 @@ func _process(delta):
 		EternityPts = largenum.new(0)
 
 func boundlessnessreset():
-	TDHandler.reset(2)
-	TDHandler.updateTSpeed()
 	boundTime = 0
 	CompletedChallenges = 0
 	CompletedECs = 0
-	TachTotalBL = largenum.new(Tachyons)
 	EternityPts = largenum.new(0)
 	Eternities  = largenum.new(0)
 	progressBL = Progression.None
@@ -148,6 +147,8 @@ func boundlessnessreset():
 	EDHandler.DimsUnlocked = 0
 	EDHandler.reset()
 	DupHandler.reset()
+	TDHandler.reset(2)
+	TachTotalBL = largenum.new(Tachyons)
 
 func int_to_string(i:int) -> String:
 	match display:

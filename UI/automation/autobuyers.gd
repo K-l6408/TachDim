@@ -109,7 +109,14 @@ var BigBangAtEP := largenum.new(1)
 ]
 
 func reset():
-	pass
+	Unlocked = 0
+	TSUpgrades = 0
+	TDUpgrades = [0, 0, 0, 0, 0, 0, 0, 0]
+	RewdUpgrades = 0
+	RewdAQups = 0
+	DilUpgrades = 0
+	GalUpgrades = 0
+	BangUpgrades = 0
 
 func TDInterval(which):
 	var i = (0.5 + which * 0.1) * (0.6 ** TDUpgrades[which])
@@ -154,7 +161,7 @@ var RewdAQups    := 0
 var DilUpgrades  := 0
 var GalUpgrades  := 0
 var BangUpgrades := 0
-var IntervalCap  := [3, 4, 4, 4, 5, 5, 5, 5]
+const IntervalCap  := [3, 4, 4, 4, 5, 5, 5, 5]
 
 func improve_interval(which = 0):
 	if which == 0:
@@ -237,7 +244,7 @@ func _process(_delta):
 			bigbang()
 			$Auto/Buyers/BigBang/Timer.start(BangInterval())
 	if Globals.progress >= GL.Progression.Overcome:
-		if $Auto/Buyers/BigBang/Enabled.button_pressed and BigBangAtEP.less(Globals.TDHandler.epgained()):
+		if $Auto/Buyers/BigBang/Enabled.button_pressed and BigBangAtEP.less(Formulas.epgained()):
 			bigbang()
 	
 	if Input.is_action_pressed("ToggleAB"):
@@ -301,6 +308,7 @@ func _process(_delta):
 		if $Auto/Buyers/TimeSpeed/Mode.button_pressed:
 			$Auto/Buyers/TimeSpeed/Mode.text = "Buys max"
 	else:
+		$Auto/Buyers/TimeSpeed/Interval.text = "Complete the challenge to\nupgrade the interval"
 		$Auto/Buyers/TimeSpeed/Interval.disabled = true
 		$Auto/Buyers/TimeSpeed/Mode.disabled = true
 		$Auto/Buyers/TimeSpeed/Mode.button_pressed = false
@@ -337,10 +345,17 @@ func _process(_delta):
 		if RewdAQups >= 8 and RewdUpgrades >= 7:
 			Globals.Achievemer.set_unlocked(5, 2)
 	
-	if not Globals.Achievemer.is_unlocked(5, 3):
-		var done = true
-		for i in 8:
-			if TDBulk(i+1) < 512:
+	var done = true
+	for i in 8:
+		if TDUpgrades[i] >= IntervalCap[i] and Globals.Achievemer.is_unlocked(5, 3):
+			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).hide()
+			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size = Vector2(250, 44)
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 1.13
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 1.13
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 0.5
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).size = Vector2(70, 22)
+		else:
+			if TDBulk(i+1) < 512 or TDUpgrades[i] < IntervalCap[i]:
 				done = false
 				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).show()
 			else:
@@ -350,15 +365,8 @@ func _process(_delta):
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 0.7
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 0.0
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).size = Vector2(217, 45)
-		if done: Globals.Achievemer.set_unlocked(5, 3)
-	else:
-		for i in 8:
-			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).hide()
-			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size = Vector2(250, 44)
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 1.13
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 1.13
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 0.5
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).size = Vector2(70, 22)
+	if done and not Globals.Achievemer.is_unlocked(5, 3):
+		Globals.Achievemer.set_unlocked(5, 3)
 	
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
