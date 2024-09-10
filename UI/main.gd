@@ -9,9 +9,10 @@ var tabSymbolRight = "⇢\uf1de⁉δΞ∀\uf091\uf0c9\uf0ad]!"
 var dimensionSymbols = "Ψδ∀"
 var challengeSymbols = "Ψδ∀"
 var  eternitySymbols = "↑⭻"
+var boundlessSymbols = "\uf0e8\uf005"
 var     statsSymbols = "\uf036\uf162\uf0cb"
 var   optionsSymbols = "\uf0c7\uf1fc"
-var celestialSymbols = "⏣⚴☾𝄽\uF1E0ɸΩ"
+var celestialSymbols = "⏣⚴☾𝄽\uf1e0ɸ⸸"
 
 func _ready():
 	Globals.NotifHandler = $Notifs
@@ -25,7 +26,7 @@ func _ready():
 	Globals.EUHandler = %"Tabs/Eternity/Eternity Upgrades"
 	Globals.OEUHandler = %"Tabs/Eternity/Overcome Eternity"
 	Globals.DupHandler = %Tabs/Duplicantes
-	Globals.Studies = %Tabs/Boundlessness/Studies
+	Globals.Studies = %"Tabs/Boundlessness/Space Studies"
 	
 	for i in %Tabs.get_child_count():
 		TBar.set_tab_title(i, "%s %s %s" % \
@@ -39,6 +40,9 @@ func _ready():
 	for i in %Tabs/Eternity.get_child_count():
 		%Tabs/Eternity.get_tab_bar().set_tab_title(i, "%s %s %s" % \
 		[eternitySymbols[i], %Tabs/Eternity.get_child(i).name, eternitySymbols[i]])
+	for i in %Tabs/Boundlessness.get_child_count():
+		%Tabs/Boundlessness.get_tab_bar().set_tab_title(i, "%s %s %s" % \
+		[boundlessSymbols[i], %Tabs/Boundlessness.get_child(i).name, boundlessSymbols[i]])
 	for i in %Tabs/Statistics.get_child_count():
 		%Tabs/Statistics.get_tab_bar().set_tab_title(i, "%s %s %s" % \
 		[statsSymbols[i], %Tabs/Statistics.get_child(i).name, statsSymbols[i]])

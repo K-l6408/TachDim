@@ -118,6 +118,10 @@ func _process(delta):
 		if EUHandler.is_bought(12) and (EU12Timer == null or EU12Timer.time_left == 0):
 			EternityPts.add2self(fastestEtern.epgain)
 			EU12Timer = get_tree().create_timer(fastestEtern.time * 3)
+		if EternityPts.to_float() < 1e3 and OEUHandler.PasEPBought == 0:
+			if fmod(EternityPts.to_float(), 1) >= 0.8 or \
+			(EternityPts.to_float() > 0.002 and EternityPts.to_float() < 1):
+				EternityPts.add2self(0.001) # ah fuck a rounding error
 	if OEUHandler is Node:
 		var avg = largenum.new(0)
 		for i in last10etern:
@@ -130,7 +134,8 @@ func _process(delta):
 
 func boundlessnessreset():
 	boundTime = 0
-	CompletedChallenges = 0
+	if Boundlessnesses.to_float() < 2:
+		CompletedChallenges = 0
 	CompletedECs = 0
 	EternityPts = largenum.new(0)
 	Eternities  = largenum.new(0)
@@ -149,6 +154,7 @@ func boundlessnessreset():
 	DupHandler.reset()
 	TDHandler.reset(2)
 	TachTotalBL = largenum.new(Tachyons)
+	Studies.on_reset()
 
 func int_to_string(i:int) -> String:
 	match display:

@@ -92,3 +92,6 @@ static func duplicantes():
 		return dupli_no11()
 	else:
 		return dupli_yes11()
+
+static func bounlesspower():
+	return Globals.SDHandler.BoundlessPower.add(1).power(2)

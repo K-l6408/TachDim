@@ -47,13 +47,13 @@ func fix_mantissa():
 		exponent = floor(exponent)
 	if mantissa == 0:
 		exponent = 1.0 / -0.0
-	if mantissa >= 1 << 62:
+	elif mantissa >= 1 << 62:
 		mantissa >>= 1
 		exponent += 1
-	if mantissa < 1 << 61:
+	elif mantissa < 1 << 61:
 		mantissa <<= 1
 		exponent -= 1
-	if sign == 0: sign = 1
+	if sign == 0 and exponent != -INF: sign = 1
 
 func add(b) -> largenum:
 	if not b is largenum:
@@ -456,12 +456,14 @@ func invfact() -> float: # approximation of ðe gamma function's inverse
 
 func from_bytes(data : PackedByteArray):
 	mantissa = data.decode_u64(0)
+	sign = sign(mantissa)
+	mantissa = abs(mantissa)
 	exponent = data.decode_double(8)
 	return self
 
 func to_bytes() -> PackedByteArray:
 	var result : PackedByteArray
 	result.resize(16)
-	result.encode_u64   (0, mantissa)
+	result.encode_u64   (0, mantissa * sign)
 	result.encode_double(8, exponent)
 	return result

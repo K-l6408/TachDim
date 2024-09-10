@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=44 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_fid5e"]
@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://d070fk356hwgi" path="res://images/glass.png" id="15_7ies4"]
 [ext_resource type="Shader" path="res://UI/eternity/glass.gdshader" id="15_hde6e"]
 [ext_resource type="PackedScene" uid="uid://br0msw23i7kmv" path="res://UI/boundlessness/studies.tscn" id="17_uosw5"]
+[ext_resource type="PackedScene" uid="uid://cbiebd0j27hoy" path="res://UI/boundlessness/milestones.tscn" id="19_u3snt"]
 [ext_resource type="Shader" path="res://UI/tint.gdshader" id="24_irn3s"]
 [ext_resource type="FontFile" uid="uid://bbb4ct4acdbbl" path="res://fonts/Blobmoji.ttf" id="25_na6n0"]
 
@@ -70,6 +71,22 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(0.148651, 4.59479, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sfx5g"]
+resource_name = "boundless"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.3, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 0.2), Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_a3cka"]
@@ -115,6 +132,7 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8dv4p"]
 _data = {
 "bang": SubResource("Animation_m0sop"),
+"boundless": SubResource("Animation_sfx5g"),
 "overcome": SubResource("Animation_a3cka")
 }
 
@@ -187,6 +205,7 @@ grow_vertical = 2
 dragger_visibility = 2
 
 [node name="News" type="PanelContainer" parent="VSplitContainer"]
+z_index = 1
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 script = ExtResource("3_7hxj0")
@@ -501,7 +520,11 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="Studies" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Boundlessness" instance=ExtResource("17_uosw5")]
+[node name="Space Studies" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Boundlessness" instance=ExtResource("17_uosw5")]
+layout_mode = 2
+
+[node name="Milestones" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Boundlessness" instance=ExtResource("19_u3snt")]
+visible = false
 layout_mode = 2
 
 [node name="Achievements" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("6_mtmcd")]

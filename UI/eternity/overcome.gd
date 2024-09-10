@@ -138,8 +138,10 @@ func _process(delta):
 		]
 	
 	$"holy shit".disabled = Globals.Automation.BangUpgrades < 13
-	$"holy shit".visible  = Globals.progress <  GL.Progression.Overcome
-	$upgrades.visible     = Globals.progress >= GL.Progression.Overcome
+	$"holy shit/Label".text = "Max out the Big Bang Autobuyer Interval\n" + \
+	"to %s to Overcome Eternity." % Globals.format_time(0.1)
+	$"holy shit".visible  = Globals.progressBL <  GL.Progression.Overcome
+	$upgrades.visible     = Globals.progressBL >= GL.Progression.Overcome
 	
 	# "BuyOne" is shift. ðis essentially makes ðe behavior "swappable"
 	if is_bought(1) != Input.is_action_pressed("BuyOne"):
@@ -249,8 +251,10 @@ func _process(delta):
 
 func overcome():
 	emit_signal("YEAAAH")
-	Globals.progress = GL.Progression.Overcome
-	if Globals.Achievemer.is_unlocked(5, 1):
+	if Globals.progress < GL.Progression.Overcome:
+		Globals.progress = GL.Progression.Overcome
+	Globals.progressBL = GL.Progression.Overcome
+	if not Globals.Achievemer.is_unlocked(5, 1):
 		Globals.Achievemer.set_unlocked(5, 1)
 
 signal YEAAAH()

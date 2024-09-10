@@ -12,7 +12,7 @@ func _process(_delta):
 	for i in $Chal/lenges.get_child_count():
 		if i == 0: continue
 		$Chal/lenges.get_child(i).get_node("Name").text = "EC%s" % Globals.int_to_string(i)
-		$Chal/lenges.get_child(i).visible = Globals.TachTotal.log10() >= Globals.ECUnlocks[i-1]
+		$Chal/lenges.get_child(i).visible = Globals.TachTotalBL.log10() >= Globals.ECUnlocks[i-1]
 		if $Chal/lenges.get_child(i).visible: seen += 1
 		if Globals.ECCompleted(i):
 			$Chal/lenges.get_child(i).get_node("Start").text = "Completed"

@@ -74,8 +74,8 @@ func _process(delta):
 	var buymult = 5
 	
 	%Important.text = "[center]%s [font_size=20]%s[/font_size] %s [font_size=20]/%s[/font_size]." % [
-		"You have", BoundlessPower.to_string(), "Boundless Power, dividing Tachyon Dimensions' costs by",
-		BoundlessPower.add(1).to_string()
+		"You have", BoundlessPower.to_string(), "Boundless Power,\ndividing Tachyon Dimensions' costs by",
+		Formulas.bounlesspower().to_string()
 	]
 	%Important.text += "\n[font_size=10]%s [/font_size]%s[font_size=10] %s" % [
 		"You're gaining", BLPperS.to_string(), "Boundless Power per second."

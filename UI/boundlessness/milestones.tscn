@@ -1,0 +1,119 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbiebd0j27hoy"]
+
+[ext_resource type="Script" path="res://UI/boundlessness/milestones.gd" id="1_62jlh"]
+
+[node name="Milestones" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+script = ExtResource("1_62jlh")
+
+[node name="Mile" type="HFlowContainer" parent="."]
+layout_mode = 2
+
+[node name="M1" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_pressed = true
+button_mask = 0
+text = "Unlock the ×2 EP
+multiplier autobuyer."
+
+[node name="Label" type="Label" parent="Mile/M1"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 1 Boundlessness:"
+
+[node name="M2" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "You start Eternities
+with all Challenges
+complete and TD and
+Timespeed autobuyers
+fully upgraded."
+
+[node name="Label" type="Label" parent="Mile/M2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 2 Boundlessnesses:"
+
+[node name="M3" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "You start having already
+Overcome Eternity, and
+unlock autobuyers for
+Duplicantes chance and
+interval upgrades."
+
+[node name="Label" type="Label" parent="Mile/M3"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 3 Boundlessnesses:"
+
+[node name="M4" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "You start with all
+Eternity Upgrades.
+
+The Big Bang autobuyer
+has more options."
+
+[node name="Label" type="Label" parent="Mile/M4"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 4 Boundlessnesses:"

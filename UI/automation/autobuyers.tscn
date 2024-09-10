@@ -37,13 +37,15 @@ size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/BigBang"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]Big Bang Autobuyer
 [font_size=10] Activates every 30.00 seconds"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/BigBang"]
@@ -126,14 +128,16 @@ size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Galaxy"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]Tachyon Galaxy Autobuyer
 [font_size=10] Activates every 10.00 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/Galaxy"]
@@ -204,14 +208,16 @@ size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Dilation"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]Time Dilation Autobuyer
 [font_size=10] Activates every 4.00 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/Dilation"]
@@ -329,21 +335,61 @@ text = "Enabled"
 wait_time = 4.0
 one_shot = true
 
-[node name="Rewind" type="Control" parent="Auto/Buyers"]
+[node name="EPMult" type="Control" parent="Auto/Buyers"]
+visible = false
 clip_contents = true
+custom_minimum_size = Vector2(180, 35)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/EPMult"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -17.5
+offset_right = 116.0
+offset_bottom = 17.5
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]EP Multiplier Autobuyer
+[font_size=10] Activates instantly"
+fit_content = true
+scroll_active = false
+
+[node name="Enabled" type="Button" parent="Auto/Buyers/EPMult"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -71.0
+offset_top = -11.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+toggle_mode = true
+button_pressed = true
+text = "Enabled"
+
+[node name="Rewind" type="Control" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/Rewind"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 184.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -17.0
+offset_right = 156.0
+offset_bottom = 17.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]Rewind Autobuyer
 [font_size=10] Activates every 1.50 seconds
 Current accuracy: 0.5"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/Rewind"]
@@ -416,20 +462,21 @@ text = "Timespeed Autobuyer locked
 (Requires 1e100 total Tachyons)"
 
 [node name="TimeSpeed" type="Control" parent="Auto/Buyers"]
-clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TimeSpeed"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]Timespeed Autobuyer
 [font_size=10] Activates every 0.50 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TimeSpeed"]
@@ -513,20 +560,21 @@ text = "1st Tachyon Dimension Autobuyer locked
 (Requires 1e20 total Tachyons)"
 
 [node name="TD1" type="Control" parent="Auto/Buyers"]
-clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD1"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]1st Tachyon Dim Autobuyer
 [font_size=10] Activates every 0.50 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TD1"]
@@ -583,20 +631,21 @@ text = "2nd Tachyon Dimension Autobuyer locked
 
 [node name="TD2" type="Control" parent="Auto/Buyers"]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD2"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]2nd Tachyon Dim Autobuyer
 [font_size=10] Activates every 0.60 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TD2"]
@@ -653,20 +702,21 @@ text = "3rd Tachyon Dimension Autobuyer locked
 
 [node name="TD3" type="Control" parent="Auto/Buyers"]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD3"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]3rd Tachyon Dim Autobuyer
 [font_size=10] Activates every 0.70 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TD3"]
@@ -723,20 +773,21 @@ text = "4th Tachyon Dimension Autobuyer locked
 
 [node name="TD4" type="Control" parent="Auto/Buyers"]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD4"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]4th Tachyon Dim Autobuyer
 [font_size=10] Activates every 0.80 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TD4"]
@@ -793,20 +844,21 @@ text = "5th Tachyon Dimension Autobuyer locked
 
 [node name="TD5" type="Control" parent="Auto/Buyers"]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD5"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]5th Tachyon Dim Autobuyer
 [font_size=10] Activates every 0.90 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TD5"]
@@ -863,20 +915,21 @@ text = "6th Tachyon Dimension Autobuyer locked
 
 [node name="TD6" type="Control" parent="Auto/Buyers"]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD6"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]6th Tachyon Dim Autobuyer
 [font_size=10] Activates every 1.00 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TD6"]
@@ -933,20 +986,21 @@ text = "7th Tachyon Dimension Autobuyer locked
 
 [node name="TD7" type="Control" parent="Auto/Buyers"]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD7"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]7th Tachyon Dim Autobuyer
 [font_size=10] Activates every 1.10 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TD7"]
@@ -1003,20 +1057,21 @@ text = "8th Tachyon Dimension Autobuyer locked
 
 [node name="TD8" type="Control" parent="Auto/Buyers"]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD8"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_right = 184.0
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]8th Tachyon Dim Autobuyer
 [font_size=10] Activates every 1.20 seconds
 Current bulk: ×1"
+fit_content = true
 scroll_active = false
 
 [node name="Interval" type="Button" parent="Auto/Buyers/TD8"]

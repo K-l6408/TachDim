@@ -224,6 +224,8 @@ func saveF(file : String = saveFilePath):
 		DATA["dupe galaxies"]= Globals.DupHandler.dupGalaxies
 	
 	if Globals.progress >= GL.Progression.Boundlessness:
+		DATA["bln progress"] = Globals.progressBL
+		
 		DATA["bln-es"] = Globals.Boundlessnesses.to_bytes()
 		DATA["bln points"] = Globals.BoundlessPts.to_bytes()
 		DATA["top tachyons in bln"] = Globals.TachTotalBL.to_bytes()
@@ -406,6 +408,9 @@ func loadF(file : String = saveFilePath):
 		Globals.eternTime = Globals.existence
 	
 	if Globals.progress >= GL.Progression.Overcome:
+		if DATA.has("bln progress"):
+			Globals.progressBL = DATA["bln progress"]
+		
 		if DATA.has("bought overcome upgrades"):
 			Globals.OEUHandler.Bought = DATA["bought overcome upgrades"]
 		

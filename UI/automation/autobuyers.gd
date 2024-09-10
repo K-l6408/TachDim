@@ -99,6 +99,11 @@ var GalLimit:
 
 var BigBangAtEP := largenum.new(1)
 
+var EPMultEnabled:
+	get:
+		return $Auto/Buyers/EPMult/Enabled.button_pressed \
+		and $Auto/Buyers/EPMult.visible
+
 @onready var sizechange = [
 	$Auto/Buyers/HSeparator, $Auto/Buyers/BigBang, $Auto/Buyers/Galaxy, $Auto/Buyers/Dilation,
 	$Auto/Buyers/TimeSpeedLocked, $Auto/Buyers/TimeSpeed, $Auto/Buyers/TD1Locked, $Auto/Buyers/TD1,
@@ -109,9 +114,10 @@ var BigBangAtEP := largenum.new(1)
 ]
 
 func reset():
-	Unlocked = 0
-	TSUpgrades = 0
-	TDUpgrades = [0, 0, 0, 0, 0, 0, 0, 0]
+	if Globals.Boundlessnesses.to_float() < 2:
+		Unlocked = 0
+		TSUpgrades = 0
+		TDUpgrades = [0, 0, 0, 0, 0, 0, 0, 0]
 	RewdUpgrades = 0
 	RewdAQups = 0
 	DilUpgrades = 0
@@ -131,7 +137,9 @@ func RewdAccuracy():
 	if i > 1: return 1
 	return i
 func RewdInterval():
-	if Globals.Achievemer.is_unlocked(5, 2): return 0
+	if Globals.Achievemer.is_unlocked(5, 2):
+		RewdUpgrades = 7
+		return 0
 	var i = 3 * (0.6 ** RewdUpgrades)
 	if i < 0.11: return MIN_INTERVAL
 	return i
@@ -149,10 +157,10 @@ func BangInterval():
 	return i
 
 func TDBulk(which):
-	if TDUpgrades[which-1] <= IntervalCap[which-1]:
-		return 1
-	elif Globals.Achievemer.is_unlocked(5, 3):
+	if Globals.Achievemer.is_unlocked(5, 3):
 		return 1e9
+	elif TDUpgrades[which-1] <= IntervalCap[which-1]:
+		return 1
 	else:
 		return max(2 ** (TDUpgrades[which-1] - IntervalCap[which-1]), 512)
 
@@ -223,6 +231,7 @@ func _process(_delta):
 	$Auto/Buyers/Dilation.visible = Globals.challengeCompleted(11)
 	$Auto/Buyers/Galaxy  .visible = Globals.challengeCompleted(12)
 	$Auto/Buyers/BigBang .visible = Globals.challengeCompleted(14)
+	$Auto/Buyers/EPMult  .visible = not Globals.Boundlessnesses.less(0)
 	if Globals.challengeCompleted(10) and $Auto/Buyers/Rewind/Timer.time_left == 0:
 		if $Auto/Buyers/Rewind/Enabled.button_pressed and \
 		Globals.TDHandler.rewindNode.score >= RewdAccuracy() and not \
@@ -241,11 +250,11 @@ func _process(_delta):
 		if $Auto/Buyers/Galaxy/Enabled.button_pressed:
 			buygala()
 			$Auto/Buyers/Galaxy/Timer.start(GalInterval())
-	if Globals.challengeCompleted(14) and $Auto/Buyers/BigBang/Timer.time_left == 0 and (Globals.progress < GL.Progression.Overcome or Globals.Challenge != 0):
+	if Globals.challengeCompleted(14) and $Auto/Buyers/BigBang/Timer.time_left == 0 and (Globals.progressBL < GL.Progression.Overcome or Globals.Challenge != 0):
 		if $Auto/Buyers/BigBang/Enabled.button_pressed:
 			bigbang()
 			$Auto/Buyers/BigBang/Timer.start(BangInterval())
-	if Globals.progress >= GL.Progression.Overcome:
+	if Globals.progressBL >= GL.Progression.Overcome:
 		if $Auto/Buyers/BigBang/Enabled.button_pressed and BigBangAtEP.less(Formulas.epgained()):
 			bigbang()
 	
@@ -275,8 +284,13 @@ func _process(_delta):
 	for i in sizechange:
 		if i != null: i.custom_minimum_size.x = size.x - 10
 	if not ($Auto/Buyers/Rewind/Interval.visible or $Auto/Buyers/Rewind/Accuracy.visible):
-		$Auto/Buyers/Rewind.custom_minimum_size = Vector2(250, 80)
-	else: $Auto/Buyers/Rewind.custom_minimum_size = Vector2(size.x - 10, 45)
+		$Auto/Buyers/Rewind.custom_minimum_size = Vector2(260, 44)
+		$Auto/Buyers/Rewind/Objective.custom_minimum_size.x = 123
+		$Auto/Buyers/Rewind/Objective.\
+		set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+		$Auto/Buyers/Rewind/Objective.offset_left = -113
+	else:
+		$Auto/Buyers/Rewind.custom_minimum_size = Vector2(size.x - 10, 45)
 	
 	if RewdInterval() == 0:
 		$Auto/Buyers/Rewind/RichTextLabel.text = \
@@ -305,7 +319,7 @@ func _process(_delta):
 		$Auto/Buyers/TimeSpeed/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 		[Globals.percent_to_string(0.4, 0),
 		Globals.float_to_string(2.0 ** TSUpgrades, 1)]
-		$Auto/Buyers/TimeSpeed/Interval.disabled = Globals.EternityPts.less(2 ** TSUpgrades)
+		$Auto/Buyers/TimeSpeed/Interval.disabled = Globals.EternityPts.less(largenum.two_to_the(TSUpgrades))
 		$Auto/Buyers/TimeSpeed/Mode.disabled = false
 		if $Auto/Buyers/TimeSpeed/Mode.button_pressed:
 			$Auto/Buyers/TimeSpeed/Mode.text = "Buys max"
@@ -352,23 +366,38 @@ func _process(_delta):
 		if TDUpgrades[i] >= IntervalCap[i] and Globals.Achievemer.is_unlocked(5, 3):
 			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).hide()
 			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size = Vector2(250, 44)
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 1.13
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 1.13
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 0.5
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).size = Vector2(70, 22)
+			get_node("Auto/Buyers/TD%d" % (i+1)).size = Vector2(250, 44)
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).custom_minimum_size = Vector2(70, 22)
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).\
+			set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).position.x = \
+			get_node("Auto/Buyers/TD%d/Enabled" % (i+1)).position.x
 		else:
 			if TDBulk(i+1) < 512 or TDUpgrades[i] < IntervalCap[i]:
 				done = false
 				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).show()
 			else:
 				get_node("Auto/Buyers/TD%d/Interval" % (i+1)).hide()
-			get_node("Auto/Buyers/TD%d" % (i+1)).custom_minimum_size.y = 45
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).custom_minimum_size.x = 217
+			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).\
+			set_anchors_and_offsets_preset(Control.PRESET_VCENTER_WIDE)
 			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_left  = 0.7
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_right = 0.7
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).anchor_top   = 0.0
-			get_node("Auto/Buyers/TD%d/Mode" % (i+1)).size = Vector2(217, 45)
 	if done and not Globals.Achievemer.is_unlocked(5, 3):
 		Globals.Achievemer.set_unlocked(5, 3)
+	
+	if TSUpgrades >= 3 and Globals.Achievemer.is_unlocked(5, 3):
+		$Auto/Buyers/TimeSpeed.custom_minimum_size = Vector2(250, 44)
+		$Auto/Buyers/TimeSpeed.size = Vector2(250, 44)
+		$Auto/Buyers/TimeSpeed/Mode.custom_minimum_size = Vector2(70, 22)
+		$Auto/Buyers/TimeSpeed/Mode.\
+		set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+		$Auto/Buyers/TimeSpeed/Mode.position.x = \
+		$Auto/Buyers/TimeSpeed/Enabled.position.x
+	else:
+		$Auto/Buyers/TimeSpeed/Mode.anchor_left  = 0.7
+		$Auto/Buyers/TimeSpeed/Mode.anchor_right = 0.7
+		$Auto/Buyers/TimeSpeed/Mode.anchor_top   = 0.0
+		$Auto/Buyers/TimeSpeed/Mode.size = Vector2(217, 45)
 	
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),

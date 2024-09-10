@@ -6,6 +6,8 @@ var BPST := 0
 var ST := largenum.new(0)
 
 var purchased : PackedStringArray = []
+var respecing : bool :
+	get: return $Respec.button_pressed
 
 func theorem_cost_tc():
 	return largenum.ten_to_the(20000 * (TCST + 1))
@@ -36,6 +38,13 @@ func theorem_buy(how):
 			while Globals.BoundlessPts.less(theorem_cost_bp()):
 				theorem_buy(2)
 
+func on_reset():
+	if respecing:
+		var sds = Globals.SDHandler.DimsUnlocked
+		respec()
+		for i in sds:
+			buy_study("SD%d" % (i + 1))
+
 func _ready():
 	for tree in %Trees.get_children():
 		for i in tree.get_children():
@@ -60,6 +69,7 @@ func _process(_delta):
 	)
 	
 	$ST/Amount.text = "%s Space Theorems" % ST.to_string()
+	
 	
 	%StudyTree1/SD1.text = "\nUnlock the %s\nSpace Dimension.\n\n\n" % \
 	Globals.ordinal(1)
@@ -100,12 +110,13 @@ func respec():
 	ST = largenum.new(TCST + EPST + BPST)
 
 func buy_study(which):
+	if which is String:
+		which = find_study(which)
 	if which is Study:
+		if not ST.less(which.cost): return
 		ST.add2self(-which.cost)
 		purchased.append(which.id_label.text)
 		which.bought = true
-	if which is String:
-		return buy_study(find_study(which))
 
 func find_study(id:String):
 	for tree in %Trees.get_children():

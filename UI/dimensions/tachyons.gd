@@ -90,7 +90,7 @@ var buylim : int :
 var latest_purchased = 1
 
 func dimcost(which):
-	return DimBaseCost[which-1].divide(Globals.SDHandler.BoundlessPower.add(1))
+	return DimBaseCost[which-1].divide(Formulas.bounlesspower())
 
 func updateTSpeed():
 	var GalaxyBoost = 0.975
@@ -224,8 +224,8 @@ func dilate():
 
 func galaxy():
 	if Globals.Challenge == 22: return
-	reset(1)
 	Globals.TGalaxies += 1
+	reset(1)
 	if  Globals.progress   < Globals.Progression.Galaxy:
 		Globals.progress   = Globals.Progression.Galaxy
 	if  Globals.progressBL < Globals.Progression.Galaxy:
@@ -357,8 +357,7 @@ func reset(level := 0, challengeReset := true):
 		Globals.eternTime = 0
 		topTachyonsInEternity = largenum.new(0)
 		emit_signal("eternitied")
-	if level >= 1:
-		updateTSpeed()
+	updateTSpeed()
 
 func _process(delta):
 	
@@ -470,13 +469,14 @@ func _process(delta):
 		%Important.text += "\n[font_size=10]%s and %s Dimension: [/font_size]×%s" % \
 		[Globals.ordinal(2), Globals.ordinal(1), Globals.float_to_string(0.03)]
 	if Globals.Challenge == 9:
-		%Important.text += "\n \n[font_size=10]Production: [/font_size]/ " + \
-		Globals.Tachyons.power(0.05).to_string()
+		%Important.text += "\n \n[font_size=10]Dimensions %s-%s: [/font_size]/" % [
+			Globals.int_to_string(1), Globals.int_to_string(7)
+		] + Globals.Tachyons.power(0.05).to_string()
 	if Globals.Challenge == 14:
-		%Important.text += "\n \n[font_size=10]Production: [/font_size]/ " + \
+		%Important.text += "\n \n[font_size=10]Production: [/font_size]/" + \
 		Globals.float_to_string(C14Divisor)
 	if Globals.Challenge == 16:
-		%Important.text += "\n \n[font_size=10]Production: [/font_size]/ " + \
+		%Important.text += "\n \n[font_size=10]Production: [/font_size]/" + \
 		Globals.float_to_string(C14Divisor) + ", " + Globals.percent_to_string(C2Multiplier)
 	if %Prestiges/DiButton.material != null:
 		%Prestiges/DiButton.material.\
@@ -620,7 +620,8 @@ func _process(delta):
 		%Prestiges/GaButton.disabled = true
 		%Prestiges/GaButton.text = "Tachyon Galaxies disabled\n(Eternity Challenge %s)" % \
 		Globals.int_to_string(7)
-	%Prestiges/Reset.visible = (Globals.Challenge in [18, 19])
+	%Prestiges/Reset.visible = (Globals.Challenge in [14, 18, 19]) and \
+	Globals.TDilation > -3
 	
 	if not Input.is_action_pressed("ToggleAB"):
 		for i in range(8, 0, -1):
@@ -692,7 +693,8 @@ func _process(delta):
 		if Globals.Challenge == 3:
 			if i == 3: mult.mult2self(3)
 			if i <= 2: mult.mult2self(0.03)
-		if Globals.Challenge ==  9: mult.div2self(Globals.Tachyons.power(0.05))
+		if Globals.Challenge == 9 and i != 8:
+			mult.div2self(Globals.Tachyons.power(0.05))
 		if Globals.Challenge == 14 or Globals.Challenge == 16: mult.div2self(C14Divisor)
 		
 		if Globals.Challenge != 13:
@@ -700,14 +702,14 @@ func _process(delta):
 			if Globals.Achievemer.is_unlocked(2, 7) and i == 1: mult.mult2self(1.5)
 			if Globals.Achievemer.is_unlocked(3, 4) and i != 8: mult.mult2self(1.5)
 			if Globals.Achievemer.is_unlocked(4, 8): mult.mult2self(1.2)
-		
-		if Globals.OEUHandler.is_bought(1):
-			mult.mult2self(Formulas.overcome_1())
-		if Globals.Achievemer.is_unlocked(5, 6):
-			mult.mult2self(Formulas.achievement_56())
-		
-		if Globals.Achievemer.is_unlocked(6, 2) and i <= 4:
-			mult.mult2self(3)
+			
+			if Globals.OEUHandler.is_bought(1):
+				mult.mult2self(Formulas.overcome_1())
+			if Globals.Achievemer.is_unlocked(5, 6):
+				mult.mult2self(Formulas.achievement_56())
+			
+			if Globals.Achievemer.is_unlocked(6, 2) and i <= 4:
+				mult.mult2self(3)
 		
 		if not Globals.Achievemer.is_unlocked(3, 1) and mult.log10() >= 40:
 			Globals.Achievemer.set_unlocked(3, 1)

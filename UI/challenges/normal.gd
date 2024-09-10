@@ -46,6 +46,9 @@ func _process(_delta):
 	[Globals.ordinal(7), Globals.ordinal(8)] + \
 	"disabled, but Dilation and Galaxies are cheaper."
 	
+	$Chal/lenges/C9/Condition.text = "All Dimensions except the " + \
+	Globals.ordinal(8) + " get weaker as you gain more Tachyons."
+	
 	$Chal/lenges/C11/Condition.text = "You start with -%s Dilation, locking all " % Globals.int_to_string(3) + \
 	"Tachyon Dimensions except the %s." % Globals.ordinal(1)
 	

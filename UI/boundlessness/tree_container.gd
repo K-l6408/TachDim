@@ -36,7 +36,7 @@ func sort():
 			pos += 1
 			study.column = pos
 		row_y += max_new_y
-	custom_minimum_size.y = row_y + 50
+	custom_minimum_size.y = row_y + 60
 	
 	for i in get_children():
 		if i is Study:

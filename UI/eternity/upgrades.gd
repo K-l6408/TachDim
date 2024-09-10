@@ -35,7 +35,7 @@ func buyEPmult():
 	EPMultBought += 1
 
 func maxEPmult():
-	while not Globals.EternityPts.less(largenum.ten_to_the(EPMultBought + 1)):
+	while largenum.ten_to_the(EPMultBought + 1).less(Globals.EternityPts):
 		buyEPmult()
 
 func _process(_delta):
@@ -82,10 +82,13 @@ func _process(_delta):
 		$AutoGal.remove_theme_stylebox_override("disabled")
 		$AutoGal.disabled = Globals.EternityPts.less(Costs[4][0])
 	
-	$EPMult.disabled = \
-	Globals.EternityPts.less(largenum.ten_to_the(EPMultBought + 1))
-	$EPMult/Max.disabled = \
-	Globals.EternityPts.less(largenum.ten_to_the(EPMultBought + 1))
+	$EPMult.disabled = not \
+	largenum.ten_to_the(EPMultBought + 1).less(Globals.EternityPts)
+	$EPMult/Max.disabled = not \
+	largenum.ten_to_the(EPMultBought + 1).less(Globals.EternityPts)
+	if Globals.Automation.EPMultEnabled and \
+	largenum.ten_to_the(EPMultBought + 1).less(Globals.EternityPts):
+		maxEPmult()
 	
 	if is_bought(1) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col1/TimePlayed.text = \
@@ -191,9 +194,9 @@ func _process(_delta):
 	Globals.int_to_string(3)
 	if is_bought(12) != Input.is_action_pressed("BuyOne"):
 		if Globals.fastestEtern.time < 0:
-			$Columns/Col3/PassiveEP.text += "Currently: Too slow to generate"
+			$Columns/Col3/PassiveEP.text += "Currently: Too slow\nto generate"
 		else:
-			$Columns/Col3/PassiveEP.text += "Currently: %s every %s" % \
+			$Columns/Col3/PassiveEP.text += "Currently: %s\nevery %s" % \
 			[Globals.fastestEtern.epgain, Globals.format_time(Globals.fastestEtern.time * 3)]
 	else:
 		$Columns/Col3/PassiveEP.text += "Cost: %s EP" % \

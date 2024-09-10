@@ -37,9 +37,10 @@ func _process(delta):
 			material.set_shader_parameter("zoom", 1.0)
 		score = 1 - abs(score)
 		if smol:
-			if disabled: text = ""
-			else: text = "×%s" % \
-				Globals.TDHandler.rewindBoost(score).divide(Globals.TDHandler.RewindMult).to_string()
+			var j = Globals.TDHandler.rewindBoost(score).\
+			divide(Globals.TDHandler.RewindMult)
+			if j.exponent < 0 or disabled: text = ""
+			else: text = "×%s" % j.to_string()
 	material.set_shader_parameter("pixelsize", 1./size.x)
 
 func _on_pressed():

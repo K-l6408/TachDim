@@ -55,8 +55,15 @@ func _process(_delta):
 	$HFlow/Scaling/Label.text = "UI Scaling: ×%s" % \
 	Globals.float_to_string($HFlow/Scaling.value)
 	%AnimOptions/Blobs.visible = (theme_txt == "Blob")
+	custom_minimum_size.y = $HFlow.size.y
+	if Input.is_action_just_pressed("Zoom+") and $HFlow/Scaling.value < 4:
+		$HFlow/Scaling.value *= (2 ** +(1. / 3))
+		change_ui_scaling()
+	if Input.is_action_just_pressed("Zoom-") and $HFlow/Scaling.value > 0.25:
+		$HFlow/Scaling.value *= (2 ** -(1. / 3))
+		change_ui_scaling()
 
-func change_ui_scaling(_value_changed):
+func change_ui_scaling(_value_changed = false):
 	get_node("/root").content_scale_factor = $HFlow/Scaling.value
 
 func change_theme(index):

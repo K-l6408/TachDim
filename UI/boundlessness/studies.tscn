@@ -14,6 +14,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rlv08")
 
+[node name="Respec" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.417
+anchor_right = 0.583
+offset_left = -0.320038
+offset_top = 20.0
+offset_right = 0.320007
+offset_bottom = 50.0
+grow_horizontal = 2
+toggle_mode = true
+text = "Respec Studies on the
+next Boundlessness"
+
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -31,7 +45,7 @@ size_flags_vertical = 3
 
 [node name="StudyTree1" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(377, 1045)
+custom_minimum_size = Vector2(377, 680)
 layout_mode = 2
 size_flags_horizontal = 6
 script = ExtResource("1_cryta")

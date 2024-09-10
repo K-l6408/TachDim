@@ -66,7 +66,8 @@ func achnames(r, c):
 			5: return "Is this safe?"
 			6: return "I??? h-two them???"
 			
-			
+			8: return "%s degrees to infinity" % \
+			Globals.int_to_string(1024).to_pascal_case()
 		7: match c:
 			1: return "New Galaxies!"
 			2: return "not so challenging now"
@@ -100,7 +101,7 @@ func achreqs(r, c):
 			1: return "Get any TD multiplier above %s." % largenum.ten_to_the(40)
 			2: return "Big Bang %s times." % Globals.int_to_string(10)
 			3: return "Keep the game closed for more than %s." % Globals.format_time(3600*6)
-			4: return "Big Bang with no %s TDs." % Globals.ordinal(8) + \
+			4: return "Big Bang without any %s Dimensions." % Globals.ordinal(8) + \
 			"\n(Reward: TDs %s-%s are %s stronger.)" % [
 				Globals.int_to_string(1), Globals.int_to_string(7),
 				Globals.percent_to_string(.5)
