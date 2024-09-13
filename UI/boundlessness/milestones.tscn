@@ -15,6 +15,8 @@ script = ExtResource("1_62jlh")
 
 [node name="Mile" type="HFlowContainer" parent="."]
 layout_mode = 2
+theme_override_constants/v_separation = 25
+alignment = 1
 
 [node name="M1" type="Button" parent="Mile"]
 custom_minimum_size = Vector2(200, 100)
@@ -74,11 +76,10 @@ theme_type_variation = &"Study"
 theme_override_font_sizes/font_size = 16
 toggle_mode = true
 button_mask = 0
-text = "You start having already
-Overcome Eternity, and
-unlock autobuyers for
-Duplicantes chance and
-interval upgrades."
+text = "You start with Eternity
+overcame and 
+all normal autobuyers
+fully upgraded."
 
 [node name="Label" type="Label" parent="Mile/M3"]
 layout_mode = 1
@@ -117,3 +118,27 @@ offset_right = 57.0
 offset_bottom = -3.0
 grow_horizontal = 2
 text = "At 4 Boundlessnesses:"
+
+[node name="M5" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "You complete Eternity
+Challenges immediately
+when you unlock them."
+
+[node name="Label" type="Label" parent="Mile/M5"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 5 Boundlessnesses:"

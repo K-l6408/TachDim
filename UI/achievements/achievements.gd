@@ -1,7 +1,7 @@
 extends Control
 
 const MAXROWS = 20
-var loaded_rows = 7
+var loaded_rows = 8
 var unlocked : PackedByteArray = []
 var achgot : int :
 	get:
@@ -298,3 +298,6 @@ func _process(_delta):
 	if not is_unlocked(7, 7):
 		if Globals.DupHandler.dupGalaxies >= 3:
 			set_unlocked(7, 7)
+	if not is_unlocked(7, 8):
+		if Globals.progress >= GL.Progression.Boundlessness:
+			set_unlocked(7, 8)

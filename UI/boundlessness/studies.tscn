@@ -45,7 +45,7 @@ size_flags_vertical = 3
 
 [node name="StudyTree1" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(377, 680)
+custom_minimum_size = Vector2(377, 1025)
 layout_mode = 2
 size_flags_horizontal = 6
 script = ExtResource("1_cryta")

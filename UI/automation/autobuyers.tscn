@@ -104,6 +104,29 @@ grow_vertical = 2
 text = " (1.00)"
 vertical_alignment = 1
 
+[node name="OptionButton" type="OptionButton" parent="Auto/Buyers/BigBang/Amount"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+offset_left = -374.8
+offset_top = -11.0
+offset_right = -157.8
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+item_count = 3
+selected = 0
+popup/item_0/text = "Big Bang at X EP:"
+popup/item_0/id = 0
+popup/item_1/text = "X times current EP:"
+popup/item_1/id = 1
+popup/item_2/text = "Big Bang every X seconds:"
+popup/item_2/id = 2
+
 [node name="Enabled" type="Button" parent="Auto/Buyers/BigBang"]
 layout_mode = 1
 anchors_preset = 1

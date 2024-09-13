@@ -62,7 +62,7 @@ func _process(_delta):
 			else:
 				k.get_child(j).remove_theme_stylebox_override("disabled")
 				k.get_child(j).disabled = \
-				Globals.EternityPts.less(Costs[i][j] - 0.001)
+				Costs[i][j] > Globals.EternityPts.to_float()
 				if j > 0 and not is_bought(i*4+j):
 					k.get_child(j).disabled = true
 	
@@ -197,7 +197,7 @@ func _process(_delta):
 			$Columns/Col3/PassiveEP.text += "Currently: Too slow\nto generate"
 		else:
 			$Columns/Col3/PassiveEP.text += "Currently: %s\nevery %s" % \
-			[Globals.fastestEtern.epgain, Globals.format_time(Globals.fastestEtern.time * 3)]
+			[Globals.fastestEtern.currency, Globals.format_time(Globals.fastestEtern.time * 3)]
 	else:
 		$Columns/Col3/PassiveEP.text += "Cost: %s EP" % \
 		Globals.int_to_string(Costs[2][3])

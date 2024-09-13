@@ -4,6 +4,8 @@ const PLANCK_LOG = 43.2683
 var secondsInPlanckTime = largenum.ten_to_the(PLANCK_LOG)
 var eternityColor : String :
 	get: return get_theme_color("font_color", "ButtonEtern").to_html(false)
+var boundlessColor : String :
+	get: return get_theme_color("font_color", "ButtonBLess").to_html(false)
 
 func _process(_delta):
 	text = "[center][font_size=30]%s[/font_size]\n%s %s %s\n%s %s." % [
@@ -58,10 +60,21 @@ func _process(_delta):
 		text += " to count all your tachyons."
 	
 	if Globals.progress >= Globals.Progression.Eternity:
-		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s\n%s %s.\n%s %s %s" % [
+		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s%s%s.\n%s %s.\n%s %s %s" % [
 			eternityColor,
 			"Eternity",
-			"You have", Globals.Eternities, "Eternities.",
+			"You have", Globals.Eternities, "Eternit",
+			"y" if Globals.Eternities.to_float() == 1 else "ies",
+			" this Boundlessness" if Globals.Boundlessnesses.to_float() > 0 else "",
 			"Your fastest Eternity was", Globals.format_time(Globals.fastestEtern.time),
 			"You have spent", Globals.format_time(Globals.eternTime), "in this Eternity."
+		]
+	
+	if Globals.progress >= Globals.Progression.Boundlessness:
+		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s\n%s %s.\n%s %s %s" % [
+			boundlessColor,
+			"Boundlessness",
+			"You have", Globals.Boundlessnesses, "Boundlessnesses.",
+			"Your fastest Boundlessness was", Globals.format_time(Globals.fastestBLess.time),
+			"You have spent", Globals.format_time(Globals.boundTime), "in this Boundlessness."
 		]

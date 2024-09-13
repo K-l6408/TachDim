@@ -145,8 +145,8 @@ func saveF(file : String = saveFilePath):
 		DATA["eternities"] = Globals.Eternities.to_bytes()
 		DATA["fastest eternity"] = {
 			time = Globals.fastestEtern.time,
-			epgain = Globals.fastestEtern.epgain.to_bytes(),
-			eternities = Globals.fastestEtern.eternities.to_bytes()
+			currency = Globals.fastestEtern.currency.to_bytes(),
+			eternities = Globals.fastestEtern.amount.to_bytes()
 		}
 		DATA["time in eternity"] = Globals.eternTime
 		if Globals.Challenge == 10:
@@ -253,6 +253,11 @@ func saveF(file : String = saveFilePath):
 		]
 		DATA["space purchases"] = Globals.SDHandler.DimPurchase
 		DATA["boundless power"] = Globals.SDHandler.BoundlessPower.to_bytes()
+		DATA["fastest boundlessness"] = Globals.fastestBLess.to_dict()
+		
+		DATA["last 10 bln"] = []
+		for i in Globals.last10bless:
+			DATA["last 10 bln"].append(i.to_dict())
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -344,11 +349,11 @@ func loadF(file : String = saveFilePath):
 		
 		if DATA.has("fastest eternity"):
 			if DATA["fastest eternity"] is Dictionary:
-				Globals.fastestEtern = Globals.EternityData.from_dict(DATA["fastest eternity"])
+				Globals.fastestEtern = Globals.PrestigeData.from_dict(DATA["fastest eternity"])
 			elif DATA["fastest eternity"] is int or DATA["fastest eternity"] is float:
 				Globals.fastestEtern.time       = DATA["fastest eternity"]
-				Globals.fastestEtern.epgain     = largenum.new(1)
-				Globals.fastestEtern.eternities = largenum.new(1)
+				Globals.fastestEtern.currency   = largenum.new(1)
+				Globals.fastestEtern.amount     = largenum.new(1)
 		
 		if Globals.Challenge == 10:
 			Globals.TDHandler.C10Power = DATA["c10 power"]
@@ -388,9 +393,9 @@ func loadF(file : String = saveFilePath):
 		if DATA.has("last 10 eternities"):
 			Globals.last10etern = []
 			for e in DATA["last 10 eternities"]:
-				if Globals.EternityData.from_dict(e) != null:
+				if Globals.PrestigeData.from_dict(e) != null:
 					Globals.last10etern.append(
-						Globals.EternityData.from_dict(e)
+						Globals.PrestigeData.from_dict(e)
 					)
 		
 		if DATA.has("ep multiplier buys"):
@@ -468,10 +473,18 @@ func loadF(file : String = saveFilePath):
 			Globals.SDHandler.DimPurchase[i] = DATA["space purchases"][i]
 		
 		Globals.SDHandler.BoundlessPower.from_bytes(DATA["boundless power"])
+		
+		if DATA.has("fastest boundlessness"):
+			Globals.fastestBLess = \
+			Globals.PrestigeData.from_dict(DATA["fastest boundlessness"])
+		if DATA.has("last 10 bln"):
+			Globals.last10bless = []
+			for i in DATA["last 10 bln"]:
+				Globals.last10bless.append(Globals.PrestigeData.from_dict(i))
 	else:
 		Globals.progressBL = Globals.progress
 		Globals.boundTime = Globals.existence
-		Globals.TachTotalBL = largenum.new(Globals.TachTotal)
+		Globals.TachTotalBL.from_bytes(DATA["total tachyons"])
 	
 	Globals.TDHandler.updateTSpeed()
 	get_tree().paused = pause
@@ -502,7 +515,7 @@ func gameReset():
 	Globals.Automation.Unlocked = 0
 	Globals.Automation.TDModes  = 255
 	Globals.Automation.TDEnabl  = 511
-	Globals.fastestEtern = Globals.EternityData.new(-1, 1, 1)
+	Globals.fastestEtern = Globals.PrestigeData.new(-1, 1, 1)
 	Globals.eternTime   = 0
 	Globals.EternityPts = largenum.new(0)
 	Globals.Eternities  = largenum.new(0)
@@ -553,7 +566,7 @@ func gameReset():
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value
-	Engine.time_scale = 1. + max(idletime / idlerealtime, 10)
+	Engine.time_scale = max(idletime / idlerealtime, 10)
 	$SaveTimer.paused = true
 	$IdleTimer.start(idletime)
 	$Idle.show()

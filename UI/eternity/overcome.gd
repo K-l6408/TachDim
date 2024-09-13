@@ -227,7 +227,7 @@ func _process(delta):
 		$upgrades/PasEter.text = \
 		"\nGain Eternities passively\nbased on your fastest\nEternity." + \
 		"\n\nCurrently: %s/sec" % \
-		Globals.fastestEtern.eternities.divide(Globals.fastestEtern.time / 10)
+		Globals.fastestEtern.amount.divide(Globals.fastestEtern.time / 10)
 	else:
 		$upgrades/PasEter.text = \
 		"\nGain Eternities passively\nbased on your fastest\nEternity." + \
@@ -244,7 +244,7 @@ func _process(delta):
 	
 	if is_bought(8):
 		Globals.Eternities.add2self(
-			Globals.fastestEtern.eternities.divide(
+			Globals.fastestEtern.amount.divide(
 				Globals.fastestEtern.time / delta / 10
 			)
 		)

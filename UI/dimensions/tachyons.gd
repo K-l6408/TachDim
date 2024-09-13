@@ -262,8 +262,8 @@ func eternity():
 	if Globals.fastestEtern.time > Globals.eternTime \
 	or Globals.fastestEtern.time < 0:
 		Globals.fastestEtern.time		= Globals.eternTime
-		Globals.fastestEtern.epgain		= epgain
-		Globals.fastestEtern.eternities = largenum.new(etgain)
+		Globals.fastestEtern.currency	= epgain
+		Globals.fastestEtern.amount		= largenum.new(etgain)
 	
 	if not Globals.Achievemer.is_unlocked(2, 8):
 		Globals.Achievemer.set_unlocked(2, 8)
@@ -289,7 +289,7 @@ func eternity():
 	if not Globals.Achievemer.is_unlocked(7, 5) and epgain.log10() >= 200:
 		Globals.Achievemer.set_unlocked(7, 5)
 	
-	Globals.last10etern.insert(0, Globals.EternityData.new(
+	Globals.last10etern.insert(0, Globals.PrestigeData.new(
 		Globals.eternTime, epgain, 1
 	))
 	if Globals.last10etern.size() > 10:

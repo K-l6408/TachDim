@@ -254,9 +254,18 @@ func _process(_delta):
 		if $Auto/Buyers/BigBang/Enabled.button_pressed:
 			bigbang()
 			$Auto/Buyers/BigBang/Timer.start(BangInterval())
-	if Globals.progressBL >= GL.Progression.Overcome:
-		if $Auto/Buyers/BigBang/Enabled.button_pressed and BigBangAtEP.less(Formulas.epgained()):
-			bigbang()
+	if Globals.progressBL >= GL.Progression.Overcome \
+	and $Auto/Buyers/BigBang/Enabled.button_pressed:
+		if Globals.Boundlessnesses.to_float() < 4 \
+		or $Auto/Buyers/BigBang/Amount/OptionButton.selected == 0:
+			if BigBangAtEP.less(Formulas.epgained()):
+				bigbang()
+		elif $Auto/Buyers/BigBang/Amount/OptionButton.selected == 1:
+			if BigBangAtEP.less(Formulas.epgained().divide(Globals.EternityPts)):
+				bigbang()
+		elif $Auto/Buyers/BigBang/Amount/OptionButton.selected == 2:
+			if Globals.eternTime >= BigBangAtEP.to_float():
+				bigbang()
 	
 	if Input.is_action_pressed("ToggleAB"):
 		for i in range(1, 9):
@@ -319,7 +328,7 @@ func _process(_delta):
 		$Auto/Buyers/TimeSpeed/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 		[Globals.percent_to_string(0.4, 0),
 		Globals.float_to_string(2.0 ** TSUpgrades, 1)]
-		$Auto/Buyers/TimeSpeed/Interval.disabled = Globals.EternityPts.less(largenum.two_to_the(TSUpgrades))
+		$Auto/Buyers/TimeSpeed/Interval.disabled = not largenum.two_to_the(TSUpgrades).less(Globals.EternityPts)
 		$Auto/Buyers/TimeSpeed/Mode.disabled = false
 		if $Auto/Buyers/TimeSpeed/Mode.button_pressed:
 			$Auto/Buyers/TimeSpeed/Mode.text = "Buys max"
@@ -427,6 +436,12 @@ func _process(_delta):
 		Globals.float_to_string(BangInterval())
 	$Auto/Buyers/BigBang/Amount/Label2.text = " (%s)" % BigBangAtEP.to_string()
 	$Auto/Buyers/BigBang/Amount.visible = Globals.progressBL >= GL.Progression.Overcome
+	if Globals.Boundlessnesses.to_float() < 4:
+		$Auto/Buyers/BigBang/Amount/Label.show()
+		$Auto/Buyers/BigBang/Amount/OptionButton.hide()
+	else:
+		$Auto/Buyers/BigBang/Amount/Label.hide()
+		$Auto/Buyers/BigBang/Amount/OptionButton.show()
 
 func unlock(which):
 	if which == 0:

@@ -1,25 +1,33 @@
 extends Node
 class_name GL
 
-class EternityData:
+class PrestigeData:
 	var time := 0.0
-	var epgain := largenum.new(1)
-	var eternities := largenum.new(1)
+	var currency := largenum.new(1)
+	var amount := largenum.new(1)
 	func _init(t, ep, et):
 		time = t
-		epgain = largenum.new(ep)
-		eternities = largenum.new(et)
+		currency = largenum.new(ep)
+		amount = largenum.new(et)
 	func to_dict():
 		var D := {time = time}
-		D.epgain = epgain.to_bytes()
-		D.eternities = eternities.to_bytes()
+		D.currency = currency.to_bytes()
+		D.amount = amount.to_bytes()
 		return D
 	static func from_dict(D):
 		if D == null: return null
 		var e = new(-1,1,1)
 		e.time = D.time
-		e.epgain.from_bytes(D.epgain)
-		e.eternities.from_bytes(D.eternities)
+		
+		if D.has("epgain"):
+			e.currency.from_bytes(D.epgain)
+		if D.has("currency"):
+			e.currency.from_bytes(D.currency)
+		
+		if D.has("eternities"):
+			e.amount.from_bytes(D.eternities)
+		if D.has("amount"):
+			e.amount.from_bytes(D.amount)
 		return e
 
 enum DisplayMode {
@@ -83,10 +91,13 @@ var existence = 0
 var eternTime = 0
 var boundTime = 0
 
-var fastestEtern := EternityData.new(-1, 1, 1)
 var EU12Timer : SceneTreeTimer = null
 
-var last10etern : Array[EternityData] = []
+var fastestEtern := PrestigeData.new(-1, 1, 1)
+var fastestBLess := PrestigeData.new(-1, 1, 1)
+
+var last10etern : Array[PrestigeData] = []
+var last10bless : Array[PrestigeData] = []
 
 var challengeTimes = [
 	-1, -1, -1,
@@ -114,9 +125,10 @@ const ECUnlocks = [
 func _process(delta):
 	existence += delta
 	eternTime += delta
+	boundTime += delta
 	if EUHandler is Node:
 		if EUHandler.is_bought(12) and (EU12Timer == null or EU12Timer.time_left == 0):
-			EternityPts.add2self(fastestEtern.epgain)
+			EternityPts.add2self(fastestEtern.currency)
 			EU12Timer = get_tree().create_timer(fastestEtern.time * 3)
 		if EternityPts.to_float() < 1e3 and OEUHandler.PasEPBought == 0:
 			if fmod(EternityPts.to_float(), 1) >= 0.8 or \
@@ -125,12 +137,14 @@ func _process(delta):
 	if OEUHandler is Node:
 		var avg = largenum.new(0)
 		for i in last10etern:
-			avg.add2self(i.epgain.divide(i.time))
+			avg.add2self(i.currency.divide(i.time))
 		avg.div2self(last10etern.size())
 		EternityPts.add2self(avg.mult2self(delta * OEUHandler.PasEPBought / 20))
 	EternityPts.fix_mantissa()
 	if EternityPts.less(0.01):
 		EternityPts = largenum.new(0)
+	#if last10bless.size() == 0:
+		#last10bless.append(fastestBLess)
 
 func boundlessnessreset():
 	boundTime = 0
@@ -139,11 +153,15 @@ func boundlessnessreset():
 	CompletedECs = 0
 	EternityPts = largenum.new(0)
 	Eternities  = largenum.new(0)
-	progressBL = Progression.None
 	last10etern = []
-	fastestEtern = EternityData.new(-1, 1, 1)
-	Automation.reset()
-	EUHandler.Bought = 0
+	fastestEtern = PrestigeData.new(-1, 1, 1)
+	progressBL = Progression.None
+	if Boundlessnesses.to_float() < 3:
+		Automation.reset()
+	else:
+		progressBL = Progression.Overcome
+	if Boundlessnesses.to_float() < 4:
+		EUHandler.Bought = 0
 	EUHandler.EPMultBought = 0
 	OEUHandler.Bought = 0
 	OEUHandler.TSpScBought = 0

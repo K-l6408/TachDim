@@ -14,3 +14,6 @@ func _process(_delta):
 	
 	$Mile/M4/Label.text = "At %s Boundlessnesses:" % Globals.int_to_string(4)
 	$Mile/M4.button_pressed = Globals.Boundlessnesses.to_float() >= 4
+	
+	$Mile/M5/Label.text = "At %s Boundlessnesses:" % Globals.int_to_string(5)
+	$Mile/M5.button_pressed = Globals.Boundlessnesses.to_float() >= 5
