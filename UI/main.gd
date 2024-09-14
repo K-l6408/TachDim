@@ -151,19 +151,22 @@ func _process(_delta):
 	%Resources/Tachyons/Text.text = \
 	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Globals.Tachyons.to_string()
 	%Resources/EP/Text.text = \
-	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Points[/color][/center]" % [
+	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Point%s[/color][/center]" % [
 		get_theme_color("font_color", "ButtonEtern").to_html(false),
-		Globals.EternityPts.to_string()
+		Globals.EternityPts.to_string().trim_suffix(".00"),
+		"" if Globals.EternityPts.exponent == 0 else "s"
 	]
 	%Resources/Dupl/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nDuplican%ss[/color][/center]" % [
 		get_theme_color("meow", "DupliButton").to_html(false),
-		Globals.Duplicantes.to_string(), "" if Globals.Duplicantes.less(1) else "te"
+		Globals.Duplicantes.to_string().trim_suffix(".00"),
+		"" if Globals.Duplicantes.exponent == 0 else "te"
 	]
 	%Resources/BP/Text.text = \
-	"[center][color=%s][font_size=16]%s[/font_size]\nBoundlessness Points[/color][/center]" % [
+	"[center][color=%s][font_size=16]%s[/font_size]\nBoundlessness Point%s[/color][/center]" % [
 		get_theme_color("font_color", "ButtonBLess").to_html(false),
-		Globals.BoundlessPts.to_string()
+		Globals.BoundlessPts.to_string().trim_suffix(".00"),
+		"" if Globals.BoundlessPts.exponent == 0 else "s"
 	]
 	if Globals.Challenge > 15:
 		%Resources/Challenge/Text.text = \

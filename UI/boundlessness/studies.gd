@@ -101,11 +101,15 @@ func _process(_delta):
 	
 	for i in %StudyTree1.get_children():
 		if i is Study:
-			i.text += "Cost: %s Space Theorems" % Globals.int_to_string(i.cost)
+			i.text += "Cost: %s Space Theorem%s" % [
+				Globals.int_to_string(i.cost),
+				"" if i.cost == 1 else "s"
+			]
 
 func respec():
 	for id in purchased:
-		find_study(id).bought = false
+		if find_study(id) != null:
+			find_study(id).bought = false
 	purchased = []
 	ST = largenum.new(TCST + EPST + BPST)
 
@@ -113,7 +117,8 @@ func buy_study(which):
 	if which is String:
 		which = find_study(which)
 	if which is Study:
-		if not ST.less(which.cost): return
+		if which.cost > ST.to_float():
+			return
 		ST.add2self(-which.cost)
 		purchased.append(which.id_label.text)
 		which.bought = true

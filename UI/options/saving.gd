@@ -465,7 +465,7 @@ func loadF(file : String = saveFilePath):
 		Globals.Studies.TCST = DATA["space theorems"][0]
 		Globals.Studies.EPST = DATA["space theorems"][1]
 		Globals.Studies.BPST = DATA["space theorems"][2]
-		
+		Globals.Studies.respec()
 		for i in DATA["studies bought"].split(","):
 			Globals.Studies.buy_study(i)
 		for i in 8:

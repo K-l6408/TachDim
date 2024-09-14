@@ -133,12 +133,12 @@ func _process(delta):
 			mult.mult2self(Formulas.ec1_reward())
 		
 		if Globals.Challenge == 17:
-			mult.pow2self(0.2)
+			mult.pow2self(0)
 		
 		if Globals.Challenge == 20:
 			mult.pow2self(1.1)
 		
-		if Globals.progress <= GL.Progression.Duplicantes:
+		if Globals.progressBL >= GL.Progression.Duplicantes:
 			mult.mult2self(Formulas.duplicantes())
 		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
@@ -170,7 +170,8 @@ func eternitied():
 		DimAmount[i] = largenum.new(DimPurchase[i])
 
 func unlocknewdim():
-	DimsUnlocked += 1
+	if Globals.Tachyons.log10() >= TachLogReq[DimsUnlocked]:
+		DimsUnlocked += 1
 
 func reset():
 	for i in 8:

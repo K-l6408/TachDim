@@ -65,7 +65,7 @@ func achnames(r, c):
 			4: return "That wasn't an eternity"
 			5: return "Is this safe?"
 			6: return "I??? h-two them???"
-			
+			7: return "LET'S GO GAMBLING!"
 			8: return "%s degrees to infinity" % \
 			Globals.int_to_string(1024).to_pascal_case()
 		7: match c:
@@ -166,7 +166,8 @@ func achreqs(r, c):
 			5: return "Have more Duplicantes than Eternity Points."
 			6: return "Big Bang with -%s Dilation and no Tachyon Galaxies." % \
 			Globals.int_to_string(3)
-			
+			7: return "Upgrade your Duplicantes' duplication chance to at least %s." % \
+			Globals.percent_to_string(.5, 0)
 			8: return "Max out the Duplicantes limit." + \
 			"\n(Reward: Duplicantes don't reset on Eternity.)"
 		7: match c:
@@ -286,6 +287,9 @@ func _process(_delta):
 	if not is_unlocked(6, 5):
 		if not Globals.Duplicantes.less(Globals.EternityPts):
 			set_unlocked(6, 5)
+	if not is_unlocked(6, 7):
+		if Globals.DupHandler.chance >= 50:
+			set_unlocked(6, 7)
 	if not is_unlocked(6, 8):
 		if Globals.DupHandler.limitUpgrades >= 6:
 			set_unlocked(6, 8)

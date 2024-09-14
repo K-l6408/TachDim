@@ -80,11 +80,12 @@ var Studies    : Control
 
 var NotifHandler : Control
 
-var AnimOpt : Array[bool] = [true]
+var AnimOpt : Array[bool] = [true, true]
 
 var Animater : AnimationPlayer
 func animation(which):
 	if which == "bang" and not AnimOpt[0]: return
+	if which == "boundless" and not AnimOpt[1]: return
 	Animater.play(which)
 
 var existence = 0
@@ -113,7 +114,7 @@ var ECTimes = [
 
 var ECTargets = [
 	largenum.two_to_the(2048), largenum.ten_to_the(1500),
-	largenum.ten_to_the(9000), largenum.ten_to_the(11500),
+	largenum.ten_to_the(9000), largenum.ten_to_the(10500),
 	largenum.ten_to_the(7000), largenum.ten_to_the(13000),
 	largenum.ten_to_the(30000)
 ]

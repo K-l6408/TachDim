@@ -2,7 +2,10 @@ extends Control
 
 func challenge_start(which):
 	Globals.Challenge = which
-	Globals.TDHandler.reset(2, false)
+	if Globals.TDHandler.canBigBang:
+		Globals.TDHandler.eternity(false)
+	else:
+		Globals.TDHandler.reset(2, false)
 
 func _process(_delta):
 	$Chal/lenges/Separator.custom_minimum_size = Vector2.ZERO
@@ -49,7 +52,7 @@ func _process(_delta):
 	] + "\n(Currently: ×%s)" % Globals.int_to_string(Formulas.ec1_reward())
 	
 	$Chal/lenges/EC2/Condition.text = \
-	"Eternity Dimensions' multipliers are raised ^%s." % Globals.float_to_string(0.2, 1)
+	"Eternity Dimensions' multipliers are reduced to ×%s." % Globals.int_to_string(1)
 	$Chal/lenges/EC2/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
 	Globals.ECTargets[1].to_string() + \

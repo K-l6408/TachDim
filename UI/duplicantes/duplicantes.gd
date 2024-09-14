@@ -22,11 +22,17 @@ func buy_chance():
 	chance += 1
 
 var intervUpgrades := 0
-const intervalCap = 0.05
+var intervalCap :
+	get:
+		if "1×2" in Globals.Studies.purchased:
+			return 0.05 / 3
+		else:
+			return 0.05
 func interval():
-	var interv = max(0.9 ** intervUpgrades, intervalCap)
+	var interv = 0.9 ** intervUpgrades
 	if "1×2" in Globals.Studies.purchased:
 		interv /= 3
+	if interv <= intervalCap: return intervalCap
 	return interv
 func buy_interval():
 	Globals.Duplicantes.div2self(3.0 ** (intervUpgrades + 1))
@@ -72,10 +78,14 @@ func _process(delta):
 	
 	%TextD.text = "[center]You have [font_size=20]%s[/font_size] Duplican%ss,\n" % [
 		Globals.Duplicantes.to_string().trim_suffix(".00"),
-		"te" if Globals.Duplicantes.to_float() > 1 else ""
+		"" if Globals.Duplicantes.exponent == 0 else "te"
 	] + \
 	"giving a [font_size=20]×%s[/font_size] multiplier to all Eternity Dimensions." % \
-	Globals.float_to_string(Formulas.duplicantes())
+	(
+		Formulas.duplicantes().to_string() if
+		Formulas.duplicantes() is largenum else
+		Globals.float_to_string(Formulas.duplicantes())
+	)
 	
 	%TextL.text = \
 	"[center]You can only hold [font_size=20]%s[/font_size] Duplicantes. (%s)" % [
@@ -128,6 +138,8 @@ func _process(delta):
 				for t in int(tickFraction):
 					if randi_range(1, 100) <= chance:
 						Globals.Duplicantes.add2self(1)
+		if limit().less(Globals.Duplicantes):
+			Globals.Duplicantes = limit()
 	
 	tickFraction = fmod(tickFraction, 1.0)
 	

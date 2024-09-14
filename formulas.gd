@@ -85,10 +85,11 @@ static func ec2_reward():
 static func dupli_no11():
 	return max(Globals.Duplicantes.add(9).log10() ** 2, 1)
 static func dupli_yes11():
-	return Globals.Duplicantes.power(0.03).add2self(dupli_no11())
+	return Globals.Duplicantes.power(0.05).add(dupli_no11() - 1)
 
 static func duplicantes():
-	if "1×1" not in Globals.Studies.purchased:
+	if "1×1" not in Globals.Studies.purchased \
+	or Globals.Duplicantes.exponent < 0:
 		return dupli_no11()
 	else:
 		return dupli_yes11()

@@ -34,12 +34,17 @@ var DimCostMult : Array[largenum] :
 			]
 		var costscaling = 10 - Globals.OEUHandler.TDmScBought
 		for i in 8:
-			if DimPurchase[i] / buylim >= CostScaleStart[i]:
+			if DimPurchase[i] / buylim >= CostScaleStart(i):
 				base[i].mult2self(largenum.new(costscaling).power(
-					DimPurchase[i] / buylim - CostScaleStart[i]
+					DimPurchase[i] / buylim - CostScaleStart(i)
 				))
 		return base
-const CostScaleStart := [103, 77, 61, 51, 38, 30, 25, 19]
+func CostScaleStart(i):
+	var baselog = [3, 4, 5, 6, 8, 10, 12, 15]
+	if Globals.progress < Globals.Progression.Boundlessness:
+		return int(308.25 / baselog[i])
+	else:
+		return int((308.25 + Formulas.bounlesspower().log10()) / baselog[i])
 const TSpeedScaleStart := 305
 
 var DistantScaling :
@@ -231,7 +236,7 @@ func galaxy():
 	if  Globals.progressBL < Globals.Progression.Galaxy:
 		Globals.progressBL = Globals.Progression.Galaxy
 
-func eternity():
+func eternity(resetchallenge := true):
 	if Globals.Challenge != 0 and Globals.Challenge <= 15:
 		Globals.CompletedChallenges |= 1 << (Globals.Challenge - 1)
 		if  Globals.challengeTimes[Globals.Challenge - 1] > Globals.eternTime \
@@ -290,13 +295,13 @@ func eternity():
 		Globals.Achievemer.set_unlocked(7, 5)
 	
 	Globals.last10etern.insert(0, Globals.PrestigeData.new(
-		Globals.eternTime, epgain, 1
+		Globals.eternTime, epgain, etgain
 	))
 	if Globals.last10etern.size() > 10:
 		Globals.last10etern.resize(10)
 	
 	await get_tree().process_frame
-	reset(2)
+	reset(2, resetchallenge)
 	updateTSpeed()
 	Globals.animation("bang")
 

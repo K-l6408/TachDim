@@ -1,7 +1,7 @@
 extends Control
 
 const ANIMATION = [
-	"Big Bang"
+	"Big Bang", "Going Boundless"
 ]
 const THEMES = {
 	"Dark" : preload("res://themes/Dark.tres"),
@@ -40,6 +40,8 @@ func _ready():
 		%AnimOptions.add_child(ck)
 
 func change_anim_opt(what, index):
+	if Globals.AnimOpt.size() <= index:
+		Globals.AnimOpt.resize(index + 1)
 	Globals.AnimOpt[index] = what
 
 func change_notation(index):
@@ -50,7 +52,10 @@ func _process(_delta):
 		var j = false
 		match i:
 			0: j = (Globals.progress >= Globals.Progression.Eternity)
+			1: j = (Globals.progress >= Globals.Progression.Boundlessness)
 		%AnimOptions.get_node(ANIMATION[i]).visible = j
+		if not j and not Globals.AnimOpt[i]:
+			change_anim_opt(true, i)
 	$HFlow/Notation.select(Globals.display)
 	$HFlow/Scaling/Label.text = "UI Scaling: ×%s" % \
 	Globals.float_to_string($HFlow/Scaling.value)
