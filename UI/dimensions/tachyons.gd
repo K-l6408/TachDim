@@ -17,34 +17,6 @@ var DimAmount : Array[largenum] = [
 	largenum.new(0),largenum.new(0),largenum.new(0),largenum.new(0)
 ]
 var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
-var DimBaseCost : Array[largenum] = [
-	largenum.ten_to_the(1),largenum.ten_to_the( 2),largenum.ten_to_the( 4),largenum.ten_to_the( 6),
-	largenum.ten_to_the(9),largenum.ten_to_the(13),largenum.ten_to_the(18),largenum.ten_to_the(24)
-]
-var DimCostMult : Array[largenum] :
-	get:
-		var base : Array[largenum] = [
-			largenum.ten_to_the(3),largenum.ten_to_the( 4),largenum.ten_to_the( 5),largenum.ten_to_the( 6),
-			largenum.ten_to_the(8),largenum.ten_to_the(10),largenum.ten_to_the(12),largenum.ten_to_the(15)
-		]
-		if Globals.Challenge == 1 or Globals.Challenge == 16:
-			base = [
-				largenum.ten_to_the( 4),largenum.ten_to_the( 6),largenum.ten_to_the( 8),largenum.ten_to_the(10),
-				largenum.ten_to_the(13),largenum.ten_to_the(15),largenum.ten_to_the(17),largenum.ten_to_the(20)
-			]
-		var costscaling = 10 - Globals.OEUHandler.TDmScBought
-		for i in 8:
-			if DimPurchase[i] / buylim >= CostScaleStart(i):
-				base[i].mult2self(largenum.new(costscaling).power(
-					DimPurchase[i] / buylim - CostScaleStart(i)
-				))
-		return base
-func CostScaleStart(i):
-	var baselog = [3, 4, 5, 6, 8, 10, 12, 15]
-	if Globals.progress < Globals.Progression.Boundlessness:
-		return int(308.25 / baselog[i])
-	else:
-		return int((308.25 + Formulas.bounlesspower().log10()) / baselog[i])
 const TSpeedScaleStart := 305
 
 var DistantScaling :
@@ -94,8 +66,37 @@ var buylim : int :
 		else:													return 10
 var latest_purchased = 1
 
+func tspcost():
+	var start = 1
+	var increase = 1
+	if Globals.Challenge == 5 or Globals.Challenge == 16:
+		increase += log(5) / GL.LOG10
+	
+
 func dimcost(which):
-	return DimBaseCost[which-1].divide(Formulas.bounlesspower())
+	var start = [
+		1, 2, 4, 6,
+		9,13,18,24
+	][which - 1]
+	var increase = [
+		3, 4, 5, 6,
+		8,10,12,15
+	][which - 1]
+	if Globals.Challenge == 1 or Globals.Challenge == 16:
+		increase = [
+			4, 6, 8, 10,
+			13,15,17,20
+		][which - 1]
+	var purchase : int = DimPurchase[which - 1] / buylim
+	
+	var costlog = start + increase * purchase
+	
+	if costlog >= 308.2547156:
+		var scalingamount = log(10 - Globals.OEUHandler.TDmScBought) / GL.LOG10
+		var scaling : int = purchase - (308.2547156 - start) / increase
+		costlog += scaling * (scaling + 1) * scalingamount / 2
+	
+	return largenum.ten_to_the(costlog)
 
 func updateTSpeed():
 	var GalaxyBoost = 0.975
@@ -158,18 +159,21 @@ func buydim(which, bulkoverride := 0):
 		if which > DimsUnlocked:
 			return
 		var bulk :int= 1
-		if (
-			(%TopButtons/BuyMode.button_pressed
-			and not Input.is_action_pressed("BuyOne"))
-			or bulkoverride != 0
-		):
-			if Globals.Tachyons.divide(dimcost(which)).to_float() >= buylim:
-				bulk = buylim - DimPurchase[which-1] % buylim
-			else:
-				bulk = min(
-					(Globals.Tachyons.divide(dimcost(which))).to_float(),
-					buylim - DimPurchase[which-1] % buylim
-				)
+		if Globals.Tachyons.exponent - dimcost(which).exponent < 62:
+			if (
+				(%TopButtons/BuyMode.button_pressed
+				and not Input.is_action_pressed("BuyOne"))
+				or bulkoverride != 0
+			):
+				if Globals.Tachyons.divide(dimcost(which)).to_float() >= buylim:
+					bulk = buylim - DimPurchase[which-1] % buylim
+				else:
+					bulk = min(
+						(Globals.Tachyons.divide(dimcost(which))).to_float(),
+						buylim - DimPurchase[which-1] % buylim
+					)
+		else:
+			bulk = buylim - DimPurchase[which-1] % buylim
 		
 		if bulk < 1:
 			return
@@ -179,11 +183,11 @@ func buydim(which, bulkoverride := 0):
 				return
 			bulk = min(bulk, bulkoverride)
 		
-		Globals.Tachyons.add2self(dimcost(which).neg().mult2self(bulk))
+		if Globals.Tachyons.exponent - dimcost(which).exponent < 62:
+			Globals.Tachyons.add2self(dimcost(which).neg().mult2self(bulk))
 		DimPurchase[which-1] += bulk
-		DimAmount[which-1].add2self(bulk)
-		if DimPurchase[which-1] % buylim == 0:
-			DimBaseCost[which-1].mult2self(DimCostMult[which-1])
+		if DimAmount[which-1].exponent < 100:
+			DimAmount[which-1].add2self(bulk)
 		if not Globals.Achievemer.is_unlocked(2, 7):
 			if bulk == 1 and which == 1 and DimAmount[which-1].log10() >= 100:
 				Globals.Achievemer.set_unlocked(2, 7)
@@ -237,18 +241,19 @@ func galaxy():
 		Globals.progressBL = Globals.Progression.Galaxy
 
 func eternity(resetchallenge := true):
-	if Globals.Challenge != 0 and Globals.Challenge <= 15:
-		Globals.CompletedChallenges |= 1 << (Globals.Challenge - 1)
-		if  Globals.challengeTimes[Globals.Challenge - 1] > Globals.eternTime \
-		or  Globals.challengeTimes[Globals.Challenge - 1] < 0:
-			Globals.challengeTimes[Globals.Challenge - 1] = Globals.eternTime
-	if Globals.Challenge > 15:
-		Globals.CompletedECs |= 1 << (Globals.Challenge - 16)
-		if Globals.ECTimes.size() < Globals.Challenge - 15:
-			Globals.ECTimes.append(-1)
-		if  Globals.ECTimes[Globals.Challenge - 16] > Globals.eternTime \
-		or  Globals.ECTimes[Globals.Challenge - 16] < 0:
-			Globals.ECTimes[Globals.Challenge - 16] = Globals.eternTime
+	if resetchallenge:
+		if Globals.Challenge != 0 and Globals.Challenge <= 15:
+			Globals.CompletedChallenges |= 1 << (Globals.Challenge - 1)
+			if  Globals.challengeTimes[Globals.Challenge - 1] > Globals.eternTime \
+			or  Globals.challengeTimes[Globals.Challenge - 1] < 0:
+				Globals.challengeTimes[Globals.Challenge - 1] = Globals.eternTime
+		if Globals.Challenge > 15:
+			Globals.CompletedECs |= 1 << (Globals.Challenge - 16)
+			if Globals.ECTimes.size() < Globals.Challenge - 15:
+				Globals.ECTimes.append(-1)
+			if  Globals.ECTimes[Globals.Challenge - 16] > Globals.eternTime \
+			or  Globals.ECTimes[Globals.Challenge - 16] < 0:
+				Globals.ECTimes[Globals.Challenge - 16] = Globals.eternTime
 	
 	var epgain = Formulas.epgained()
 	var etgain = 1
@@ -320,12 +325,6 @@ func reset(level := 0, challengeReset := true):
 	else:
 		Globals.Tachyons = largenum.ten_to_the(1)
 	DimPurchase = [0,0,0,0,0,0,0,0]
-	DimBaseCost = [
-		largenum.ten_to_the( 1),largenum.ten_to_the( 2),
-		largenum.ten_to_the( 4),largenum.ten_to_the( 6),
-		largenum.ten_to_the( 9),largenum.ten_to_the(13),
-		largenum.ten_to_the(18),largenum.ten_to_the(24)
-	]
 	for i in DimAmount:
 		i.exponent = -INF # set to zero
 		i.fix_mantissa()
@@ -522,6 +521,10 @@ func _process(delta):
 		DilaBoost = 2.2 ** (1 - abs(C10Score()))
 	if Globals.Challenge == 8: DilaBoost = 1
 	if Globals.Challenge == 22: DilaBoost = 10
+	pass
+	DilaBoost = largenum.new(DilaBoost)
+	if Globals.progress >= Globals.Progression.Boundlessness:
+		DilaBoost.mult2self(Formulas.bounlesspower())
 	
 	if Globals.Challenge == 6 or Globals.Challenge == 16:
 		if DimsUnlocked < 6:
@@ -529,7 +532,7 @@ func _process(delta):
 			"Reset your Dimensions to\nunlock the %s Dimension" % \
 			Globals.ordinal(DimsUnlocked + 1) +\
 			" and\ngain a ×%s multiplier to Dimension%s" % [
-				Globals.float_to_string(DilaBoost,1),
+				DilaBoost.to_string(),
 				(
 					"s %s-%s" % [Globals.int_to_string(1),
 					Globals.int_to_string(Globals.TDilation + 1)] \
@@ -540,19 +543,19 @@ func _process(delta):
 		else:
 			%Prestiges/DiButton.text = \
 			"Reset your Dimensions"
-			if DilaBoost > 1.1:
+			if not DilaBoost.less(1.1):
 				%Prestiges/DiButton.text += " to\ngain a ×%s multiplier to %s" % [
-					Globals.float_to_string(DilaBoost, 1),
+					DilaBoost.to_string(),
 					("all Dimensions" if Globals.TDilation >= 5 else "Dimensions 1-%d" % (Globals.TDilation + 1))
 				]
 	else:
 		if Globals.TDilation == 4:
 			%Prestiges/DiButton.text = \
 			"Reset your Dimensions to\nunlock Rewind"
-			if DilaBoost > 1.1:
+			if not DilaBoost.less(1.1):
 				%Prestiges/DiButton.text += " and\ngain a ×%s multiplier to Dimension%s" %\
 				[
-					Globals.float_to_string(DilaBoost,1),
+					DilaBoost.to_string(),
 					("s %s-%s" % [
 						Globals.int_to_string(1),
 						Globals.int_to_string(Globals.TDilation + 1)
@@ -564,16 +567,16 @@ func _process(delta):
 		elif Globals.TDilation >= 5:
 			%Prestiges/DiButton.text = \
 			"Reset your Dimensions"
-			if DilaBoost > 1.1:
+			if not DilaBoost.less(1.1):
 				%Prestiges/DiButton.text += " to\ngain a ×%s multiplier to all Dimensions" % \
-				Globals.float_to_string(DilaBoost, 1)
+				DilaBoost.to_string()
 		else:
 			%Prestiges/DiButton.text = \
 			"Reset your Dimensions to\nunlock the %s Dimension" % Globals.ordinal(DimsUnlocked + 1)
-			if DilaBoost > 1.1:
+			if not DilaBoost.less(1.1):
 				%Prestiges/DiButton.text += " and\ngain a ×%s multiplier to Dimension%s" %\
 				[
-					Globals.float_to_string(DilaBoost,1),
+					DilaBoost.to_string(),
 					("s %s-%s" % [
 						Globals.int_to_string(1),
 						Globals.int_to_string(Globals.TDilation + 1)
@@ -669,14 +672,14 @@ func _process(delta):
 	else:
 		%Prestiges/DiButton/Accuracy.visible = false
 	
-	for i in range(1, min(DimsUnlocked+1, len(dims))):
+	for i in range(min(DimsUnlocked, len(dims) - 1), 0, -1):
 		var mult := largenum.new(1)
 		
 		mult.mult2self(largenum.new(buy10mult).power(DimPurchase[i-1] / buylim))
 		if Globals.Challenge == 10:
-			mult.mult2self(largenum.new(   2.2   ).power(max(      C10Power    - i + 1, 0)))
+			mult.mult2self(largenum.new(2.2).power(max(      C10Power    - i + 1, 0)))
 		else:
-			mult.mult2self(largenum.new(DilaBoost).power(max(Globals.TDilation - i + 1, 0)))
+			mult.mult2self(        DilaBoost.power(max(Globals.TDilation - i + 1, 0)))
 		
 		if Globals.Challenge != 13:
 			if Globals.EUHandler.is_bought(1): mult.mult2self(Formulas.eternity_11())
@@ -767,13 +770,12 @@ func dilacost():
 
 func galacost():
 	var Cost = 80 + 60 * Globals.TGalaxies
-	if "3×1" in Globals.Studies.purchased:
-		Cost -= 20 * Globals.TGalaxies
 	
 	if (Globals.Challenge == 6 or Globals.Challenge == 16):
 		Cost = 60 + 40 * Globals.TGalaxies
-		if "3×1" in Globals.Studies.purchased:
-			Cost -= 10 * Globals.TGalaxies
+	
+	if "3×1" in Globals.Studies.purchased:
+		Cost -= 5 * Globals.TGalaxies
 	
 	if (Globals.Challenge == 5 or Globals.Challenge == 16):
 		Cost = Cost * 3 / 2

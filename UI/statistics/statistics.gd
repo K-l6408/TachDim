@@ -60,21 +60,29 @@ func _process(_delta):
 		text += " to count all your tachyons."
 	
 	if Globals.progress >= Globals.Progression.Eternity:
-		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s%s%s.\n%s %s.\n%s %s %s" % [
+		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s%s%s.\n" % [
 			eternityColor,
 			"Eternity",
-			"You have", Globals.Eternities, "Eternit",
+			"You have", Globals.Eternities.to_string().trim_suffix(".00"), "Eternit",
 			"y" if Globals.Eternities.to_float() == 1 else "ies",
 			" this Boundlessness" if Globals.Boundlessnesses.to_float() > 0 else "",
-			"Your fastest Eternity was", Globals.format_time(Globals.fastestEtern.time),
-			"You have spent", Globals.format_time(Globals.eternTime), "in this Eternity."
 		]
+		if Globals.fastestEtern.time > 0:
+			text += "Your fastest Eternity %stook %s.\n" % [
+				"this Boundlessness " if Globals.Boundlessnesses.to_float() > 0 else "",
+				Globals.format_time(Globals.fastestEtern.time)
+			]
+		else:
+			text += "You have no fastest Eternity%s.\n" % [
+				" this Boundlessness" if Globals.Boundlessnesses.to_float() > 0 else "",
+			]
+		text += "You have spent %s in this Eternity." % Globals.format_time(Globals.eternTime)
 	
 	if Globals.progress >= Globals.Progression.Boundlessness:
 		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s\n%s %s.\n%s %s %s" % [
 			boundlessColor,
 			"Boundlessness",
-			"You have", Globals.Boundlessnesses, "Boundlessnesses.",
+			"You have", Globals.Boundlessnesses.to_string().trim_suffix(".00"), "Boundlessnesses.",
 			"Your fastest Boundlessness was", Globals.format_time(Globals.fastestBLess.time),
 			"You have spent", Globals.format_time(Globals.boundTime), "in this Boundlessness."
 		]

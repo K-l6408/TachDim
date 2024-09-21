@@ -120,16 +120,6 @@ func saveF(file : String = saveFilePath):
 			Globals.TDHandler.DimAmount[7].to_bytes()
 		],
 		"tach dim purchases" : Globals.TDHandler.DimPurchase,
-		"tach dim costs" : [
-			Globals.TDHandler.DimBaseCost[0].to_bytes(),
-			Globals.TDHandler.DimBaseCost[1].to_bytes(),
-			Globals.TDHandler.DimBaseCost[2].to_bytes(),
-			Globals.TDHandler.DimBaseCost[3].to_bytes(),
-			Globals.TDHandler.DimBaseCost[4].to_bytes(),
-			Globals.TDHandler.DimBaseCost[5].to_bytes(),
-			Globals.TDHandler.DimBaseCost[6].to_bytes(),
-			Globals.TDHandler.DimBaseCost[7].to_bytes()
-		],
 		"timespeed amount" : Globals.TDHandler.TSpeedCount,
 		"timespeed cost" : Globals.TDHandler.TSpeedCost.to_bytes(),
 		"rewind multiplier" : Globals.TDHandler.RewindMult.to_bytes(),
@@ -258,6 +248,9 @@ func saveF(file : String = saveFilePath):
 		DATA["last 10 bln"] = []
 		for i in Globals.last10bless:
 			DATA["last 10 bln"].append(i.to_dict())
+		
+		DATA["big bang buyer mode"] = Globals.Automation.\
+		get_node("Auto/Buyers/BigBang/Amount/OptionButton").selected
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -327,7 +320,6 @@ func loadF(file : String = saveFilePath):
 	Globals.Achievemer.unlocked = DATA["achievements"]
 	for i in 8:
 		Globals.TDHandler.DimAmount[i].from_bytes(DATA["tach dim amounts"][i])
-		Globals.TDHandler.DimBaseCost[i].from_bytes(DATA["tach dim costs"][i])
 		Globals.TDHandler.DimPurchase[i] = DATA["tach dim purchases"][i]
 	
 	Globals.TDHandler.TSpeedCount = DATA["timespeed amount"]
@@ -481,6 +473,11 @@ func loadF(file : String = saveFilePath):
 			Globals.last10bless = []
 			for i in DATA["last 10 bln"]:
 				Globals.last10bless.append(Globals.PrestigeData.from_dict(i))
+		
+		if DATA.has("big bang buyer mode"):
+			Globals.Automation.\
+			get_node("Auto/Buyers/BigBang/Amount/OptionButton").\
+			selected = DATA["big bang buyer mode"]
 	else:
 		Globals.progressBL = Globals.progress
 		Globals.boundTime = Globals.existence
@@ -501,11 +498,6 @@ func gameReset():
 	for i in 8:
 		Globals.TDHandler.DimAmount[i]   = largenum.new(0)
 		Globals.TDHandler.DimPurchase[i] = 0
-		Globals.TDHandler.DimBaseCost[i] = [
-			largenum.ten_to_the( 1),largenum.ten_to_the( 2),largenum.ten_to_the( 4),
-			largenum.ten_to_the( 6),largenum.ten_to_the( 9),largenum.ten_to_the(13),
-			largenum.ten_to_the(18),largenum.ten_to_the(24)
-		][i]
 	Globals.TDHandler.TSpeedCount = 0
 	Globals.TDHandler.TSpeedCost  = largenum.new(1000)
 	Globals.TDHandler.RewindMult  = largenum.new(1)
@@ -552,7 +544,7 @@ func gameReset():
 	Globals.DupHandler.dupGalaxies    = 0
 	Globals.Boundlessnesses = largenum.new(0)
 	Globals.BoundlessPts = largenum.new(0)
-	Globals.TachTotalBL  = Globals.TachTotal
+	Globals.TachTotalBL  = largenum.new(Globals.TachTotal)
 	Globals.boundTime    = 0
 	Globals.Studies.TCST = 0
 	Globals.Studies.EPST = 0

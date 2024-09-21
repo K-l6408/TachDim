@@ -26,6 +26,9 @@ static func epgained():
 	
 	epgain.mult2self(largenum.two_to_the(Globals.EUHandler.EPMultBought))
 	
+	if Globals.Achievemer.is_unlocked(7, 5):
+		epgain.mult2self(2)
+	
 	if "3×2" in Globals.Studies.purchased:
 		epgain.mult2self(1.4 ** Globals.TGalaxies)
 	
@@ -39,6 +42,8 @@ static func bpgained():
 			Globals.EternityPts.log2() / 1024
 		) - 1)
 	
+	if "5×1" in Globals.Studies.purchased:
+		bpgain.mult2self(5)
 	#bpgain.mult2self(largenum.two_to_the(Globals.EUHandler.EPMultBought))
 	
 	if bpgain.to_float() < 1e10:
@@ -47,6 +52,10 @@ static func bpgained():
 	return bpgain
 
 static func next_bp():
+	if "5×1" in Globals.Studies.purchased:
+		return largenum.two_to_the(
+			1024 * (bpgained().add(1).divide(5).log10() + 1)
+		)
 	return largenum.two_to_the(1024 * (bpgained().add(1).log10() + 1))
 
 static func overcome_1():
@@ -85,14 +94,17 @@ static func ec2_reward():
 static func dupli_no11():
 	return max(Globals.Duplicantes.add(9).log10() ** 2, 1)
 static func dupli_yes11():
-	return Globals.Duplicantes.power(0.05).add(dupli_no11() - 1)
+	if Globals.Duplicantes.exponent < 0:
+		return largenum.new(1)
+	return Globals.Duplicantes.power(0.03).add(dupli_no11() - 1)
 
 static func duplicantes():
-	if "1×1" not in Globals.Studies.purchased \
-	or Globals.Duplicantes.exponent < 0:
+	if "1×1" not in Globals.Studies.purchased:
 		return dupli_no11()
 	else:
 		return dupli_yes11()
 
 static func bounlesspower():
-	return Globals.SDHandler.BoundlessPower.add(1).power(5)
+	if Globals.SDHandler.BoundlessPower.exponent < 0:
+		return largenum.new(1)
+	return Globals.SDHandler.BoundlessPower.power(1./3.)

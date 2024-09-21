@@ -445,6 +445,23 @@ Cost: 10 EP"
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension8"]
 layout_mode = 2
 
+[node name="BuyMax" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -110.0
+offset_top = 19.0
+offset_right = -8.0
+offset_bottom = 48.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+theme_type_variation = &"EDButton"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Buy Max"
+
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension1/Buy" to="." method="buydim" binds= [1]]
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension2/Buy" to="." method="buydim" binds= [2]]
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension3/Buy" to="." method="buydim" binds= [3]]
@@ -453,3 +470,4 @@ layout_mode = 2
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension6/Buy" to="." method="buydim" binds= [6]]
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension7/Buy" to="." method="buydim" binds= [7]]
 [connection signal="pressed" from="VSplitContainer/Dimensions/Dimension8/Buy" to="." method="buydim" binds= [8]]
+[connection signal="pressed" from="BuyMax" to="." method="buymax"]

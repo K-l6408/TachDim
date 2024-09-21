@@ -11,7 +11,7 @@ func boundlessness():
 	if Globals.fastestBLess.time < 0 \
 	or Globals.fastestBLess.time > time:
 		Globals.fastestBLess = Globals.PrestigeData.new(time, bpgained, 1)
-	Globals.last10bless.append(Globals.PrestigeData.new(time, bpgained, 1))
+	Globals.last10bless.insert(0, Globals.PrestigeData.new(time, bpgained, 1))
 	if  Globals.last10bless.size() > 10:
 		Globals.last10bless.resize(10)
 	Globals.animation("boundless")

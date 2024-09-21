@@ -58,6 +58,11 @@ text = "Improve Duplication
 interval (500ms → 450ms)
 Cost: /3.00 Dupl."
 
+[node name="DupGain" type="Label" parent="HSplitContainer/DUpgrades"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
 [node name="DupLimit" type="VBoxContainer" parent="HSplitContainer"]
 layout_mode = 2
 

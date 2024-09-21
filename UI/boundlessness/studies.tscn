@@ -17,16 +17,16 @@ script = ExtResource("1_rlv08")
 [node name="Respec" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.417
-anchor_right = 0.583
+anchor_left = 0.4
+anchor_right = 0.6
 offset_left = -0.320038
 offset_top = 20.0
 offset_right = 0.320007
 offset_bottom = 50.0
 grow_horizontal = 2
 toggle_mode = true
-text = "Respec Studies on the
-next Boundlessness"
+text = "Respec Studies on the next
+Boundlessness reset"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -42,12 +42,13 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+alignment = 1
 
 [node name="StudyTree1" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(377, 680)
+custom_minimum_size = Vector2(480, 680)
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 4
 script = ExtResource("1_cryta")
 
 [node name="SD1" type="Button" parent="ScrollContainer/Trees/StudyTree1"]
@@ -65,7 +66,7 @@ Space Dimension.
 Cost: 0 ST"
 script = ExtResource("2_egti4")
 id_override = "SD1"
-counts_towards_centering = null
+needs_all_studies = true
 
 [node name="DupM" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
 custom_minimum_size = Vector2(150, 100)
@@ -85,7 +86,6 @@ script = ExtResource("2_egti4")
 row = 1
 studies_required = [NodePath("../SD1")]
 cost = 2
-counts_towards_centering = null
 
 [node name="DupSp" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
 custom_minimum_size = Vector2(150, 100)
@@ -105,7 +105,6 @@ script = ExtResource("2_egti4")
 row = 1
 studies_required = [NodePath("../SD1")]
 cost = 2
-counts_towards_centering = null
 
 [node name="Dila2Eter" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
 custom_minimum_size = Vector2(150, 100)
@@ -124,7 +123,6 @@ script = ExtResource("2_egti4")
 row = 2
 studies_required = [NodePath("../DupM")]
 cost = 1
-counts_towards_centering = null
 
 [node name="EtMultPow" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
 custom_minimum_size = Vector2(150, 100)
@@ -144,7 +142,6 @@ script = ExtResource("2_egti4")
 row = 2
 studies_required = [NodePath("../DupSp")]
 cost = 3
-counts_towards_centering = null
 
 [node name="TGScaling" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
 custom_minimum_size = Vector2(150, 100)
@@ -164,7 +161,6 @@ script = ExtResource("2_egti4")
 row = 3
 studies_required = [NodePath("../Dila2Eter")]
 cost = 6
-counts_towards_centering = null
 
 [node name="TG2EP" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
 custom_minimum_size = Vector2(150, 100)
@@ -184,7 +180,6 @@ script = ExtResource("2_egti4")
 row = 3
 studies_required = [NodePath("../EtMultPow")]
 cost = 4
-counts_towards_centering = null
 
 [node name="SD2" type="Button" parent="ScrollContainer/Trees/StudyTree1" node_paths=PackedStringArray("studies_required")]
 custom_minimum_size = Vector2(150, 100)
@@ -204,7 +199,87 @@ script = ExtResource("2_egti4")
 row = 4
 id_override = "SD2"
 studies_required = [NodePath("../TGScaling"), NodePath("../TG2EP")]
-cost = 6
+cost = 5
+
+[node name="StudyTree2" type="Container" parent="ScrollContainer/Trees"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(358, 440)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("1_cryta")
+
+[node name="SD2" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("linked_to")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+
+Unlock the 2nd
+Space Dimension.
+
+
+Cost: 6 ST"
+script = ExtResource("2_egti4")
+row = 3
+id_override = "SD2"
+linked_to = NodePath("../../StudyTree1/SD2")
+cost = 5
+
+[node name="DGIn" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+theme_type_variation = &"Study"
+disabled = true
+text = "
+Duplicantes Galaxies
+don't reset
+Interval upgrades.
+
+
+Cost: 3 ST"
+script = ExtResource("2_egti4")
+row = 4
+studies_required = [NodePath("../SD2")]
+cost = 2
+
+[node name="DGCh" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+theme_type_variation = &"Study"
+disabled = true
+text = "
+Duplicantes Galaxies
+don't reset
+Chance upgrades.
+
+
+Cost: 4 ST"
+script = ExtResource("2_egti4")
+row = 4
+studies_required = [NodePath("../SD2")]
+cost = 3
+
+[node name="EPx" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+
+Gain ×5 more
+Boundlessness Points.
+
+
+Cost: 7 ST"
+script = ExtResource("2_egti4")
+row = 5
+studies_required = [NodePath("../DGIn"), NodePath("../DGCh")]
+cost = 7
 counts_towards_centering = null
 
 [node name="ST" type="Panel" parent="."]

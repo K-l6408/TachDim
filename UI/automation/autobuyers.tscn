@@ -176,6 +176,37 @@ grow_vertical = 2
 text = "Decrease interval by 40%
 Cost: 1 EP"
 
+[node name="BuyMax" type="SpinBox" parent="Auto/Buyers/Galaxy"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.25
+anchor_right = 0.4
+anchor_bottom = 0.75
+offset_left = -122.0
+offset_top = -0.25
+offset_right = 122.0
+offset_bottom = 0.25
+max_value = 99.0
+step = 0.02
+value = 0.1
+prefix = "Buy max Galaxies every"
+suffix = "second(s)"
+
+[node name="Enabled" type="CheckBox" parent="Auto/Buyers/Galaxy/BuyMax"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.799988
+offset_right = 20.8
+grow_horizontal = 0
+grow_vertical = 2
+button_pressed = true
+flat = true
+
 [node name="Limit" type="SpinBox" parent="Auto/Buyers/Galaxy"]
 layout_mode = 1
 anchors_preset = -1

@@ -1,7 +1,7 @@
 extends MarginContainer
 
 func _process(_delta):
-	$Mile/M1.text = "Unlock the ×%s EP\nmultiplier autobuyer" % \
+	$Mile/M1.text = "Unlock the ×%s EP\nmultiplier autobuyer." % \
 	Globals.int_to_string(2)
 	$Mile/M1/Label.text = "At %s Boundlessness:" % Globals.int_to_string(1)
 	$Mile/M1.button_pressed = Globals.Boundlessnesses.to_float() >= 1
@@ -17,3 +17,9 @@ func _process(_delta):
 	
 	$Mile/M5/Label.text = "At %s Boundlessnesses:" % Globals.int_to_string(5)
 	$Mile/M5.button_pressed = Globals.Boundlessnesses.to_float() >= 5
+	
+	$Mile/M6/Label.text = "At %s Boundlessnesses:" % Globals.int_to_string(6)
+	$Mile/M6.button_pressed = Globals.Boundlessnesses.to_float() >= 6
+	
+	$Mile/M7/Label.text = "At %s Boundlessnesses:" % Globals.int_to_string(7)
+	$Mile/M7.button_pressed = Globals.Boundlessnesses.to_float() >= 7

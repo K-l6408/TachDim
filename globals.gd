@@ -116,7 +116,7 @@ var ECTargets = [
 	largenum.two_to_the(2048), largenum.ten_to_the(1500),
 	largenum.ten_to_the(9000), largenum.ten_to_the(10500),
 	largenum.ten_to_the(7000), largenum.ten_to_the(13000),
-	largenum.ten_to_the(30000)
+	largenum.ten_to_the(5000)
 ]
 const ECUnlocks = [
 	1500,  1900,  10000, 12500,
@@ -128,7 +128,9 @@ func _process(delta):
 	eternTime += delta
 	boundTime += delta
 	if EUHandler is Node:
-		if EUHandler.is_bought(12) and (EU12Timer == null or EU12Timer.time_left == 0):
+		if EUHandler.is_bought(12) \
+		and (EU12Timer == null or EU12Timer.time_left == 0) \
+		and fastestEtern.time > 0:
 			EternityPts.add2self(fastestEtern.currency)
 			EU12Timer = get_tree().create_timer(fastestEtern.time * 3)
 		if EternityPts.to_float() < 1e3 and OEUHandler.PasEPBought == 0:
@@ -164,7 +166,8 @@ func boundlessnessreset():
 	if Boundlessnesses.to_float() < 4:
 		EUHandler.Bought = 0
 	EUHandler.EPMultBought = 0
-	OEUHandler.Bought = 0
+	if Boundlessnesses.to_float() < 6:
+		OEUHandler.Bought = 0
 	OEUHandler.TSpScBought = 0
 	OEUHandler.TDmScBought = 0
 	OEUHandler.PasEPBought = 0
@@ -172,6 +175,7 @@ func boundlessnessreset():
 	EDHandler.reset()
 	DupHandler.reset()
 	TDHandler.reset(2)
+	SDHandler.boundlessed()
 	TachTotalBL = largenum.new(Tachyons)
 	Studies.on_reset()
 

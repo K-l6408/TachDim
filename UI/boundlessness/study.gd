@@ -61,15 +61,20 @@ func update_line():
 	connect_lines.default_color = line_color
 
 func _process(_delta):
+	if linked_to != null:
+		bought = linked_to.bought
+		disabled = linked_to.disabled
+		text = linked_to.text
+		id_label.text = linked_to.id_label.text
 	if bought:
 		disabled = true
 		add_theme_stylebox_override("disabled", get_theme_stylebox("enabled"))
 	else:
 		var requirements : bool
-		if needs_all_studies:
+		if not needs_all_studies:
 			requirements = false
 			for i in studies_required:
-				if not i.bought:
+				if i.bought:
 					requirements = true
 					break
 		else:

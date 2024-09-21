@@ -17,7 +17,7 @@ var DimAmount : Array[largenum] = [
 ]
 var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
 var DimCostStart : Array[largenum] = [
-	largenum.new( 1),largenum.new(20),
+	largenum.new( 1),largenum.new(5),
 	largenum.ten_to_the(3),
 	largenum.new(0),largenum.new(0),
 	largenum.new(0),largenum.new(0),largenum.new(0),
@@ -73,9 +73,10 @@ func _process(delta):
 	
 	var buymult = 5
 	
-	%Important.text = "[center]%s [font_size=20]%s[/font_size] %s [font_size=20]/%s[/font_size]." % [
-		"You have", BoundlessPower.to_string(), "Boundless Power,\ndividing Tachyon Dimensions' costs by",
-		Formulas.bounlesspower().to_string()
+	%Important.text = \
+	"[center]%s [font_size=20]%s[/font_size] %s [font_size=20]^%s[/font_size] %s [font_size=20]×%s[/font_size]." % [
+		"You have", BoundlessPower.to_string(), "Boundless Power,\nraised", Globals.float_to_string(1./3., 3),
+		"to boost Time Dilation's multiplier by", Formulas.bounlesspower().to_string()
 	]
 	%Important.text += "\n[font_size=10]%s [/font_size]%s[font_size=10] %s" % [
 		"You're gaining", BLPperS.to_string(), "Boundless Power per second."

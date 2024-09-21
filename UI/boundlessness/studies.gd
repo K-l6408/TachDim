@@ -79,7 +79,7 @@ func _process(_delta):
 	Formulas.dupli_yes11().divide(Formulas.dupli_no11()).to_string()
 	
 	%StudyTree1/DupSp.text = \
-	"\n\nYou gain Duplicantes\n%s times faster.\n\n\n" % Globals.int_to_string(3)
+	"\n\nYou gain Duplicantes\n%s times faster.\n\n\n" % Globals.int_to_string(5)
 	
 	%StudyTree1/Dila2Eter.text = "\nTime Dilation boosts\nEternity gain.\n\n" + \
 	"Currently: ×%s\n\n" % Globals.int_to_string(max(Globals.TDilation, 1))
@@ -88,7 +88,7 @@ func _process(_delta):
 	"raised ^%s.\n\n\n" % Globals.float_to_string(4)
 	
 	%StudyTree1/TGScaling.text = "\n%s\n%s %s %s\n%s %s.\n\n\n" % [
-		"Tachyon Galaxy costs", "scale by", Globals.int_to_string(40),
+		"Tachyon Galaxy costs", "scale by", Globals.int_to_string(55),
 		"Dimensions", "instead of", Globals.int_to_string(60)
 	]
 	
@@ -105,6 +105,26 @@ func _process(_delta):
 				Globals.int_to_string(i.cost),
 				"" if i.cost == 1 else "s"
 			]
+	
+	%StudyTree2.visible = ("SD2" in purchased)
+	
+	%StudyTree2/DGIn.text = \
+	"\nDuplicantes Galaxies\ndon't reset\nInterval upgrades.\n\n\n"
+	
+	%StudyTree2/DGCh.text = \
+	"\nDuplicantes Galaxies\ndon't reset\nChance upgrades.\n\n\n"
+	
+	%StudyTree2/EPx.text = \
+	"\n\nGain ×%s more\nBoundlessness Points.\n\n\n" % \
+	Globals.int_to_string(5)
+	
+	for i in %StudyTree2.get_children():
+		if i is Study:
+			i.text += "Cost: %s Space Theorem%s" % [
+				Globals.int_to_string(i.cost),
+				"" if i.cost == 1 else "s"
+			]
+	
 
 func respec():
 	for id in purchased:

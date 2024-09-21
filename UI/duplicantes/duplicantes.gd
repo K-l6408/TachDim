@@ -25,13 +25,13 @@ var intervUpgrades := 0
 var intervalCap :
 	get:
 		if "1×2" in Globals.Studies.purchased:
-			return 0.05 / 3
+			return 0.05 / 5
 		else:
 			return 0.05
 func interval():
 	var interv = 0.9 ** intervUpgrades
 	if "1×2" in Globals.Studies.purchased:
-		interv /= 3
+		interv /= 5
 	if interv <= intervalCap: return intervalCap
 	return interv
 func buy_interval():
@@ -58,9 +58,12 @@ func buy_maxgal():
 var dupGalaxies := 0
 func buy_galaxy():
 	Globals.Duplicantes = largenum.new(1)
-	chance = 1
-	intervUpgrades = 0
+	if "4×2" not in Globals.Studies.purchased:
+		chance = 1
+	if "4×1" not in Globals.Studies.purchased:
+		intervUpgrades = 0
 	dupGalaxies += 1
+	Globals.TDHandler.updateTSpeed()
 
 func _process(delta):
 	if Globals.progressBL < Globals.Progression.Duplicantes:
@@ -72,7 +75,6 @@ func _process(delta):
 			Globals.progressBL   = Globals.Progression.Duplicantes
 	elif Globals.Duplicantes.less(1):
 		Globals.Duplicantes = largenum.new(1)
-
 	
 	$HSplitContainer.split_offset = size.x / 2 - 2
 	
@@ -94,8 +96,29 @@ func _process(delta):
 	]
 	
 	%TextG.text = \
-	"[center]You have [font_size=20]%s[/font_size] Duplicantes Galaxies." % \
-	Globals.int_to_string(dupGalaxies)
+	"[center]You have [font_size=20]%s[/font_size] Duplicantes Galax%s." % [
+		Globals.int_to_string(dupGalaxies),
+		"y" if dupGalaxies == 1 else "ies"
+	]
+	
+	var about = ""
+	if   Globals.Duplicantes.log10() < 1:
+		about = "Approximately "
+	elif Globals.Duplicantes.log10() < 1.5:
+		about = "Approx. "
+	elif Globals.Duplicantes.log10() < 2:
+		about = "About "
+	elif Globals.Duplicantes.log10() < 2.5:
+		about = "Abt "
+	elif Globals.Duplicantes.log10() < 3:
+		about = "~"
+	%DupGain.text = "You are gaining ×%s Duplicantes per second. (%s%s to reach the limit)" % [
+		largenum.new(chance / 100. + 1).power(1. / interval()),
+		about, Globals.format_time(
+			limit().divide(Globals.Duplicantes).log2() \
+			* 100 * interval() / chance
+		)
+	]
 	
 	if limitUpgrades >= 6:
 		%Limit.text = "Duplicantes limit:\n%s (capped)" % \
@@ -115,9 +138,24 @@ func _process(delta):
 		largenum.ten_to_the(140 + 60 * maxGalaxies)
 	)
 	
-	%Galaxy.text = "Reset Duplicantes and Duplicantes Upgrades\nfor a Duplicantes" + \
-	" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
-	largenum.two_to_the(1024).to_string()
+	if "4×1" in Globals.Studies.purchased and "4×2" in Globals.Studies.purchased:
+		%Galaxy.text = "Reset Duplicantes to %s\nfor a Duplicantes" + \
+		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % [
+			Globals.int_to_string(1),
+			largenum.two_to_the(1024).to_string()
+		]
+	elif "4×1" in Globals.Studies.purchased:
+		%Galaxy.text = "Reset Duplicantes and Duplicantes Chance Upgrades\nfor a Duplicantes" + \
+		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
+		largenum.two_to_the(1024).to_string()
+	elif "4×2" in Globals.Studies.purchased:
+		%Galaxy.text = "Reset Duplicantes and Duplicantes Interval Upgrades\nfor a Duplicantes" + \
+		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
+		largenum.two_to_the(1024).to_string()
+	else:
+		%Galaxy.text = "Reset Duplicantes and Duplicantes Upgrades\nfor a Duplicantes" + \
+		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
+		largenum.two_to_the(1024).to_string()
 	%Galaxy.disabled = (
 		Globals.Duplicantes.log2() < 1024 or chance < 100
 		or interval() < intervalCap or dupGalaxies >= maxGalaxies

@@ -56,6 +56,11 @@ var BuyMax : bool
 func dimcost(which):
 	return DimCostStart[which-1].multiply(DimCostMult[which-1].power(DimPurchase[which-1]))
 
+func buymax():
+	for i in DimsUnlocked:
+		while dimcost(DimsUnlocked - i).less(Globals.EternityPts):
+			buydim(DimsUnlocked - i)
+
 func buydim(which):
 	if which > DimsUnlocked: return
 	Globals.EternityPts.add2self(dimcost(which).neg())
@@ -133,7 +138,7 @@ func _process(delta):
 			mult.mult2self(Formulas.ec1_reward())
 		
 		if Globals.Challenge == 17:
-			mult.pow2self(0)
+			mult = largenum.new(1)
 		
 		if Globals.Challenge == 20:
 			mult.pow2self(1.1)

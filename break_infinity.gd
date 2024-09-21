@@ -149,7 +149,10 @@ func power(b:float) -> largenum:
 	return result
 
 func pow2self(b:float) -> largenum:
-	if b == 0: return largenum.new(1)
+	if b == 0:
+		exponent = 0
+		mantissa = 2 ** 61
+		return self
 	exponent = exponent * float(b)
 	var M = (log(mantissa) / GL.LOG2 - 61) * float(b)
 	exponent += floor(M)
@@ -205,11 +208,11 @@ func _to_string() -> String:
 				pass
 			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
 				return "%.2f" % to_float()
-			if m > 9.999:
+			if m > 9.95:
 				l = ceil(l)
 				m = 1
 			if l > 1e5:
-				return "e%.2fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
+				return "e%.4fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
 			return "%.2fe%.0f" % [m*sign, floor(l)]
 		GL.DisplayMode.Engineering:
 			var l = log10() / 3
@@ -218,11 +221,11 @@ func _to_string() -> String:
 			var m = 1000 ** (l - floor(l))
 			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
 				return "%.2f" % to_float()
-			if m > 999.99:
+			if m > 999.95:
 				l = ceil(l)
 				m = 1
 			if l > 1e5:
-				return "e%.2fe%.0f" % [
+				return "e%.4fe%.0f" % [
 					l/10**floor(log(l)/GL.LOG10),
 					log(l)/GL.LOG10
 				]
@@ -232,7 +235,7 @@ func _to_string() -> String:
 			var m = 1000 ** (l - floor(l))
 			if abs(to_float()) < 1e3:
 				return "%.2f" % to_float()
-			if m > 999.99:
+			if m > 999.95:
 				l = ceil(l)
 				m = 1
 			return "%.2f %s" % [m*sign, largenum.standard(l-1)]
@@ -243,18 +246,18 @@ func _to_string() -> String:
 			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
 				return "%.2f" % to_float()
 			if l > 1e5:
-				return "ee%.2f" % (log(l)/GL.LOG10)
+				return "ee%.4f" % (log(l)/GL.LOG10)
 			return "e%.2f" % l
 		GL.DisplayMode.Letters:
 			var l = log10()
 			if l == -INF:
 				return "0.00"
 			var m = 10 ** (l - floor(l))
-			if abs(to_float()) < 999.999 and abs(to_float()) > 0.009:
+			if abs(to_float()) < 999.95 and abs(to_float()) > 0.009:
 				return "%.2f" % to_float()
 			var s = ""
 			var alpha = "abcdefghijklmnopqrstuvwxyz"
-			if m > 9.99:
+			if m > 9.95:
 				l = ceil(l)
 				m = 1
 			var k = ceil(fmod(l, 3) - 0.9999999)
@@ -272,14 +275,14 @@ func _to_string() -> String:
 				return largenum.dozenal(to_float())
 			if l > 12 ** 5:
 				return "e%se%s" % [
-					largenum.dozenal(l / 12 ** floor(log(l) / GL.LOG12)),
+					largenum.dozenal(l / 12 ** floor(log(l) / GL.LOG12), 4),
 					largenum.dozenal(log(l) / GL.LOG12, 0)
 				]
 			return "%se%s" % [largenum.dozenal(m), largenum.dozenal(l,0)]
 		GL.DisplayMode.Strict_Logarithm:
 			if log10() < 1e3:
 				return ("e%.2f" % log10()).replace("inf", "∞")
-			return "ee%.2f" % (log(log10()) / GL.LOG10)
+			return "ee%.4f" % (log(log10()) / GL.LOG10)
 		GL.DisplayMode.Roman:
 			var l = log10() / 3
 			if l < 3.3333:
@@ -300,7 +303,7 @@ func _to_string() -> String:
 		GL.DisplayMode.sitelen_pona:
 			var l = log10() / 2
 			var m = 100 ** fmod(l, 1)
-			if m > 99.999:
+			if m > 99.95:
 				l = ceil(l)
 				m = 1
 			if l >= 1e4:
@@ -330,11 +333,11 @@ func _to_string() -> String:
 			var m = 10 ** (l - floor(l))
 			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
 				return Globals.float_to_string(to_float())
-			if m > 9.999:
+			if m > 9.95:
 				l = ceil(l)
 				m = 1
 			if l > 1e5:
-				return "e%.2fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
+				return "e%.4fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
 			return "%.2fe%.0f" % [m, floor(l)]
 		GL.DisplayMode.Factorial:
 			if abs(to_float()) < 1000:

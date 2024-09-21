@@ -125,7 +125,8 @@ func _process(_delta):
 	%Resources/Boundlessness.visible = Globals.EDHandler.DimsUnlocked == 8
 	if Globals.EternityPts.exponent < 1024:
 		%Resources/Boundlessness/BoundlessButton.disabled = true
-		%Resources/Boundlessness/BoundlessButton.text = "Reach\n%s EP"
+		%Resources/Boundlessness/BoundlessButton.text = "Reach %s\nEternity Points" % \
+		largenum.two_to_the(1024)
 	else:
 		%Resources/Boundlessness/BoundlessButton.disabled = false
 		%Resources/Boundlessness/BoundlessButton.text = "%s\n%s %s %s\n%s" % [

@@ -88,7 +88,7 @@ func _process(_delta):
 	Globals.ECTargets[5].to_string() + \
 	"\nReward: Decrease free Timespeed requirement after %s. (×%s → ×%s)" % [
 		Globals.int_to_string(308),
-		Globals.float_to_string(2), Globals.float_to_string(1.8)
+		Globals.float_to_string(2), Globals.float_to_string(1.75)
 	]
 	
 	$Chal/lenges/EC7/Condition.text = \

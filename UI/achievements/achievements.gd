@@ -176,8 +176,10 @@ func achreqs(r, c):
 				Globals.int_to_string(3), Globals.format_time(30)
 			]
 			
-			5: return "Big Bang for %s Eternity Points." % \
-			Globals.float_to_string(1e200)
+			5: return "Big Bang for %s Eternity Points.\n" % \
+			Globals.float_to_string(1e200) + \
+			"Reward: Gain ×%s Eternity Points." % \
+			Globals.int_to_string(2)
 			
 			7: return "Have %s Duplicantes Galaxies." % \
 			Globals.int_to_string(3)

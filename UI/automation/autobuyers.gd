@@ -242,7 +242,8 @@ func _process(_delta):
 		if $Auto/Buyers/Dilation/Enabled.button_pressed:
 			buydila()
 			if Globals.OEUHandler.is_bought(2) and \
-			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed:
+			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed and \
+			Globals.TDilation >= (2 if Globals.Challenge in [6, 16] else 4):
 				$Auto/Buyers/Dilation/Timer.start($Auto/Buyers/Dilation/BuyMax.value)
 			else:
 				$Auto/Buyers/Dilation/Timer.start(DilInterval())
@@ -292,14 +293,18 @@ func _process(_delta):
 	
 	for i in sizechange:
 		if i != null: i.custom_minimum_size.x = size.x - 10
+	$Auto/Buyers/Rewind/Objective.custom_minimum_size.x = 123
 	if not ($Auto/Buyers/Rewind/Interval.visible or $Auto/Buyers/Rewind/Accuracy.visible):
 		$Auto/Buyers/Rewind.custom_minimum_size = Vector2(260, 44)
-		$Auto/Buyers/Rewind/Objective.custom_minimum_size.x = 123
 		$Auto/Buyers/Rewind/Objective.\
 		set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
 		$Auto/Buyers/Rewind/Objective.offset_left = -113
 	else:
 		$Auto/Buyers/Rewind.custom_minimum_size = Vector2(size.x - 10, 45)
+		$Auto/Buyers/Rewind/Objective.\
+		set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+		$Auto/Buyers/Rewind/Objective.anchor_left  = 0.55
+		$Auto/Buyers/Rewind/Objective.anchor_right = 0.55
 	
 	if RewdInterval() == 0:
 		$Auto/Buyers/Rewind/RichTextLabel.text = \
@@ -403,9 +408,10 @@ func _process(_delta):
 		$Auto/Buyers/TimeSpeed/Mode.position.x = \
 		$Auto/Buyers/TimeSpeed/Enabled.position.x
 	else:
+		$Auto/Buyers/TimeSpeed/Mode.custom_minimum_size.x = 217
+		$Auto/Buyers/TimeSpeed/Mode.\
+		set_anchors_and_offsets_preset(Control.PRESET_VCENTER_WIDE)
 		$Auto/Buyers/TimeSpeed/Mode.anchor_left  = 0.7
-		$Auto/Buyers/TimeSpeed/Mode.anchor_right = 0.7
-		$Auto/Buyers/TimeSpeed/Mode.anchor_top   = 0.0
 		$Auto/Buyers/TimeSpeed/Mode.size = Vector2(217, 45)
 	
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \

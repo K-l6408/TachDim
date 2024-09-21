@@ -16,7 +16,7 @@ func save_anim_settings():
 	for i in %AnimOptions.get_children():
 		if not i is CheckButton: continue
 		if i.button_pressed: current += mask
-		mask >>= 1
+		mask <<= 1
 	return current
 
 func load_anim_settings(current : int):
@@ -24,7 +24,7 @@ func load_anim_settings(current : int):
 	for i in %AnimOptions.get_children():
 		if not i is CheckButton: continue
 		i.button_pressed = current & mask
-		mask >>= 1
+		mask <<= 1
 
 func _ready():
 	for i in GL.DisplayMode.keys():
