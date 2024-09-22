@@ -30,7 +30,7 @@ static func epgained():
 		epgain.mult2self(2)
 	
 	if "3×2" in Globals.Studies.purchased:
-		epgain.mult2self(1.4 ** Globals.TGalaxies)
+		epgain.mult2self(1.5 ** Globals.TGalaxies)
 	
 	if epgain.to_float() < 1e10:
 		epgain = largenum.new(floor(epgain.to_float() + 0.1))

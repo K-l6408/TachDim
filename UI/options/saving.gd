@@ -121,7 +121,6 @@ func saveF(file : String = saveFilePath):
 		],
 		"tach dim purchases" : Globals.TDHandler.DimPurchase,
 		"timespeed amount" : Globals.TDHandler.TSpeedCount,
-		"timespeed cost" : Globals.TDHandler.TSpeedCost.to_bytes(),
 		"rewind multiplier" : Globals.TDHandler.RewindMult.to_bytes(),
 		"time dilation" : Globals.TDilation,
 		"tachyon galaxies" : Globals.TGalaxies,
@@ -251,6 +250,9 @@ func saveF(file : String = saveFilePath):
 		
 		DATA["big bang buyer mode"] = Globals.Automation.\
 		get_node("Auto/Buyers/BigBang/Amount/OptionButton").selected
+		
+		DATA["tgal buyer max time"] = \
+		Globals.Automation.get_node("Auto/Buyers/Galaxy/BuyMax").value
 	
 	sf.store_var(DATA)
 	sf.close()
@@ -323,7 +325,6 @@ func loadF(file : String = saveFilePath):
 		Globals.TDHandler.DimPurchase[i] = DATA["tach dim purchases"][i]
 	
 	Globals.TDHandler.TSpeedCount = DATA["timespeed amount"]
-	Globals.TDHandler.TSpeedCost.from_bytes(DATA["timespeed cost"])
 	Globals.TDHandler.RewindMult.from_bytes(DATA["rewind multiplier"])
 	
 	Globals.TDilation = DATA["time dilation"]
@@ -478,6 +479,10 @@ func loadF(file : String = saveFilePath):
 			Globals.Automation.\
 			get_node("Auto/Buyers/BigBang/Amount/OptionButton").\
 			selected = DATA["big bang buyer mode"]
+		
+		if DATA.has("tgal buyer max time"):
+			Globals.Automation.get_node("Auto/Buyers/Galaxy/BuyMax").value = \
+			DATA["tgal buyer max time"]
 	else:
 		Globals.progressBL = Globals.progress
 		Globals.boundTime = Globals.existence

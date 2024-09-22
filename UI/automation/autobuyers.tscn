@@ -390,7 +390,6 @@ wait_time = 4.0
 one_shot = true
 
 [node name="EPMult" type="Control" parent="Auto/Buyers"]
-visible = false
 clip_contents = true
 custom_minimum_size = Vector2(180, 35)
 layout_mode = 2

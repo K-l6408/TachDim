@@ -826,6 +826,7 @@ ButtonBLess/styles/pressed = SubResource("StyleBoxFlat_h1bbj")
 ButtonEtern/base_type = &"Button"
 ButtonEtern/colors/disabled_color = Color(0.133333, 0.133333, 0.133333, 1)
 ButtonEtern/colors/font_color = Color(0.698039, 0.254902, 0.890196, 1)
+ButtonEtern/colors/font_focus_color = Color(0.698039, 0.254902, 0.890196, 1)
 ButtonEtern/colors/font_hover_color = Color(0, 0, 0, 1)
 ButtonEtern/colors/font_pressed_color = Color(0, 0, 0, 1)
 ButtonEtern/styles/disabled = SubResource("StyleBoxFlat_viuc7")

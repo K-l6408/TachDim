@@ -23,15 +23,6 @@ var DistantScaling :
 	get: return 75
 
 var TSpeedBoost := largenum.new(1.13)
-var TSpeedCost := largenum.new(1000)
-var TSpeedCostIncrease : largenum :
-	get:
-		var base = largenum.new(10)
-		var costscaling = 10 - Globals.OEUHandler.TSpScBought
-		if Globals.Challenge == 5 or Globals.Challenge == 16: base.mult2self(1.5)
-		if TSpeedCount >= TSpeedScaleStart:
-			base.mult2self(largenum.new(costscaling).power(TSpeedCount - TSpeedScaleStart))
-		return base
 var TSpeedCount := 0
 
 var DimsUnlocked := 4
@@ -70,8 +61,18 @@ func tspcost():
 	var start = 1
 	var increase = 1
 	if Globals.Challenge == 5 or Globals.Challenge == 16:
-		increase += log(5) / GL.LOG10
+		increase += 1 - GL.LOG2 / GL.LOG10
 	
+	var purchase : int = TSpeedCount
+	
+	var costlog = start + increase * purchase
+	
+	if costlog >= 308.2547156:
+		var scalingamount = log(10 - Globals.OEUHandler.TSpScBought) / GL.LOG10
+		var scaling : int = purchase - (308.2547156 - start) / increase
+		costlog += scaling * (scaling + 1) * scalingamount / 2
+	
+	return largenum.ten_to_the(costlog)
 
 func dimcost(which):
 	var start = [
@@ -121,11 +122,9 @@ func rewind(score:float):
 	if Globals.Challenge == 8:
 		var RM = RewindMult
 		var TS = TSpeedCount
-		var TC = TSpeedCost
 		reset(0)
 		RewindMult = RM
 		TSpeedCount = TS
-		TSpeedCost = TC
 	else:
 		for i in 7:
 			DimAmount[i].pow2self(1 - score)
@@ -205,12 +204,12 @@ func buydim(which, bulkoverride := 0):
 
 func buytspeed(maxm:bool):
 	if Globals.Challenge == 20: return
-	while TSpeedCost.less(Globals.Tachyons):
-		Globals.Tachyons.add2self(TSpeedCost.neg())
-		if Globals.Tachyons.sign < 0:
-			Globals.Tachyons.add2self(TSpeedCost)
-			return
-		TSpeedCost.mult2self(TSpeedCostIncrease)
+	while tspcost().less(Globals.Tachyons):
+		if Globals.Tachyons.exponent - tspcost().exponent < 62:
+			Globals.Tachyons.add2self(tspcost().neg())
+			if Globals.Tachyons.sign < 0:
+				Globals.Tachyons.add2self(tspcost())
+				return
 		TSpeedCount += 1
 		if Globals.Challenge == 2 or Globals.Challenge == 16: C2Multiplier = 0.0
 		if Globals.Challenge == 14:  C14Divisor = 1.0
@@ -328,7 +327,6 @@ func reset(level := 0, challengeReset := true):
 	for i in DimAmount:
 		i.exponent = -INF # set to zero
 		i.fix_mantissa()
-	TSpeedCost = largenum.ten_to_the(3)
 	TSpeedCount = 0
 	RewindMult = largenum.new(1)
 	if level >= 1:
@@ -424,9 +422,9 @@ func _process(delta):
 		%TopButtons/Timespeed/BuyMax.disabled = true
 		%TopButtons/Timespeed.text = "Timespeed disabled (EC5)"
 	else:
-		%TopButtons/Timespeed.disabled = Globals.Tachyons.less(TSpeedCost)
-		%TopButtons/Timespeed/BuyMax.disabled = Globals.Tachyons.less(TSpeedCost)
-		%TopButtons/Timespeed.text = "Timespeed (%s TC) " % TSpeedCost.to_string()
+		%TopButtons/Timespeed.disabled = Globals.Tachyons.less(tspcost())
+		%TopButtons/Timespeed/BuyMax.disabled = Globals.Tachyons.less(tspcost())
+		%TopButtons/Timespeed.text = "Timespeed (%s TC) " % tspcost().to_string()
 	%TopButtons/Timespeed.tooltip_text = "Purchased %s time%s" % \
 	[Globals.int_to_string(TSpeedCount), "" if TSpeedCount == 1 else "s"]
 	if Globals.EDHandler.DimsUnlocked > 0:
@@ -444,6 +442,10 @@ func _process(delta):
 		%Progress.value = Globals.Tachyons.log2()
 		%Progress.max_value = logfinity
 		%Progress.tooltip_text += "Eternity"
+	else:
+		%Progress.value = Globals.Tachyons.log2()
+		%Progress.max_value = Globals.ECTargets[Globals.Challenge - 16].log2()
+		%Progress.tooltip_text += "Challenge goal"
 	%Progress/Label.text = Globals.percent_to_string(%Progress.value / %Progress.max_value, 1)
 	%Progress/Label.add_theme_color_override("font_color", get_theme_color("font_color", "ProgressBar"))
 	rewindNode.visible = (Globals.TDilation >= 5) or (Globals.progress >= Globals.Progression.Galaxy)
@@ -642,7 +644,7 @@ func _process(delta):
 					if BuyMax:
 						buydim(i, 1e9)
 		if Input.is_action_pressed("BuyTSpeed") or BuyMax:
-			if TSpeedCost.less(Globals.Tachyons):
+			if tspcost().less(Globals.Tachyons):
 				buytspeed(not Input.is_action_pressed("BuyOne") or BuyMax)
 	BuyMax = Input.is_action_pressed("BuyMax")
 	

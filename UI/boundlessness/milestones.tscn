@@ -50,11 +50,11 @@ theme_type_variation = &"Study"
 theme_override_font_sizes/font_size = 16
 toggle_mode = true
 button_mask = 0
-text = "You start Eternities
-with all Challenges
-complete and TD and
-Timespeed autobuyers
-fully upgraded."
+text = "Start with all
+Challenges completed
+and TD and Timespeed
+autobuyers fully
+upgraded."
 
 [node name="Label" type="Label" parent="Mile/M2"]
 layout_mode = 1
@@ -76,7 +76,7 @@ theme_type_variation = &"Study"
 theme_override_font_sizes/font_size = 16
 toggle_mode = true
 button_mask = 0
-text = "You start with Eternity
+text = "Start with Eternity
 overcame and 
 all normal autobuyers
 fully upgraded."
@@ -101,7 +101,7 @@ theme_type_variation = &"Study"
 theme_override_font_sizes/font_size = 16
 toggle_mode = true
 button_mask = 0
-text = "You start with all
+text = "Start with all
 Eternity Upgrades.
 
 The Big Bang autobuyer
@@ -127,7 +127,7 @@ theme_type_variation = &"Study"
 theme_override_font_sizes/font_size = 16
 toggle_mode = true
 button_mask = 0
-text = "You complete Eternity
+text = "Complete Eternity
 Challenges immediately
 when you unlock them."
 

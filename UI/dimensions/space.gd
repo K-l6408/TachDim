@@ -37,7 +37,7 @@ var BoundlessPower := largenum.new(0)
 var BuyMax : bool
 
 func dimcost(which):
-	return DimCostStart[which-1].multiply(DimCostMult[which-1].power(DimPurchase[which-1]))
+	return DimCostStart[which-1].multiply(DimCostMult[which-1].power(DimPurchase[which-1])).add(-0.001)
 
 func buydim(which):
 	if which > DimsUnlocked: return
@@ -45,6 +45,8 @@ func buydim(which):
 	if Globals.BoundlessPts.sign < 0:
 		Globals.BoundlessPts.add2self(dimcost(which))
 		return
+	if Globals.BoundlessPts.to_float() < 0.1:
+		Globals.BoundlessPts = largenum.new(0)
 	DimPurchase[which-1] += 1
 	DimAmount[which-1].add2self(1)
 

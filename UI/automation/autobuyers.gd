@@ -250,7 +250,11 @@ func _process(_delta):
 	if Globals.challengeCompleted(12) and $Auto/Buyers/Galaxy/Timer.time_left == 0:
 		if $Auto/Buyers/Galaxy/Enabled.button_pressed:
 			buygala()
-			$Auto/Buyers/Galaxy/Timer.start(GalInterval())
+			if Globals.Boundlessnesses.to_float() >= 7 and \
+			$Auto/Buyers/Galaxy/BuyMax/Enabled.button_pressed:
+				$Auto/Buyers/Galaxy/Timer.start($Auto/Buyers/Dilation/BuyMax.value)
+			else:
+				$Auto/Buyers/Galaxy/Timer.start(GalInterval())
 	if Globals.challengeCompleted(14) and $Auto/Buyers/BigBang/Timer.time_left == 0 and (Globals.progressBL < GL.Progression.Overcome or Globals.Challenge != 0):
 		if $Auto/Buyers/BigBang/Enabled.button_pressed:
 			bigbang()
@@ -344,6 +348,7 @@ func _process(_delta):
 		$Auto/Buyers/TimeSpeed/Mode.button_pressed = false
 	
 	$Auto/Buyers/Dilation/BuyMax.visible = Globals.OEUHandler.is_bought(2)
+	$Auto/Buyers/Galaxy/BuyMax.visible = Globals.Boundlessnesses.to_float() >= 7
 	
 	for i in 8:
 		if Globals.challengeCompleted(i+1):
@@ -506,7 +511,13 @@ func buygala():
 		if $Auto/Buyers/Galaxy/Limit/Enabled.button_pressed:
 			if Globals.TGalaxies >= GalLimit:
 				doit = false
-		if doit: Globals.TDHandler.galaxy()
+		if doit:
+			var dim8 = Globals.TDHandler.DimPurchase[Globals.TDHandler.DimsUnlocked - 1]
+			Globals.TDHandler.galaxy()
+			if Globals.Boundlessnesses.to_float() >= 7 and \
+			$Auto/Buyers/Galaxy/BuyMax/Enabled.button_pressed:
+				while dim8 >= Globals.TDHandler.galacost():
+					Globals.TDHandler.galaxy()
 
 func bigbang():
 	if Globals.TDHandler.canBigBang:

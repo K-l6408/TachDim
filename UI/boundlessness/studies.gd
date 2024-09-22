@@ -53,22 +53,25 @@ func _ready():
 
 func _process(_delta):
 	$ST/Buy/TC.text = " Cost: %s TC " % \
-	theorem_cost_tc().to_string().replace(".00", "")
+	theorem_cost_tc().to_string().replace(".00e", "e").replace("00e", "e")
 	$ST/Buy/TC.disabled = not theorem_cost_tc().less(Globals.Tachyons)
 	
 	$ST/Buy/EP.text = " Cost: %s EP " % \
-	theorem_cost_ep().to_string().replace(".00", "")
+	theorem_cost_ep().to_string().replace(".00e", "e").replace(";00e", "e")
 	$ST/Buy/EP.disabled = not theorem_cost_ep().less(Globals.EternityPts)
 	
 	$ST/Buy/BP.text = " Cost: %s BP " % \
-	theorem_cost_bp().to_string()
+	theorem_cost_bp().to_string().trim_suffix(".00").trim_suffix(";00")
 	$ST/Buy/BP.disabled = not theorem_cost_bp().less(Globals.BoundlessPts)
 	
 	$ST/Buy/Max.disabled = (
 		$ST/Buy/TC.disabled and $ST/Buy/EP.disabled and $ST/Buy/BP.disabled
 	)
 	
-	$ST/Amount.text = "%s Space Theorems" % ST.to_string()
+	$ST/Amount.text = "%s Space Theorem%s" % [
+		ST.to_string().trim_suffix(".00").trim_suffix(";00"),
+		"" if ST.exponent == 0 else "s"
+	]
 	
 	
 	%StudyTree1/SD1.text = "\nUnlock the %s\nSpace Dimension.\n\n\n" % \
@@ -94,7 +97,7 @@ func _process(_delta):
 	
 	%StudyTree1/TG2EP.text = \
 	"\nEach Tachyon Galaxy\ngives a ×%s\nmultiplier to\nEP gained.\n\n" % \
-	Globals.float_to_string(1.4)
+	Globals.float_to_string(1.5, 1)
 	
 	%StudyTree1/SD2.text = "\nUnlock the %s\nSpace Dimension.\n\n\n" % \
 	Globals.ordinal(2)

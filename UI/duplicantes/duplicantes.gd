@@ -15,6 +15,7 @@ func reset():
 
 var chance := 1
 func buy_chance():
+	if chance >= 100: return
 	Globals.Duplicantes.div2self(2.0 ** chance)
 	if Globals.Duplicantes.exponent < 61:
 		Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
@@ -101,24 +102,28 @@ func _process(delta):
 		"y" if dupGalaxies == 1 else "ies"
 	]
 	
-	var about = ""
-	if   Globals.Duplicantes.log10() < 1:
-		about = "Approximately "
-	elif Globals.Duplicantes.log10() < 1.5:
-		about = "Approx. "
-	elif Globals.Duplicantes.log10() < 2:
-		about = "About "
-	elif Globals.Duplicantes.log10() < 2.5:
-		about = "Abt "
-	elif Globals.Duplicantes.log10() < 3:
-		about = "~"
-	%DupGain.text = "You are gaining ×%s Duplicantes per second. (%s%s to reach the limit)" % [
-		largenum.new(chance / 100. + 1).power(1. / interval()),
-		about, Globals.format_time(
-			limit().divide(Globals.Duplicantes).log2() \
-			* 100 * interval() / chance
-		)
-	]
+	if Globals.Duplicantes.exponent == -INF:
+		%DupGain.text = "You are not gaining any Duplicantes."
+	else:
+		var about = ""
+		if chance < 100:
+			if   Globals.Duplicantes.log10() < 1:
+				about = "Approximately "
+			elif Globals.Duplicantes.log10() < 1.5:
+				about = "Approx. "
+			elif Globals.Duplicantes.log10() < 2:
+				about = "About "
+			elif Globals.Duplicantes.log10() < 2.5:
+				about = "Abt "
+			elif Globals.Duplicantes.log10() < 3:
+				about = "~"
+		%DupGain.text = "You are gaining ×%s Duplicantes per second. (%s%s to reach the limit)" % [
+			largenum.new(chance / 100. + 1).power(1. / interval()),
+			about, Globals.format_time(
+				limit().divide(Globals.Duplicantes).log2() \
+				* 100 * interval() / chance
+			)
+		]
 	
 	if limitUpgrades >= 6:
 		%Limit.text = "Duplicantes limit:\n%s (capped)" % \
@@ -139,11 +144,10 @@ func _process(delta):
 	)
 	
 	if "4×1" in Globals.Studies.purchased and "4×2" in Globals.Studies.purchased:
-		%Galaxy.text = "Reset Duplicantes to %s\nfor a Duplicantes" + \
-		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % [
-			Globals.int_to_string(1),
-			largenum.two_to_the(1024).to_string()
-		]
+		%Galaxy.text = "Reset Duplicantes to %s\nfor a Duplicantes" % \
+		Globals.int_to_string(1) + \
+		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
+		largenum.two_to_the(1024).to_string()
 	elif "4×1" in Globals.Studies.purchased:
 		%Galaxy.text = "Reset Duplicantes and Duplicantes Chance Upgrades\nfor a Duplicantes" + \
 		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
