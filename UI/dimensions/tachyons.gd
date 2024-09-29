@@ -407,10 +407,7 @@ func _process(delta):
 		i.get_node("Buy/Progress").max_value = buylim - DimPurchase[k-1] % buylim
 		i.get_node("Buy").disabled = not dimcost(k).less(Globals.Tachyons)
 		if k < 8:
-			if DimAmount[k].exponent == -INF:
-				i.get_node("A&G/Amount").text = Globals.int_to_string(DimPurchase[k-1])
-			else:
-				i.get_node("A&G/Amount").text = DimAmount[k-1].to_string()
+			i.get_node("A&G/Amount").text = DimAmount[k-1].to_string().trim_suffix(".00").trim_suffix(";00")
 		else:
 			i.get_node("A&G/Amount").text = Globals.int_to_string(DimPurchase[k-1])
 		i.get_node("Buy").text = "Buy %s\nCost: %s TC" % [
@@ -698,6 +695,8 @@ func _process(delta):
 		
 		if i == 8 or Globals.Challenge == 13:
 			mult.mult2self(RewindMult)
+		elif "Tach1" in Globals.Studies.purchased:
+			mult.mult2self(Formulas.study_tach1())
 		
 		if Globals.Challenge == 2 or Globals.Challenge == 16: mult.mult2self(C2Multiplier)
 		if Globals.Challenge == 3:

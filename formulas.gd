@@ -38,9 +38,9 @@ static func epgained():
 	return epgain
 
 static func bpgained():
-	var bpgain = largenum.ten_to_the((
+	var bpgain = largenum.two_to_the(3 * (
 			Globals.EternityPts.log2() / 1024
-		) - 1)
+		 - 1))
 	
 	if "5×1" in Globals.Studies.purchased:
 		bpgain.mult2self(5)
@@ -54,9 +54,9 @@ static func bpgained():
 static func next_bp():
 	if "5×1" in Globals.Studies.purchased:
 		return largenum.two_to_the(
-			1024 * (bpgained().add(1).divide(5).log10() + 1)
+			1024 * (bpgained().add(1).divide(5).log2() / 3 + 1)
 		)
-	return largenum.two_to_the(1024 * (bpgained().add(1).log10() + 1))
+	return largenum.two_to_the(1024 * (bpgained().add(1).log2() / 3 + 1))
 
 static func overcome_1():
 	return Globals.Tachyons.power(0.01)
@@ -104,7 +104,22 @@ static func duplicantes():
 	else:
 		return dupli_yes11()
 
-static func bounlesspower():
+static func bounlesspower(): # haha typo
 	if Globals.SDHandler.BoundlessPower.exponent < 0:
 		return largenum.new(1)
 	return Globals.SDHandler.BoundlessPower.power(1./3.)
+
+static func study_tach1():
+	return Globals.TDHandler.RewindMult.power(0.1)
+
+static func study_time1():
+	if Globals.TDHandler.RewindMult.exponent < 1:
+		return 1
+	return Globals.TDHandler.RewindMult.log2()
+static func study_time3():
+	return 1 + .1 * Globals.DupHandler.dupGalaxies
+
+static func study_space1():
+	if Globals.TDHandler.RewindMult.exponent < 1:
+		return 1
+	return Globals.TDHandler.RewindMult.log2() ** 0.2

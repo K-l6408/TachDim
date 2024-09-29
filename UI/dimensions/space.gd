@@ -25,7 +25,7 @@ var DimCostStart : Array[largenum] = [
 var DimCostMult : Array[largenum] :
 	get:
 		return [
-			largenum.new( 3),largenum.ten_to_the(),
+			largenum.new( 3),largenum.ten_to_the(1),
 			largenum.new(27),
 			largenum.new(0),largenum.new(0),
 			largenum.new(0),largenum.new(0),largenum.new(0),
@@ -37,16 +37,17 @@ var BoundlessPower := largenum.new(0)
 var BuyMax : bool
 
 func dimcost(which):
-	return DimCostStart[which-1].multiply(DimCostMult[which-1].power(DimPurchase[which-1])).add(-0.001)
+	return DimCostStart[which-1].\
+	multiply(DimCostMult[which-1].power(DimPurchase[which-1]))
 
 func buydim(which):
 	if which > DimsUnlocked: return
 	Globals.BoundlessPts.add2self(dimcost(which).neg())
+	if abs(Globals.BoundlessPts.to_float()) < 0.1:
+		Globals.BoundlessPts = largenum.new(0)
 	if Globals.BoundlessPts.sign < 0:
 		Globals.BoundlessPts.add2self(dimcost(which))
 		return
-	if Globals.BoundlessPts.to_float() < 0.1:
-		Globals.BoundlessPts = largenum.new(0)
 	DimPurchase[which-1] += 1
 	DimAmount[which-1].add2self(1)
 
@@ -68,10 +69,13 @@ func _process(delta):
 			i.modulate.a = 1
 		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % \
 		[Globals.int_to_string(DimPurchase[k-1]), "" if DimPurchase[k-1] == 1 else "s"]
-		i.get_node("Buy").disabled = not dimcost(k).less(Globals.BoundlessPts)
-		i.get_node("A&G/Amount").text = DimAmount[k-1].to_string()
+		i.get_node("Buy").disabled = \
+		abs(dimcost(k).add(Globals.BoundlessPts.neg()).to_float()) > 0.1
+		i.get_node("A&G/Amount").text = DimAmount[k-1].to_string().\
+		trim_suffix(".00").trim_suffix(";00")
 		#print(DimAmount[k-1].to_float())
-		i.get_node("Buy").text = "Cost: %s BP" % dimcost(k).to_string()
+		i.get_node("Buy").text = "Cost: %s BP" % dimcost(k).to_string().\
+		replace(".00", "").trim_suffix(";00")
 	
 	var buymult = 5
 	

@@ -102,7 +102,17 @@ var BigBangAtEP := largenum.new(1)
 var EPMultEnabled:
 	get:
 		return $Auto/Buyers/EPMult/Enabled.button_pressed \
-		and $Auto/Buyers/EPMult.visible
+		and    $Auto/Buyers/EPMult.visible
+
+var DupChEnabled:
+	get:
+		return $Auto/Buyers/DupCh/Enabled.button_pressed \
+		and    $Auto/Buyers/DupCh.visible
+
+var DupIntEnabled:
+	get:
+		return $Auto/Buyers/DupInt/Enabled.button_pressed \
+		and    $Auto/Buyers/DupInt.visible
 
 @onready var sizechange = [
 	$Auto/Buyers/HSeparator, $Auto/Buyers/BigBang, $Auto/Buyers/Galaxy, $Auto/Buyers/Dilation,
@@ -453,6 +463,9 @@ func _process(_delta):
 	else:
 		$Auto/Buyers/BigBang/Amount/Label.hide()
 		$Auto/Buyers/BigBang/Amount/OptionButton.show()
+	
+	$Auto/Buyers/DupCh .visible = Globals.Boundlessnesses.to_float() >= 8
+	$Auto/Buyers/DupInt.visible = Globals.Boundlessnesses.to_float() >= 8
 
 func unlock(which):
 	if which == 0:

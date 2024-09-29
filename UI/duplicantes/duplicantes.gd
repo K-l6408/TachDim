@@ -16,10 +16,11 @@ func reset():
 var chance := 1
 func buy_chance():
 	if chance >= 100: return
-	Globals.Duplicantes.div2self(2.0 ** chance)
-	if Globals.Duplicantes.exponent < 61:
-		Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
-		Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
+	if Globals.Boundlessnesses.to_float() < 8:
+		Globals.Duplicantes.div2self(2.0 ** chance)
+		if Globals.Duplicantes.exponent < 61:
+			Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
+			Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
 	chance += 1
 
 var intervUpgrades := 0
@@ -36,10 +37,11 @@ func interval():
 	if interv <= intervalCap: return intervalCap
 	return interv
 func buy_interval():
-	Globals.Duplicantes.div2self(3.0 ** (intervUpgrades + 1))
-	if Globals.Duplicantes.exponent < 61:
-		Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
-		Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
+	if Globals.Boundlessnesses.to_float() < 8:
+		Globals.Duplicantes.div2self(3.0 ** (intervUpgrades + 1))
+		if Globals.Duplicantes.exponent < 61:
+			Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
+			Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
 	intervUpgrades += 1
 
 var limitUpgrades := 0
@@ -80,7 +82,7 @@ func _process(delta):
 	$HSplitContainer.split_offset = size.x / 2 - 2
 	
 	%TextD.text = "[center]You have [font_size=20]%s[/font_size] Duplican%ss,\n" % [
-		Globals.Duplicantes.to_string().trim_suffix(".00"),
+		Globals.Duplicantes.to_string().trim_suffix(".00").trim_suffix(";00"),
 		"" if Globals.Duplicantes.exponent == 0 else "te"
 	] + \
 	"giving a [font_size=20]×%s[/font_size] multiplier to all Eternity Dimensions." % \
@@ -137,10 +139,10 @@ func _process(delta):
 	
 	%MaxGal.text = "Max Duplicantes\nGalaxies: %s\nCost: %s EP" % [
 		Globals.int_to_string(maxGalaxies),
-		largenum.ten_to_the(140 + 60 * maxGalaxies).to_string().replace(".00", "")
+		largenum.ten_to_the(140 + 80 * maxGalaxies).to_string().replace(".00", "")
 	]
 	%MaxGal.disabled = Globals.EternityPts.less(
-		largenum.ten_to_the(140 + 60 * maxGalaxies)
+		largenum.ten_to_the(140 + 80 * maxGalaxies)
 	)
 	
 	if "4×1" in Globals.Studies.purchased and "4×2" in Globals.Studies.purchased:
@@ -185,16 +187,33 @@ func _process(delta):
 	
 	tickFraction = fmod(tickFraction, 1.0)
 	
-	%Chance.disabled   = Globals.Duplicantes.less(2.0 ** chance - 0.001) or chance >= 100
+	%Chance.disabled = Globals.Duplicantes.less(2.0 ** chance - 0.001) or chance >= 100
+	while not %Chance.disabled and Globals.Automation.DupChEnabled:
+		buy_chance()
+		%Chance.disabled = \
+		Globals.Duplicantes.less(2.0 ** chance - 0.001) or chance >= 100
+	
 	%Interval.disabled = Globals.Duplicantes.less(3.0 ** (intervUpgrades + 1) - 0.001) or \
 	interval() <= intervalCap
+	while not %Interval.disabled and Globals.Automation.DupIntEnabled:
+		buy_interval()
+		%Interval.disabled = \
+		Globals.Duplicantes.less(3.0 ** (intervUpgrades + 1) - 0.001) or \
+		interval() <= intervalCap
 	
 	if chance >= 100:
 		%Chance.text = "Duplication chance:\n%s (capped)" % [
 			Globals.percent_to_string(chance / 100.0, 0),
 		]
-	else:
+	elif Globals.Boundlessnesses.to_float() < 8:
 		%Chance.text = "Improve Duplication\nchance (%s → %s)\nCost: /%s Dupl." % [
+			Globals.percent_to_string(chance / 100.0       , 0),
+			Globals.percent_to_string(chance / 100.0 + 0.01, 0),
+			Globals.int_to_string(2 ** chance) if 2.0**chance < 1e5 else
+			Globals.float_to_string(2.0 ** chance)
+		]
+	else:
+		%Chance.text = "Improve Duplication\nchance (%s → %s)\nReq: %s Dupl." % [
 			Globals.percent_to_string(chance / 100.0       , 0),
 			Globals.percent_to_string(chance / 100.0 + 0.01, 0),
 			Globals.int_to_string(2 ** chance) if 2.0**chance < 1e5 else
@@ -204,12 +223,22 @@ func _process(delta):
 	if interval() <= intervalCap:
 		%Interval.text = "Duplication interval:\n%s (capped)" % \
 		Globals.format_time(interval())
-	else:
+	elif Globals.Boundlessnesses.to_float() < 8:
 		%Interval.text = "Improve Duplication\ninterval (%s → %s)" % [
 			Globals.format_time(interval()),
 			Globals.format_time(max(interval() * 0.9, intervalCap))
 		] + \
 		"\nCost: /%s Dupl." % (
+			Globals.int_to_string(3 ** (intervUpgrades + 1)) if
+			3.0 ** (intervUpgrades + 1) < 1e5 else
+			Globals.float_to_string(3.0 ** (intervUpgrades + 1))
+		)
+	else:
+		%Interval.text = "Improve Duplication\ninterval (%s → %s)" % [
+			Globals.format_time(interval()),
+			Globals.format_time(max(interval() * 0.9, intervalCap))
+		] + \
+		"\nReq: %s Dupl." % (
 			Globals.int_to_string(3 ** (intervUpgrades + 1)) if
 			3.0 ** (intervUpgrades + 1) < 1e5 else
 			Globals.float_to_string(3.0 ** (intervUpgrades + 1))

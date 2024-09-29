@@ -213,10 +213,12 @@ script = ExtResource("3_7hxj0")
 [node name="DialogueLabel" parent="VSplitContainer/News" instance=ExtResource("3_ky8nc")]
 clip_contents = false
 layout_mode = 2
-text = "[center]news go here…… [rainbow]but maybe not only ðat?"
+size_flags_horizontal = 4
+text = "[center]NEWS TICKER!!!"
 autowrap_mode = 0
 meta_underlined = true
 hint_underlined = true
+visible_characters_behavior = 0
 skip_action = &""
 seconds_per_step = 0.1
 

@@ -131,12 +131,13 @@ func _process(_delta):
 		%Resources/Boundlessness/BoundlessButton.disabled = false
 		%Resources/Boundlessness/BoundlessButton.text = "%s\n%s %s %s\n%s" % [
 			"Other lands await…",
-			"gain", Formulas.bpgained(), "BP",
+			"gain", Formulas.bpgained().to_string()\
+			.trim_suffix(".00").trim_suffix(";00"), "BP",
 			(
 				"(%s%s %s)" % (
 					[
 						"next at ", Formulas.next_bp(), "EP"
-					] if Formulas.bpgained().to_float() < 1000 else [
+					] if Formulas.bpgained().to_float() < 100 else [
 						"", Formulas.bpgained().divide(Globals.boundTime),
 						"BP/s"
 					]
@@ -154,19 +155,19 @@ func _process(_delta):
 	%Resources/EP/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Point%s[/color][/center]" % [
 		get_theme_color("font_color", "ButtonEtern").to_html(false),
-		Globals.EternityPts.to_string().trim_suffix(".00"),
+		Globals.EternityPts.to_string().trim_suffix(".00").trim_suffix(";00"),
 		"" if Globals.EternityPts.exponent == 0 else "s"
 	]
 	%Resources/Dupl/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nDuplican%ss[/color][/center]" % [
 		get_theme_color("meow", "DupliButton").to_html(false),
-		Globals.Duplicantes.to_string().trim_suffix(".00"),
+		Globals.Duplicantes.to_string().trim_suffix(".00").trim_suffix(";00"),
 		"" if Globals.Duplicantes.exponent == 0 else "te"
 	]
 	%Resources/BP/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nBoundlessness Point%s[/color][/center]" % [
 		get_theme_color("font_color", "ButtonBLess").to_html(false),
-		Globals.BoundlessPts.to_string().trim_suffix(".00"),
+		Globals.BoundlessPts.to_string().trim_suffix(".00").trim_suffix(";00"),
 		"" if Globals.BoundlessPts.exponent == 0 else "s"
 	]
 	if Globals.Challenge > 15:
@@ -190,7 +191,7 @@ func _process(_delta):
 		%Resources/Eternity/EternityButton.text = "Big Bang to\ncomplete the\nchallenge"
 	else:
 		%Resources/Eternity/EternityButton.text = "Big Bang for\n%s EP\n(%s EP/s)" % [
-			Formulas.epgained().to_string(),
+			Formulas.epgained().to_string().trim_suffix(".00").trim_suffix(";00"),
 			Formulas.epgained().divide(Globals.eternTime).to_string()
 		]
 

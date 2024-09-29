@@ -42,11 +42,12 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 30
 alignment = 1
 
 [node name="StudyTree1" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(480, 680)
+custom_minimum_size = Vector2(320, 680)
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("1_cryta")
@@ -203,7 +204,7 @@ cost = 5
 
 [node name="StudyTree2" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(358, 440)
+custom_minimum_size = Vector2(480, 800)
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("1_cryta")
@@ -275,12 +276,204 @@ Gain ×5 more
 Boundlessness Points.
 
 
-Cost: 7 ST"
+Cost: 6 ST"
 script = ExtResource("2_egti4")
 row = 5
 studies_required = [NodePath("../DGIn"), NodePath("../DGCh")]
-cost = 7
+cost = 6
 counts_towards_centering = null
+
+[node name="Tach1" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("locked_by", "studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"StudyG"
+disabled = true
+action_mode = 0
+text = "Dimensional Rewind
+affects all other
+Tachyon Dimensions with
+reduced effect.
+(Currently: ×1.24e9999)
+
+Cost: 2 ST"
+script = ExtResource("2_egti4")
+row = 6
+id_override = "Tach1"
+locked_by = [NodePath("../Time1"), NodePath("../Space1")]
+studies_required = [NodePath("../EPx")]
+cost = 2
+line_color = Color(0.32595, 0.41, 0.2419, 1)
+
+[node name="Tach2" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"StudyG"
+disabled = true
+action_mode = 0
+text = "
+The boost from
+Time Dilation gets
+an additional ×2.00
+multiplier.
+
+Cost: 3 Space Theorems"
+script = ExtResource("2_egti4")
+row = 7
+id_override = "Tach2"
+studies_required = [NodePath("../Tach1")]
+cost = 3
+line_color = Color(0.32595, 0.41, 0.2419, 1)
+
+[node name="Tach3" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"StudyG"
+disabled = true
+action_mode = 0
+text = "Tachyon Dimensions are
+multiplied by the
+current Duplicantes
+amount.
+(Currently: ×1.80e308)
+
+Cost: 4 ST"
+script = ExtResource("2_egti4")
+row = 8
+id_override = "Tach3"
+studies_required = [NodePath("../Tach2")]
+cost = 4
+line_color = Color(0.32595, 0.41, 0.2419, 1)
+
+[node name="Time1" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("locked_by", "studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"StudyP"
+disabled = true
+action_mode = 0
+text = "Dimensional Rewind
+affects the first 4
+Eternity Dimensions with
+greatly reduced effect.
+(Currently: ×1.24e9999)
+
+Cost: 2 ST"
+script = ExtResource("2_egti4")
+row = 6
+id_override = "Time1"
+locked_by = [NodePath("../Tach1"), NodePath("../Space1")]
+studies_required = [NodePath("../EPx")]
+cost = 3
+line_color = Color(0.32595, 0.2419, 0.41, 1)
+
+[node name="Time2" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"StudyP"
+disabled = true
+action_mode = 0
+text = "
+Time Dilation affects
+Eternity Dimensions with
+reduced effect.
+(Currently: ×1.24e9999)
+
+Cost: 5 ST"
+script = ExtResource("2_egti4")
+row = 7
+id_override = "Time2"
+studies_required = [NodePath("../Time1")]
+cost = 5
+line_color = Color(0.32595, 0.2419, 0.41, 1)
+
+[node name="Time3" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"StudyP"
+disabled = true
+action_mode = 0
+text = "The Duplicantes
+multiplier is raised
+to a power based on
+Duplicantes Galaxies.
+(Currently: ^1.05)
+
+Cost: 6 ST"
+script = ExtResource("2_egti4")
+row = 8
+id_override = "Time3"
+studies_required = [NodePath("../Time2")]
+cost = 3
+line_color = Color(0.32595, 0.2419, 0.41, 1)
+
+[node name="Space1" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("locked_by", "studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "Dimensional Rewind
+affects the 2nd
+Space Dimension with
+greatly reduced effect.
+(Currently: ×1.24e9999)
+
+Cost: 2 ST"
+script = ExtResource("2_egti4")
+row = 6
+id_override = "Space1"
+locked_by = [NodePath("../Tach1"), NodePath("../Time1")]
+studies_required = [NodePath("../EPx")]
+cost = 5
+line_color = Color(0.41, 0.339958, 0.2419, 1)
+
+[node name="Space2" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "Dimensional Rewind
+affects the 2nd
+Space Dimension with
+greatly reduced effect.
+(Currently: ×1.24e9999)
+
+Cost: 2 ST"
+script = ExtResource("2_egti4")
+row = 7
+id_override = "Space2"
+studies_required = [NodePath("../Space1")]
+cost = 5
+line_color = Color(0.41, 0.339958, 0.2419, 1)
+
+[node name="Space3" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "Dimensional Rewind
+affects the 2nd
+Space Dimension with
+greatly reduced effect.
+(Currently: ×1.24e9999)
+
+Cost: 2 ST"
+script = ExtResource("2_egti4")
+row = 8
+id_override = "Space3"
+studies_required = [NodePath("../Space2")]
+cost = 5
+line_color = Color(0.41, 0.339958, 0.2419, 1)
 
 [node name="ST" type="Panel" parent="."]
 layout_mode = 1

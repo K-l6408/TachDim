@@ -23,3 +23,6 @@ func _process(_delta):
 	
 	$Mile/M7/Label.text = "At %s Boundlessnesses:" % Globals.int_to_string(7)
 	$Mile/M7.button_pressed = Globals.Boundlessnesses.to_float() >= 7
+	
+	$Mile/M8/Label.text = "At %s Boundlessnesses:" % Globals.int_to_string(8)
+	$Mile/M8.button_pressed = Globals.Boundlessnesses.to_float() >= 8

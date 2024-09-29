@@ -1,3 +1,4 @@
+# g = general: always active
 ~ g1
 [center]Ham sandwich.
 => END
@@ -11,7 +12,7 @@
 [center]Oh yeah I should probably mention this is inspired by [url=https://ivark.github.io/AntimatterDimensions/]Antimatter Dimensions[/url], so play that first :)
 => END
 ~ g5
-[center]Meow :3
+[center]…………………………………[wait=1] [font_size=100]BOOM!![/font_size] haha, did I scare you?
 => END
 ~ g6
 ~ g7

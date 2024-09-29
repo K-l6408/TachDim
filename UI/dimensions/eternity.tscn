@@ -445,6 +445,12 @@ Cost: 10 EP"
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension8"]
 layout_mode = 2
 
+[node name="Label" type="Label" parent="VSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "The requirement for free Timespeed starts at ×1.10. It jumps to ×2.00 at 308 upgrades and to ×5.00 at 4000 upgrades."
+horizontal_alignment = 1
+
 [node name="BuyMax" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 1

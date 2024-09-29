@@ -16,6 +16,11 @@ var column = 1 :
 	set(value):
 		id_override = value
 		update_label()
+@export var locked_by : Array[Study] = [] :
+	set(value):
+		locked_by = value
+		if get_parent() is StudyTreeContainer:
+			get_parent().sort()
 @export var studies_required : Array[Study] = [] :
 	set(value):
 		studies_required = value
@@ -70,19 +75,24 @@ func _process(_delta):
 		disabled = true
 		add_theme_stylebox_override("disabled", get_theme_stylebox("enabled"))
 	else:
-		var requirements : bool
-		if not needs_all_studies:
-			requirements = false
-			for i in studies_required:
-				if i.bought:
-					requirements = true
-					break
-		else:
-			requirements = true
-			for i in studies_required:
-				if not i.bought:
-					requirements = false
-					break
+		var requirements := true
+		for i in locked_by:
+			if i.bought:
+				requirements = false
+				break
+		if requirements:
+			if not needs_all_studies:
+				requirements = false
+				for i in studies_required:
+					if i.bought:
+						requirements = true
+						break
+			else:
+				requirements = true
+				for i in studies_required:
+					if not i.bought:
+						requirements = false
+						break
 		remove_theme_stylebox_override("disabled")
 		if Engine.is_editor_hint():
 			disabled = not requirements

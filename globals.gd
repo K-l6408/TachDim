@@ -168,9 +168,10 @@ func boundlessnessreset():
 	EUHandler.EPMultBought = 0
 	if Boundlessnesses.to_float() < 6:
 		OEUHandler.Bought = 0
-	OEUHandler.TSpScBought = 0
-	OEUHandler.TDmScBought = 0
-	OEUHandler.PasEPBought = 0
+	if Boundlessnesses.to_float() < 9:
+		OEUHandler.TSpScBought = 0
+		OEUHandler.TDmScBought = 0
+		OEUHandler.PasEPBought = 0
 	EDHandler.DimsUnlocked = 0
 	EDHandler.reset()
 	DupHandler.reset()
@@ -209,7 +210,10 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 				return "e" + String.num(log(f) / LOG10, precision).pad_decimals(precision)
 		DisplayMode.Dozenal:
 			if f > 12**3 and not force_dec:
-				return largenum.dozenal(fmod(f, 12), precision) + "e" + largenum.dozenal(log(f) / LOG12,0)
+				var l = floor(log(f) / LOG12)
+				return \
+				largenum.dozenal(f / (12 ** l), precision) +\
+				"e" + largenum.dozenal(l, 0)
 			return largenum.dozenal(f, precision)
 		DisplayMode.Roman:
 			return largenum.roman(f)
@@ -248,10 +252,17 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 					l /= 27
 				return String.num(f * 10**k, precision)\
 				.pad_decimals(precision) + s
+		DisplayMode.Engineering:
+			if f >= 1000 and not force_dec:
+				var l = log(f) / LOG10 / 3
+				if f / (1000.0 ** floor(l)) > 999.95:
+					l += 0.5
+				return String.num(f / (1000.0 ** floor(l)), precision)\
+				.pad_decimals(precision) + "e" + str(int(l) * 3)
 		_:
 			if f >= 1000 and not force_dec:
 				var l = log(f) / LOG10
-				if f / (10.0 ** floor(l)) > 9.9:
+				if f / (10.0 ** floor(l)) > 9.95:
 					l += 1
 				return String.num(f / (10.0 ** floor(l)), precision)\
 				.pad_decimals(precision) + "e" + str(int(l))

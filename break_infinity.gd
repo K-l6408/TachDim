@@ -208,11 +208,14 @@ func _to_string() -> String:
 				pass
 			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
 				return "%.2f" % to_float()
-			if m > 9.95:
+			if l >= 1e5:
+				return "e%.4fe%.0f" % [
+					l/10**floor(log(l)/GL.LOG10),
+					floor(log(l)/GL.LOG10)
+				]
+			elif m >= 9.95:
 				l = ceil(l)
 				m = 1
-			if l > 1e5:
-				return "e%.4fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
 			return "%.2fe%.0f" % [m*sign, floor(l)]
 		GL.DisplayMode.Engineering:
 			var l = log10() / 3
@@ -224,10 +227,10 @@ func _to_string() -> String:
 			if m > 999.95:
 				l = ceil(l)
 				m = 1
-			if l > 1e5:
+			if l*3 >= 1e5:
 				return "e%.4fe%.0f" % [
-					l/10**floor(log(l)/GL.LOG10),
-					log(l)/GL.LOG10
+					l*3/10**floor(log(l)/GL.LOG10),
+					floor(log(l)/GL.LOG10)
 				]
 			return "%.2fe%.0f" % [m*sign, floor(l) * 3]
 		GL.DisplayMode.Standard:
@@ -245,7 +248,7 @@ func _to_string() -> String:
 				return "0.00"
 			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
 				return "%.2f" % to_float()
-			if l > 1e5:
+			if l >= 1e5:
 				return "ee%.4f" % (log(l)/GL.LOG10)
 			return "e%.2f" % l
 		GL.DisplayMode.Letters:
@@ -336,7 +339,7 @@ func _to_string() -> String:
 			if m > 9.95:
 				l = ceil(l)
 				m = 1
-			if l > 1e5:
+			if l >= 1e5:
 				return "e%.4fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
 			return "%.2fe%.0f" % [m, floor(l)]
 		GL.DisplayMode.Factorial:

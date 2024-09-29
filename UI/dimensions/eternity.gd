@@ -45,12 +45,15 @@ var TreshMult    : float :
 	get:
 		if Globals.Challenge == 21:
 			return .09 + 1.01 ** FreeTSpeed
-		if FreeTSpeed < 308:
-			return 1.1
-		if Globals.ECCompleted(6):
-			return 1.75
-		else:
+		if FreeTSpeed > 4000:
+			if Globals.ECCompleted(6):
+				return 4.375
+			return 5.0
+		if FreeTSpeed > 308:
+			if Globals.ECCompleted(6):
+				return 1.75
 			return 2.0
+		return 1.1
 var BuyMax : bool
 
 func dimcost(which):
@@ -85,8 +88,14 @@ func _process(delta):
 		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % \
 		[Globals.int_to_string(DimPurchase[k-1]), "" if DimPurchase[k-1] == 1 else "s"]
 		i.get_node("Buy").disabled = Globals.EternityPts.less(dimcost(k))
-		i.get_node("A&G/Amount").text = DimAmount[k-1].to_string()
-		i.get_node("Buy").text = "Cost: %s EP" % dimcost(k).to_string()
+		if k < 8:
+			i.get_node("A&G/Amount").text = DimAmount[k-1].to_string().\
+			trim_suffix(".00").trim_suffix(";00")
+		else:
+			i.get_node("A&G/Amount").text = \
+			Globals.int_to_string(DimPurchase[k-1])
+		i.get_node("Buy").text = "Cost: %s EP" % dimcost(k).to_string().\
+		replace(".00", "").trim_suffix(";00")
 	
 	var buymult = 4
 	if Globals.ECCompleted(5):
@@ -103,6 +112,23 @@ func _process(delta):
 	%Important.text += "\n[font_size=10]%s [/font_size]%s[font_size=10] %s" % [
 		"You're gaining", TSperS.to_string(), "Time Shards per second."
 	]
+	
+	if Globals.ECCompleted(6):
+		%Label.text = "%s ×%s. %s ×%s %s %s %s ×%s %s %s %s." % [
+			"The requirement for free Timespeed upgrades starts at",
+			Globals.float_to_string(1.1), "It jumps to",
+			Globals.float_to_string(1.75), "at", Globals.int_to_string(308),
+			"upgrades and to", Globals.float_to_string(4.375), "at",
+			Globals.int_to_string(4000), "upgrades"
+		]
+	else:
+		%Label.text = "%s ×%s. %s ×%s %s %s %s ×%s %s %s %s." % [
+			"The requirement for free Timespeed upgrades starts at",
+			Globals.float_to_string(1.1), "It jumps to",
+			Globals.float_to_string(2), "at", Globals.int_to_string(308),
+			"upgrades and to", Globals.float_to_string(5), "at",
+			Globals.int_to_string(4000), "upgrades"
+		]
 	
 	if Globals.ECCompleted(2):
 		%Important.text += " | Timespeed: [/font_size]%s[font_size=10]/sec" % \

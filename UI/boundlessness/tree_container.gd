@@ -17,6 +17,7 @@ func sort():
 			while rows.size() <= i.row:
 				rows.append([])
 			rows[i.row].append(i)
+	custom_minimum_size = Vector2(0,0)
 	var row_y = 20
 	for row in rows:
 		var total_x = 0

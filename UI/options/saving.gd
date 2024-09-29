@@ -504,7 +504,6 @@ func gameReset():
 		Globals.TDHandler.DimAmount[i]   = largenum.new(0)
 		Globals.TDHandler.DimPurchase[i] = 0
 	Globals.TDHandler.TSpeedCount = 0
-	Globals.TDHandler.TSpeedCost  = largenum.new(1000)
 	Globals.TDHandler.RewindMult  = largenum.new(1)
 	Globals.TDilation = 0
 	Globals.TGalaxies = 0
