@@ -1,20 +1,28 @@
 # g = general: always active
 ~ g1
-[center]Ham sandwich.
+Ham sandwich.
 => END
 ~ g2
-[center]Tachyon Dimensions Resimplified - Coming soonish™
+Tachyon Dimensions Resimplified - Coming soonish™
 => END
 ~ g3
-[center]Tired of breaking into your own house every day? Try Doors!
+Tired of breaking into your own house every day? Try Doors!
 => END
 ~ g4
-[center]Oh yeah I should probably mention this is inspired by [url=https://ivark.github.io/AntimatterDimensions/]Antimatter Dimensions[/url], so play that first :)
+Oh yeah I should probably mention this is inspired by [url=https://ivark.github.io/AntimatterDimensions/]Antimatter Dimensions[/url], so play that first :)
 => END
 ~ g5
-[center]…………………………………[wait=1] [font_size=100]BOOM!![/font_size] haha, did I scare you?
+…………………………………[wait=1] [font_size=100]BOOM!![/font_size] haha, did I scare you?
 => END
 ~ g6
+[next=auto]What's the matter
+[speed=999][next=auto]What's the matte
+[speed=999][next=auto]What's the matt
+[speed=999][next=auto]What's the mat
+[speed=999][next=auto]What's the ma
+[speed=999][next=auto]What's the m
+[speed=999]What's the [speed=1]particle? Cat got your tongue?
+=> END
 ~ g7
 ~ g8
 ~ g9
@@ -39,5 +47,5 @@
 ~ g28
 ~ g29
 ~ g30
-[center](placeholder message (there's like 24 of these sorry))
+(placeholder message (there's like 24 of these sorry))
 => END

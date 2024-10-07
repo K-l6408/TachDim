@@ -520,7 +520,10 @@ func _process(delta):
 		DilaBoost = 2.2 ** (1 - abs(C10Score()))
 	if Globals.Challenge == 8: DilaBoost = 1
 	if Globals.Challenge == 22: DilaBoost = 10
-	pass
+	
+	if "Tach2" in Globals.Studies.purchased:
+		DilaBoost *= 2
+	
 	DilaBoost = largenum.new(DilaBoost)
 	if Globals.progress >= Globals.Progression.Boundlessness:
 		DilaBoost.mult2self(Formulas.bounlesspower())
@@ -698,6 +701,10 @@ func _process(delta):
 		elif "Tach1" in Globals.Studies.purchased:
 			mult.mult2self(Formulas.study_tach1())
 		
+		if "Tach3" in Globals.Studies.purchased and \
+		Globals.Duplicantes.exponent > 0:
+			mult.mult2self(Globals.Duplicantes)
+		
 		if Globals.Challenge == 2 or Globals.Challenge == 16: mult.mult2self(C2Multiplier)
 		if Globals.Challenge == 3:
 			if i == 3: mult.mult2self(3)
@@ -723,8 +730,13 @@ func _process(delta):
 		if not Globals.Achievemer.is_unlocked(3, 1) and mult.log10() >= 40:
 			Globals.Achievemer.set_unlocked(3, 1)
 		
+		# POWER EFFECTS GO HERE
+		
 		if Globals.Challenge == 18 and i != latest_purchased:
 			mult.pow2self(0.2)
+		
+		if "6×1" in Globals.Studies.purchased:
+			mult.pow2self(1.05)
 		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		mult.mult2self(TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed))

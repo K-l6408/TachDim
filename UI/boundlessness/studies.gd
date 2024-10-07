@@ -76,7 +76,7 @@ func _process(_delta):
 	]
 	
 	
-	%StudyTree1/SD1.text = "\nUnlock the %s\nSpace Dimension.\n\n\n" % \
+	%StudyTree1/SD1.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
 	Globals.ordinal(1)
 	
 	%StudyTree1/DupM.text = "\nImprove Duplicantes'\nmultiplier.\n\n" + \
@@ -101,7 +101,7 @@ func _process(_delta):
 	"\nEach Tachyon Galaxy\ngives a ×%s\nmultiplier to\nEP gained.\n\n" % \
 	Globals.float_to_string(1.5, 1)
 	
-	%StudyTree1/SD2.text = "\nUnlock the %s\nSpace Dimension.\n\n\n" % \
+	%StudyTree1/SD2.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
 	Globals.ordinal(2)
 	
 	for i in %StudyTree1.get_children():
@@ -144,11 +144,12 @@ func _process(_delta):
 	"Dimensional Rewind\naffects the first " + \
 	Globals.int_to_string(4) + \
 	"\nEternity Dimensions with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
-	Globals.float_to_string(Formulas.study_time1())
+	Formulas.study_time1().to_string()
 	
 	%StudyTree2/Time2.text = \
 	"\nTime Dilation affects\nEternity Dimensions with" + \
-	"\nreduced effect.\n(Currently: ×1.24e9999)\n\n"
+	"\nreduced effect.\n(Currently: ×%s)\n\n" % \
+	Formulas.study_time2().to_string()
 	
 	%StudyTree2/Time3.text = "The Duplicantes\nmultiplier is raised" + \
 	"\nto a power based on\nDuplicantes Galaxies.\n(Currently: ^%s)\n\n" % \
@@ -159,18 +160,29 @@ func _process(_delta):
 	"Dimensional Rewind\naffects the " + \
 	 Globals.ordinal(2) + \
 	"\nSpace Dimension with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
-	Globals.float_to_string(Formulas.study_space1())
+	Formulas.study_space1().to_string()
 	
 	%StudyTree2/Space2.text = \
-	"Time Dilation\naffects Space" + \
-	"\nDimension with\ngreatly reduced effect.\n(Currently: ×%s.)\n\n" % \
-	Globals.float_to_string(Formulas.study_space1())
+	"\nTime Dilation affects\n" + \
+	"Space Dimensions with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
+	Formulas.study_space2().to_string()
 	
 	%StudyTree2/Space3.text = \
-	"Dimensional Rewind\naffects the " + \
-	 Globals.ordinal(2) + \
-	"\nSpace Dimension with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
-	Globals.float_to_string(Formulas.study_space1())
+	"Space Dimensions are\nmultiplied by your\nDuplcantes Galaxy\namount.\n(Currently: ×%s)\n\n" % \
+	Globals.float_to_string(max(Globals.DupHandler.dupGalaxies, 1))
+	
+	%StudyTree2/DGIn2.text = \
+	"\nRaise Tachyon\nDimensions'\nmultipliers ^1.05.\n\n\n"
+	
+	%"StudyTree2/BPow+".text = \
+	"\nImprove Boundless\nPower's effect.\n\n" + \
+	"(^%s → ^%s)\n\n" % [
+		Globals.float_to_string(1./3., 3),
+		Globals.float_to_string(1./2., 3)
+	]
+	
+	%StudyTree2/SD3.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
+	Globals.ordinal(3)
 	
 	
 	for i in %StudyTree2.get_children():

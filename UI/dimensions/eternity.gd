@@ -57,7 +57,8 @@ var TreshMult    : float :
 var BuyMax : bool
 
 func dimcost(which):
-	return DimCostStart[which-1].multiply(DimCostMult[which-1].power(DimPurchase[which-1]))
+	return DimCostStart[which-1].\
+	multiply(DimCostMult[which-1].power(DimPurchase[which-1]))
 
 func buymax():
 	for i in DimsUnlocked:
@@ -138,6 +139,11 @@ func _process(delta):
 		NextUpgrade.mult2self(TreshMult)
 		FreeTSpeed += 1
 	
+	for i in DimsUnlocked:
+		if Globals.Automation.EDenabled(i+1):
+			while not Globals.EternityPts.less(dimcost(i+1)):
+				buydim(i+1)
+	
 	#if false:
 		#if not Input.is_action_pressed("ToggleAB"):
 			#for i in range(8, 0, -1):
@@ -148,7 +154,8 @@ func _process(delta):
 	#BuyMax = Input.is_action_pressed("BuyMax")
 	
 	for i in 8:
-		dims[i+1].get_node("N&M/Name").text = "%s Eternity Dimension" % Globals.ordinal(i+1)
+		dims[i+1].get_node("N&M/Name").text = \
+		"%s Eternity Dimension" % Globals.ordinal(i+1)
 	
 	if DimsUnlocked < 8:
 		dims[DimsUnlocked + 1].get_node("A&G/Growth").hide()
@@ -171,6 +178,9 @@ func _process(delta):
 		
 		if Globals.progressBL >= GL.Progression.Duplicantes:
 			mult.mult2self(Formulas.duplicantes())
+		
+		if "Time1" in Globals.Studies.purchased:
+			mult.mult2self(Formulas.study_time1())
 		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		dims[i].get_node("N&M/Multiplier").show()

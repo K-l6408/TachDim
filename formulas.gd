@@ -99,27 +99,36 @@ static func dupli_yes11():
 	return Globals.Duplicantes.power(0.03).add(dupli_no11() - 1)
 
 static func duplicantes():
+	if "Time3" in Globals.Studies.purchased:
+		if "1×1" not in Globals.Studies.purchased:
+			return dupli_no11() ** study_time3()
+		else:
+			return dupli_yes11().power(study_time3())
 	if "1×1" not in Globals.Studies.purchased:
 		return dupli_no11()
 	else:
 		return dupli_yes11()
 
+static func boundlessconversion():
+	if "6×2" in Globals.Studies.purchased:
+		return 2./3.
+	else: return 1./3.
 static func bounlesspower(): # haha typo
 	if Globals.SDHandler.BoundlessPower.exponent < 0:
 		return largenum.new(1)
-	return Globals.SDHandler.BoundlessPower.power(1./3.)
+	return Globals.SDHandler.BoundlessPower.power(boundlessconversion())
 
 static func study_tach1():
 	return Globals.TDHandler.RewindMult.power(0.1)
 
 static func study_time1():
-	if Globals.TDHandler.RewindMult.exponent < 1:
-		return 1
-	return Globals.TDHandler.RewindMult.log2()
+	return Globals.TDHandler.RewindMult.power(0.002)
+static func study_time2():
+	return bounlesspower().power(Globals.TDilation * 0.01)
 static func study_time3():
 	return 1 + .1 * Globals.DupHandler.dupGalaxies
 
 static func study_space1():
-	if Globals.TDHandler.RewindMult.exponent < 1:
-		return 1
-	return Globals.TDHandler.RewindMult.log2() ** 0.2
+	return Globals.TDHandler.RewindMult.power(5e-5)
+static func study_space2():
+	return largenum.new(1.002).power(Globals.TDilation)

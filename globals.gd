@@ -213,7 +213,7 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 				var l = floor(log(f) / LOG12)
 				return \
 				largenum.dozenal(f / (12 ** l), precision) +\
-				"e" + largenum.dozenal(l, 0)
+				"ɛ" + largenum.dozenal(l, 0)
 			return largenum.dozenal(f, precision)
 		DisplayMode.Roman:
 			return largenum.roman(f)
@@ -258,7 +258,7 @@ func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 				if f / (1000.0 ** floor(l)) > 999.95:
 					l += 0.5
 				return String.num(f / (1000.0 ** floor(l)), precision)\
-				.pad_decimals(precision) + "e" + str(int(l) * 3)
+				.pad_decimals(precision) + "ᴇ" + str(int(l) * 3)
 		_:
 			if f >= 1000 and not force_dec:
 				var l = log(f) / LOG10
@@ -292,8 +292,7 @@ func format_time(f:float) -> String:
 func pad_zeroes(s:String, howmany := 2):
 	var num = 0
 	for ch in s:
-		if ch.is_valid_int() or \
-		(display == DisplayMode.Dozenal and ch in "↊↋"):
+		if ch.is_valid_int() or ch in "↊↋":
 			num += 1
 		if ch in ".;":
 			break

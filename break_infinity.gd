@@ -228,11 +228,11 @@ func _to_string() -> String:
 				l = ceil(l)
 				m = 1
 			if l*3 >= 1e5:
-				return "e%.4fe%.0f" % [
+				return "ᴇ%.4fᴇ%.0f" % [
 					l*3/10**floor(log(l)/GL.LOG10),
 					floor(log(l)/GL.LOG10)
 				]
-			return "%.2fe%.0f" % [m*sign, floor(l) * 3]
+			return "%.2fᴇ%.0f" % [m*sign, floor(l) * 3]
 		GL.DisplayMode.Standard:
 			var l = log10() / 3
 			var m = 1000 ** (l - floor(l))
@@ -260,7 +260,7 @@ func _to_string() -> String:
 				return "%.2f" % to_float()
 			var s = ""
 			var alpha = "abcdefghijklmnopqrstuvwxyz"
-			if m > 9.95:
+			if m > 999.95:
 				l = ceil(l)
 				m = 1
 			var k = ceil(fmod(l, 3) - 0.9999999)
@@ -277,11 +277,11 @@ func _to_string() -> String:
 			if l < 3:
 				return largenum.dozenal(to_float())
 			if l > 12 ** 5:
-				return "e%se%s" % [
+				return "ɛ%sɛ%s" % [
 					largenum.dozenal(l / 12 ** floor(log(l) / GL.LOG12), 4),
 					largenum.dozenal(log(l) / GL.LOG12, 0)
 				]
-			return "%se%s" % [largenum.dozenal(m), largenum.dozenal(l,0)]
+			return "%sɛ%s" % [largenum.dozenal(m), largenum.dozenal(l,0)]
 		GL.DisplayMode.Strict_Logarithm:
 			if log10() < 1e3:
 				return ("e%.2f" % log10()).replace("inf", "∞")
@@ -340,8 +340,8 @@ func _to_string() -> String:
 				l = ceil(l)
 				m = 1
 			if l >= 1e5:
-				return "e%.4fe%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
-			return "%.2fe%.0f" % [m, floor(l)]
+				return "ě%.4fě%.0f" % [l/10**floor(log(l)/GL.LOG10), (log(l)/GL.LOG10)]
+			return "%.2fě%.0f" % [m, floor(l)]
 		GL.DisplayMode.Factorial:
 			if abs(to_float()) < 1000:
 				return "%.2f" % to_float()

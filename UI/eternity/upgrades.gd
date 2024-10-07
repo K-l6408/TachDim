@@ -156,10 +156,10 @@ func _process(_delta):
 		[Globals.ordinal(3), Globals.ordinal(6), Globals.int_to_string(Costs[1][2])]
 	
 	if is_bought(8) != Input.is_action_pressed("BuyOne"):
-		$Columns/Col2/GalaxyBoost.text = "Tachyon Galaxies are\ntwice as strong."
+		$Columns/Col2/GalaxyBoost.text = "All Galaxies are\ntwice as strong."
 	else:
 		$Columns/Col2/GalaxyBoost.text = \
-		"\nTachyon Galaxies are\ntwice as strong.\n \n \nCost: %s EP" % \
+		"\nAll Galaxies are\ntwice as strong.\n \n \nCost: %s EP" % \
 		Globals.int_to_string(Costs[1][3])
 	
 	if is_bought(9) != Input.is_action_pressed("BuyOne"):

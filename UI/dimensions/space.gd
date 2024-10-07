@@ -70,7 +70,8 @@ func _process(delta):
 		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % \
 		[Globals.int_to_string(DimPurchase[k-1]), "" if DimPurchase[k-1] == 1 else "s"]
 		i.get_node("Buy").disabled = \
-		abs(dimcost(k).add(Globals.BoundlessPts.neg()).to_float()) > 0.1
+		abs(dimcost(k).add(Globals.BoundlessPts.neg()).to_float()) > 0.1\
+		and Globals.BoundlessPts.less(dimcost(k))
 		i.get_node("A&G/Amount").text = DimAmount[k-1].to_string().\
 		trim_suffix(".00").trim_suffix(";00")
 		#print(DimAmount[k-1].to_float())
@@ -81,7 +82,8 @@ func _process(delta):
 	
 	%Important.text = \
 	"[center]%s [font_size=20]%s[/font_size] %s [font_size=20]^%s[/font_size] %s [font_size=20]×%s[/font_size]." % [
-		"You have", BoundlessPower.to_string(), "Boundless Power,\nraised", Globals.float_to_string(1./3., 3),
+		"You have", BoundlessPower.to_string(), "Boundless Power,\nraised",
+		Globals.float_to_string(Formulas.boundlessconversion(), 3),
 		"to boost Time Dilation's multiplier by", Formulas.bounlesspower().to_string()
 	]
 	%Important.text += "\n[font_size=10]%s [/font_size]%s[font_size=10] %s" % [
@@ -109,6 +111,14 @@ func _process(delta):
 		var mult := largenum.new(1)
 		
 		mult.mult2self(largenum.new(buymult).power(DimPurchase[i-1]))
+		
+		if i == 2 and "Space1" in Globals.Studies.purchased:
+			mult.mult2self(Formulas.study_space1())
+		
+		if "Space2" in Globals.Studies.purchased:
+			mult.mult2self(Formulas.study_space2())
+		if "Space3" in Globals.Studies.purchased:
+			mult.mult2self(max(Globals.DupHandler.dupGalaxies, 1))
 		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		dims[i].get_node("N&M/Multiplier").show()

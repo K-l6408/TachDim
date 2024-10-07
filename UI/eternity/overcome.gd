@@ -248,6 +248,8 @@ func _process(delta):
 				Globals.fastestEtern.time / delta / 10
 			)
 		)
+	if Globals.Eternities.sign < 0:
+		Globals.Eternities = largenum.new(0)
 
 func overcome():
 	emit_signal("YEAAAH")

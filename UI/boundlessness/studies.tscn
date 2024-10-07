@@ -36,6 +36,7 @@ anchor_bottom = 1.0
 offset_top = 75.0
 grow_horizontal = 2
 grow_vertical = 2
+scroll_vertical = 100
 
 [node name="Trees" type="HBoxContainer" parent="ScrollContainer"]
 unique_name_in_owner = true
@@ -204,7 +205,7 @@ cost = 5
 
 [node name="StudyTree2" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(480, 800)
+custom_minimum_size = Vector2(480, 1040)
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("1_cryta")
@@ -281,7 +282,6 @@ script = ExtResource("2_egti4")
 row = 5
 studies_required = [NodePath("../DGIn"), NodePath("../DGCh")]
 cost = 6
-counts_towards_centering = null
 
 [node name="Tach1" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("locked_by", "studies_required")]
 custom_minimum_size = Vector2(150, 100)
@@ -408,7 +408,7 @@ script = ExtResource("2_egti4")
 row = 8
 id_override = "Time3"
 studies_required = [NodePath("../Time2")]
-cost = 3
+cost = 4
 line_color = Color(0.32595, 0.2419, 0.41, 1)
 
 [node name="Space1" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("locked_by", "studies_required")]
@@ -451,7 +451,7 @@ script = ExtResource("2_egti4")
 row = 7
 id_override = "Space2"
 studies_required = [NodePath("../Space1")]
-cost = 5
+cost = 4
 line_color = Color(0.41, 0.339958, 0.2419, 1)
 
 [node name="Space3" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
@@ -472,8 +472,64 @@ script = ExtResource("2_egti4")
 row = 8
 id_override = "Space3"
 studies_required = [NodePath("../Space2")]
-cost = 5
+cost = 3
 line_color = Color(0.41, 0.339958, 0.2419, 1)
+
+[node name="DGIn2" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+theme_type_variation = &"Study"
+disabled = true
+text = "
+
+???
+
+
+
+Cost: 7 Space Theorems"
+script = ExtResource("2_egti4")
+row = 9
+id_override = "6×1"
+studies_required = [NodePath("../Tach3"), NodePath("../Time3")]
+cost = 7
+
+[node name="BPow+" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+theme_type_variation = &"Study"
+disabled = true
+text = "
+Improve Boundless
+Power's effect.
+
+(^0.333 → ^0.500)
+
+Cost: 7 Space Theorems"
+script = ExtResource("2_egti4")
+row = 9
+id_override = "6×2"
+studies_required = [NodePath("../Time3"), NodePath("../Space3")]
+cost = 7
+
+[node name="SD3" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+
+Unlock the 2nd
+Space Dimension.
+
+
+Cost: 6 ST"
+script = ExtResource("2_egti4")
+row = 10
+id_override = "SD3"
+studies_required = [NodePath("../DGIn2"), NodePath("../BPow+")]
+cost = 20
 
 [node name="ST" type="Panel" parent="."]
 layout_mode = 1

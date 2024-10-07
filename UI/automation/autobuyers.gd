@@ -114,13 +114,50 @@ var DupIntEnabled:
 		return $Auto/Buyers/DupInt/Enabled.button_pressed \
 		and    $Auto/Buyers/DupInt.visible
 
+var DupGalEnabled:
+	get:
+		return $Auto/Buyers/DupGal/Enabled.button_pressed \
+		and    $Auto/Buyers/DupGal.visible
+
+var EDEnabl :
+	get:
+		return (
+			int($"Auto/Buyers/EDs/Buyers/1/Enabled".button_pressed) * 1 +
+			int($"Auto/Buyers/EDs/Buyers/2/Enabled".button_pressed) * 2 +
+			int($"Auto/Buyers/EDs/Buyers/3/Enabled".button_pressed) * 4 +
+			int($"Auto/Buyers/EDs/Buyers/4/Enabled".button_pressed) * 8 +
+			int($"Auto/Buyers/EDs/Buyers/5/Enabled".button_pressed) * 16 +
+			int($"Auto/Buyers/EDs/Buyers/6/Enabled".button_pressed) * 32 +
+			int($"Auto/Buyers/EDs/Buyers/7/Enabled".button_pressed) * 64 +
+			int($"Auto/Buyers/EDs/Buyers/8/Enabled".button_pressed) * 128
+		) * (1 if $Auto/Buyers/EDs/Enabled.button_pressed else -1)
+	set(value):
+		$Auto/Buyers/EDs/Enabled.button_pressed = (value >= 0)
+		value = abs(value)
+		$"Auto/Buyers/EDs/Buyers/1/Enabled".button_pressed = value & 1 << 0 > 0
+		$"Auto/Buyers/EDs/Buyers/2/Enabled".button_pressed = value & 1 << 1 > 0
+		$"Auto/Buyers/EDs/Buyers/3/Enabled".button_pressed = value & 1 << 2 > 0
+		$"Auto/Buyers/EDs/Buyers/4/Enabled".button_pressed = value & 1 << 3 > 0
+		$"Auto/Buyers/EDs/Buyers/5/Enabled".button_pressed = value & 1 << 4 > 0
+		$"Auto/Buyers/EDs/Buyers/6/Enabled".button_pressed = value & 1 << 5 > 0
+		$"Auto/Buyers/EDs/Buyers/7/Enabled".button_pressed = value & 1 << 6 > 0
+		$"Auto/Buyers/EDs/Buyers/8/Enabled".button_pressed = value & 1 << 7 > 0
+
+func EDenabled(which):
+	if not $Auto/Buyers/EDs/Enabled.button_pressed: return false
+	if get_node("Auto/Buyers/EDs/Buyers/%d/Enabled" % which).\
+	button_pressed and \
+	get_node("Auto/Buyers/EDs/Buyers/%d/Enabled" % which).visible:
+		return true
+	return false
+
 @onready var sizechange = [
 	$Auto/Buyers/HSeparator, $Auto/Buyers/BigBang, $Auto/Buyers/Galaxy, $Auto/Buyers/Dilation,
 	$Auto/Buyers/TimeSpeedLocked, $Auto/Buyers/TimeSpeed, $Auto/Buyers/TD1Locked, $Auto/Buyers/TD1,
 	$Auto/Buyers/TD2Locked, $Auto/Buyers/TD2, $Auto/Buyers/TD3Locked, $Auto/Buyers/TD3,
 	$Auto/Buyers/TD4Locked, $Auto/Buyers/TD4, $Auto/Buyers/TD5Locked, $Auto/Buyers/TD5,
 	$Auto/Buyers/TD6Locked, $Auto/Buyers/TD6, $Auto/Buyers/TD7Locked, $Auto/Buyers/TD7,
-	$Auto/Buyers/TD8Locked, $Auto/Buyers/TD8, $Auto/Buyers
+	$Auto/Buyers/TD8Locked, $Auto/Buyers/TD8, $Auto/Buyers, $Auto/Buyers/EDs
 ]
 
 func reset():
@@ -466,6 +503,26 @@ func _process(_delta):
 	
 	$Auto/Buyers/DupCh .visible = Globals.Boundlessnesses.to_float() >= 8
 	$Auto/Buyers/DupInt.visible = Globals.Boundlessnesses.to_float() >= 8
+	$Auto/Buyers/DupGal.visible = Globals.Boundlessnesses.to_float() >= 10
+	$Auto/Buyers/EDs   .visible = Globals.Boundlessnesses.to_float() >= 11
+	for i in $Auto/Buyers/EDs/Buyers.get_children():
+		i.visible = Globals.Boundlessnesses.to_float() >= \
+		10 + i.name.to_int()
+		i.get_node("Label").text = "%s Eternity Dimension\nAutobuyer" % \
+		Globals.ordinal(i.name.to_int())
+		i.get_node("Enabled").text = "ON" if \
+		i.get_node("Enabled").button_pressed else "OFF"
+		i.get_node("Enabled").disabled = \
+		not $Auto/Buyers/EDs/Enabled.button_pressed
+	
+	$Auto/Buyers/EDs/Buyers.\
+	set_anchors_and_offsets_preset(Control.PRESET_HCENTER_WIDE)
+	$Auto/Buyers/EDs/Buyers.\
+	position.x -= 10
+	$Auto/Buyers/EDs/Buyers.\
+	size.x -= 20
+	$Auto/Buyers/EDs.custom_minimum_size.y = \
+	max($Auto/Buyers/EDs/Buyers.size.y + 16, 67)
 
 func unlock(which):
 	if which == 0:

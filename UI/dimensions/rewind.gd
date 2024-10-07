@@ -11,6 +11,14 @@ func _process(delta):
 		if Globals.Achievemer.is_unlocked(5, 2):
 			rewspd *= 7
 		
+		if smol:
+			var j = Globals.TDHandler.rewindBoost(score).\
+			divide(Globals.TDHandler.RewindMult)
+			if j.exponent < 0 or disabled:
+				text = ""
+				disabled = true
+			else: text = "×%s" % j.to_string()
+		
 		score = sin(Globals.existence * rewspd)
 		# sine changed sign (score reached maximum)
 		if sin(Globals.existence * rewspd) * \
@@ -18,7 +26,6 @@ func _process(delta):
 		(Globals.existence * rewspd) - \
 		((Globals.existence - delta) * rewspd) >= PI:
 			score = 0
-		
 		
 		$Accuracy.position.x = (
 			(score * (size.x - 20)) + size.x - $Accuracy.size.x
@@ -28,6 +35,9 @@ func _process(delta):
 			material.set_shader_parameter("ignore", get_theme_stylebox("normal").border_color)
 		else:
 			$Accuracy.color = Color.WHITE
+		
+		score = 1 - abs(score)
+		
 		material.set_shader_parameter("disabled", disabled)
 		if Globals.Achievemer.is_unlocked(2, 4):
 			var B = Globals.TDHandler.rewindBoost().log2()
@@ -35,12 +45,7 @@ func _process(delta):
 			material.set_shader_parameter("zoom", max(M / (B - M) + 1, 1))
 		else:
 			material.set_shader_parameter("zoom", 1.0)
-		score = 1 - abs(score)
-		if smol:
-			var j = Globals.TDHandler.rewindBoost(score).\
-			divide(Globals.TDHandler.RewindMult)
-			if j.exponent < 0 or disabled: text = ""
-			else: text = "×%s" % j.to_string()
+		
 	material.set_shader_parameter("pixelsize", 1./size.x)
 
 func _on_pressed():

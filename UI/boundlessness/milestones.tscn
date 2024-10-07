@@ -202,8 +202,9 @@ button_mask = 0
 text = "Unlock autobuyers for
 Duplicantes Chance and
 Interval upgrades, 
-which no longer cost
-Duplicantes to purchase."
+which only cost the
+square root of their
+requirement."
 
 [node name="Label" type="Label" parent="Mile/M8"]
 layout_mode = 1
@@ -216,3 +217,50 @@ offset_right = 57.0
 offset_bottom = -3.0
 grow_horizontal = 2
 text = "At 8 Boundlessnesses:"
+
+[node name="M9" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Start with all the
+rebuyable Overcome
+upgrades fully bought."
+
+[node name="Label" type="Label" parent="Mile/M9"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 9 Boundlessnesses:"
+
+[node name="M10" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Unlock an autobuyer for
+Duplicantes Galaxies."
+
+[node name="Label" type="Label" parent="Mile/M10"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 10 Boundlessnesses:"

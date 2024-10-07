@@ -119,6 +119,11 @@ for a Duplicantes Galaxy
 (Requires 1.80e308 Duplicantes
 and maxed out upgrades)"
 
+[node name="Label" type="Label" parent="HSplitContainer/DupLimit"]
+layout_mode = 2
+text = "You can only keep 5 Duplicantes Galaxies on Eternities."
+horizontal_alignment = 1
+
 [connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Chance" to="." method="buy_chance"]
 [connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Interval" to="." method="buy_interval"]
 [connection signal="pressed" from="HSplitContainer/DupLimit/HBoxContainer/Limit" to="." method="buy_limit"]

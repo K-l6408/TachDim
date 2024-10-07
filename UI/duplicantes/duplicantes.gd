@@ -5,6 +5,8 @@ var tickFraction := 0.0
 func on_eternity():
 	if not Globals.Achievemer.is_unlocked(6, 8):
 		Globals.Duplicantes = largenum.new(1)
+	if dupGalaxies > 5:
+		dupGalaxies = 5
 
 func reset():
 	chance = 1
@@ -17,11 +19,14 @@ var chance := 1
 func buy_chance():
 	if chance >= 100: return
 	if Globals.Boundlessnesses.to_float() < 8:
-		Globals.Duplicantes.div2self(2.0 ** chance)
-		if Globals.Duplicantes.exponent < 61:
-			Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
-			Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
+		Globals.Duplicantes.div2self(2.0 **  chance     )
+	else:
+		Globals.Duplicantes.div2self(2.0 ** (chance / 2))
+	if Globals.Duplicantes.exponent < 61:
+		Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
+		Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
 	chance += 1
+	%Chance.disabled = true
 
 var intervUpgrades := 0
 var intervalCap :
@@ -38,11 +43,14 @@ func interval():
 	return interv
 func buy_interval():
 	if Globals.Boundlessnesses.to_float() < 8:
-		Globals.Duplicantes.div2self(3.0 ** (intervUpgrades + 1))
-		if Globals.Duplicantes.exponent < 61:
-			Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
-			Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
+		Globals.Duplicantes.div2self(3.0 **  (intervUpgrades + 1)       )
+	else:
+		Globals.Duplicantes.div2self(3.0 ** ((intervUpgrades + 1) / 2.0))
+	if Globals.Duplicantes.exponent < 61:
+		Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
+		Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
 	intervUpgrades += 1
+	%Interval.disabled = true
 
 var limitUpgrades := 0
 func limit():
@@ -52,11 +60,15 @@ func limit_cost():
 func buy_limit():
 	Globals.EternityPts.add2self(limit_cost().neg())
 	limitUpgrades += 1
+	%Limit.disabled = true
 
 var maxGalaxies := 0
 func buy_maxgal():
-	Globals.EternityPts.add2self(largenum.ten_to_the(140 + 60 * maxGalaxies).neg())
+	Globals.EternityPts.add2self(
+		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies)).neg()
+	)
 	maxGalaxies += 1
+	%MaxGal.disabled = true
 
 var dupGalaxies := 0
 func buy_galaxy():
@@ -67,6 +79,7 @@ func buy_galaxy():
 		intervUpgrades = 0
 	dupGalaxies += 1
 	Globals.TDHandler.updateTSpeed()
+	%Galaxy.disabled = true
 
 func _process(delta):
 	if Globals.progressBL < Globals.Progression.Duplicantes:
@@ -139,10 +152,10 @@ func _process(delta):
 	
 	%MaxGal.text = "Max Duplicantes\nGalaxies: %s\nCost: %s EP" % [
 		Globals.int_to_string(maxGalaxies),
-		largenum.ten_to_the(140 + 80 * maxGalaxies).to_string().replace(".00", "")
+		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies)).to_string().replace(".00", "")
 	]
 	%MaxGal.disabled = Globals.EternityPts.less(
-		largenum.ten_to_the(140 + 80 * maxGalaxies)
+		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies))
 	)
 	
 	if "4×1" in Globals.Studies.purchased and "4×2" in Globals.Studies.purchased:
@@ -166,6 +179,9 @@ func _process(delta):
 		Globals.Duplicantes.log2() < 1024 or chance < 100
 		or interval() < intervalCap or dupGalaxies >= maxGalaxies
 	)
+	if not %Galaxy.disabled and Globals.Automation.DupGalEnabled:
+		buy_galaxy()
+		%Galaxy.disabled = true
 	
 	tickFraction += delta / interval()
 	if limit().less(Globals.Duplicantes):

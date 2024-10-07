@@ -33,7 +33,11 @@ var column = 1 :
 	set(value):
 		line_color = value
 		update_line()
-@export var counts_towards_centering = true
+@export var counts_towards_centering = true:
+	set(value):
+		counts_towards_centering = value
+		if get_parent() is StudyTreeContainer:
+			get_parent().sort()
 var id_label := Label.new()
 var connect_lines := Line2D.new()
 var bought := false
