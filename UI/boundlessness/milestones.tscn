@@ -264,3 +264,219 @@ offset_right = 57.0
 offset_bottom = -3.0
 grow_horizontal = 2
 text = "At 10 Boundlessnesses:"
+
+[node name="M11" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Unlock an autobuyer
+for the 1st
+Eternity Dimension."
+
+[node name="Label" type="Label" parent="Mile/M11"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 11 Boundlessnesses:"
+
+[node name="M12" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Unlock an autobuyer
+for the 1st
+Eternity Dimension."
+
+[node name="Label" type="Label" parent="Mile/M12"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 11 Boundlessnesses:"
+
+[node name="M13" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Unlock an autobuyer
+for the 1st
+Eternity Dimension."
+
+[node name="Label" type="Label" parent="Mile/M13"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 11 Boundlessnesses:"
+
+[node name="M14" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Unlock an autobuyer
+for the 1st
+Eternity Dimension."
+
+[node name="Label" type="Label" parent="Mile/M14"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 11 Boundlessnesses:"
+
+[node name="M15" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Unlock an autobuyer
+for the 1st
+Eternity Dimension."
+
+[node name="Label" type="Label" parent="Mile/M15"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 11 Boundlessnesses:"
+
+[node name="M16" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Unlock an autobuyer
+for the 1st
+Eternity Dimension."
+
+[node name="Label" type="Label" parent="Mile/M16"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 11 Boundlessnesses:"
+
+[node name="M17" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Unlock an autobuyer
+for the 1st
+Eternity Dimension."
+
+[node name="Label" type="Label" parent="Mile/M17"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 11 Boundlessnesses:"
+
+[node name="M18" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Unlock an autobuyer
+for the 1st
+Eternity Dimension."
+
+[node name="Label" type="Label" parent="Mile/M18"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 11 Boundlessnesses:"
+
+[node name="M25" type="Button" parent="Mile"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"Study"
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_mask = 0
+text = "Eternity Dimensions
+are unlocked
+automatically."
+
+[node name="Label" type="Label" parent="Mile/M25"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -16.0
+offset_right = 57.0
+offset_bottom = -3.0
+grow_horizontal = 2
+text = "At 25 Boundlessnesses:"

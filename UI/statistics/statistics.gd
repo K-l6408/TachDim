@@ -14,16 +14,16 @@ func _process(_delta):
 		"You have played for", Globals.format_time(Globals.existence)
 	]
 	
-	if Globals.Tachyons.less(secondsInPlanckTime):
-		var div = secondsInPlanckTime.divide(Globals.Tachyons)
+	if Currencies.Tachyons.AMOUNT.less(secondsInPlanckTime):
+		var div = secondsInPlanckTime.divide(Currencies.Tachyons.AMOUNT)
 		if div.exponent > 0:
-			if Globals.Tachyons.log10() < 31:
+			if Currencies.Tachyons.AMOUNT.log10() < 31:
 				var units := [
 					"", "milli", "micro", "nano",
 					"pico", "femto", "atto",
 					"zepto", "yocto", "ronto", "quecto"
 				]
-				var log1000 = Globals.Tachyons.log10() / 3
+				var log1000 = Currencies.Tachyons.AMOUNT.log10() / 3
 				var mantiss = 1000.0 ** (log1000 - round(log1000))
 				log1000 = round(log1000)
 				
@@ -41,7 +41,7 @@ func _process(_delta):
 	else:
 		text += "\n\nIf you counted a tachyon each planck time, it would take "
 		
-		var seconds = 10 ** (Globals.Tachyons.log10() - PLANCK_LOG)
+		var seconds = 10 ** (Currencies.Tachyons.AMOUNT.log10() - PLANCK_LOG)
 		var days = seconds / 3600 / 24
 		var years = days / 365.2422
 		

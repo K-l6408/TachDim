@@ -254,7 +254,7 @@ func _process(_delta):
 		if Globals.CompletedChallenges > 0:
 			set_unlocked(4, 1)
 	if not is_unlocked(4, 5):
-		if Globals.Tachyons.log10() >= 100 and Globals.eternTime < 30:
+		if Currencies.Tachyons.AMOUNT.log10() >= 100 and Globals.eternTime < 30:
 			set_unlocked(4, 5)
 	if not is_unlocked(4, 6):
 		if  Globals.EUHandler.is_bought(4) \
@@ -284,7 +284,7 @@ func _process(_delta):
 		if Globals.OEUHandler.is_bought(3):
 			set_unlocked(5, 8)
 	if not is_unlocked(6, 1):
-		if not Globals.Tachyons.less(largenum.ten_to_the(9999).multiply(9)):
+		if not Currencies.Tachyons.AMOUNT.less(largenum.ten_to_the(9999).multiply(9)):
 			set_unlocked(6, 1)
 	if not is_unlocked(6, 5):
 		if not Globals.Duplicantes.less(Globals.EternityPts):

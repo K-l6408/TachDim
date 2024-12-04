@@ -13,7 +13,7 @@ func evil():
 			oper = "pow2self"
 	match $Resource.selected:
 		0:
-			Globals.Tachyons.call(oper, $LineEdit.text.to_float())
+			Currencies.Tachyons.AMOUNT.call(oper, $LineEdit.text.to_float())
 		1:
 			Globals.TachTotal.call(oper, $LineEdit.text.to_float())
 		2:

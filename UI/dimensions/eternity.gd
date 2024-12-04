@@ -211,7 +211,7 @@ func eternitied():
 		DimAmount[i] = largenum.new(DimPurchase[i])
 
 func unlocknewdim():
-	if Globals.Tachyons.log10() >= TachLogReq[DimsUnlocked]:
+	if Currencies.Tachyons.AMOUNT.log10() >= TachLogReq[DimsUnlocked]:
 		DimsUnlocked += 1
 
 func reset():

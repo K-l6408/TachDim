@@ -19,9 +19,9 @@ func theorem_cost_bp():
 func theorem_buy(how):
 	match how:
 		0:
-			Globals.Tachyons.add2self(theorem_cost_tc().neg())
-			TCST += 1
-			ST.add2self(1)
+			if Currencies.Tachyons.spend(theorem_cost_tc()):
+				TCST += 1
+				ST.add2self(1)
 		1:
 			Globals.EternityPts.add2self(theorem_cost_ep().neg())
 			EPST += 1
@@ -31,7 +31,7 @@ func theorem_buy(how):
 			BPST += 1
 			ST.add2self(1)
 		3:
-			while theorem_cost_tc().less(Globals.Tachyons):
+			while theorem_cost_tc().less(Currencies.Tachyons.AMOUNT):
 				theorem_buy(0)
 			while theorem_cost_ep().less(Globals.EternityPts):
 				theorem_buy(1)
@@ -55,7 +55,7 @@ func _process(_delta):
 	$ST/Buy/TC.text = " Cost: %s TC " % \
 	theorem_cost_tc().to_string().replace(".00e", "e").replace("00e", "e")\
 	.trim_suffix(".00").trim_suffix(";00")
-	$ST/Buy/TC.disabled = not theorem_cost_tc().less(Globals.Tachyons)
+	$ST/Buy/TC.disabled = not theorem_cost_tc().less(Currencies.Tachyons.AMOUNT)
 	
 	$ST/Buy/EP.text = " Cost: %s EP " % \
 	theorem_cost_ep().to_string().replace(".00e", "e").replace(";00e", "e")\
@@ -171,19 +171,20 @@ func _process(_delta):
 	"Space Dimensions are\nmultiplied by your\nDuplcantes Galaxy\namount.\n(Currently: ×%s)\n\n" % \
 	Globals.float_to_string(max(Globals.DupHandler.dupGalaxies, 1))
 	
-	%StudyTree2/DGIn2.text = \
-	"\nRaise Tachyon\nDimensions'\nmultipliers ^1.05.\n\n\n"
+	
+	%"StudyTree2/TD^".text = \
+	"\nRaise Tachyon\nDimensions'\nmultipliers ^%s.\n\n\n" % \
+	Globals.float_to_string(1.02)
 	
 	%"StudyTree2/BPow+".text = \
 	"\nImprove Boundless\nPower's effect.\n\n" + \
 	"(^%s → ^%s)\n\n" % [
 		Globals.float_to_string(1./3., 3),
-		Globals.float_to_string(1./2., 3)
+		Globals.float_to_string(2./3., 3)
 	]
 	
 	%StudyTree2/SD3.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
 	Globals.ordinal(3)
-	
 	
 	for i in %StudyTree2.get_children():
 		if i is Study:
@@ -192,6 +193,35 @@ func _process(_delta):
 				"" if i.cost == 1 else "s"
 			]
 	
+	%StudyTree3.visible = ("SD3" in purchased)
+	
+	%StudyTree3/DupIx.text = "\nReduce the\n" + \
+	"base Duplicantes\nInterval cap.\n(%s → %s)\n\n" % [
+		Globals.format_time(0.05),
+		Globals.format_time(0.005)
+	]
+	
+	%StudyTree3/Active1 .text = \
+	"Gain more BP\ndepending on how fast\n" + \
+	"your last %s\nBoundlessnesses were.\n(%s: ×%s)\n\n" % [
+		Globals.int_to_string(10),
+		"Capped" if Formulas.study_act1() == 50 else "Currently",
+		Globals.float_to_string(Formulas.study_act1())
+	]
+	
+	%StudyTree3/Passive1.text = \
+	"\n\nGain ×%s more\nBoundlessness Points.\n\n\n" % \
+	Globals.int_to_string(35)
+	
+	%StudyTree3/Idle1   .text = "NYI\n\n"
+	
+	for i in %StudyTree3.get_children():
+		if i is Study:
+			i.text += "Cost: %s Space Theorem%s" % [
+				Globals.int_to_string(i.cost),
+				"" if i.cost == 1 else "s"
+			]
+
 
 func respec():
 	for id in purchased:

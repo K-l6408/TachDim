@@ -8,5 +8,7 @@ func _process(_delta):
 		text += "type of Dimension."
 	else:
 		text += "Eternity Dimension."
-	disabled = (Globals.Tachyons.log10() < \
+	disabled = (Currencies.Tachyons.AMOUNT.log10() < \
 	Globals.EDHandler.TachLogReq[Globals.EDHandler.DimsUnlocked])
+	if Globals.Boundlessnesses.to_float() >= 25 and not disabled:
+		Globals.EDHandler.DimsUnlocked += 1

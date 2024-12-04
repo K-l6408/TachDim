@@ -59,7 +59,7 @@ static func next_bp():
 	return largenum.two_to_the(1024 * (bpgained().add(1).log2() / 3 + 1))
 
 static func overcome_1():
-	return Globals.Tachyons.power(0.01)
+	return Currencies.Tachyons.AMOUNT.power(0.01)
 
 static func overcome_7():
 	var i : float = -1
@@ -124,11 +124,17 @@ static func study_tach1():
 static func study_time1():
 	return Globals.TDHandler.RewindMult.power(0.002)
 static func study_time2():
-	return bounlesspower().power(Globals.TDilation * 0.01)
+	return bounlesspower().power(Globals.TDilation * 0.001)
 static func study_time3():
-	return 1 + .1 * Globals.DupHandler.dupGalaxies
+	return 1 + .05 * Globals.DupHandler.dupGalaxies
 
 static func study_space1():
 	return Globals.TDHandler.RewindMult.power(5e-5)
 static func study_space2():
 	return largenum.new(1.002).power(Globals.TDilation)
+
+static func study_act1():
+	var t = 0
+	for i in Globals.last10bless.size():
+		t += Globals.last10bless[i].time
+	return max(1, min(300./t, 50))

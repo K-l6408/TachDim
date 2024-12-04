@@ -3,8 +3,8 @@ extends Control
 @onready var TBar : TabBar = %Tabs.get_tab_bar()
 var debugMode := false
 
-var tabSymbolLeft  = "⇠\uf085⁈δΞ∀\uf091\uf0ca\uf1de[!"
-var tabSymbolRight = "⇢\uf1de⁉δΞ∀\uf091\uf0c9\uf0ad]!"
+var tabSymbolLeft  = "⇠\uf085⁈δΞ∀\uf091 \uf0ca\uf1de[!"
+var tabSymbolRight = "⇢\uf1de⁉δΞ∀\uf091 \uf0c9\uf0ad]!"
 
 var dimensionSymbols = "Ψδ∀"
 var challengeSymbols = "Ψδ∀"
@@ -119,10 +119,13 @@ func _process(_delta):
 	%Resources/EDunlock.visible = \
 	Globals.progressBL >= GL.Progression.Overcome and \
 	(Globals.Challenge == 0 or Globals.Challenge > 15) and \
-	Globals.EDHandler.DimsUnlocked < 8
+	Globals.EDHandler.DimsUnlocked < 8 and \
+	Globals.Boundlessnesses.to_float() < 25
 	%Resources/EDunlock/EDButton.disabled = true
 	
-	%Resources/Boundlessness.visible = Globals.EDHandler.DimsUnlocked == 8
+	%Resources/Boundlessness.visible = \
+	Globals.EDHandler.DimsUnlocked == 8 or \
+	Globals.Boundlessnesses.to_float() >= 25
 	if Globals.EternityPts.exponent < 1024:
 		%Resources/Boundlessness/BoundlessButton.disabled = true
 		%Resources/Boundlessness/BoundlessButton.text = "Reach %s\nEternity Points" % \
@@ -151,7 +154,7 @@ func _process(_delta):
 	%Resources/BP.visible = (Globals.progress >= GL.Progression.Boundlessness)
 	
 	%Resources/Tachyons/Text.text = \
-	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Globals.Tachyons.to_string()
+	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Currencies.Tachyons.to_string()
 	%Resources/EP/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Point%s[/color][/center]" % [
 		get_theme_color("font_color", "ButtonEtern").to_html(false),

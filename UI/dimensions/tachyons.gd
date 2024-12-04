@@ -12,106 +12,7 @@ extends Control
 ]
 @onready var rewindNode = %TopButtons/Rewind
 
-var DimAmount : Array[largenum] = [
-	largenum.new(0),largenum.new(0),largenum.new(0),largenum.new(0),
-	largenum.new(0),largenum.new(0),largenum.new(0),largenum.new(0)
-]
-var DimPurchase : Array[int] = [0,0,0,0,0,0,0,0]
-const TSpeedScaleStart := 305
-
-var DistantScaling :
-	get: return 75
-
-var TSpeedBoost := largenum.new(1.13)
-var TSpeedCount := 0
-
-var DimsUnlocked := 4
 var TCperS := largenum.new(0)
-var BuyMax : bool
-
-var C2Multiplier := 1.0
-var C14Divisor := 1.0
-var C10Power := 0.0
-func C10Score():
-	return sin(Time.get_ticks_msec() / 1000.0)
-
-var RewindMult := largenum.new(1)
-
-var canDilate :
-	get: return (not %Prestiges/DiButton.disabled) and $VSplitContainer.visible
-var canGalaxy :
-	get:
-		if Globals.Challenge == 22: return false
-		return (not %Prestiges/GaButton.disabled) and $VSplitContainer.visible
-var canBigBang:
-	get:
-		if Globals.Challenge > 15:
-			return Globals.ECTargets[Globals.Challenge - 16].less(topTachyonsInEternity)
-		var logfinity = 2048 if Globals.Challenge == 15 else 1024
-		return (Globals.Tachyons.log2() >= logfinity) or (topTachyonsInEternity.log2() >= logfinity)
-var topTachyonsInEternity := largenum.new(0)
-
-var buylim : int :
-	get:
-		if Globals.Challenge == 5 or Globals.Challenge == 16:	return 15
-		else:													return 10
-var latest_purchased = 1
-
-func tspcost():
-	var start = 1
-	var increase = 1
-	if Globals.Challenge == 5 or Globals.Challenge == 16:
-		increase += 1 - GL.LOG2 / GL.LOG10
-	
-	var purchase : int = TSpeedCount
-	
-	var costlog = start + increase * purchase
-	
-	if costlog >= 308.2547156:
-		var scalingamount = log(10 - Globals.OEUHandler.TSpScBought) / GL.LOG10
-		var scaling : int = purchase - (308.2547156 - start) / increase
-		costlog += scaling * (scaling + 1) * scalingamount / 2
-	
-	return largenum.ten_to_the(costlog)
-
-func dimcost(which):
-	var start = [
-		1, 2, 4, 6,
-		9,13,18,24
-	][which - 1]
-	var increase = [
-		3, 4, 5, 6,
-		8,10,12,15
-	][which - 1]
-	if Globals.Challenge == 1 or Globals.Challenge == 16:
-		increase = [
-			4, 6, 8, 10,
-			13,15,17,20
-		][which - 1]
-	var purchase : int = DimPurchase[which - 1] / buylim
-	
-	var costlog = start + increase * purchase
-	
-	if costlog >= 308.2547156:
-		var scalingamount = log(10 - Globals.OEUHandler.TDmScBought) / GL.LOG10
-		var scaling : int = purchase - (308.2547156 - start) / increase
-		costlog += scaling * (scaling + 1) * scalingamount / 2
-	
-	return largenum.ten_to_the(costlog)
-
-func updateTSpeed():
-	var GalaxyBoost = 0.975
-	var GalaxyMult = 1
-	if Globals.EUHandler.is_bought(8): GalaxyMult *= 2
-	if Globals.OEUHandler.is_bought(3): GalaxyMult *= 1.4
-	if Globals.ECCompleted(4): GalaxyMult *= 1.15
-	if Globals.Challenge == 12:
-		TSpeedBoost = largenum.new(1.10)
-	else:
-		TSpeedBoost = largenum.new(1.13)
-	TSpeedBoost.div2self(largenum.new(GalaxyBoost).power(
-		(Globals.TGalaxies + Globals.DupHandler.dupGalaxies) * GalaxyMult
-	))
 
 func rewind(score:float):
 	if not (
@@ -150,66 +51,9 @@ func rewindBoost(score := 1.0) -> largenum:
 	
 	return RBoost
 
-func buydim(which, bulkoverride := 0):
-	if which > 1:
-		if DimAmount[which - 2].exponent == -INF:
-			return
-	while true:
-		if which > DimsUnlocked:
-			return
-		var bulk :int= 1
-		if Globals.Tachyons.exponent - dimcost(which).exponent < 62:
-			if (
-				(%TopButtons/BuyMode.button_pressed
-				and not Input.is_action_pressed("BuyOne"))
-				or bulkoverride != 0
-			):
-				if Globals.Tachyons.divide(dimcost(which)).to_float() >= buylim:
-					bulk = buylim - DimPurchase[which-1] % buylim
-				else:
-					bulk = min(
-						(Globals.Tachyons.divide(dimcost(which))).to_float(),
-						buylim - DimPurchase[which-1] % buylim
-					)
-		else:
-			bulk = buylim - DimPurchase[which-1] % buylim
-		
-		if bulk < 1:
-			return
-		
-		if bulkoverride > 0:
-			if min(bulkoverride, buylim - DimPurchase[which-1] % buylim) > bulk:
-				return
-			bulk = min(bulk, bulkoverride)
-		
-		if Globals.Tachyons.exponent - dimcost(which).exponent < 62:
-			Globals.Tachyons.add2self(dimcost(which).neg().mult2self(bulk))
-		DimPurchase[which-1] += bulk
-		if DimAmount[which-1].exponent < 100:
-			DimAmount[which-1].add2self(bulk)
-		if not Globals.Achievemer.is_unlocked(2, 7):
-			if bulk == 1 and which == 1 and DimAmount[which-1].log10() >= 100:
-				Globals.Achievemer.set_unlocked(2, 7)
-		
-		if Globals.Challenge == 2 or Globals.Challenge == 16: C2Multiplier = 0.0
-		if Globals.Challenge == 7:
-			for i in which - 1: DimAmount[i] = largenum.new(DimPurchase[i])
-		if Globals.Challenge == 14 or Globals.Challenge == 16: C14Divisor = 1.0
-		latest_purchased = which
-		
-		if bulkoverride >= buylim:
-			bulkoverride -= buylim
-		else:
-			return
-
 func buytspeed(maxm:bool):
 	if Globals.Challenge == 20: return
-	while tspcost().less(Globals.Tachyons):
-		if Globals.Tachyons.exponent - tspcost().exponent < 62:
-			Globals.Tachyons.add2self(tspcost().neg())
-			if Globals.Tachyons.sign < 0:
-				Globals.Tachyons.add2self(tspcost())
-				return
+	while Currencies.Tachyons.spend(tspcost()):
 		TSpeedCount += 1
 		if Globals.Challenge == 2 or Globals.Challenge == 16: C2Multiplier = 0.0
 		if Globals.Challenge == 14:  C14Divisor = 1.0
@@ -313,16 +157,7 @@ func reset(level := 0, challengeReset := true):
 	if level >= 2 and challengeReset: Globals.Challenge = 0
 	if Globals.Challenge == 2  or Globals.Challenge == 16: C2Multiplier = 1.0
 	if Globals.Challenge == 14 or Globals.Challenge == 16:  C14Divisor = 1.0
-	if   Globals.Achievemer.is_unlocked(6,4):
-		Globals.Tachyons = largenum.ten_to_the(25.6989)
-	elif Globals.Achievemer.is_unlocked(4,2):
-		Globals.Tachyons = largenum.ten_to_the(5.6989)
-	elif Globals.Achievemer.is_unlocked(3,6):
-		Globals.Tachyons = largenum.ten_to_the(3.6989)
-	elif Globals.Achievemer.is_unlocked(2,8):
-		Globals.Tachyons = largenum.ten_to_the(2)
-	else:
-		Globals.Tachyons = largenum.ten_to_the(1)
+	Currencies.Tachyons.reset()
 	DimPurchase = [0,0,0,0,0,0,0,0]
 	for i in DimAmount:
 		i.exponent = -INF # set to zero
@@ -368,20 +203,20 @@ func _process(delta):
 	if canBigBang and Input.is_action_pressed("BBang"):
 		eternity()
 	
-	if topTachyonsInEternity.less(Globals.Tachyons):
-		topTachyonsInEternity = largenum.new(Globals.Tachyons)
+	if topTachyonsInEternity.less(Currencies.Tachyons.AMOUNT):
+		topTachyonsInEternity = largenum.new(Currencies.Tachyons.AMOUNT)
 	
 	if Globals.progressBL < GL.Progression.Overcome or \
 	(Globals.Challenge != 0 and Globals.Challenge <= 15):
-		$VSplitContainer.visible = (Globals.Tachyons.log2() <= logfinity)
-		$ETERNITY.visible        = (Globals.Tachyons.log2() >= logfinity)
+		$VSplitContainer.visible = (Currencies.Tachyons.AMOUNT.log2() <= logfinity)
+		$ETERNITY.visible        = (Currencies.Tachyons.AMOUNT.log2() >= logfinity)
 		
 		if canBigBang:
 			custom_minimum_size.y = $ETERNITY.size.y
 		
-		if Globals.Tachyons.log2() >= logfinity:
-			Globals.Tachyons.exponent = logfinity
-			Globals.Tachyons.mantissa = (1 << 62)
+		if Currencies.Tachyons.AMOUNT.log2() >= logfinity:
+			Currencies.Tachyons.AMOUNT.exponent = logfinity
+			Currencies.Tachyons.AMOUNT.mantissa = (1 << 62)
 			return
 	else:
 		$VSplitContainer.visible = true
@@ -399,13 +234,13 @@ func _process(delta):
 		else:					i.show()
 		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % \
 		[Globals.int_to_string(DimPurchase[k-1]), "" if DimPurchase[k-1] == 1 else "s"]
-		var buyable = (Globals.Tachyons.divide(dimcost(k))).to_float()
+		var buyable = (Currencies.Tachyons.AMOUNT.divide(dimcost(k))).to_float()
 		if abs(buyable) > buylim:
 			buyable = buylim
 		buyable = int(buyable)
 		i.get_node("Buy/Progress").value = int(buyable)
 		i.get_node("Buy/Progress").max_value = buylim - DimPurchase[k-1] % buylim
-		i.get_node("Buy").disabled = not dimcost(k).less(Globals.Tachyons)
+		i.get_node("Buy").disabled = not dimcost(k).less(Currencies.Tachyons.AMOUNT)
 		if k < 8:
 			i.get_node("A&G/Amount").text = DimAmount[k-1].to_string().trim_suffix(".00").trim_suffix(";00")
 		else:
@@ -419,8 +254,8 @@ func _process(delta):
 		%TopButtons/Timespeed/BuyMax.disabled = true
 		%TopButtons/Timespeed.text = "Timespeed disabled (EC5)"
 	else:
-		%TopButtons/Timespeed.disabled = Globals.Tachyons.less(tspcost())
-		%TopButtons/Timespeed/BuyMax.disabled = Globals.Tachyons.less(tspcost())
+		%TopButtons/Timespeed.disabled = Currencies.Tachyons.AMOUNT.less(tspcost())
+		%TopButtons/Timespeed/BuyMax.disabled = Currencies.Tachyons.AMOUNT.less(tspcost())
 		%TopButtons/Timespeed.text = "Timespeed (%s TC) " % tspcost().to_string()
 	%TopButtons/Timespeed.tooltip_text = "Purchased %s time%s" % \
 	[Globals.int_to_string(TSpeedCount), "" if TSpeedCount == 1 else "s"]
@@ -436,11 +271,11 @@ func _process(delta):
 	else:
 		%Progress.tooltip_text = "Percentage to "
 	if Globals.Challenge <= 15:
-		%Progress.value = Globals.Tachyons.log2()
+		%Progress.value = Currencies.Tachyons.AMOUNT.log2()
 		%Progress.max_value = logfinity
 		%Progress.tooltip_text += "Eternity"
 	else:
-		%Progress.value = Globals.Tachyons.log2()
+		%Progress.value = Currencies.Tachyons.AMOUNT.log2()
 		%Progress.max_value = Globals.ECTargets[Globals.Challenge - 16].log2()
 		%Progress.tooltip_text += "Challenge goal"
 	%Progress/Label.text = Globals.percent_to_string(%Progress.value / %Progress.max_value, 1)
@@ -452,7 +287,7 @@ func _process(delta):
 	elif Globals.EUHandler.is_bought(5): buy10mult = 2.2222222
 	
 	%Important.text = \
-	"[center]You have [font_size=20]" + Globals.Tachyons.to_string() + \
+	"[center]You have [font_size=20]" + Currencies.Tachyons.to_string() + \
 	"[/font_size] Tachyons.\n[font_size=10]You're gaining [/font_size]" + TCperS.to_string() + \
 	"[font_size=10] Tachyons per second.[/font_size]\n[font_size=10]Timespeed strength: [/font_size]" + \
 	TSpeedBoost.to_string() + "[font_size=10] | Total speed: [/font_size]" + \
@@ -474,7 +309,7 @@ func _process(delta):
 	if Globals.Challenge == 9:
 		%Important.text += "\n \n[font_size=10]Dimensions %s-%s: [/font_size]/" % [
 			Globals.int_to_string(1), Globals.int_to_string(7)
-		] + Globals.Tachyons.power(0.05).to_string()
+		] + Currencies.Tachyons.AMOUNT.power(0.05).to_string()
 	if Globals.Challenge == 14:
 		%Important.text += "\n \n[font_size=10]Production: [/font_size]/" + \
 		Globals.float_to_string(C14Divisor)
@@ -644,7 +479,7 @@ func _process(delta):
 					if BuyMax:
 						buydim(i, 1e9)
 		if Input.is_action_pressed("BuyTSpeed") or BuyMax:
-			if tspcost().less(Globals.Tachyons):
+			if tspcost().less(Currencies.Tachyons.AMOUNT):
 				buytspeed(not Input.is_action_pressed("BuyOne") or BuyMax)
 	BuyMax = Input.is_action_pressed("BuyMax")
 	
@@ -710,7 +545,7 @@ func _process(delta):
 			if i == 3: mult.mult2self(3)
 			if i <= 2: mult.mult2self(0.03)
 		if Globals.Challenge == 9 and i != 8:
-			mult.div2self(Globals.Tachyons.power(0.05))
+			mult.div2self(Currencies.Tachyons.AMOUNT.power(0.05))
 		if Globals.Challenge == 14 or Globals.Challenge == 16: mult.div2self(C14Divisor)
 		
 		if Globals.Challenge != 13:
@@ -736,7 +571,7 @@ func _process(delta):
 			mult.pow2self(0.2)
 		
 		if "6×1" in Globals.Studies.purchased:
-			mult.pow2self(1.05)
+			mult.pow2self(1.02)
 		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		mult.mult2self(TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed))
@@ -750,7 +585,7 @@ func _process(delta):
 				dims[i+1].modulate.a = 1.0
 		if i == 1:
 			TCperS = DimAmount[i-1].multiply(mult)
-			Globals.Tachyons   .add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
+			Currencies.Tachyons.add(DimAmount[i-1].multiply(mult.multiply(delta)))
 			Globals.TachTotalBL.add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
 			Globals.TachTotal  .add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
 		else:

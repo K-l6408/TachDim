@@ -5,6 +5,7 @@ var currentFile := 1
 var saveFilePath :
 	get: return "user://save%d.txt" % currentFile
 var idleTimeSpent = 0
+const MAX_FILE_NUMBER = 10
 
 func _ready():
 	match OS.get_name():
@@ -15,6 +16,16 @@ func _ready():
 			$CanvasLayer/ColorRect/Panel/RichTextLabel.text += "go to ~/.local/share/godot/app_userdata" +\
 			"/Tachyon Dimensions, and check the files for \"save%d.txt\"." % currentFile
 	get_tree().create_timer(0.1).connect("timeout", start)
+	for i in MAX_FILE_NUMBER:
+		var j = $"FilesContainer/Files/1"
+		if i != 0:
+			j = j.duplicate()
+			j.name = str(i+1)
+			$FilesContainer/Files.add_child(j)
+		j.get_node("Button1").connect("pressed", $FilesContainer.hide)
+		j.get_node("Button1").connect("pressed", choose_save.bind(i+1))
+		j.get_node("Button2").connect("pressed", $FilesContainer.hide)
+		j.get_node("Button2").connect("pressed", choose_load.bind(i+1))
 
 func start():
 	var sf = FileAccess.open("user://lastsave.txt", FileAccess.READ)
@@ -30,6 +41,10 @@ func _process(delta):
 	Globals.format_time($HFlowContainer/Sidler.value)
 	$HFlowContainer/Idle.visible = Globals.challengeCompleted(15)
 	$HFlowContainer/Sidler.visible = Globals.challengeCompleted(15)
+	
+	for i in $FilesContainer/Files.get_children():
+		if i is Panel:
+			i.get_node("Label").text = "File #%s" % Globals.int_to_string(i.name.to_int())
 	
 	if $Idle.visible:
 		idleTimeSpent += delta
@@ -63,23 +78,23 @@ func choose_load(which):
 	loadF()
 
 func openDialog():
-	for f in 5:
+	for f in MAX_FILE_NUMBER:
 		var sf = FileAccess.open("user://save%d.txt" % (f + 1), FileAccess.READ)
 		if sf == null: continue
 		if sf.get_line() != "TachDimSave": continue
 		var progress = sf.get_8()
-		get_node("Files/%d/Progress" % (f+1)).texture.region.position.x = progress * 32
+		get_node("FilesContainer/Files/%d/Progress" % (f+1)).texture.region.position.x = progress * 32
 		sf.get_8()
 		var D = sf.get_var()
 		if D is Dictionary:
 			if progress < Globals.Progression.Eternity:
-				get_node("Files/%d/Tachyons" % (f+1)).text = \
+				get_node("FilesContainer/Files/%d/Tachyons" % (f+1)).text = \
 				"%s Tachyons" % largenum.new(1).from_bytes(D["tachyons"]).to_string()
 			else:
-				get_node("Files/%d/Tachyons" % (f+1)).text = \
+				get_node("FilesContainer/Files/%d/Tachyons" % (f+1)).text = \
 				"%s Eternity Points" % largenum.new(1).from_bytes(D["eternity points"]).to_string()
 		else:
-			get_node("Files/%d/Tachyons" % (f+1)).text = "Outdated or corrupted file"
+			get_node("FilesContainer/Files/%d/Tachyons" % (f+1)).text = "Outdated or corrupted file"
 
 func saveF(file : String = saveFilePath):
 	var settf := FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.WRITE)
@@ -106,7 +121,7 @@ func saveF(file : String = saveFilePath):
 	var DATA : Dictionary = {
 		"time played": Globals.existence,
 		"last time" : Time.get_unix_time_from_system() as int,
-		"tachyons" : Globals.Tachyons.to_bytes(),
+		"tachyons" : Currencies.Tachyons._save(),
 		"total tachyons" : Globals.TachTotal.to_bytes(),
 		"achievements" : Globals.Achievemer.unlocked,
 		"tach dim amounts" : [
@@ -316,7 +331,7 @@ func loadF(file : String = saveFilePath):
 	
 	Globals.existence = DATA["time played"]
 	
-	Globals.Tachyons.from_bytes(DATA["tachyons"])
+	Currencies.Tachyons._load(DATA["tachyons"])
 	Globals.TachTotal.from_bytes(DATA["total tachyons"])
 	
 	Globals.Achievemer.unlocked = DATA["achievements"]
@@ -495,7 +510,6 @@ func loadF(file : String = saveFilePath):
 func gameReset():
 	Globals.progress  = Globals.Progression.None
 	Globals.existence = 0
-	Globals.Tachyons  = largenum.ten_to_the(1)
 	Globals.TachTotal = largenum.ten_to_the(1)
 	Globals.Achievemer.unlocked = []
 	for i in Globals.Achievemer.MAXROWS:
@@ -558,7 +572,7 @@ func gameReset():
 		Globals.SDHandler.DimAmount[i] = largenum.new(0)
 		Globals.SDHandler.DimPurchase[i] = 0
 	Globals.SDHandler.BoundlessPower = largenum.new(0)
-	
+	Currencies.Tachyons.reset()
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value

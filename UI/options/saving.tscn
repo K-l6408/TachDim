@@ -1,25 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bb23v4wug50t3"]
+[gd_scene load_steps=4 format=3 uid="uid://bb23v4wug50t3"]
 
 [ext_resource type="Script" path="res://UI/options/saving.gd" id="1_wkl0i"]
 [ext_resource type="Texture2D" uid="uid://ck8ysxndq062f" path="res://images/progress.png" id="2_u7cvg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bvv8d"]
-atlas = ExtResource("2_u7cvg")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yng2b"]
-atlas = ExtResource("2_u7cvg")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8mv8r"]
-atlas = ExtResource("2_u7cvg")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v5jah"]
-atlas = ExtResource("2_u7cvg")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5dbs5"]
 atlas = ExtResource("2_u7cvg")
 region = Rect2(0, 0, 32, 32)
 
@@ -127,30 +111,35 @@ Take 05:00 at most to calculate
 idle progress"
 horizontal_alignment = 1
 
-[node name="Files" type="VBoxContainer" parent="."]
+[node name="FilesContainer" type="ScrollContainer" parent="."]
 visible = false
-custom_minimum_size = Vector2(555, 0)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 100.0
-offset_top = 61.0
+offset_top = 130.0
 offset_right = -100.0
-offset_bottom = -63.0
+offset_bottom = -116.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Files" type="VBoxContainer" parent="FilesContainer"]
+custom_minimum_size = Vector2(555, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = -2
 
-[node name="Button" type="Button" parent="Files"]
+[node name="Button" type="Button" parent="FilesContainer/Files"]
 layout_mode = 2
 text = "Close"
 
-[node name="1" type="Panel" parent="Files"]
+[node name="1" type="Panel" parent="FilesContainer/Files"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Files/1"]
+[node name="Label" type="Label" parent="FilesContainer/Files/1"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -163,7 +152,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 20
 text = "File #1"
 
-[node name="Tachyons" type="Label" parent="Files/1"]
+[node name="Tachyons" type="Label" parent="FilesContainer/Files/1"]
 layout_mode = 1
 offset_left = 147.0
 offset_top = 12.0
@@ -172,7 +161,7 @@ offset_bottom = 37.0
 theme_override_font_sizes/font_size = 20
 text = "[No data]"
 
-[node name="Button" type="Button" parent="Files/1"]
+[node name="Button1" type="Button" parent="FilesContainer/Files/1"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -188,7 +177,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 20
 text = "Choose and save"
 
-[node name="Button2" type="Button" parent="Files/1"]
+[node name="Button2" type="Button" parent="FilesContainer/Files/1"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -203,7 +192,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 20
 text = "Choose and load"
 
-[node name="Progress" type="TextureRect" parent="Files/1"]
+[node name="Progress" type="TextureRect" parent="FilesContainer/Files/1"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -214,282 +203,6 @@ offset_right = 242.0
 offset_bottom = -18.0
 grow_vertical = 0
 texture = SubResource("AtlasTexture_bvv8d")
-
-[node name="2" type="Panel" parent="Files"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Files/2"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = -12.5
-offset_right = 115.0
-offset_bottom = 12.5
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "File #2"
-
-[node name="Tachyons" type="Label" parent="Files/2"]
-layout_mode = 1
-offset_left = 147.0
-offset_top = 12.0
-offset_right = 230.0
-offset_bottom = 37.0
-theme_override_font_sizes/font_size = 20
-text = "[No data]"
-
-[node name="Button" type="Button" parent="Files/2"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_top = -43.0
-offset_right = -24.0
-offset_bottom = -4.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "Choose and save"
-
-[node name="Button2" type="Button" parent="Files/2"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_right = -24.0
-offset_bottom = 39.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "Choose and load"
-
-[node name="Progress" type="TextureRect" parent="Files/2"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 210.0
-offset_top = -50.0
-offset_right = 242.0
-offset_bottom = -18.0
-grow_vertical = 0
-texture = SubResource("AtlasTexture_yng2b")
-
-[node name="3" type="Panel" parent="Files"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Files/3"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = -12.5
-offset_right = 115.0
-offset_bottom = 12.5
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "File #3"
-
-[node name="Tachyons" type="Label" parent="Files/3"]
-layout_mode = 1
-offset_left = 147.0
-offset_top = 12.0
-offset_right = 230.0
-offset_bottom = 37.0
-theme_override_font_sizes/font_size = 20
-text = "[No data]"
-
-[node name="Button" type="Button" parent="Files/3"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_top = -43.0
-offset_right = -24.0
-offset_bottom = -4.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "Choose and save"
-
-[node name="Button2" type="Button" parent="Files/3"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_right = -24.0
-offset_bottom = 39.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "Choose and load"
-
-[node name="Progress" type="TextureRect" parent="Files/3"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 210.0
-offset_top = -50.0
-offset_right = 242.0
-offset_bottom = -18.0
-grow_vertical = 0
-texture = SubResource("AtlasTexture_8mv8r")
-
-[node name="4" type="Panel" parent="Files"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Files/4"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = -12.5
-offset_right = 115.0
-offset_bottom = 12.5
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "File #4"
-
-[node name="Tachyons" type="Label" parent="Files/4"]
-layout_mode = 1
-offset_left = 147.0
-offset_top = 12.0
-offset_right = 230.0
-offset_bottom = 37.0
-theme_override_font_sizes/font_size = 20
-text = "[No data]"
-
-[node name="Button" type="Button" parent="Files/4"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_top = -43.0
-offset_right = -24.0
-offset_bottom = -4.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "Choose and save"
-
-[node name="Button2" type="Button" parent="Files/4"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_right = -24.0
-offset_bottom = 39.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "Choose and load"
-
-[node name="Progress" type="TextureRect" parent="Files/4"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 210.0
-offset_top = -50.0
-offset_right = 242.0
-offset_bottom = -18.0
-grow_vertical = 0
-texture = SubResource("AtlasTexture_v5jah")
-
-[node name="5" type="Panel" parent="Files"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Files/5"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = -12.5
-offset_right = 115.0
-offset_bottom = 12.5
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "File #5"
-
-[node name="Tachyons" type="Label" parent="Files/5"]
-layout_mode = 1
-offset_left = 147.0
-offset_top = 12.0
-offset_right = 230.0
-offset_bottom = 37.0
-theme_override_font_sizes/font_size = 20
-text = "[No data]"
-
-[node name="Button" type="Button" parent="Files/5"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_top = -43.0
-offset_right = -24.0
-offset_bottom = -4.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "Choose and save"
-
-[node name="Button2" type="Button" parent="Files/5"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_right = -24.0
-offset_bottom = 39.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-text = "Choose and load"
-
-[node name="Progress" type="TextureRect" parent="Files/5"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 210.0
-offset_top = -50.0
-offset_right = 242.0
-offset_bottom = -18.0
-grow_vertical = 0
-texture = SubResource("AtlasTexture_5dbs5")
 
 [node name="SaveTimer" type="Timer" parent="."]
 wait_time = 60.0
@@ -602,28 +315,8 @@ vertical_alignment = 1
 [connection signal="start_idle_progress" from="." to="." method="idle"]
 [connection signal="pressed" from="HFlowContainer/Save" to="." method="saveF"]
 [connection signal="pressed" from="HFlowContainer/ChooseSave" to="." method="openDialog"]
-[connection signal="pressed" from="HFlowContainer/ChooseSave" to="Files" method="show"]
+[connection signal="pressed" from="HFlowContainer/ChooseSave" to="FilesContainer" method="show"]
 [connection signal="pressed" from="HFlowContainer/Load" to="." method="loadF"]
 [connection signal="value_changed" from="HFlowContainer/HSlider" to="." method="_on_value_changed"]
-[connection signal="pressed" from="Files/Button" to="Files" method="hide"]
-[connection signal="pressed" from="Files/1/Button" to="Files" method="hide"]
-[connection signal="pressed" from="Files/1/Button" to="." method="choose_save" binds= [1]]
-[connection signal="pressed" from="Files/1/Button2" to="Files" method="hide"]
-[connection signal="pressed" from="Files/1/Button2" to="." method="choose_load" binds= [1]]
-[connection signal="pressed" from="Files/2/Button" to="Files" method="hide"]
-[connection signal="pressed" from="Files/2/Button" to="." method="choose_save" binds= [2]]
-[connection signal="pressed" from="Files/2/Button2" to="Files" method="hide"]
-[connection signal="pressed" from="Files/2/Button2" to="." method="choose_load" binds= [2]]
-[connection signal="pressed" from="Files/3/Button" to="Files" method="hide"]
-[connection signal="pressed" from="Files/3/Button" to="." method="choose_save" binds= [3]]
-[connection signal="pressed" from="Files/3/Button2" to="Files" method="hide"]
-[connection signal="pressed" from="Files/3/Button2" to="." method="choose_load" binds= [3]]
-[connection signal="pressed" from="Files/4/Button" to="Files" method="hide"]
-[connection signal="pressed" from="Files/4/Button" to="." method="choose_save" binds= [4]]
-[connection signal="pressed" from="Files/4/Button2" to="Files" method="hide"]
-[connection signal="pressed" from="Files/4/Button2" to="." method="choose_load" binds= [4]]
-[connection signal="pressed" from="Files/5/Button" to="Files" method="hide"]
-[connection signal="pressed" from="Files/5/Button" to="." method="choose_save" binds= [5]]
-[connection signal="pressed" from="Files/5/Button2" to="Files" method="hide"]
-[connection signal="pressed" from="Files/5/Button2" to="." method="choose_load" binds= [5]]
+[connection signal="pressed" from="FilesContainer/Files/Button" to="FilesContainer" method="hide"]
 [connection signal="timeout" from="SaveTimer" to="." method="autosave"]

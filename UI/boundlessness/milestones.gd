@@ -32,3 +32,16 @@ func _process(_delta):
 	
 	$Mile/M10/Label.text = "At %s Boundlessnesses:" % Globals.int_to_string(10)
 	$Mile/M10.button_pressed = Globals.Boundlessnesses.to_float() >= 10
+	
+	for i in 8:
+		get_node("Mile/M1%d/Label" % (i+1)).text = \
+		"At %s Boundlessnesses:" % Globals.int_to_string(11+i)
+		get_node("Mile/M1%d" % (i+1)).text = \
+		"Unlock an autobuyer\nfor the %s\nEternity Dimension." % \
+		Globals.ordinal(i+1)
+		get_node("Mile/M1%d" % (i+1)).button_pressed = \
+		Globals.Boundlessnesses.to_float() >= 11+i
+	
+	$Mile/M25/Label.text = "At %s Boundlessnesses:" % Globals.int_to_string(25)
+	$Mile/M25.button_pressed = Globals.Boundlessnesses.to_float() >= 25
+	

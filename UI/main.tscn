@@ -473,8 +473,10 @@ size_flags_vertical = 3
 [node name="Tabs" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+current_tab = 7
 
 [node name="Dimensions" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+visible = false
 layout_mode = 2
 
 [node name="Tachyons" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("1_8gea7")]
@@ -532,6 +534,26 @@ layout_mode = 2
 [node name="Achievements" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("6_mtmcd")]
 visible = false
 layout_mode = 2
+
+[node name="Hotkeys" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+layout_mode = 2
+theme_override_constants/line_separation = 4
+bbcode_enabled = true
+text = "
+[center][font=res://fonts/FairfaxHD.ttf]1⃣ - 8⃣ : Buy Tachyon Dimensions until 10
+T⃣ : Buy max Timespeed Upgrades
+shift +  1⃣ - 8⃣ : Buy single Tachyon Dimensions
+shift +  T⃣ : Buy single Timespeed Upgrades
+alt +  1⃣ - 8⃣ : Switch Tachyon Dimension Autobuyers on/off
+alt +  T⃣ : Switch Timespeed Autobuyer on/off
+M⃣ : Buy max Tachyon Dimensions and Timespeed Upgrades
+
+R⃣ : Dimensional Rewind
+D⃣ : Buy one Time Dilation
+G⃣ : Buy one Tachyon Galaxy
+
+B⃣ : Big Bang"
+autowrap_mode = 0
 
 [node name="Statistics" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false

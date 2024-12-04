@@ -36,7 +36,7 @@ anchor_bottom = 1.0
 offset_top = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_vertical = 100
+scroll_horizontal = 100
 
 [node name="Trees" type="HBoxContainer" parent="ScrollContainer"]
 unique_name_in_owner = true
@@ -475,7 +475,7 @@ studies_required = [NodePath("../Space2")]
 cost = 3
 line_color = Color(0.41, 0.339958, 0.2419, 1)
 
-[node name="DGIn2" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
+[node name="TD^" type="Button" parent="ScrollContainer/Trees/StudyTree2" node_paths=PackedStringArray("studies_required")]
 custom_minimum_size = Vector2(150, 100)
 layout_mode = 2
 theme_type_variation = &"Study"
@@ -520,16 +520,106 @@ disabled = true
 action_mode = 0
 text = "
 
-Unlock the 2nd
+Unlock the 3rd
 Space Dimension.
 
 
-Cost: 6 ST"
+Cost: 10 Space Theorems"
 script = ExtResource("2_egti4")
-row = 10
+row = 20
 id_override = "SD3"
-studies_required = [NodePath("../DGIn2"), NodePath("../BPow+")]
-cost = 20
+studies_required = [NodePath("../TD^"), NodePath("../BPow+")]
+cost = 10
+
+[node name="StudyTree3" type="Container" parent="ScrollContainer/Trees"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 440)
+layout_mode = 2
+script = ExtResource("1_cryta")
+
+[node name="SD3" type="Button" parent="ScrollContainer/Trees/StudyTree3" node_paths=PackedStringArray("linked_to")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+
+Unlock the 3rd
+Space Dimension.
+
+
+Cost: 10 Space Theorems"
+script = ExtResource("2_egti4")
+row = 6
+id_override = "SD3"
+linked_to = NodePath("../../StudyTree2/SD3")
+cost = 10
+
+[node name="DupIx" type="Button" parent="ScrollContainer/Trees/StudyTree3" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"Study"
+disabled = true
+action_mode = 0
+text = "
+Reduce the
+base Duplicantes
+Interval cap.
+(50 ms → 5 ms)
+
+Cost: 7 Space Theorems"
+script = ExtResource("2_egti4")
+row = 7
+studies_required = [NodePath("../SD3")]
+cost = 7
+
+[node name="Active1" type="Button" parent="ScrollContainer/Trees/StudyTree3" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"StudyR"
+disabled = true
+action_mode = 0
+text = "NYI"
+script = ExtResource("2_egti4")
+row = 8
+id_override = "Active1"
+studies_required = [NodePath("../DupIx")]
+cost = 9
+line_color = Color(0.41, 0.246, 0.246, 1)
+
+[node name="Passive1" type="Button" parent="ScrollContainer/Trees/StudyTree3" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"StudyP"
+disabled = true
+action_mode = 0
+text = "NYI"
+script = ExtResource("2_egti4")
+row = 8
+id_override = "Passive1"
+studies_required = [NodePath("../DupIx")]
+cost = 9
+line_color = Color(0.32549, 0.243137, 0.407843, 1)
+
+[node name="Idle1" type="Button" parent="ScrollContainer/Trees/StudyTree3" node_paths=PackedStringArray("studies_required")]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"StudyB"
+disabled = true
+action_mode = 0
+text = "NYI"
+script = ExtResource("2_egti4")
+row = 8
+id_override = "Idle1"
+studies_required = [NodePath("../DupIx")]
+cost = 9
+line_color = Color(0.246, 0.328, 0.41, 1)
 
 [node name="ST" type="Panel" parent="."]
 layout_mode = 1

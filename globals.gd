@@ -45,7 +45,6 @@ var display    : DisplayMode = DisplayMode.Scientific
 var progress   : Progression = Progression.None
 var progressBL : Progression = Progression.None
 
-var Tachyons  := largenum.new(10)
 var TachTotal := largenum.new(10)
 
 var TDilation := 0
@@ -177,7 +176,7 @@ func boundlessnessreset():
 	DupHandler.reset()
 	TDHandler.reset(2)
 	SDHandler.boundlessed()
-	TachTotalBL = largenum.new(Tachyons)
+	TachTotalBL = largenum.new(Currencies.Tachyons.AMOUNT)
 	Studies.on_reset()
 
 func int_to_string(i:int) -> String:

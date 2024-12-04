@@ -31,8 +31,13 @@ func buy_chance():
 var intervUpgrades := 0
 var intervalCap :
 	get:
+		if "7×1" in Globals.Studies.purchased:
+			if "1×2" in Globals.Studies.purchased:
+				return 0.001
+			else:
+				return 0.005
 		if "1×2" in Globals.Studies.purchased:
-			return 0.05 / 5
+			return 0.01
 		else:
 			return 0.05
 func interval():
