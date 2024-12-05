@@ -1,6 +1,6 @@
 extends Control
 
-@onready var dims : Array[HBoxContainer] = [null,
+@onready var dims : Array[HBoxContainer] = [
 	%Dimensions/Dimension1,
 	%Dimensions/Dimension2,
 	%Dimensions/Dimension3,
@@ -14,258 +14,115 @@ extends Control
 
 var TCperS := largenum.new(0)
 
-func rewind(score:float):
-	if not (
-		Globals.Achievemer.is_unlocked(3, 5) or
-		rewindBoost(score).divide(RewindMult).less(600)):
-			Globals.Achievemer.set_unlocked(3, 5)
-	RewindMult = rewindBoost(score)
-	if Globals.Challenge == 8:
-		var RM = RewindMult
-		var TS = TSpeedCount
-		reset(0)
-		RewindMult = RM
-		TSpeedCount = TS
-	else:
-		for i in 7:
-			DimAmount[i].pow2self(1 - score)
-			if DimAmount[i].less(DimPurchase[i]):
-				DimAmount[i] = largenum.new(DimPurchase[i])
-
-func rewindBoost(score := 1.0) -> largenum:
-	var RBoost : largenum
-	if Globals.Challenge == 8:
-		RBoost = DimAmount[0].power(0.1)
-	elif Globals.OEUHandler.is_bought(6):
-		RBoost = DimAmount[0].power(0.05)
-	else:
-		RBoost = largenum.new(DimAmount[0].log10() ** 1.5 / 10)
-	
-	if Globals.Achievemer.is_unlocked(2, 4): RBoost.mult2self(2)
-	
-	if Globals.Achievemer.is_unlocked(5, 4): RBoost.pow2self(1.2)
-	
-	if Globals.Achievemer.is_unlocked(2, 4): RBoost.div2self(RewindMult)
-	RBoost.pow2self(score)
-	if Globals.Achievemer.is_unlocked(2, 4): RBoost.mult2self(RewindMult)
-	
-	return RBoost
-
-func buytspeed(maxm:bool):
-	if Globals.Challenge == 20: return
-	while Currencies.Tachyons.spend(tspcost()):
-		TSpeedCount += 1
-		if Globals.Challenge == 2 or Globals.Challenge == 16: C2Multiplier = 0.0
-		if Globals.Challenge == 14:  C14Divisor = 1.0
-		if not maxm: break
-
-func antisoftlock():
-	reset(0)
-	if Globals.TDilation > -3:
-		Globals.TDilation -= 1
-
-func dilate():
-	reset(0)
-	Globals.TDilation += 1
-	if Globals.Challenge == 10:
-		C10Power += 1 - abs(C10Score())
-	if  Globals.progress   < Globals.Progression.Dilation:
-		Globals.progress   = Globals.Progression.Dilation
-	if  Globals.progressBL < Globals.Progression.Dilation:
-		Globals.progressBL = Globals.Progression.Dilation
-
-func galaxy():
-	if Globals.Challenge == 22: return
-	Globals.TGalaxies += 1
-	reset(1)
-	if  Globals.progress   < Globals.Progression.Galaxy:
-		Globals.progress   = Globals.Progression.Galaxy
-	if  Globals.progressBL < Globals.Progression.Galaxy:
-		Globals.progressBL = Globals.Progression.Galaxy
-
-func eternity(resetchallenge := true):
-	if resetchallenge:
-		if Globals.Challenge != 0 and Globals.Challenge <= 15:
-			Globals.CompletedChallenges |= 1 << (Globals.Challenge - 1)
-			if  Globals.challengeTimes[Globals.Challenge - 1] > Globals.eternTime \
-			or  Globals.challengeTimes[Globals.Challenge - 1] < 0:
-				Globals.challengeTimes[Globals.Challenge - 1] = Globals.eternTime
-		if Globals.Challenge > 15:
-			Globals.CompletedECs |= 1 << (Globals.Challenge - 16)
-			if Globals.ECTimes.size() < Globals.Challenge - 15:
-				Globals.ECTimes.append(-1)
-			if  Globals.ECTimes[Globals.Challenge - 16] > Globals.eternTime \
-			or  Globals.ECTimes[Globals.Challenge - 16] < 0:
-				Globals.ECTimes[Globals.Challenge - 16] = Globals.eternTime
-	
-	var epgain = Formulas.epgained()
-	var etgain = 1
-	
-	if "2×1" in Globals.Studies.purchased:
-		etgain = max(Globals.TDilation, 1)
-	
-	Globals.EternityPts.add2self(epgain)
-	Globals.Eternities .add2self(etgain)
-	
-	if  Globals.progress   < Globals.Progression.Eternity:
-		Globals.progress   = Globals.Progression.Eternity
-	if  Globals.progressBL < Globals.Progression.Eternity:
-		Globals.progressBL = Globals.Progression.Eternity
-	
-	if Globals.fastestEtern.time > Globals.eternTime \
-	or Globals.fastestEtern.time < 0:
-		Globals.fastestEtern.time		= Globals.eternTime
-		Globals.fastestEtern.currency	= epgain
-		Globals.fastestEtern.amount		= largenum.new(etgain)
-	
-	if not Globals.Achievemer.is_unlocked(2, 8):
-		Globals.Achievemer.set_unlocked(2, 8)
-	if DimPurchase[7] == 0:
-		if not Globals.Achievemer.is_unlocked(3, 4):
-			Globals.Achievemer.set_unlocked(3, 4)
-		if not Globals.Achievemer.is_unlocked(4, 4) and DimPurchase[6] == 0:
-			Globals.Achievemer.set_unlocked(4, 4)
-	if not Globals.Achievemer.is_unlocked(3, 6) and Globals.eternTime <= 600:
-		Globals.Achievemer.set_unlocked(3, 6)
-	if not Globals.Achievemer.is_unlocked(4, 2) and Globals.eternTime <= 60:
-		Globals.Achievemer.set_unlocked(4, 2)
-	if not Globals.Achievemer.is_unlocked(6, 4) and Globals.eternTime <= 0.5:
-		Globals.Achievemer.set_unlocked(6, 4)
-	if not Globals.Achievemer.is_unlocked(3, 7) and Globals.TGalaxies == 1:
-		Globals.Achievemer.set_unlocked(3, 7)
-	if not Globals.Achievemer.is_unlocked(6, 2) and Globals.TGalaxies == 0 and \
-	Globals.TDilation <= 0:
-		Globals.Achievemer.set_unlocked(6, 2)
-	if not Globals.Achievemer.is_unlocked(6, 6) and Globals.TGalaxies == 0 and \
-	Globals.TDilation <= -3:
-		Globals.Achievemer.set_unlocked(6, 6)
-	if not Globals.Achievemer.is_unlocked(7, 5) and epgain.log10() >= 200:
-		Globals.Achievemer.set_unlocked(7, 5)
-	
-	Globals.last10etern.insert(0, Globals.PrestigeData.new(
-		Globals.eternTime, epgain, etgain
-	))
-	if Globals.last10etern.size() > 10:
-		Globals.last10etern.resize(10)
-	
-	await get_tree().process_frame
-	reset(2, resetchallenge)
-	updateTSpeed()
-	Globals.animation("bang")
-
-func reset(level := 0, challengeReset := true):
-	if level >= 2 and challengeReset: Globals.Challenge = 0
-	if Globals.Challenge == 2  or Globals.Challenge == 16: C2Multiplier = 1.0
-	if Globals.Challenge == 14 or Globals.Challenge == 16:  C14Divisor = 1.0
-	Currencies.Tachyons.reset()
-	DimPurchase = [0,0,0,0,0,0,0,0]
-	for i in DimAmount:
-		i.exponent = -INF # set to zero
-		i.fix_mantissa()
-	TSpeedCount = 0
-	RewindMult = largenum.new(1)
-	if level >= 1:
-		if   Globals.Challenge == 11 or Globals.Challenge == 16:
-			Globals.TDilation = -3
-		elif Globals.Challenge != 0:
-			Globals.TDilation = 0
-		elif Globals.EUHandler.is_bought(17):
-			Globals.TDilation = 5
-		elif Globals.EUHandler.is_bought(16):
-			Globals.TDilation = 4
-		elif Globals.EUHandler.is_bought(15):
-			Globals.TDilation = 3
-		elif Globals.EUHandler.is_bought(14):
-			Globals.TDilation = 2
-		elif Globals.EUHandler.is_bought(13):
-			Globals.TDilation = 1
-		else:
-			Globals.TDilation = 0
-		if Globals.Challenge == 10: C10Power = 0
-	if level >= 2:
-		if Globals.Challenge != 0:            Globals.TGalaxies = 0
-		elif Globals.EUHandler.is_bought(17): Globals.TGalaxies = 1
-		else:                                 Globals.TGalaxies = 0
-		if Globals.Challenge == 10:
-			%Prestiges/DiButton.material = rewindNode.material.duplicate()
-			%Prestiges/DiButton.material.set_shader_parameter("pixelsize", 1./250.)
-		else:
-			%Prestiges/DiButton.material = null
-		Globals.eternTime = 0
-		topTachyonsInEternity = largenum.new(0)
-		emit_signal("eternitied")
-	updateTSpeed()
-
 func _process(delta):
-	
 	var logfinity = 2048 if Globals.Challenge == 15 else 1024
 	
-	if canBigBang and Input.is_action_pressed("BBang"):
-		eternity()
-	
-	if topTachyonsInEternity.less(Currencies.Tachyons.AMOUNT):
-		topTachyonsInEternity = largenum.new(Currencies.Tachyons.AMOUNT)
+	#if canBigBang and Input.is_action_pressed("BBang"):
+		#eternity()
 	
 	if Globals.progressBL < GL.Progression.Overcome or \
 	(Globals.Challenge != 0 and Globals.Challenge <= 15):
 		$VSplitContainer.visible = (Currencies.Tachyons.AMOUNT.log2() <= logfinity)
 		$ETERNITY.visible        = (Currencies.Tachyons.AMOUNT.log2() >= logfinity)
 		
-		if canBigBang:
+		if TachyonDims.canBigBang:
 			custom_minimum_size.y = $ETERNITY.size.y
-		
-		if Currencies.Tachyons.AMOUNT.log2() >= logfinity:
-			Currencies.Tachyons.AMOUNT.exponent = logfinity
-			Currencies.Tachyons.AMOUNT.mantissa = (1 << 62)
 			return
 	else:
 		$VSplitContainer.visible = true
 		$ETERNITY.visible = false
 	custom_minimum_size.y = $VSplitContainer.size.y
 	
-	if Globals.Challenge == 6 or Globals.Challenge == 16:
-		DimsUnlocked = min(Globals.TDilation + 4, 6)
-	else:
-		DimsUnlocked = min(Globals.TDilation + 4, 8)
-	for k in range(1, len(dims)):
+	for k in 8:
 		var i = dims[k]
-		if i == null: continue
-		if k > DimsUnlocked:	i.hide()
-		else:					i.show()
-		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % \
-		[Globals.int_to_string(DimPurchase[k-1]), "" if DimPurchase[k-1] == 1 else "s"]
-		var buyable = (Currencies.Tachyons.AMOUNT.divide(dimcost(k))).to_float()
-		if abs(buyable) > buylim:
-			buyable = buylim
-		buyable = int(buyable)
-		i.get_node("Buy/Progress").value = int(buyable)
-		i.get_node("Buy/Progress").max_value = buylim - DimPurchase[k-1] % buylim
-		i.get_node("Buy").disabled = not dimcost(k).less(Currencies.Tachyons.AMOUNT)
-		if k < 8:
-			i.get_node("A&G/Amount").text = DimAmount[k-1].to_string().trim_suffix(".00").trim_suffix(";00")
-		else:
-			i.get_node("A&G/Amount").text = Globals.int_to_string(DimPurchase[k-1])
-		i.get_node("Buy").text = "Buy %s\nCost: %s TC" % [
-			Globals.int_to_string(min(buyable, buylim - DimPurchase[k-1] % buylim)),
-			dimcost(k).multiply(min(max(buyable, 1), buylim - DimPurchase[k-1] % buylim)).to_string()
+		
+		if k > TachyonDims.DimsUnlocked:	i.hide()
+		else:								i.show()
+		
+		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % [
+			Globals.int_to_string(TachyonDims.DimPurchase[k]),
+			"" if TachyonDims.DimPurchase[k] == 1 else "s"
 		]
+		
+		var buyable = (
+			Currencies.Tachyons.AMOUNT.divide(TachyonDims.dimcost(k+1))
+		).to_float()
+		if abs(buyable) > TachyonDims.buylim:
+			buyable = TachyonDims.buylim
+		buyable = int(buyable)
+		i.get_node("Buy/Progress").value = buyable
+		i.get_node("Buy/Progress").max_value = \
+		TachyonDims.buylim - TachyonDims.DimPurchase[k] % TachyonDims.buylim
+		
+		i.get_node("Buy").disabled = \
+		not TachyonDims.dimcost(k+1).less(Currencies.Tachyons.AMOUNT)
+		
+		if k+1 < TachyonDims.DimsUnlocked:
+			i.get_node("A&G/Amount").text = \
+			TachyonDims.DimAmount[k].to_string().trim_suffix(".00").trim_suffix(";00")
+		else:
+			i.get_node("A&G/Amount").text = \
+			Globals.int_to_string(TachyonDims.DimPurchase[k])
+		
+		i.get_node("Buy").text = "Buy %s\nCost: %s TC" % [
+			Globals.int_to_string(min(buyable,
+				TachyonDims.buylim - TachyonDims.DimPurchase[k] % TachyonDims.buylim)),
+			TachyonDims.dimcost(k+1).multiply(min(max(buyable, 1),
+				TachyonDims.buylim - TachyonDims.DimPurchase[k] % TachyonDims.buylim)
+			).to_string()
+		]
+		
+		i.get_node("N&M/Name").text = "%s Tachyon Dimension" % Globals.ordinal(k+1)
+		i.get_node("N&M/Multiplier").text = "×%s" % TachyonDims.Multipliers[k].to_string()
+		if k != 7:
+			if k+1 >= TachyonDims.DimsUnlocked or TachyonDims.DimAmount[k+1].exponent == -INF:
+				i.get_node("A&G/Growth").hide()
+			else:
+				i.get_node("A&G/Growth").show()
+				i.get_node("A&G/Growth").text
+		
+		if k == TachyonDims.DimsUnlocked + 1:
+			i.get_node("Buy").disabled = true
+		
+		if i.get_node("Buy").button_pressed:
+			if %TopButtons/BuyMode.button_pressed:
+				TachyonDims.buy_until_mult(k+1)
+			else:
+				TachyonDims.buy_one(k+1)
+		
+		if Input.is_action_pressed("BuyTD%d" % (k+1)):
+			if Input.is_action_pressed("BuyOne"):
+				TachyonDims.buy_one(k+1)
+			else:
+				TachyonDims.buy_until_mult(k+1)
+	
+	if %TopButtons/Timespeed.button_pressed:
+		TachyonDims.buy_tspeed()
+	if %TopButtons/Timespeed/BuyMax.button_pressed:
+		TachyonDims.buy_max_tspeed()
+	
+	if Input.is_action_pressed("BuyMax") or %TopButtons/BuyMax.button_pressed:
+		for i in 8:
+			TachyonDims.buy_max(i+1)
+		TachyonDims.buy_max_tspeed()
+	
 	if Globals.Challenge == 20:
 		%TopButtons/Timespeed.disabled = true
 		%TopButtons/Timespeed/BuyMax.disabled = true
 		%TopButtons/Timespeed.text = "Timespeed disabled (EC5)"
 	else:
-		%TopButtons/Timespeed.disabled = Currencies.Tachyons.AMOUNT.less(tspcost())
-		%TopButtons/Timespeed/BuyMax.disabled = Currencies.Tachyons.AMOUNT.less(tspcost())
-		%TopButtons/Timespeed.text = "Timespeed (%s TC) " % tspcost().to_string()
+		%TopButtons/Timespeed.disabled = Currencies.Tachyons.AMOUNT.less(TachyonDims.tspcost())
+		%TopButtons/Timespeed/BuyMax.disabled = Currencies.Tachyons.AMOUNT.less(TachyonDims.tspcost())
+		%TopButtons/Timespeed.text = "Timespeed (%s TC) " % TachyonDims.tspcost().to_string()
 	%TopButtons/Timespeed.tooltip_text = "Purchased %s time%s" % \
-	[Globals.int_to_string(TSpeedCount), "" if TSpeedCount == 1 else "s"]
+	[Globals.int_to_string(TachyonDims.TSpeedCount), "" if TachyonDims.TSpeedCount == 1 else "s"]
 	if Globals.EDHandler.DimsUnlocked > 0:
 		%TopButtons/Timespeed.tooltip_text += " + %s Free upgrade%s" % [
 			Globals.int_to_string(Globals.EDHandler.FreeTSpeed),
 			"" if Globals.EDHandler.FreeTSpeed == 1 else "s"
 		]
 	%TopButtons/BuyMode.text = \
-	"Buy until %s" % Globals.int_to_string(buylim) if %TopButtons/BuyMode.button_pressed else "Buy singles"
+	"Buy until %s" % Globals.int_to_string(TachyonDims.buylim) if %TopButtons/BuyMode.button_pressed else "Buy singles"
 	if Globals.display == Globals.DisplayMode.Dozenal:
 		%Progress.tooltip_text = "Pergrossage to "
 	else:
@@ -280,27 +137,26 @@ func _process(delta):
 		%Progress.tooltip_text += "Challenge goal"
 	%Progress/Label.text = Globals.percent_to_string(%Progress.value / %Progress.max_value, 1)
 	%Progress/Label.add_theme_color_override("font_color", get_theme_color("font_color", "ProgressBar"))
-	rewindNode.visible = (Globals.TDilation >= 5) or (Globals.progress >= Globals.Progression.Galaxy)
+	rewindNode.visible = (TachyonDims.TDilation >= 5) or \
+	(Globals.progress >= Globals.Progression.Galaxy)
 	
-	var buy10mult = 2
-	if Globals.Challenge == 4: buy10mult = 1.0 + 0.2 * Globals.TDilation
-	elif Globals.EUHandler.is_bought(5): buy10mult = 2.2222222
 	
 	%Important.text = \
 	"[center]You have [font_size=20]" + Currencies.Tachyons.to_string() + \
 	"[/font_size] Tachyons.\n[font_size=10]You're gaining [/font_size]" + TCperS.to_string() + \
 	"[font_size=10] Tachyons per second.[/font_size]\n[font_size=10]Timespeed strength: [/font_size]" + \
-	TSpeedBoost.to_string() + "[font_size=10] | Total speed: [/font_size]" + \
-	TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed).to_string() + \
-	"[font_size=10]/sec\nBuy " + Globals.int_to_string(buylim) + " multiplier: [/font_size]" + \
-	Globals.float_to_string(buy10mult)
+	TachyonDims.TSpeedBoost.to_string() + "[font_size=10] | Total speed: [/font_size]" + \
+	TachyonDims.TSpeedBoost.power(
+		TachyonDims.TSpeedCount + Globals.EDHandler.FreeTSpeed).to_string() + \
+	"[font_size=10]/sec\nBuy " + Globals.int_to_string(TachyonDims.buylim) + " multiplier: [/font_size]" + \
+	Globals.float_to_string(TachyonDims.buymult)
 	
 	if rewindNode.visible:
-		%Important.text += "[font_size=10] | Rewind multiplier: [/font_size]" + RewindMult.to_string()
+		%Important.text += "[font_size=10] | Rewind multiplier: [/font_size]" + TachyonDims.RewindMult.to_string()
 	
 	if Globals.Challenge == 2:
 		%Important.text += "\n \n[font_size=10]Production: [/font_size]" + \
-		Globals.percent_to_string(C2Multiplier)
+		Globals.percent_to_string(TachyonDims.C2Multiplier)
 	if Globals.Challenge == 3:
 		%Important.text += "\n \n[font_size=10]%s Dimension: [/font_size]×%s" % \
 		[Globals.ordinal(3), Globals.int_to_string(3)]
@@ -312,23 +168,24 @@ func _process(delta):
 		] + Currencies.Tachyons.AMOUNT.power(0.05).to_string()
 	if Globals.Challenge == 14:
 		%Important.text += "\n \n[font_size=10]Production: [/font_size]/" + \
-		Globals.float_to_string(C14Divisor)
+		Globals.float_to_string(TachyonDims.C14Divisor)
 	if Globals.Challenge == 16:
 		%Important.text += "\n \n[font_size=10]Production: [/font_size]/" + \
-		Globals.float_to_string(C14Divisor) + ", " + Globals.percent_to_string(C2Multiplier)
+		Globals.float_to_string(TachyonDims.C14Divisor) + ", " + \
+		Globals.percent_to_string(TachyonDims.C2Multiplier)
 	if %Prestiges/DiButton.material != null:
 		%Prestiges/DiButton.material.\
 		set_shader_parameter("disabled", %Prestiges/DiButton.disabled)
 	
-	if Globals.TDilation < 5 and Globals.Challenge != 13:
+	if TachyonDims.TDilation < 5 and Globals.Challenge != 13:
 		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (requires %s Time Dilation) " % \
 		Globals.int_to_string(5)
-	elif DimAmount[7].exponent == -INF and Globals.Challenge != 13:
+	elif TachyonDims.DimAmount[7].exponent == -INF and Globals.Challenge != 13:
 		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (no %s TD)" % \
 		Globals.ordinal(8)
-	elif rewindBoost(rewindNode.score).less(RewindMult):
+	elif TachyonDims.rewindBoost().less(TachyonDims.RewindMult):
 		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (×%s multiplier)" % \
 		Globals.int_to_string(1)
@@ -336,165 +193,147 @@ func _process(delta):
 		rewindNode.disabled = false
 		if Globals.Challenge == 13:
 			rewindNode.text = "Dimensional Rewind (×%s to all TDs)" % [
-				rewindBoost(rewindNode.score).divide(RewindMult).to_string()
+				TachyonDims.rewindBoost().\
+				divide(TachyonDims.RewindMult).to_string()
 			]
 		else:
 			rewindNode.text = "Dimensional Rewind (×%s to %s TD)" % [
-				rewindBoost(rewindNode.score).divide(RewindMult).to_string(), Globals.ordinal(8)
+				TachyonDims.rewindBoost().\
+				divide(TachyonDims.RewindMult).to_string(), Globals.ordinal(8)
 			]
-		if Input.is_action_pressed("Rewind"):
-			rewind(rewindNode.score)
+		#if Input.is_action_pressed("Rewind"):
+			#TachyonDims.rewind()
 	
 	%Prestiges/GaButton.text = "Reset your Dimensions and\n" + \
 	"Time Dilation to boost the power\nof Timespeed upgrades"
-	var DilaBoost = 2
-	if Globals.EUHandler.is_bought(10): DilaBoost = 2.5
-	if Globals.OEUHandler.is_bought(5): DilaBoost = 3.0
-	if Globals.ECCompleted(7): DilaBoost = 5.0
-	if Globals.Challenge == 10:
-		DilaBoost = 2.2 ** (1 - abs(C10Score()))
-	if Globals.Challenge == 8: DilaBoost = 1
-	if Globals.Challenge == 22: DilaBoost = 10
-	
-	if "Tach2" in Globals.Studies.purchased:
-		DilaBoost *= 2
-	
-	DilaBoost = largenum.new(DilaBoost)
-	if Globals.progress >= Globals.Progression.Boundlessness:
-		DilaBoost.mult2self(Formulas.bounlesspower())
 	
 	if Globals.Challenge == 6 or Globals.Challenge == 16:
-		if DimsUnlocked < 6:
+		if TachyonDims.DimsUnlocked < 6:
 			%Prestiges/DiButton.text = \
 			"Reset your Dimensions to\nunlock the %s Dimension" % \
-			Globals.ordinal(DimsUnlocked + 1) +\
+			Globals.ordinal(TachyonDims.DimsUnlocked + 1) +\
 			" and\ngain a ×%s multiplier to Dimension%s" % [
-				DilaBoost.to_string(),
+				TachyonDims.dilamult.to_string(),
 				(
 					"s %s-%s" % [Globals.int_to_string(1),
-					Globals.int_to_string(Globals.TDilation + 1)] \
-					if Globals.TDilation != 0 \
+					Globals.int_to_string(TachyonDims.TDilation + 1)] \
+					if TachyonDims.TDilation != 0 \
 					else " " + Globals.int_to_string(1)
 				)
 			]
 		else:
 			%Prestiges/DiButton.text = \
 			"Reset your Dimensions"
-			if not DilaBoost.less(1.1):
+			if not TachyonDims.dilamult.less(1.1):
 				%Prestiges/DiButton.text += " to\ngain a ×%s multiplier to %s" % [
-					DilaBoost.to_string(),
-					("all Dimensions" if Globals.TDilation >= 5 else "Dimensions 1-%d" % (Globals.TDilation + 1))
+					TachyonDims.dilamult.to_string(),
+					("all Dimensions" if TachyonDims.TDilation >= 5 else "Dimensions 1-%d" % (TachyonDims.TDilation + 1))
 				]
 	else:
-		if Globals.TDilation == 4:
+		if TachyonDims.TDilation == 4:
 			%Prestiges/DiButton.text = \
 			"Reset your Dimensions to\nunlock Rewind"
-			if not DilaBoost.less(1.1):
+			if not TachyonDims.dilamult.less(1.1):
 				%Prestiges/DiButton.text += " and\ngain a ×%s multiplier to Dimension%s" %\
 				[
-					DilaBoost.to_string(),
+					TachyonDims.dilamult.to_string(),
 					("s %s-%s" % [
 						Globals.int_to_string(1),
-						Globals.int_to_string(Globals.TDilation + 1)
-					]if Globals.TDilation != 0 else " " + Globals.int_to_string(1))
+						Globals.int_to_string(TachyonDims.TDilation + 1)
+					]if TachyonDims.TDilation != 0 else " " + Globals.int_to_string(1))
 				]
-		elif Globals.TDilation < 0:
+		elif TachyonDims.TDilation < 0:
 			%Prestiges/DiButton.text = \
-			"Reset your Dimensions to\nunlock the %s Dimension" % Globals.ordinal(DimsUnlocked + 1)
-		elif Globals.TDilation >= 5:
+			"Reset your Dimensions to\nunlock the %s Dimension" % Globals.ordinal(TachyonDims.DimsUnlocked + 1)
+		elif TachyonDims.TDilation >= 5:
 			%Prestiges/DiButton.text = \
 			"Reset your Dimensions"
-			if not DilaBoost.less(1.1):
+			if not TachyonDims.dilamult.less(1.1):
 				%Prestiges/DiButton.text += " to\ngain a ×%s multiplier to all Dimensions" % \
-				DilaBoost.to_string()
+				TachyonDims.dilamult.to_string()
 		else:
 			%Prestiges/DiButton.text = \
-			"Reset your Dimensions to\nunlock the %s Dimension" % Globals.ordinal(DimsUnlocked + 1)
-			if not DilaBoost.less(1.1):
+			"Reset your Dimensions to\nunlock the %s Dimension" % Globals.ordinal(TachyonDims.DimsUnlocked + 1)
+			if not TachyonDims.dilamult.less(1.1):
 				%Prestiges/DiButton.text += " and\ngain a ×%s multiplier to Dimension%s" %\
 				[
-					DilaBoost.to_string(),
+					TachyonDims.dilamult.to_string(),
 					("s %s-%s" % [
 						Globals.int_to_string(1),
-						Globals.int_to_string(Globals.TDilation + 1)
-					]if Globals.TDilation != 0 else " " + Globals.int_to_string(1))
+						Globals.int_to_string(TachyonDims.TDilation + 1)
+					]if TachyonDims.TDilation != 0 else " " + Globals.int_to_string(1))
 				]
 	
-	%Prestiges/DiButton.disabled = DimPurchase[DimsUnlocked - 1] < dilacost()
+	%Prestiges/DiButton.disabled = not TachyonDims.canDilate
+	
+	if %Prestiges/DiButton.button_pressed:
+		TachyonDims.dilate()
+	
 	%Prestiges/DiLabel.text = \
 	"[center]Time Dilation (%s)\n[font_size=2] \n[font_size=10]Requires: %s %s Tachyon Dimensions" % [
-		Globals.int_to_string(Globals.TDilation),
-		Globals.int_to_string(dilacost()),
-		Globals.ordinal(DimsUnlocked)
+		Globals.int_to_string(TachyonDims.TDilation),
+		Globals.int_to_string(TachyonDims.dilacost()),
+		Globals.ordinal(TachyonDims.DimsUnlocked)
 	]
 	
-	%Prestiges/GaButton.disabled = DimPurchase[
-		5 if Globals.Challenge in [6, 16] else 7
-	] < galacost()
+	%Prestiges/GaButton.disabled = not TachyonDims.canGalaxy
 	%Prestiges/GaLabel.text = "[center]%sTachyon Galaxies (%s)\n%s[font_size=10]Requires: %s %s Tachyon Dimensions%s" % [
-		("" if Globals.TGalaxies < DistantScaling else "Distant "),
+		("" if TachyonDims.TGalaxies < TachyonDims.DistantScaling else "Distant "),
 		(
 			"%s + %s" % [
-				Globals.int_to_string(Globals.TGalaxies),
+				Globals.int_to_string(TachyonDims.TGalaxies),
 				Globals.int_to_string(Globals.DupHandler.dupGalaxies)
 			]
 			if Globals.DupHandler.dupGalaxies > 0 else
-			"%s" % Globals.int_to_string(Globals.TGalaxies)
+			"%s" % Globals.int_to_string(TachyonDims.TGalaxies)
 		),
-		("[font_size=2] \n" if Globals.TGalaxies < DistantScaling else ""),
-		Globals.int_to_string(galacost()),
+		("[font_size=2] \n" if TachyonDims.TGalaxies < TachyonDims.DistantScaling else ""),
+		Globals.int_to_string(TachyonDims.galacost()),
 		Globals.ordinal(
 			6 if (Globals.Challenge == 6 or Globals.Challenge == 16) else 8),
-		("" if Globals.TGalaxies < DistantScaling else 
+		("" if TachyonDims.TGalaxies < TachyonDims.DistantScaling else 
 		"\nEvery Galaxy is more expensive after %s Galaxies" %
-		Globals.int_to_string(DistantScaling))
+		Globals.int_to_string(TachyonDims.DistantScaling))
 	]
 	
 	if Globals.Challenge == 8:
-		if Globals.TDilation >= 5:
+		if TachyonDims.TDilation >= 5:
 			%Prestiges/DiButton.disabled = true
 			%Prestiges/DiButton.text = "Time Dilation capped\n(Challenge %s)" % Globals.int_to_string(8)
 		%Prestiges/GaButton.disabled = true
 		%Prestiges/GaButton.text = "Tachyon Galaxies disabled\n(Challenge %s)" % Globals.int_to_string(8)
-	if Globals.Challenge == 2  or Globals.Challenge == 16:
-		C2Multiplier += delta / 60
-		C2Multiplier = min(C2Multiplier, 1)
-	if Globals.Challenge == 14 or Globals.Challenge == 16:
-		C14Divisor *= 1e9 ** delta
+	
 	if Globals.Challenge == 22:
 		%Prestiges/GaButton.disabled = true
 		%Prestiges/GaButton.text = "Tachyon Galaxies disabled\n(Eternity Challenge %s)" % \
 		Globals.int_to_string(7)
 	%Prestiges/Reset.visible = (Globals.Challenge in [14, 18, 19]) and \
-	Globals.TDilation > -3
+	TachyonDims.TDilation > -3
 	
-	if not Input.is_action_pressed("ToggleAB"):
-		for i in range(8, 0, -1):
-			if Input.is_action_pressed("BuyTD%d" % i) or BuyMax:
-				if Input.is_action_pressed("BuyOne") and not BuyMax:
-					buydim(i, 1)
-				elif dims[i].get_node("Buy/Progress").value >= \
-				dims[i].get_node("Buy/Progress").max_value:
-					buydim(i, 0)
-					if BuyMax:
-						buydim(i, 1e9)
-		if Input.is_action_pressed("BuyTSpeed") or BuyMax:
-			if tspcost().less(Currencies.Tachyons.AMOUNT):
-				buytspeed(not Input.is_action_pressed("BuyOne") or BuyMax)
-	BuyMax = Input.is_action_pressed("BuyMax")
+	#if not Input.is_action_pressed("ToggleAB"):
+		#for i in range(8, 0, -1):
+			#if Input.is_action_pressed("BuyTD%d" % i) or BuyMax:
+				#if Input.is_action_pressed("BuyOne") and not BuyMax:
+					#buydim(i, 1)
+				#elif dims[i].get_node("Buy/Progress").value >= \
+				#dims[i].get_node("Buy/Progress").max_value:
+					#buydim(i, 0)
+					#if BuyMax:
+						#buydim(i, 1e9)
+		#if Input.is_action_pressed("BuyTSpeed") or BuyMax:
+			#if tspcost().less(Currencies.Tachyons.AMOUNT):
+				#buytspeed(not Input.is_action_pressed("BuyOne") or BuyMax)
+	#BuyMax = Input.is_action_pressed("BuyMax")
+	#if Input.is_action_pressed("Dilate"):
+		#if not %Prestiges/DiButton.disabled:
+			#dilate()
+	#if Input.is_action_pressed("Galaxy"):
+		#if not %Prestiges/GaButton.disabled:
+			#galaxy()
+	#if Input.is_action_pressed("BBang"):
+		#if $ETERNITY.visible:
+			#eternity()
 	
-	for i in 8:
-		dims[i+1].get_node("N&M/Name").text = "%s Tachyon Dimension" % Globals.ordinal(i+1)
-	
-	if Input.is_action_pressed("Dilate"):
-		if not %Prestiges/DiButton.disabled:
-			dilate()
-	if Input.is_action_pressed("Galaxy"):
-		if not %Prestiges/GaButton.disabled:
-			galaxy()
-	if Input.is_action_pressed("BBang"):
-		if $ETERNITY.visible:
-			eternity()
 	
 	if Globals.Challenge == 10:
 		if %Prestiges/DiButton.material == null:
@@ -504,140 +343,9 @@ func _process(delta):
 		)
 		%Prestiges/DiButton/Accuracy.visible = true
 		%Prestiges/DiButton/Accuracy.position.x = (
-			(C10Score() * 230) + 240
+			(TachyonDims.C10Score() * 230) + 240
 		) / 2
 	else:
 		%Prestiges/DiButton/Accuracy.visible = false
-	
-	for i in range(min(DimsUnlocked, len(dims) - 1), 0, -1):
-		var mult := largenum.new(1)
-		
-		mult.mult2self(largenum.new(buy10mult).power(DimPurchase[i-1] / buylim))
-		if Globals.Challenge == 10:
-			mult.mult2self(largenum.new(2.2).power(max(      C10Power    - i + 1, 0)))
-		else:
-			mult.mult2self(        DilaBoost.power(max(Globals.TDilation - i + 1, 0)))
-		
-		if Globals.Challenge != 13:
-			if Globals.EUHandler.is_bought(1): mult.mult2self(Formulas.eternity_11())
-			if Globals.EUHandler.is_bought(2):
-				if i == 1 or i == 8: mult.mult2self(Formulas.eternity_23())
-			if Globals.EUHandler.is_bought(3):
-				if i == 2 or i == 7: mult.mult2self(Formulas.eternity_23())
-			if Globals.EUHandler.is_bought(7):
-				if i == 3 or i == 6: mult.mult2self(Formulas.eternity_23())
-			if Globals.EUHandler.is_bought(6):
-				if i == 4 or i == 5: mult.mult2self(Formulas.eternity_23())
-			if Globals.EUHandler.is_bought(9): mult.mult2self(Formulas.achievement_mult())
-			if Globals.EUHandler.is_bought(11): mult.mult2self(Globals.EternityPts.add(1))
-		
-		if i == 8 or Globals.Challenge == 13:
-			mult.mult2self(RewindMult)
-		elif "Tach1" in Globals.Studies.purchased:
-			mult.mult2self(Formulas.study_tach1())
-		
-		if "Tach3" in Globals.Studies.purchased and \
-		Globals.Duplicantes.exponent > 0:
-			mult.mult2self(Globals.Duplicantes)
-		
-		if Globals.Challenge == 2 or Globals.Challenge == 16: mult.mult2self(C2Multiplier)
-		if Globals.Challenge == 3:
-			if i == 3: mult.mult2self(3)
-			if i <= 2: mult.mult2self(0.03)
-		if Globals.Challenge == 9 and i != 8:
-			mult.div2self(Currencies.Tachyons.AMOUNT.power(0.05))
-		if Globals.Challenge == 14 or Globals.Challenge == 16: mult.div2self(C14Divisor)
-		
-		if Globals.Challenge != 13:
-			if Globals.Achievemer.is_unlocked(2, 5): mult.mult2self(1.1)
-			if Globals.Achievemer.is_unlocked(2, 7) and i == 1: mult.mult2self(1.5)
-			if Globals.Achievemer.is_unlocked(3, 4) and i != 8: mult.mult2self(1.5)
-			if Globals.Achievemer.is_unlocked(4, 8): mult.mult2self(1.2)
-			
-			if Globals.OEUHandler.is_bought(1):
-				mult.mult2self(Formulas.overcome_1())
-			if Globals.Achievemer.is_unlocked(5, 6):
-				mult.mult2self(Formulas.achievement_56())
-			
-			if Globals.Achievemer.is_unlocked(6, 2) and i <= 4:
-				mult.mult2self(3)
-		
-		if not Globals.Achievemer.is_unlocked(3, 1) and mult.log10() >= 40:
-			Globals.Achievemer.set_unlocked(3, 1)
-		
-		# POWER EFFECTS GO HERE
-		
-		if Globals.Challenge == 18 and i != latest_purchased:
-			mult.pow2self(0.2)
-		
-		if "6×1" in Globals.Studies.purchased:
-			mult.pow2self(1.02)
-		
-		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
-		mult.mult2self(TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed))
-		
-		if i != 8:
-			if DimAmount[i].exponent == -INF:	dims[i].get_node("A&G/Growth").hide()
-			else:								dims[i].get_node("A&G/Growth").show()
-			if DimAmount[i-1].exponent == -INF:
-				dims[i+1].modulate.a = 0.5
-			else:
-				dims[i+1].modulate.a = 1.0
-		if i == 1:
-			TCperS = DimAmount[i-1].multiply(mult)
-			Currencies.Tachyons.add(DimAmount[i-1].multiply(mult.multiply(delta)))
-			Globals.TachTotalBL.add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
-			Globals.TachTotal  .add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
-		else:
-			if DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).less(10):
-				dims[i-1].get_node("A&G/Growth").text = "(+%s/s)" % \
-					Globals.percent_to_string(DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).to_float())
-			else:
-				dims[i-1].get_node("A&G/Growth").text = "(×%s/s)" % \
-					DimAmount[i-1].multiply(mult).divide(DimAmount[i-2]).to_string()
-			DimAmount[i-2].add2self(DimAmount[i-1].multiply(mult.multiply(delta)))
-
-func dilacost():
-	var Cost := 20
-	
-	if (Globals.Challenge == 6 or Globals.Challenge == 16) and DimsUnlocked == 6:
-		Cost = 30 + (Globals.TDilation - 3) * 10
-	elif DimsUnlocked == 8:
-		Cost = 5 + (Globals.TDilation - 3) * 15
-	
-	if (Globals.Challenge == 5 or Globals.Challenge == 16):
-		Cost = Cost * 3 / 2
-	if Globals.Challenge == 19:
-		Cost += Globals.TGalaxies * 15
-	if Globals.EUHandler.is_bought(4):
-		Cost -= 5
-	if Globals.ECCompleted(4):
-		Cost -= 5
-	
-	return Cost
-
-func galacost():
-	var Cost = 80 + 60 * Globals.TGalaxies
-	
-	if (Globals.Challenge == 6 or Globals.Challenge == 16):
-		Cost = 60 + 40 * Globals.TGalaxies
-	
-	if "3×1" in Globals.Studies.purchased:
-		Cost -= 5 * Globals.TGalaxies
-	
-	if (Globals.Challenge == 5 or Globals.Challenge == 16):
-		Cost = Cost * 3 / 2
-	if Globals.Challenge == 19:
-		Cost += Globals.TDilation * 5
-	if Globals.EUHandler.is_bought(4):
-		Cost -= 10
-	if Globals.TGalaxies > DistantScaling:
-		var the = (Globals.TGalaxies - DistantScaling)
-		Cost += the * (the + 1)
-	if Globals.TGalaxies > 600:
-		var the = (Globals.TGalaxies - 600)
-		Cost *= 1.002 ** the
-	
-	return Cost
 
 signal eternitied()

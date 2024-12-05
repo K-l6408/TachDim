@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu4y01w5qnw72"]
+
+[ext_resource type="Script" path="res://UI/statistics/breakdown.gd" id="1_2vbu6"]
+
+[node name="Multiplier Breakdown" type="TabContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2vbu6")
+
+[node name="Tachyons" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Tachyons"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 13.0
+grow_horizontal = 2
+text = "Base Tachyon production: 9.99e9999"
+
+[node name="ColorRect" type="ColorRect" parent="Tachyons"]
+visible = false
+layout_mode = 2
+offset_right = 40.0
+offset_bottom = 43.0
+color = Color(0.265361, 0.265361, 0.265361, 1)
+
+[node name="Label" type="Label" parent="Tachyons/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slices" type="HBoxContainer" parent="Tachyons"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 14.0
+offset_bottom = 57.0
+grow_horizontal = 2
+
+[node name="Tree" type="Tree" parent="Tachyons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 63.0
+grow_horizontal = 2
+grow_vertical = 2
+hide_root = true

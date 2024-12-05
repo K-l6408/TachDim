@@ -261,7 +261,7 @@ func _process(_delta):
 					(
 						"Buys max" if TDBulk(i.name.trim_prefix("TD").to_int()) > 512 else
 						"Buys %ss" % Globals.int_to_string(
-							Globals.TDHandler.buylim * TDBulk(i.name.trim_prefix("TD").to_int())
+							TachyonDims.buylim * TDBulk(i.name.trim_prefix("TD").to_int())
 						)
 					) if i.get_node("Mode").button_pressed else "Buys singles"
 				)
@@ -281,8 +281,8 @@ func _process(_delta):
 	$Auto/Buyers/EPMult  .visible = not Globals.Boundlessnesses.less(0)
 	if Globals.challengeCompleted(10) and $Auto/Buyers/Rewind/Timer.time_left == 0:
 		if $Auto/Buyers/Rewind/Enabled.button_pressed and \
-		Globals.TDHandler.rewindNode.score >= RewdAccuracy() and not \
-		Globals.TDHandler.rewindBoost().divide(Globals.TDHandler.RewindMult).\
+		TachyonDims.rewindScore() >= RewdAccuracy() and not \
+		TachyonDims.rewindBoost().divide(TachyonDims.RewindMult).\
 		less($Auto/Buyers/Rewind/Objective.value):
 			if buyrewd(): $Auto/Buyers/Rewind/Timer.start(RewdInterval())
 	if Globals.challengeCompleted(11) and $Auto/Buyers/Dilation/Timer.time_left == 0:
@@ -535,30 +535,31 @@ func unlock(which):
 		get_node("Auto/Buyers/TD%dLocked" % which).hide()
 
 func buyTSpeed():
-	Globals.TDHandler.buytspeed($Auto/Buyers/TimeSpeed/Mode.button_pressed)
+	if $Auto/Buyers/TimeSpeed/Mode.button_pressed:
+		TachyonDims.buy_max_tspeed()
+	else:
+		TachyonDims.buy_tspeed()
+	
 	$Auto/Buyers/TimeSpeed/Timer.start(TSpeedInterval())
 
 func buytdim(which):
 	if get_node("Auto/Buyers/TD%d/Mode" % which).button_pressed:
-		Globals.TDHandler.buydim(which,
-			Globals.TDHandler.buylim - \
-			Globals.TDHandler.DimPurchase[which-1] % Globals.TDHandler.buylim + \
-			Globals.TDHandler.buylim * (TDBulk(which) - 1)
-		)
+		#if TDBulk(which)
+		TachyonDims.buy_until_mult(which)
 	else:
-		Globals.TDHandler.buydim(which, 1)
+		TachyonDims.buy_one(which)
 	get_node("Auto/Buyers/TD%d/Timer" % which).start(TDInterval(which - 1))
 
 func buyrewd():
-	if Globals.TDHandler.rewindNode.disabled: return false
+	if TachyonDims.rewindNode.disabled: return false
 	if $Auto/Buyers/Rewind/Enabled.button_pressed:
-		Globals.TDHandler.rewind(Globals.TDHandler.rewindNode.score)
+		TachyonDims.rewind()
 	return true
 
 func buydila():
 	if Globals.Challenge == 10: return
-	if Globals.TDHandler.canDilate \
-	and not ($Auto/Buyers/Galaxy/Enabled.button_pressed and Globals.TDHandler.canGalaxy):
+	if TachyonDims.canDilate \
+	and not ($Auto/Buyers/Galaxy/Enabled.button_pressed and TachyonDims.canGalaxy):
 		var doit = true
 		if $Auto/Buyers/Dilation/Limit/Enabled.button_pressed:
 			if Globals.TDilation >= DilLimit:
@@ -567,31 +568,31 @@ func buydila():
 			if Globals.TGalaxies >= DilIgnore:
 				doit = true
 		if doit:
-			var dim8 = Globals.TDHandler.DimPurchase[Globals.TDHandler.DimsUnlocked - 1]
-			Globals.TDHandler.dilate()
+			var dim8 = TachyonDims.DimPurchase[TachyonDims.DimsUnlocked - 1]
+			TachyonDims.dilate()
 			if Globals.OEUHandler.is_bought(2) and \
 			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed and \
 			Globals.TDilation > (2 if Globals.Challenge in [6, 16] else 4):
-				while dim8 >= Globals.TDHandler.dilacost():
-					Globals.TDHandler.dilate()
+				while dim8 >= TachyonDims.dilacost():
+					TachyonDims.dilate()
 
 func buygala():
-	if Globals.TDHandler.canGalaxy:
+	if TachyonDims.canGalaxy:
 		var doit = true
 		if $Auto/Buyers/Galaxy/Limit/Enabled.button_pressed:
 			if Globals.TGalaxies >= GalLimit:
 				doit = false
 		if doit:
-			var dim8 = Globals.TDHandler.DimPurchase[Globals.TDHandler.DimsUnlocked - 1]
-			Globals.TDHandler.galaxy()
+			var dim8 = TachyonDims.DimPurchase[TachyonDims.DimsUnlocked - 1]
+			TachyonDims.galaxy()
 			if Globals.Boundlessnesses.to_float() >= 7 and \
 			$Auto/Buyers/Galaxy/BuyMax/Enabled.button_pressed:
-				while dim8 >= Globals.TDHandler.galacost():
-					Globals.TDHandler.galaxy()
+				while dim8 >= TachyonDims.galacost():
+					TachyonDims.galaxy()
 
 func bigbang():
-	if Globals.TDHandler.canBigBang:
-		Globals.TDHandler.eternity()
+	if TachyonDims.canBigBang:
+		TachyonDims.eternity()
 
 func update_bigbang_ep(epgain:String):
 	var tree = epgain.split("e")

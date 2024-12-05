@@ -17,11 +17,11 @@ static func epgained():
 	var epgain = largenum.new(1)
 	if Globals.Challenge == 15 or Globals.progressBL >= Globals.Progression.Overcome:
 		epgain = largenum.five_to_the((
-			Globals.TDHandler.topTachyonsInEternity.log2() / 1024
+			TachyonDims.topTachyonsInEternity.log2() / 1024
 		) - 1)
 		if Globals.OEUHandler.is_bought(4):
 			epgain = largenum.five_to_the((
-				Globals.TDHandler.topTachyonsInEternity.log2() / 900
+				TachyonDims.topTachyonsInEternity.log2() / 900
 			) - 1)
 	
 	epgain.mult2self(largenum.two_to_the(Globals.EUHandler.EPMultBought))
@@ -87,8 +87,8 @@ static func ec1_reward():
 	return m
 
 static func ec2_reward():
-	return max(Globals.TDHandler.TSpeedBoost.power(
-		Globals.TDHandler.TSpeedCount + Globals.EDHandler.FreeTSpeed
+	return max(TachyonDims.TSpeedBoost.power(
+		TachyonDims.TSpeedCount + Globals.EDHandler.FreeTSpeed
 	).log10(), 1)
 
 static func dupli_no11():
@@ -119,19 +119,19 @@ static func bounlesspower(): # haha typo
 	return Globals.SDHandler.BoundlessPower.power(boundlessconversion())
 
 static func study_tach1():
-	return Globals.TDHandler.RewindMult.power(0.1)
+	return TachyonDims.RewindMult.power(0.1)
 
 static func study_time1():
-	return Globals.TDHandler.RewindMult.power(0.002)
+	return TachyonDims.RewindMult.power(0.002)
 static func study_time2():
-	return bounlesspower().power(Globals.TDilation * 0.001)
+	return bounlesspower().power(TachyonDims.TDilation * 0.001)
 static func study_time3():
 	return 1 + .05 * Globals.DupHandler.dupGalaxies
 
 static func study_space1():
-	return Globals.TDHandler.RewindMult.power(5e-5)
+	return TachyonDims.RewindMult.power(5e-5)
 static func study_space2():
-	return largenum.new(1.002).power(Globals.TDilation)
+	return largenum.new(1.002).power(TachyonDims.TDilation)
 
 static func study_act1():
 	var t = 0

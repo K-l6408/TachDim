@@ -10,13 +10,12 @@ var dimensionSymbols = "Ψδ∀"
 var challengeSymbols = "Ψδ∀"
 var  eternitySymbols = "↑⭻"
 var boundlessSymbols = "\uf0e8\uf005"
-var     statsSymbols = "\uf036\uf162\uf0cb"
+var     statsSymbols = "\uf036\uf162\uf0cb\uf1ec"
 var   optionsSymbols = "\uf0c7\uf1fc"
 var celestialSymbols = "⏣⚴☾𝄽\uf1e0ɸ⸸"
 
 func _ready():
 	Globals.NotifHandler = $Notifs
-	Globals.TDHandler = %Tabs/Dimensions/Tachyons
 	Globals.EDHandler = %Tabs/Dimensions/Eternity
 	Globals.SDHandler = %Tabs/Dimensions/Space
 	Globals.Automation = %Tabs/Automation
@@ -114,7 +113,7 @@ func _process(_delta):
 	Globals.progressBL >= GL.Progression.Overcome and \
 	(Globals.Challenge == 0 or Globals.Challenge > 15)
 	%Resources/Eternity/EternityButton.disabled = \
-	not %Tabs/Dimensions/Tachyons.canBigBang
+	not TachyonDims.canBigBang
 	
 	%Resources/EDunlock.visible = \
 	Globals.progressBL >= GL.Progression.Overcome and \

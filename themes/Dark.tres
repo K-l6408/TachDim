@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=87 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=88 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -595,7 +595,7 @@ shadow_color = Color(0.658824, 0.74902, 0.658824, 0.298039)
 shadow_size = 5
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tpned"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkckc"]
 bg_color = Color(0.71, 0.497, 0.1988, 1)
 border_width_left = 2
 border_width_top = 2
@@ -1080,6 +1080,8 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 anti_aliasing = false
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nt1sj"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bvhu7"]
 
 [resource]
@@ -1156,7 +1158,7 @@ Study/colors/font_disabled_color = Color(0, 0, 0, 1)
 Study/styles/disabled = SubResource("StyleBoxFlat_oqbrr")
 Study/styles/enabled = SubResource("StyleBoxFlat_gflvf")
 Study/styles/hover = SubResource("StyleBoxFlat_b4fft")
-Study/styles/normal = SubResource("StyleBoxFlat_tpned")
+Study/styles/normal = SubResource("StyleBoxFlat_kkckc")
 Study/styles/pressed = SubResource("StyleBoxFlat_tbnln")
 StudyB/base_type = &"Button"
 StudyB/colors/font_disabled_color = Color(0, 0, 0, 1)
@@ -1208,4 +1210,5 @@ TransparentButton/styles/disabled = SubResource("StyleBoxFlat_hvuft")
 TransparentButton/styles/hover = SubResource("StyleBoxFlat_wrl2x")
 TransparentButton/styles/normal = SubResource("StyleBoxFlat_uifa0")
 TransparentButton/styles/pressed = SubResource("StyleBoxFlat_wtn4i")
+Tree/styles/focus = SubResource("StyleBoxEmpty_nt1sj")
 VSeparator/styles/separator = SubResource("StyleBoxEmpty_bvhu7")

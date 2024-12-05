@@ -87,7 +87,7 @@ func _process(_delta):
 	"\n\nYou gain Duplicantes\n%s times faster.\n\n\n" % Globals.int_to_string(5)
 	
 	%StudyTree1/Dila2Eter.text = "\nTime Dilation boosts\nEternity gain.\n\n" + \
-	"Currently: ×%s\n\n" % Globals.int_to_string(max(Globals.TDilation, 1))
+	"Currently: ×%s\n\n" % Globals.int_to_string(max(TachyonDims.TDilation, 1))
 	
 	%StudyTree1/EtMultPow.text = "\nMultipliers based on\nEternities are\n" + \
 	"raised ^%s.\n\n\n" % Globals.float_to_string(4)

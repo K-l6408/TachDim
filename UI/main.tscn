@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=45 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_fid5e"]
@@ -30,6 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://br0msw23i7kmv" path="res://UI/boundlessness/studies.tscn" id="17_uosw5"]
 [ext_resource type="PackedScene" uid="uid://cbiebd0j27hoy" path="res://UI/boundlessness/milestones.tscn" id="19_u3snt"]
 [ext_resource type="Shader" path="res://UI/tint.gdshader" id="24_irn3s"]
+[ext_resource type="PackedScene" uid="uid://bu4y01w5qnw72" path="res://UI/statistics/breakdown.tscn" id="24_mt7op"]
 [ext_resource type="FontFile" uid="uid://bbb4ct4acdbbl" path="res://fonts/Blobmoji.ttf" id="25_na6n0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
@@ -567,6 +568,10 @@ visible = false
 layout_mode = 2
 
 [node name="Challenge Records" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("13_1u8bp")]
+visible = false
+layout_mode = 2
+
+[node name="Multiplier Breakdown" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("24_mt7op")]
 visible = false
 layout_mode = 2
 

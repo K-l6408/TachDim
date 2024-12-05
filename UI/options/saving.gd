@@ -125,20 +125,20 @@ func saveF(file : String = saveFilePath):
 		"total tachyons" : Globals.TachTotal.to_bytes(),
 		"achievements" : Globals.Achievemer.unlocked,
 		"tach dim amounts" : [
-			Globals.TDHandler.DimAmount[0].to_bytes(),
-			Globals.TDHandler.DimAmount[1].to_bytes(),
-			Globals.TDHandler.DimAmount[2].to_bytes(),
-			Globals.TDHandler.DimAmount[3].to_bytes(),
-			Globals.TDHandler.DimAmount[4].to_bytes(),
-			Globals.TDHandler.DimAmount[5].to_bytes(),
-			Globals.TDHandler.DimAmount[6].to_bytes(),
-			Globals.TDHandler.DimAmount[7].to_bytes()
+			TachyonDims.DimAmount[0].to_bytes(),
+			TachyonDims.DimAmount[1].to_bytes(),
+			TachyonDims.DimAmount[2].to_bytes(),
+			TachyonDims.DimAmount[3].to_bytes(),
+			TachyonDims.DimAmount[4].to_bytes(),
+			TachyonDims.DimAmount[5].to_bytes(),
+			TachyonDims.DimAmount[6].to_bytes(),
+			TachyonDims.DimAmount[7].to_bytes()
 		],
-		"tach dim purchases" : Globals.TDHandler.DimPurchase,
-		"timespeed amount" : Globals.TDHandler.TSpeedCount,
-		"rewind multiplier" : Globals.TDHandler.RewindMult.to_bytes(),
-		"time dilation" : Globals.TDilation,
-		"tachyon galaxies" : Globals.TGalaxies,
+		"tach dim purchases" : TachyonDims.DimPurchase,
+		"timespeed amount" : TachyonDims.TSpeedCount,
+		"rewind multiplier" : TachyonDims.RewindMult.to_bytes(),
+		"time dilation" : TachyonDims.TDilation,
+		"tachyon galaxies" : TachyonDims.TGalaxies,
 		"unlocked autobuyers" : (Globals.Automation.Unlocked),
 		"tach dim buyers modes" : Globals.Automation.TDModes,
 		"tach dim buyers enabled" : Globals.Automation.TDEnabl
@@ -154,7 +154,7 @@ func saveF(file : String = saveFilePath):
 		}
 		DATA["time in eternity"] = Globals.eternTime
 		if Globals.Challenge == 10:
-			DATA["c10 power"] = Globals.TDHandler.C10Power
+			DATA["c10 power"] = TachyonDims.C10Power
 		DATA["completed challenges"] = Globals.CompletedChallenges
 		DATA["bought eternity upgrades"] = Globals.EUHandler.Bought
 		DATA["tach dim buyers upgrades"] = Globals.Automation.TDUpgrades
@@ -213,7 +213,7 @@ func saveF(file : String = saveFilePath):
 		DATA["time shards"] = Globals.EDHandler.TimeShards.to_bytes()
 		DATA["free timespeed"] = Globals.EDHandler.FreeTSpeed
 		DATA["next timespeed"] = Globals.EDHandler.NextUpgrade.to_bytes()
-		DATA["TTIE"] = Globals.TDHandler.topTachyonsInEternity.to_bytes()
+		DATA["TTIE"] = TachyonDims.topTachyonsInEternity.to_bytes()
 		
 		DATA["dila buyer max time"] = Globals.Automation.get_node("Auto/Buyers/Dilation/BuyMax").value
 		DATA["ECcompl"] = Globals.CompletedECs
@@ -336,14 +336,14 @@ func loadF(file : String = saveFilePath):
 	
 	Globals.Achievemer.unlocked = DATA["achievements"]
 	for i in 8:
-		Globals.TDHandler.DimAmount[i].from_bytes(DATA["tach dim amounts"][i])
-		Globals.TDHandler.DimPurchase[i] = DATA["tach dim purchases"][i]
+		TachyonDims.DimAmount[i].from_bytes(DATA["tach dim amounts"][i])
+		TachyonDims.DimPurchase[i] = DATA["tach dim purchases"][i]
 	
-	Globals.TDHandler.TSpeedCount = DATA["timespeed amount"]
-	Globals.TDHandler.RewindMult.from_bytes(DATA["rewind multiplier"])
+	TachyonDims.TSpeedCount = DATA["timespeed amount"]
+	TachyonDims.RewindMult.from_bytes(DATA["rewind multiplier"])
 	
-	Globals.TDilation = DATA["time dilation"]
-	Globals.TGalaxies = DATA["tachyon galaxies"]
+	TachyonDims.TDilation = DATA["time dilation"]
+	TachyonDims.TGalaxies = DATA["tachyon galaxies"]
 	
 	Globals.Automation.Unlocked = DATA["unlocked autobuyers"]
 	Globals.Automation.TDModes = DATA["tach dim buyers modes"]
@@ -364,7 +364,7 @@ func loadF(file : String = saveFilePath):
 				Globals.fastestEtern.amount     = largenum.new(1)
 		
 		if Globals.Challenge == 10:
-			Globals.TDHandler.C10Power = DATA["c10 power"]
+			TachyonDims.C10Power = DATA["c10 power"]
 		Globals.CompletedChallenges = DATA["completed challenges"]
 		Globals.EUHandler.Bought = DATA["bought eternity upgrades"]
 		Globals.Automation.TDUpgrades = DATA["tach dim buyers upgrades"]
@@ -444,7 +444,7 @@ func loadF(file : String = saveFilePath):
 			Globals.EDHandler.NextUpgrade.from_bytes(DATA["next timespeed"])
 		
 		if DATA.has("TTIE"):
-			Globals.TDHandler.topTachyonsInEternity.from_bytes(DATA["TTIE"])
+			TachyonDims.topTachyonsInEternity.from_bytes(DATA["TTIE"])
 		
 		if DATA.has("dila buyer max time"):
 			Globals.Automation.get_node("Auto/Buyers/Dilation/BuyMax").value = \
@@ -503,7 +503,6 @@ func loadF(file : String = saveFilePath):
 		Globals.boundTime = Globals.existence
 		Globals.TachTotalBL.from_bytes(DATA["total tachyons"])
 	
-	Globals.TDHandler.updateTSpeed()
 	get_tree().paused = pause
 	$CanvasLayer.visible = false
 
@@ -515,13 +514,12 @@ func gameReset():
 	for i in Globals.Achievemer.MAXROWS:
 		Globals.Achievemer.unlocked.append(0)
 	for i in 8:
-		Globals.TDHandler.DimAmount[i]   = largenum.new(0)
-		Globals.TDHandler.DimPurchase[i] = 0
-	Globals.TDHandler.TSpeedCount = 0
-	Globals.TDHandler.RewindMult  = largenum.new(1)
-	Globals.TDilation = 0
-	Globals.TGalaxies = 0
-	Globals.TDHandler.updateTSpeed()
+		TachyonDims.DimAmount[i]   = largenum.new(0)
+		TachyonDims.DimPurchase[i] = 0
+	TachyonDims.TSpeedCount = 0
+	TachyonDims.RewindMult  = largenum.new(1)
+	TachyonDims.TDilation = 0
+	TachyonDims.TGalaxies = 0
 	Globals.Automation.Unlocked = 0
 	Globals.Automation.TDModes  = 255
 	Globals.Automation.TDEnabl  = 511
@@ -572,6 +570,7 @@ func gameReset():
 		Globals.SDHandler.DimAmount[i] = largenum.new(0)
 		Globals.SDHandler.DimPurchase[i] = 0
 	Globals.SDHandler.BoundlessPower = largenum.new(0)
+	
 	Currencies.Tachyons.reset()
 
 func idle(idletime):

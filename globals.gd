@@ -47,9 +47,6 @@ var progressBL : Progression = Progression.None
 
 var TachTotal := largenum.new(10)
 
-var TDilation := 0
-var TGalaxies := 0
-
 var EternityPts := largenum.new(0)
 var Eternities  := largenum.new(0)
 
@@ -66,7 +63,6 @@ var CompletedECs := 0
 func challengeCompleted(which): return (CompletedChallenges >> (which - 1)) & 1
 func ECCompleted(which):		return (CompletedECs >> (which - 1)) & 1
 
-var TDHandler  : Control
 var EDHandler  : Control
 var SDHandler  : Control
 var Automation : Control
@@ -174,7 +170,7 @@ func boundlessnessreset():
 	EDHandler.DimsUnlocked = 0
 	EDHandler.reset()
 	DupHandler.reset()
-	TDHandler.reset(2)
+	TachyonDims.reset(2)
 	SDHandler.boundlessed()
 	TachTotalBL = largenum.new(Currencies.Tachyons.AMOUNT)
 	Studies.on_reset()

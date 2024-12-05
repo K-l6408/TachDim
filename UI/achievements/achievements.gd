@@ -221,21 +221,21 @@ func _process(_delta):
 			"\"%s\"\n%s" % [achnames(i,j), achreqs(i,j)]
 	for i in 8:
 		if not is_unlocked(1,i+1):
-			if Globals.TDHandler.DimPurchase[i] > 0:
+			if TachyonDims.DimPurchase[i] > 0:
 				set_unlocked(1,i+1)
 	if not is_unlocked(2, 1):
-		if Globals.TGalaxies >= 1:
+		if TachyonDims.TGalaxies >= 1:
 			set_unlocked(2, 1)
 	if not is_unlocked(2, 2):
-		if Globals.TGalaxies >= 2:
+		if TachyonDims.TGalaxies >= 2:
 			set_unlocked(2, 2)
 	if not is_unlocked(2, 3):
-		if Globals.TDilation >= 10:
+		if TachyonDims.TDilation >= 10:
 			set_unlocked(2, 3)
 	if not is_unlocked(2, 5):
 		var ok := true
 		for i in 7:
-			if Globals.TDHandler.DimAmount[i].less(largenum.ten_to_the(10)):
+			if TachyonDims.DimAmount[i].less(largenum.ten_to_the(10)):
 				ok = false
 				break
 		if ok: set_unlocked(2, 5)
@@ -243,7 +243,7 @@ func _process(_delta):
 		if Globals.Automation.Unlocked == 511:
 			set_unlocked(2, 6)
 	if not is_unlocked(3, 2):
-		if not Globals.Eternities.less(10):
+		if not Globals.Eternities.less(10):#if Currencies.Eternities.spend(10):
 			set_unlocked(3, 2)
 	if not is_unlocked(3, 8):
 		if  Globals.EUHandler.is_bought(4) \
