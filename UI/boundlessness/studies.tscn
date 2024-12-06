@@ -48,7 +48,7 @@ alignment = 1
 
 [node name="StudyTree1" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(320, 680)
+custom_minimum_size = Vector2(377, 1025)
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("1_cryta")
@@ -205,7 +205,7 @@ cost = 5
 
 [node name="StudyTree2" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(480, 1040)
+custom_minimum_size = Vector2(627, 1592)
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("1_cryta")
@@ -533,7 +533,7 @@ cost = 10
 
 [node name="StudyTree3" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(480, 440)
+custom_minimum_size = Vector2(480, 578)
 layout_mode = 2
 script = ExtResource("1_cryta")
 

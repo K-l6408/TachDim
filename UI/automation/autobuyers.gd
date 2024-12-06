@@ -222,26 +222,26 @@ const IntervalCap  := [3, 4, 4, 4, 5, 5, 5, 5]
 
 func improve_interval(which = 0):
 	if which == 0:
-		Globals.EternityPts.add2self(-(2 ** TSUpgrades))
+		Currencies.EternityPts.spend(2 ** TSUpgrades)
 		TSUpgrades			+= 1
 	elif which == 9:
-		Globals.EternityPts.add2self(-(2 ** DilUpgrades))
+		Currencies.EternityPts.spend(2 ** DilUpgrades)
 		DilUpgrades			+= 1
 	elif which == 10:
-		Globals.EternityPts.add2self(-(2 ** GalUpgrades))
+		Currencies.EternityPts.spend(2 ** GalUpgrades)
 		GalUpgrades			+= 1
 	elif which == 11:
-		Globals.EternityPts.add2self(-(2 ** BangUpgrades))
+		Currencies.EternityPts.spend(2 ** BangUpgrades)
 		BangUpgrades		+= 1
 	elif which == 12:
-		Globals.EternityPts.add2self(-(2 ** RewdUpgrades))
+		Currencies.EternityPts.spend(2 ** RewdUpgrades)
 		RewdUpgrades		+= 1
 	else:
-		Globals.EternityPts.add2self(-(2 ** TDUpgrades[which-1]))
+		Currencies.EternityPts.spend(2 ** TDUpgrades[which-1])
 		TDUpgrades[which-1] += 1
 
 func improve_rewd_accuracy():
-	Globals.EternityPts.add2self(-(3 ** RewdAQups))
+	Currencies.EternityPts.spend(3 ** RewdAQups)
 	RewdAQups += 1
 
 func _process(_delta):
@@ -290,7 +290,7 @@ func _process(_delta):
 			buydila()
 			if Globals.OEUHandler.is_bought(2) and \
 			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed and \
-			Globals.TDilation >= (2 if Globals.Challenge in [6, 16] else 4):
+			TachyonDims.TDilation >= (2 if Globals.Challenge in [6, 16] else 4):
 				$Auto/Buyers/Dilation/Timer.start($Auto/Buyers/Dilation/BuyMax.value)
 			else:
 				$Auto/Buyers/Dilation/Timer.start(DilInterval())
@@ -313,7 +313,7 @@ func _process(_delta):
 			if BigBangAtEP.less(Formulas.epgained()):
 				bigbang()
 		elif $Auto/Buyers/BigBang/Amount/OptionButton.selected == 1:
-			if BigBangAtEP.less(Formulas.epgained().divide(Globals.EternityPts)):
+			if BigBangAtEP.less(Formulas.epgained().divide(Currencies.EternityPts)):
 				bigbang()
 		elif $Auto/Buyers/BigBang/Amount/OptionButton.selected == 2:
 			if Globals.eternTime >= BigBangAtEP.to_float():
@@ -367,9 +367,9 @@ func _process(_delta):
 		[Globals.float_to_string(RewdInterval()), Globals.percent_to_string(RewdAccuracy())]
 	if Globals.challengeCompleted(13):
 		if $Auto/Buyers/Rewind/Interval.visible:
-			$Auto/Buyers/Rewind/Interval.disabled = not largenum.two_to_the(RewdUpgrades).less(Globals.EternityPts)
+			$Auto/Buyers/Rewind/Interval.disabled = not largenum.two_to_the(RewdUpgrades).less(Currencies.EternityPts.AMOUNT)
 		if $Auto/Buyers/Rewind/Accuracy.visible:
-			$Auto/Buyers/Rewind/Accuracy.disabled = not largenum.new(3 ** RewdAQups).less(Globals.EternityPts)
+			$Auto/Buyers/Rewind/Accuracy.disabled = not largenum.new(3 ** RewdAQups).less(Currencies.EternityPts.AMOUNT)
 		$Auto/Buyers/Rewind/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 		[Globals.percent_to_string(0.4, 0),
 		Globals.float_to_string(2.0 ** RewdUpgrades, 1)]
@@ -384,7 +384,7 @@ func _process(_delta):
 		$Auto/Buyers/TimeSpeed/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 		[Globals.percent_to_string(0.4, 0),
 		Globals.float_to_string(2.0 ** TSUpgrades, 1)]
-		$Auto/Buyers/TimeSpeed/Interval.disabled = not largenum.two_to_the(TSUpgrades).less(Globals.EternityPts)
+		$Auto/Buyers/TimeSpeed/Interval.disabled = not largenum.two_to_the(TSUpgrades).less(Currencies.EternityPts.AMOUNT)
 		$Auto/Buyers/TimeSpeed/Mode.disabled = false
 		if $Auto/Buyers/TimeSpeed/Mode.button_pressed:
 			$Auto/Buyers/TimeSpeed/Mode.text = "Buys max"
@@ -408,7 +408,7 @@ func _process(_delta):
 				[Globals.int_to_string(TDBulk(i+1)), Globals.int_to_string(TDBulk(i+1) * 2),
 				Globals.float_to_string(2.0 ** TDUpgrades[i], 0)]
 			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).disabled = \
-			not largenum.two_to_the(TDUpgrades[i]).less(Globals.EternityPts)
+			not largenum.two_to_the(TDUpgrades[i]).less(Currencies.EternityPts.AMOUNT)
 		else:
 			get_node("Auto/Buyers/TD%d/Interval" % (i+1)).text = \
 			"Complete the challenge to\nupgrade the interval"
@@ -469,7 +469,7 @@ func _process(_delta):
 	$Auto/Buyers/Dilation/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
 	Globals.float_to_string(2.0 ** DilUpgrades, 1)]
-	$Auto/Buyers/Dilation/Interval.disabled = not largenum.two_to_the(DilUpgrades).less(Globals.EternityPts)
+	$Auto/Buyers/Dilation/Interval.disabled = not largenum.two_to_the(DilUpgrades).less(Currencies.EternityPts.AMOUNT)
 	$Auto/Buyers/Dilation/RichTextLabel.text = \
 	"[center]Time Dilation Autobuyer\n[font_size=10]Activates every %s seconds" % \
 	Globals.float_to_string(DilInterval())
@@ -477,7 +477,7 @@ func _process(_delta):
 	$Auto/Buyers/Galaxy/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
 	Globals.float_to_string(2.0 ** GalUpgrades, 1)]
-	$Auto/Buyers/Galaxy/Interval.disabled = not largenum.two_to_the(GalUpgrades).less(Globals.EternityPts)
+	$Auto/Buyers/Galaxy/Interval.disabled = not largenum.two_to_the(GalUpgrades).less(Currencies.EternityPts.AMOUNT)
 	$Auto/Buyers/Galaxy/RichTextLabel.text = \
 	"[center]Tachyon Galaxy Autobuyer\n[font_size=10]Activates every %s seconds" % \
 	Globals.float_to_string(GalInterval())
@@ -485,7 +485,7 @@ func _process(_delta):
 	$Auto/Buyers/BigBang/Interval.text = "Decrease interval by %s\nCost: %s EP" % \
 	[Globals.percent_to_string(0.4, 0),
 	Globals.float_to_string(2.0 ** BangUpgrades, 1)]
-	$Auto/Buyers/BigBang/Interval.disabled = not largenum.two_to_the(BangUpgrades).less(Globals.EternityPts)
+	$Auto/Buyers/BigBang/Interval.disabled = not largenum.two_to_the(BangUpgrades).less(Currencies.EternityPts.AMOUNT)
 	$Auto/Buyers/BigBang/RichTextLabel.text = \
 	"[center]Big Bang Autobuyer"
 	if Globals.progressBL < GL.Progression.Overcome:
@@ -544,17 +544,15 @@ func buyTSpeed():
 
 func buytdim(which):
 	if get_node("Auto/Buyers/TD%d/Mode" % which).button_pressed:
-		#if TDBulk(which)
-		TachyonDims.buy_until_mult(which)
+		#if TDBulk(which) 
+		TachyonDims.buy_until_mult(which, true)
 	else:
 		TachyonDims.buy_one(which)
 	get_node("Auto/Buyers/TD%d/Timer" % which).start(TDInterval(which - 1))
 
 func buyrewd():
-	if TachyonDims.rewindNode.disabled: return false
 	if $Auto/Buyers/Rewind/Enabled.button_pressed:
 		TachyonDims.rewind()
-	return true
 
 func buydila():
 	if Globals.Challenge == 10: return
@@ -568,13 +566,11 @@ func buydila():
 			if Globals.TGalaxies >= DilIgnore:
 				doit = true
 		if doit:
-			var dim8 = TachyonDims.DimPurchase[TachyonDims.DimsUnlocked - 1]
-			TachyonDims.dilate()
 			if Globals.OEUHandler.is_bought(2) and \
-			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed and \
-			Globals.TDilation > (2 if Globals.Challenge in [6, 16] else 4):
-				while dim8 >= TachyonDims.dilacost():
-					TachyonDims.dilate()
+			$Auto/Buyers/Dilation/BuyMax/Enabled.button_pressed:
+				TachyonDims.dilate_max()
+			else:
+				TachyonDims.dilate()
 
 func buygala():
 	if TachyonDims.canGalaxy:

@@ -31,8 +31,11 @@ func _process(delta):
 		
 		material.set_shader_parameter("disabled", disabled)
 		if Globals.Achievemer.is_unlocked(2, 4):
-			var B = TachyonDims.rewindBoost().log2()
 			var M = TachyonDims.RewindMult.log2()
+			var B = TachyonDims.rewindBoost().log2()
+			if Globals.Achievemer.is_unlocked(2, 4): B -= M
+			B /= TachyonDims.rewindScore()
+			if Globals.Achievemer.is_unlocked(2, 4): B += M
 			material.set_shader_parameter("zoom", max(M / (B - M) + 1, 1))
 		else:
 			material.set_shader_parameter("zoom", 1.0)
@@ -40,9 +43,4 @@ func _process(delta):
 	material.set_shader_parameter("pixelsize", 1./size.x)
 
 func _on_pressed():
-	emit_signal("rewind")
-	if TachyonDims.rewindScore() >= 0.9:
-		if not Globals.Achievemer.is_unlocked(2, 4):
-			Globals.Achievemer.set_unlocked(2, 4)
-
-signal rewind()
+	TachyonDims.rewind()

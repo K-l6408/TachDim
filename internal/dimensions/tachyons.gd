@@ -22,7 +22,7 @@ var TSpeedBoost :
 		var GalaxyBoost = 0.975
 		var GalaxyMult = 1
 		
-		if Globals.EUHandler.is_bought(8): GalaxyMult *= 2
+		if Eternity.upgrade_bought(8): GalaxyMult *= 2
 		if Globals.OEUHandler.is_bought(3): GalaxyMult *= 1.4
 		if Globals.ECCompleted(4): GalaxyMult *= 1.15
 		
@@ -59,7 +59,9 @@ var canDilate :
 var canGalaxy :
 	get:
 		if Globals.Challenge in [8, 22]: return false
-		return (DimPurchase[DimsUnlocked - 1] >= galacost())
+		if Globals.Challenge in [6, 16]:
+			return (DimPurchase[5] >= galacost())
+		return (DimPurchase[7] >= galacost())
 var canBigBang:
 	get:
 		if Globals.Challenge > 15:
@@ -169,7 +171,11 @@ func rewind():
 		rewindBoost().divide(RewindMult).less(600)
 	):
 		Globals.Achievemer.set_unlocked(3, 5) # rewind boost >= ×600, achievement 3×5
-	RewindMult = rewindBoost()
+	if TachyonDims.rewindScore() >= 0.9:
+		if not Globals.Achievemer.is_unlocked(2, 4):
+			Globals.Achievemer.set_unlocked(2, 4)
+	if RewindMult.less(rewindBoost()):
+		RewindMult = rewindBoost()
 	if Globals.Challenge == 8:
 		var RM = RewindMult
 		var TS = TSpeedCount
@@ -209,9 +215,9 @@ func rewindScore():
 	var score = sin(Globals.existence * rewspd)
 	# sine changed sign (score reached maximum)
 	if sin(Globals.existence * rewspd) * \
-	sin((Globals.existence - 0.1) * rewspd) < 0 or \
+	sin((Globals.existence - get_process_delta_time()) * rewspd) < 0 or \
 	(Globals.existence * rewspd) - \
-	((Globals.existence - 0.1) * rewspd) >= PI:
+	((Globals.existence - get_process_delta_time()) * rewspd) >= PI:
 		return 1
 	return 1 - abs(score)
 
@@ -235,26 +241,25 @@ func reset(level := 0, challengeReset := true):
 			TDilation = -3
 		elif Globals.Challenge != 0:
 			TDilation = 0
-		elif Globals.EUHandler.is_bought(17):
+		elif Eternity.upgrade_bought(17):
 			TDilation = 5
-		elif Globals.EUHandler.is_bought(16):
+		elif Eternity.upgrade_bought(16):
 			TDilation = 4
-		elif Globals.EUHandler.is_bought(15):
+		elif Eternity.upgrade_bought(15):
 			TDilation = 3
-		elif Globals.EUHandler.is_bought(14):
+		elif Eternity.upgrade_bought(14):
 			TDilation = 2
-		elif Globals.EUHandler.is_bought(13):
+		elif Eternity.upgrade_bought(13):
 			TDilation = 1
 		else:
 			TDilation = 0
 		if Globals.Challenge == 10: C10Power = 0
 	if level >= 2:
 		if Globals.Challenge != 0:            TGalaxies = 0
-		elif Globals.EUHandler.is_bought(17): TGalaxies = 1
+		elif Eternity.upgrade_bought(17): TGalaxies = 1
 		else:                                 TGalaxies = 0
 		Globals.eternTime = 0
 		topTachyonsInEternity = largenum.new(0)
-		emit_signal("eternitied")
 
 # cost of time dilation. takes into account challenge effects.
 func dilacost():
@@ -269,7 +274,7 @@ func dilacost():
 		Cost = Cost * 3 / 2
 	if Globals.Challenge == 19:
 		Cost += TGalaxies * 15
-	if Globals.EUHandler.is_bought(4):
+	if Eternity.upgrade_bought(4):
 		Cost -= 5
 	if Globals.ECCompleted(4):
 		Cost -= 5
@@ -290,7 +295,7 @@ func galacost():
 		Cost = Cost * 3 / 2
 	if Globals.Challenge == 19:
 		Cost += TDilation * 5
-	if Globals.EUHandler.is_bought(4):
+	if Eternity.upgrade_bought(4):
 		Cost -= 10
 	if TGalaxies > DistantScaling:
 		var the = (TGalaxies - DistantScaling)
@@ -307,8 +312,11 @@ func antisoftlock():
 	if TDilation > -3:
 		TDilation -= 1
 
-func dilate():
-	if not canDilate: return false
+func dilate(dim8 = null):
+	if dim8 == null:
+		if not canDilate: return false
+	else:
+		if dim8 < dilacost(): return false
 	reset(0)
 	TDilation += 1
 	if Globals.Challenge == 10:
@@ -324,8 +332,8 @@ func dilate_max():
 	if DimsUnlocked != 8 and not (DimsUnlocked == 6 and Globals.Challenge in [6, 16]):
 		return dilate()
 	var dim8 = DimPurchase[-1]
-	while dim8 > dilacost():
-		if not dilate(): return
+	while dim8 >= dilacost():
+		if not dilate(dim8): return
 
 func galaxy():
 	if Globals.Challenge == 22: return
@@ -358,8 +366,8 @@ func eternity(resetchallenge := true):
 	if "2×1" in Globals.Studies.purchased:
 		etgain = max(TDilation, 1)
 	
-	Globals.EternityPts.add2self(epgain)
-	Globals.Eternities .add2self(etgain)
+	Currencies.EternityPts.add(epgain)
+	Currencies.Eternities .add(etgain)
 	
 	if  Globals.progress   < Globals.Progression.Eternity:
 		Globals.progress   = Globals.Progression.Eternity
@@ -422,10 +430,10 @@ func _process(delta):
 	
 	buymult = 2
 	if Globals.Challenge == 4: buymult = 1.0 + 0.2 * TDilation
-	elif Globals.EUHandler.is_bought(5): buymult = 2.2222222
+	elif Eternity.upgrade_bought(5): buymult = 2.2222222
 	
 	dilamult = 2.0
-	if Globals.EUHandler.is_bought(10): dilamult = 2.5
+	if Eternity.upgrade_bought(10): dilamult = 2.5
 	if Globals.OEUHandler.is_bought(5): dilamult = 3.0
 	if Globals.ECCompleted(7): dilamult = 5.0
 	if Globals.Challenge == 10:
@@ -448,6 +456,7 @@ func _process(delta):
 		"Purchases": [],
 		"Timespeed": null,
 		"Time Dilation": [],
+		"Dimensional Rewind": null,
 		"Achievements": {},
 		"Eternity Upgrades": {},
 		"Overcome Eternity Upgrades": {}
@@ -476,37 +485,37 @@ func _process(delta):
 		push_front(Currencies.Multiplier.new(dilationMult))
 		
 		if Globals.Challenge != 13: # mults from Eternity Upgrades are disabled by C13
-			if Globals.EUHandler.is_bought(1):
-				multiplayer.mult2self(Formulas.eternity_11())
+			if Eternity.upgrade_bought(1):
+				multiplier.mult2self(Formulas.eternity_11())
 				if not Currencies.Tachyons.mults["Eternity Upgrades"].has("EU 1"):
 					Currencies.Tachyons.mults["Eternity Upgrades"]["EU 1"] = \
-					Currencies.Multiplier.new(Formulas.eternity_11(), 8)
+					Currencies.Multiplier.new(largenum.new(Formulas.eternity_11()), 8)
 			
 			var k = 0
-			if Globals.EUHandler.is_bought(2):
-				if i == 1 or i == 8: multiplayer.mult2self(Formulas.eternity_23())
+			if Eternity.upgrade_bought(2):
+				if i == 1 or i == 8: multiplier.mult2self(Formulas.eternity_23())
 				k += 2
-			if Globals.EUHandler.is_bought(3):
-				if i == 2 or i == 7: multiplayer.mult2self(Formulas.eternity_23())
+			if Eternity.upgrade_bought(3):
+				if i == 2 or i == 7: multiplier.mult2self(Formulas.eternity_23())
 				k += 2
-			if Globals.EUHandler.is_bought(7):
-				if i == 3 or i == 6: multiplayer.mult2self(Formulas.eternity_23())
+			if Eternity.upgrade_bought(7):
+				if i == 3 or i == 6: multiplier.mult2self(Formulas.eternity_23())
 				k += 2
-			if Globals.EUHandler.is_bought(6):
-				if i == 4 or i == 5: multiplayer.mult2self(Formulas.eternity_23())
+			if Eternity.upgrade_bought(6):
+				if i == 4 or i == 5: multiplier.mult2self(Formulas.eternity_23())
 				k += 2
 			if k > 0 and \
 			not Currencies.Tachyons.mults["Eternity Upgrades"].has("EUs 2, 3, 6, 7"):
 				Currencies.Tachyons.mults["Eternity Upgrades"]["EUs 2, 3, 6, 7"] = \
 				Currencies.Multiplier.new(Formulas.eternity_23(), k)
 			
-			if Globals.EUHandler.is_bought(9):
+			if Eternity.upgrade_bought(9):
 				multiplier.mult2self(Formulas.achievement_mult())
 				if not Currencies.Tachyons.mults["Eternity Upgrades"].has("EU 9"):
 					Currencies.Tachyons.mults["Eternity Upgrades"]["EU 9"] = \
 					Currencies.Multiplier.new(Formulas.achievement_mult(), 8)
 			
-			if Globals.EUHandler.is_bought(11):
+			if Eternity.upgrade_bought(11):
 				multiplier.mult2self(Currencies.EternityPts.AMOUNT.add(1))
 				if not Currencies.Tachyons.mults["Eternity Upgrades"].has("EU 11"):
 					Currencies.Tachyons.mults["Eternity Upgrades"]["EU 11"] = \
@@ -516,7 +525,7 @@ func _process(delta):
 		
 		if i == 8 or Globals.Challenge == 13:
 			multiplier.mult2self(RewindMult)
-			if not Currencies.Tachyons.mults.has("Dimensional Rewind"):
+			if Currencies.Tachyons.mults["Dimensional Rewind"] == null:
 				Currencies.Tachyons.mults["Dimensional Rewind"] = \
 				Currencies.Multiplier.new(
 					RewindMult, 8 if Globals.Challenge == 13 else 1
@@ -591,7 +600,7 @@ func _process(delta):
 				multiplier.mult2self(Formulas.achievement_56())
 				if not Currencies.Tachyons.mults["Achievements"].has("5×6"):
 					Currencies.Tachyons.mults["Achievements"]["5×6"] = \
-					Currencies.Multiplier.new(Formulas.achievement_56(), 8)
+					Currencies.Multiplier.new(largenum.new(Formulas.achievement_56()), 8)
 			
 			if Globals.Achievemer.is_unlocked(6, 2) and i <= 4:
 				multiplier.mult2self(3)
@@ -622,25 +631,21 @@ func _process(delta):
 				#dims[i+1].modulate.a = 0.5
 			#else:
 				#dims[i+1].modulate.a = 1.0
+		
+		Multipliers[i-1] = largenum.new(multiplier)
+		
+		multiplier.mult2self(TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed))
+		
 		var production = DimAmount[i-1].multiply(multiplier)
 		if i == 1:
 			Currencies.Tachyons.add     (production.multiply(delta))
 			Globals.TachTotalBL.add2self(production.multiply(delta))
 			Globals.TachTotal  .add2self(production.multiply(delta))
 		else:
-			#if production.divide(DimAmount[i-2]).less(10):
-				#dims[i-1].get_node("A&G/Growth").text = "(+%s/s)" % \
-					#Globals.percent_to_string(production.divide(DimAmount[i-2]).to_float())
-			#else:
-				#dims[i-1].get_node("A&G/Growth").text = "(×%s/s)" % \
-					#production.divide(DimAmount[i-2]).to_string()
 			DimAmount[i-2].add2self(production.multiply(delta))
 		
-		Multipliers[i-1] = multiplier
-		
-		multiplier.mult2self(TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed))
-	Currencies.Tachyons.mult["Timespeed"] = Currencies.Multiplier.new(
-		TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed), 8
+	Currencies.Tachyons.mults["Timespeed"] = Currencies.Multiplier.new(
+		TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed), DimsUnlocked
 	)
 
 

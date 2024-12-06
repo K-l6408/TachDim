@@ -5,7 +5,7 @@ static func eternity_11():
 	return max((Globals.eternTime / 6.0) ** 0.1 * 2, 1)
 
 static func eternity_23():
-	var base = Globals.Eternities.multiply(0.2).add(1)
+	var base = Currencies.Eternities.AMOUNT.multiply(0.2).add(1)
 	if "2×2" in Globals.Studies.purchased:
 		base.pow2self(4)
 	return base
@@ -32,14 +32,13 @@ static func epgained():
 	if "3×2" in Globals.Studies.purchased:
 		epgain.mult2self(1.5 ** Globals.TGalaxies)
 	
-	if epgain.to_float() < 1e10:
-		epgain = largenum.new(floor(epgain.to_float() + 0.1))
+	epgain.integerize()
 	
 	return epgain
 
 static func bpgained():
 	var bpgain = largenum.two_to_the(3 * (
-			Globals.EternityPts.log2() / 1024
+			Currencies.EternityPts.AMOUNT.log2() / 1024
 		 - 1))
 	
 	if "5×1" in Globals.Studies.purchased:
@@ -69,7 +68,7 @@ static func overcome_7():
 	return max(300 / i, 1)
 
 static func overcome_9():
-	var base = Globals.Eternities.power(2)
+	var base = Currencies.Eternities.AMOUNT.power(2)
 	if "2×2" in Globals.Studies.purchased:
 		base.pow2self(4)
 	return base

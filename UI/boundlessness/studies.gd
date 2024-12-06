@@ -23,7 +23,7 @@ func theorem_buy(how):
 				TCST += 1
 				ST.add2self(1)
 		1:
-			Globals.EternityPts.add2self(theorem_cost_ep().neg())
+			Currencies.EternityPts.spend(theorem_cost_ep())
 			EPST += 1
 			ST.add2self(1)
 		2:
@@ -33,7 +33,7 @@ func theorem_buy(how):
 		3:
 			while theorem_cost_tc().less(Currencies.Tachyons.AMOUNT):
 				theorem_buy(0)
-			while theorem_cost_ep().less(Globals.EternityPts):
+			while theorem_cost_ep().less(Currencies.EternityPts.AMOUNT):
 				theorem_buy(1)
 			while theorem_cost_bp().less(Globals.BoundlessPts):
 				theorem_buy(2)
@@ -60,7 +60,7 @@ func _process(_delta):
 	$ST/Buy/EP.text = " Cost: %s EP " % \
 	theorem_cost_ep().to_string().replace(".00e", "e").replace(";00e", "e")\
 	.trim_suffix(".00").trim_suffix(";00")
-	$ST/Buy/EP.disabled = not theorem_cost_ep().less(Globals.EternityPts)
+	$ST/Buy/EP.disabled = not theorem_cost_ep().less(Currencies.EternityPts.AMOUNT)
 	
 	$ST/Buy/BP.text = " Cost: %s BP " % \
 	theorem_cost_bp().to_string().trim_suffix(".00").trim_suffix(";00")
@@ -89,7 +89,7 @@ func _process(_delta):
 	%StudyTree1/Dila2Eter.text = "\nTime Dilation boosts\nEternity gain.\n\n" + \
 	"Currently: ×%s\n\n" % Globals.int_to_string(max(TachyonDims.TDilation, 1))
 	
-	%StudyTree1/EtMultPow.text = "\nMultipliers based on\nEternities are\n" + \
+	%StudyTree1/EtMultPow.text = "\nMultipliers based on\nEternityPts are\n" + \
 	"raised ^%s.\n\n\n" % Globals.float_to_string(4)
 	
 	%StudyTree1/TGScaling.text = "\n%s\n%s %s %s\n%s %s.\n\n\n" % [

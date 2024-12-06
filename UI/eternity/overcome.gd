@@ -30,35 +30,19 @@ func pasep_cost():
 
 func buy(which):
 	var i : int = (which - 1)
-	Globals.EternityPts.add2self(-Costs[i])
-	if Globals.EternityPts.sign < 0:
-		Globals.EternityPts.add2self(Costs[i])
-		push_error("eternity points attempted to go negative (wrong eternity upgrade?)")
-		return
+	Currencies.EternityPts.spend(Costs[i])
 	set_bought(which)
 
 func buy_rebuyable(which):
 	match which:
 		1:
-			Globals.EternityPts.add2self(tspsc_cost().neg())
-			if Globals.EternityPts.sign < 0:
-				Globals.EternityPts.add2self(tspsc_cost())
-				push_error("eternity points attempted to go negative (wrong eternity upgrade?)")
-				return
+			Currencies.EternityPts.spend(tspsc_cost())
 			TSpScBought += 1
 		2:
-			Globals.EternityPts.add2self(tdmsc_cost().neg())
-			if Globals.EternityPts.sign < 0:
-				Globals.EternityPts.add2self(tdmsc_cost())
-				push_error("eternity points attempted to go negative (wrong eternity upgrade?)")
-				return
+			Currencies.EternityPts.spend(tdmsc_cost())
 			TDmScBought += 1
 		3:
-			Globals.EternityPts.add2self(pasep_cost().neg())
-			if Globals.EternityPts.sign < 0:
-				Globals.EternityPts.add2self(pasep_cost())
-				push_error("eternity points attempted to go negative (wrong eternity upgrade?)")
-				return
+			Currencies.EternityPts.spend(pasep_cost())
 			PasEPBought += 1
 
 func _process(delta):
@@ -73,7 +57,7 @@ func _process(delta):
 			continue
 		else:
 			$upgrades.get_child(j).remove_theme_stylebox_override("disabled")
-			$upgrades.get_child(j).disabled = Globals.EternityPts.less(Costs[j])
+			$upgrades.get_child(j).disabled = Currencies.EternityPts.AMOUNT.less(Costs[j])
 	
 	if TSpScBought >= 8:
 		TSpScBought = 8
@@ -87,7 +71,7 @@ func _process(delta):
 		]
 	else:
 		$upgrades/TSpSc.remove_theme_stylebox_override("disabled")
-		$upgrades/TSpSc.disabled = Globals.EternityPts.less(tspsc_cost())
+		$upgrades/TSpSc.disabled = Currencies.EternityPts.AMOUNT.less(tspsc_cost())
 		$upgrades/TSpSc.text = "%s\n%s %s.\n\n%s ×%s\n%s ×%s\n%s %s %s" % [
 			"Reduce Timespeed Upgrade",
 			"cost scaling after", largenum.two_to_the(1024).to_string(),
@@ -108,7 +92,7 @@ func _process(delta):
 		]
 	else:
 		$upgrades/TDmSc.remove_theme_stylebox_override("disabled")
-		$upgrades/TDmSc.disabled = Globals.EternityPts.less(tdmsc_cost())
+		$upgrades/TDmSc.disabled = Currencies.EternityPts.AMOUNT.less(tdmsc_cost())
 		$upgrades/TDmSc.text = "%s\n%s %s.\n\n%s ×%s\n%s ×%s\n%s %s %s" % [
 			"Reduce Tachyon Dimensions",
 			"cost scaling after", largenum.two_to_the(1024).to_string(),
@@ -129,7 +113,7 @@ func _process(delta):
 		]
 	else:
 		$upgrades/PasEP.remove_theme_stylebox_override("disabled")
-		$upgrades/PasEP.disabled = Globals.EternityPts.less(pasep_cost())
+		$upgrades/PasEP.disabled = Currencies.EternityPts.AMOUNT.less(pasep_cost())
 		$upgrades/PasEP.text = "%s %s %s\n%s\n%s %s %s\n\n%s %s\n%s %s %s" % [
 			"Passively generate", Globals.percent_to_string(PasEPBought / 20., 0), "of",
 			"your average EP gain", "over the last", Globals.int_to_string(10),
@@ -243,13 +227,13 @@ func _process(delta):
 		"\n\nCost: %s EP" % Globals.float_to_string(Costs[8], 0)
 	
 	if is_bought(8):
-		Globals.Eternities.add2self(
+		Currencies.EternityPts.spend(
 			Globals.fastestEtern.amount.divide(
 				Globals.fastestEtern.time / delta / 10
 			)
 		)
-	if Globals.Eternities.sign < 0:
-		Globals.Eternities = largenum.new(0)
+	#if Globals.Eternities.sign < 0:
+		#Globals.Eternities = largenum.new(0)
 
 func overcome():
 	emit_signal("YEAAAH")

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=88 format=3 uid="uid://dbbjjuko7gh5h"]
+[gd_resource type="Theme" load_steps=91 format=3 uid="uid://dbbjjuko7gh5h"]
 
 [ext_resource type="FontFile" uid="uid://deu606jh0uxfn" path="res://fonts/fa-solid-900.ttf" id="1_6475w"]
 
@@ -1082,6 +1082,17 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nt1sj"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfqn0"]
+bg_color = Color(0.17, 0.17, 0.17, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ge2uj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ini7e"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bvhu7"]
 
 [resource]
@@ -1210,5 +1221,9 @@ TransparentButton/styles/disabled = SubResource("StyleBoxFlat_hvuft")
 TransparentButton/styles/hover = SubResource("StyleBoxFlat_wrl2x")
 TransparentButton/styles/normal = SubResource("StyleBoxFlat_uifa0")
 TransparentButton/styles/pressed = SubResource("StyleBoxFlat_wtn4i")
+Tree/colors/font_color = Color(1, 1, 1, 1)
 Tree/styles/focus = SubResource("StyleBoxEmpty_nt1sj")
+Tree/styles/panel = SubResource("StyleBoxFlat_nfqn0")
+Tree/styles/selected = SubResource("StyleBoxEmpty_ge2uj")
+Tree/styles/selected_focus = SubResource("StyleBoxEmpty_ini7e")
 VSeparator/styles/separator = SubResource("StyleBoxEmpty_bvhu7")

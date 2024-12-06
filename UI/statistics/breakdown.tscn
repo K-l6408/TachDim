@@ -17,16 +17,18 @@ layout_mode = 2
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_right = -2.0
 offset_bottom = 13.0
 grow_horizontal = 2
 text = "Base Tachyon production: 9.99e9999"
 
 [node name="ColorRect" type="ColorRect" parent="Tachyons"]
 visible = false
+clip_contents = true
 layout_mode = 2
 offset_right = 40.0
 offset_bottom = 43.0
-color = Color(0.265361, 0.265361, 0.265361, 1)
+color = Color(0.388235, 0.866667, 0.0901961, 1)
 
 [node name="Label" type="Label" parent="Tachyons/ColorRect"]
 layout_mode = 1
@@ -35,6 +37,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 24
 text = ""
 horizontal_alignment = 1
@@ -45,6 +50,7 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 14.0
+offset_right = -2.0
 offset_bottom = 57.0
 grow_horizontal = 2
 
@@ -54,6 +60,8 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 63.0
+offset_right = -2.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 hide_root = true

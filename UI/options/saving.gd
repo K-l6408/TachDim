@@ -20,6 +20,8 @@ func _ready():
 		var j = $"FilesContainer/Files/1"
 		if i != 0:
 			j = j.duplicate()
+			j.get_node("Progress").texture = \
+			j.get_node("Progress").texture.duplicate()
 			j.name = str(i+1)
 			$FilesContainer/Files.add_child(j)
 		j.get_node("Button1").connect("pressed", $FilesContainer.hide)
@@ -145,8 +147,8 @@ func saveF(file : String = saveFilePath):
 	}
 	
 	if Globals.progress >= GL.Progression.Eternity:
-		DATA["eternity points"] = Globals.EternityPts.to_bytes()
-		DATA["eternities"] = Globals.Eternities.to_bytes()
+		DATA["eternity points"] = Currencies.EternityPts._save()
+		DATA["eternities"] = Currencies.Eternities._save()
 		DATA["fastest eternity"] = {
 			time = Globals.fastestEtern.time,
 			currency = Globals.fastestEtern.currency.to_bytes(),
@@ -156,7 +158,7 @@ func saveF(file : String = saveFilePath):
 		if Globals.Challenge == 10:
 			DATA["c10 power"] = TachyonDims.C10Power
 		DATA["completed challenges"] = Globals.CompletedChallenges
-		DATA["bought eternity upgrades"] = Globals.EUHandler.Bought
+		DATA["bought eternity upgrades"] = Eternity.BoughtUpgrades
 		DATA["tach dim buyers upgrades"] = Globals.Automation.TDUpgrades
 		DATA["timespeed buyer upgrades"] = Globals.Automation.TSUpgrades
 		DATA["dilation buyer upgrades"] = Globals.Automation.DilUpgrades
@@ -179,7 +181,7 @@ func saveF(file : String = saveFilePath):
 		Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Mode").button_pressed
 		DATA["big bang buyer amount"] = Globals.Automation.get_node("Auto/Buyers/BigBang/Amount").text
 		
-		DATA["ep multiplier buys"] = Globals.EUHandler.EPMultBought
+		DATA["ep multiplier buys"] = Eternity.EPMultBought
 		
 		if Globals.EU12Timer != null:
 			DATA["eu12 timer"] = Globals.EU12Timer.time_left
@@ -350,8 +352,8 @@ func loadF(file : String = saveFilePath):
 	Globals.Automation.TDEnabl = DATA["tach dim buyers enabled"]
 	
 	if Globals.progress >= GL.Progression.Eternity:
-		Globals.EternityPts.from_bytes(DATA["eternity points"])
-		Globals.Eternities.from_bytes(DATA["eternities"])
+		Currencies.EternityPts._load(DATA["eternity points"])
+		Currencies.Eternities ._load(DATA["eternities"])
 		if DATA.has("time in eternity"):
 			Globals.eternTime = DATA["time in eternity"]
 		
@@ -366,7 +368,7 @@ func loadF(file : String = saveFilePath):
 		if Globals.Challenge == 10:
 			TachyonDims.C10Power = DATA["c10 power"]
 		Globals.CompletedChallenges = DATA["completed challenges"]
-		Globals.EUHandler.Bought = DATA["bought eternity upgrades"]
+		Eternity.BoughtUpgrades = DATA["bought eternity upgrades"]
 		Globals.Automation.TDUpgrades = DATA["tach dim buyers upgrades"]
 		Globals.Automation.TSUpgrades = DATA["timespeed buyer upgrades"]
 		Globals.Automation.DilUpgrades = DATA["dilation buyer upgrades"]
@@ -407,7 +409,7 @@ func loadF(file : String = saveFilePath):
 					)
 		
 		if DATA.has("ep multiplier buys"):
-			Globals.EUHandler.EPMultBought = DATA["ep multiplier buys"]
+			Eternity.EPMultBought = DATA["ep multiplier buys"]
 		
 		var idletime = Time.get_unix_time_from_system() - DATA["last time"]
 		if not Globals.Achievemer.is_unlocked(3, 3) and idletime >= 3600 * 6:
@@ -525,16 +527,14 @@ func gameReset():
 	Globals.Automation.TDEnabl  = 511
 	Globals.fastestEtern = Globals.PrestigeData.new(-1, 1, 1)
 	Globals.eternTime   = 0
-	Globals.EternityPts = largenum.new(0)
-	Globals.Eternities  = largenum.new(0)
 	Globals.Challenge   = 0
 	Globals.CompletedChallenges   = 0
-	Globals.EUHandler.Bought      = 0
+	Eternity.BoughtUpgrades       = 0
+	Eternity.EPMultBought         = 0
 	Globals.Automation.TSUpgrades = 0
 	Globals.Automation.TDUpgrades = [0,0,0,0,0,0,0,0]
 	Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value = 4
 	Globals.EU12Timer = null
-	Globals.EUHandler.EPMultBought = 0
 	Globals.OEUHandler.Bought      = 0
 	Globals.OEUHandler.TSpScBought = 0
 	Globals.OEUHandler.TDmScBought = 0
@@ -570,8 +570,11 @@ func gameReset():
 		Globals.SDHandler.DimAmount[i] = largenum.new(0)
 		Globals.SDHandler.DimPurchase[i] = 0
 	Globals.SDHandler.BoundlessPower = largenum.new(0)
+	Globals.EDHandler.reset()
 	
 	Currencies.Tachyons.reset()
+	Currencies.EternityPts.reset()
+	Currencies.Eternities .reset()
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value

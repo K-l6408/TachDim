@@ -63,8 +63,8 @@ func _process(_delta):
 		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s%s%s.\n" % [
 			eternityColor,
 			"Eternity",
-			"You have", Globals.Eternities.to_string().trim_suffix(".00"), "Eternit",
-			"y" if Globals.Eternities.to_float() == 1 else "ies",
+			"You have", Currencies.Eternities.AMOUNT.to_string().trim_suffix(".00"), "Eternit",
+			"y" if Currencies.Eternities.AMOUNT.to_float() == 1 else "ies",
 			" this Boundlessness" if Globals.Boundlessnesses.to_float() > 0 else "",
 		]
 		if Globals.fastestEtern.time > 0:

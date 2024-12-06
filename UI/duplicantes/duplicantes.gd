@@ -51,9 +51,7 @@ func buy_interval():
 		Globals.Duplicantes.div2self(3.0 **  (intervUpgrades + 1)       )
 	else:
 		Globals.Duplicantes.div2self(3.0 ** ((intervUpgrades + 1) / 2.0))
-	if Globals.Duplicantes.exponent < 61:
-		Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
-		Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
+	Globals.Duplicantes.integerize()
 	intervUpgrades += 1
 	%Interval.disabled = true
 
@@ -63,17 +61,17 @@ func limit():
 func limit_cost():
 	return largenum.ten_to_the(45 + 15 * limitUpgrades)
 func buy_limit():
-	Globals.EternityPts.add2self(limit_cost().neg())
-	limitUpgrades += 1
-	%Limit.disabled = true
+	if Currencies.EternityPts.spend(limit_cost()):
+		limitUpgrades += 1
+		%Limit.disabled = true
 
 var maxGalaxies := 0
 func buy_maxgal():
-	Globals.EternityPts.add2self(
-		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies)).neg()
-	)
-	maxGalaxies += 1
-	%MaxGal.disabled = true
+	if Currencies.EternityPts.spend(
+		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies))
+	):
+		maxGalaxies += 1
+		%MaxGal.disabled = true
 
 var dupGalaxies := 0
 func buy_galaxy():
@@ -153,13 +151,13 @@ func _process(delta):
 			limit().to_string(), limit().power(2).to_string(),
 			limit_cost().to_string().replace(".00", "")
 		]
-	%Limit.disabled = Globals.EternityPts.less(limit_cost()) or limitUpgrades >= 6
+	%Limit.disabled = Currencies.EternityPts.AMOUNT.less(limit_cost()) or limitUpgrades >= 6
 	
 	%MaxGal.text = "Max Duplicantes\nGalaxies: %s\nCost: %s EP" % [
 		Globals.int_to_string(maxGalaxies),
 		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies)).to_string().replace(".00", "")
 	]
-	%MaxGal.disabled = Globals.EternityPts.less(
+	%MaxGal.disabled = Currencies.EternityPts.AMOUNT.less(
 		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies))
 	)
 	

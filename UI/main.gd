@@ -3,8 +3,8 @@ extends Control
 @onready var TBar : TabBar = %Tabs.get_tab_bar()
 var debugMode := false
 
-var tabSymbolLeft  = "⇠\uf085⁈δΞ∀\uf091 \uf0ca\uf1de[!"
-var tabSymbolRight = "⇢\uf1de⁉δΞ∀\uf091 \uf0c9\uf0ad]!"
+var tabSymbolLeft  = "⇠\uf085⁈δΞ∀\uf091\uf11c\uf0ca\uf1de[!"
+var tabSymbolRight = "⇢\uf1de⁉δΞ∀\uf091\uf11c\uf0c9\uf0ad]!"
 
 var dimensionSymbols = "Ψδ∀"
 var challengeSymbols = "Ψδ∀"
@@ -125,7 +125,7 @@ func _process(_delta):
 	%Resources/Boundlessness.visible = \
 	Globals.EDHandler.DimsUnlocked == 8 or \
 	Globals.Boundlessnesses.to_float() >= 25
-	if Globals.EternityPts.exponent < 1024:
+	if Currencies.EternityPts.AMOUNT.exponent < 1024:
 		%Resources/Boundlessness/BoundlessButton.disabled = true
 		%Resources/Boundlessness/BoundlessButton.text = "Reach %s\nEternity Points" % \
 		largenum.two_to_the(1024)
@@ -157,8 +157,8 @@ func _process(_delta):
 	%Resources/EP/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Point%s[/color][/center]" % [
 		get_theme_color("font_color", "ButtonEtern").to_html(false),
-		Globals.EternityPts.to_string().trim_suffix(".00").trim_suffix(";00"),
-		"" if Globals.EternityPts.exponent == 0 else "s"
+		Currencies.EternityPts.AMOUNT.to_string().trim_suffix(".00").trim_suffix(";00"),
+		"" if Currencies.EternityPts.AMOUNT.exponent == 0 else "s"
 	]
 	%Resources/Dupl/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nDuplican%ss[/color][/center]" % [

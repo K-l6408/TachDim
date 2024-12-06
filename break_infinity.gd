@@ -55,6 +55,12 @@ func fix_mantissa():
 		exponent -= 1
 	if sign == 0 and exponent != -INF: sign = 1
 
+func integerize():
+	if Globals.Duplicantes.exponent < 61:
+		Globals.Duplicantes.mantissa >>= 60 - int(Globals.Duplicantes.exponent)
+		Globals.Duplicantes.mantissa += Globals.Duplicantes.mantissa % 2
+		Globals.Duplicantes.mantissa <<= 60 - int(Globals.Duplicantes.exponent)
+
 func add(b) -> largenum:
 	if not b is largenum:
 		b = largenum.new(b)
@@ -277,11 +283,11 @@ func _to_string() -> String:
 			if l < 3:
 				return largenum.dozenal(to_float())
 			if l > 12 ** 5:
-				return "ɛ%sɛ%s" % [
+				return "e%se%s" % [
 					largenum.dozenal(l / 12 ** floor(log(l) / GL.LOG12), 4),
 					largenum.dozenal(log(l) / GL.LOG12, 0)
 				]
-			return "%sɛ%s" % [largenum.dozenal(m), largenum.dozenal(l,0)]
+			return "%se%s" % [largenum.dozenal(m), largenum.dozenal(l,0)]
 		GL.DisplayMode.Strict_Logarithm:
 			if log10() < 1e3:
 				return ("e%.2f" % log10()).replace("inf", "∞")

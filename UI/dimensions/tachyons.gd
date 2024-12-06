@@ -12,8 +12,6 @@ extends Control
 ]
 @onready var rewindNode = %TopButtons/Rewind
 
-var TCperS := largenum.new(0)
-
 func _process(delta):
 	var logfinity = 2048 if Globals.Challenge == 15 else 1024
 	
@@ -79,10 +77,24 @@ func _process(delta):
 				i.get_node("A&G/Growth").hide()
 			else:
 				i.get_node("A&G/Growth").show()
-				i.get_node("A&G/Growth").text
+				i.get_node("A&G/Growth").text = "(+%s)" % \
+				Globals.percent_to_string(
+					TachyonDims.Multipliers[k+1].multiply(
+						TachyonDims.TSpeedBoost.power(
+							TachyonDims.TSpeedCount + Globals.EDHandler.FreeTSpeed
+						).multiply(TachyonDims.DimAmount[k+1])
+					).divide(TachyonDims.DimAmount[k]).to_float()
+				)
 		
-		if k == TachyonDims.DimsUnlocked + 1:
-			i.get_node("Buy").disabled = true
+		if k != 0:
+			if TachyonDims.DimAmount[k-1].exponent == -INF:
+				i.get_node("Buy").disabled = true
+				i.modulate.a = 0.5
+			elif k >= TachyonDims.DimsUnlocked:
+				i.get_node("Buy").disabled = true
+				i.modulate.a = 0.5
+			else:
+				i.modulate.a = 1.0
 		
 		if i.get_node("Buy").button_pressed:
 			if %TopButtons/BuyMode.button_pressed:
@@ -94,9 +106,9 @@ func _process(delta):
 			if Input.is_action_pressed("BuyOne"):
 				TachyonDims.buy_one(k+1)
 			else:
-				TachyonDims.buy_until_mult(k+1)
+				TachyonDims.buy_until_mult(k+1, true)
 	
-	if %TopButtons/Timespeed.button_pressed:
+	if %TopButtons/Timespeed.button_pressed: # and Globals.Challenge != 20
 		TachyonDims.buy_tspeed()
 	if %TopButtons/Timespeed/BuyMax.button_pressed:
 		TachyonDims.buy_max_tspeed()
@@ -143,7 +155,9 @@ func _process(delta):
 	
 	%Important.text = \
 	"[center]You have [font_size=20]" + Currencies.Tachyons.to_string() + \
-	"[/font_size] Tachyons.\n[font_size=10]You're gaining [/font_size]" + TCperS.to_string() + \
+	"[/font_size] Tachyons.\n[font_size=10]You're gaining [/font_size]" + \
+	TachyonDims.Multipliers[0].multiply(TachyonDims.DimAmount[0]).\
+	multiply(Currencies.Tachyons.mults["Timespeed"].power).to_string() + \
 	"[font_size=10] Tachyons per second.[/font_size]\n[font_size=10]Timespeed strength: [/font_size]" + \
 	TachyonDims.TSpeedBoost.to_string() + "[font_size=10] | Total speed: [/font_size]" + \
 	TachyonDims.TSpeedBoost.power(
@@ -201,8 +215,8 @@ func _process(delta):
 				TachyonDims.rewindBoost().\
 				divide(TachyonDims.RewindMult).to_string(), Globals.ordinal(8)
 			]
-		#if Input.is_action_pressed("Rewind"):
-			#TachyonDims.rewind()
+		if Input.is_action_pressed("Rewind"):
+			TachyonDims.rewind()
 	
 	%Prestiges/GaButton.text = "Reset your Dimensions and\n" + \
 	"Time Dilation to boost the power\nof Timespeed upgrades"
@@ -265,10 +279,8 @@ func _process(delta):
 				]
 	
 	%Prestiges/DiButton.disabled = not TachyonDims.canDilate
-	
 	if %Prestiges/DiButton.button_pressed:
 		TachyonDims.dilate()
-	
 	%Prestiges/DiLabel.text = \
 	"[center]Time Dilation (%s)\n[font_size=2] \n[font_size=10]Requires: %s %s Tachyon Dimensions" % [
 		Globals.int_to_string(TachyonDims.TDilation),
@@ -277,6 +289,8 @@ func _process(delta):
 	]
 	
 	%Prestiges/GaButton.disabled = not TachyonDims.canGalaxy
+	if %Prestiges/GaButton.button_pressed:
+		TachyonDims.galaxy()
 	%Prestiges/GaLabel.text = "[center]%sTachyon Galaxies (%s)\n%s[font_size=10]Requires: %s %s Tachyon Dimensions%s" % [
 		("" if TachyonDims.TGalaxies < TachyonDims.DistantScaling else "Distant "),
 		(
@@ -334,7 +348,6 @@ func _process(delta):
 		#if $ETERNITY.visible:
 			#eternity()
 	
-	
 	if Globals.Challenge == 10:
 		if %Prestiges/DiButton.material == null:
 			%Prestiges/DiButton.material = rewindNode.material.duplicate()
@@ -347,5 +360,7 @@ func _process(delta):
 		) / 2
 	else:
 		%Prestiges/DiButton/Accuracy.visible = false
+		%Prestiges/DiButton.material = null
 
-signal eternitied()
+func eternity():
+	TachyonDims.eternity()

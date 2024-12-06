@@ -243,12 +243,12 @@ func _process(_delta):
 		if Globals.Automation.Unlocked == 511:
 			set_unlocked(2, 6)
 	if not is_unlocked(3, 2):
-		if not Globals.Eternities.less(10):#if Currencies.Eternities.spend(10):
+		if Currencies.Eternities.spend(10):
 			set_unlocked(3, 2)
 	if not is_unlocked(3, 8):
-		if  Globals.EUHandler.is_bought(4) \
-		and Globals.EUHandler.is_bought(8) \
-		and Globals.EUHandler.is_bought(12):
+		if  Eternity.upgrade_bought(4) \
+		and Eternity.upgrade_bought(8) \
+		and Eternity.upgrade_bought(12):
 			set_unlocked(3, 8)
 	if not is_unlocked(4, 1):
 		if Globals.CompletedChallenges > 0:
@@ -257,10 +257,10 @@ func _process(_delta):
 		if Currencies.Tachyons.AMOUNT.log10() >= 100 and Globals.eternTime < 30:
 			set_unlocked(4, 5)
 	if not is_unlocked(4, 6):
-		if  Globals.EUHandler.is_bought(4) \
-		and Globals.EUHandler.is_bought(8) \
-		and Globals.EUHandler.is_bought(12)\
-		and Globals.EUHandler.is_bought(16):
+		if  Eternity.upgrade_bought(4) \
+		and Eternity.upgrade_bought(8) \
+		and Eternity.upgrade_bought(12)\
+		and Eternity.upgrade_bought(16):
 			set_unlocked(4, 6)
 	if not is_unlocked(4, 7):
 		if Globals.challengeCompleted(15):
@@ -287,7 +287,7 @@ func _process(_delta):
 		if not Currencies.Tachyons.AMOUNT.less(largenum.ten_to_the(9999).multiply(9)):
 			set_unlocked(6, 1)
 	if not is_unlocked(6, 5):
-		if not Globals.Duplicantes.less(Globals.EternityPts):
+		if not Globals.Duplicantes.less(Currencies.EternityPts.AMOUNT):
 			set_unlocked(6, 5)
 	if not is_unlocked(6, 7):
 		if Globals.DupHandler.chance >= 50:

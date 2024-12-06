@@ -2,7 +2,7 @@ extends Control
 
 func challenge_start(which):
 	Globals.Challenge = which
-	Globals.TDHandler.reset(2, false)
+	TachyonDims.reset(2, false)
 
 func _process(_delta):
 	$Chal/lenges/Separator.custom_minimum_size = Vector2.ZERO

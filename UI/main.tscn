@@ -474,7 +474,7 @@ size_flags_vertical = 3
 [node name="Tabs" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-current_tab = 7
+current_tab = 8
 
 [node name="Dimensions" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
@@ -537,6 +537,7 @@ visible = false
 layout_mode = 2
 
 [node name="Hotkeys" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+visible = false
 layout_mode = 2
 theme_override_constants/line_separation = 4
 bbcode_enabled = true
@@ -557,10 +558,11 @@ B⃣ : Big Bang"
 autowrap_mode = 0
 
 [node name="Statistics" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
-visible = false
 layout_mode = 2
+current_tab = 3
 
 [node name="Statistics" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("10_whf7c")]
+visible = false
 layout_mode = 2
 
 [node name="Last Prestiges" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("11_t22am")]
@@ -572,7 +574,6 @@ visible = false
 layout_mode = 2
 
 [node name="Multiplier Breakdown" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("24_mt7op")]
-visible = false
 layout_mode = 2
 
 [node name="Options" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
@@ -725,11 +726,7 @@ preprocess = 20.0
 visibility_rect = Rect2(-5000, -1000, 9999, 9999)
 
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" method="_on_pressed"]
-[connection signal="rewind" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="." method="rewind"]
-[connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Eternity/EternityButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" method="eternity"]
 [connection signal="button_down" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="unlocknewdim"]
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" method="boundlessness"]
-[connection signal="eternitied" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="eternitied"]
-[connection signal="eternitied" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Tachyons" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Duplicantes" method="on_eternity"]
 [connection signal="YEAAAH" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity/Overcome Eternity" to="AnimationPlayer" method="play" binds= ["overcome"]]
 [connection signal="theme_change" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options/Visual" to="." method="theme_change"]
