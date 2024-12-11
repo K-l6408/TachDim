@@ -138,6 +138,9 @@ func buy_one(tier, times = 1):
 			if not Globals.Achievemer.is_unlocked(2, 7):
 				Globals.Achievemer.set_unlocked(2, 7)
 		
+		if Globals.Challenge in [2, 16]:  C2Multiplier = 0.0
+		if Globals.Challenge in [14, 16]:  C14Divisor = 1.0
+		
 		return true
 	return false
 
@@ -191,7 +194,7 @@ func rewind():
 func rewindBoost() -> largenum:
 	var RBoost : largenum
 	if Globals.Challenge == 8:
-		RBoost = DimAmount[0].power(0.1)
+		RBoost = DimAmount[0].power(0.2)
 	elif Globals.OEUHandler.is_bought(6):
 		RBoost = DimAmount[0].power(0.05)
 	else:
@@ -457,6 +460,11 @@ func _process(delta):
 		"Timespeed": null,
 		"Time Dilation": [],
 		"Dimensional Rewind": null,
+		"Challenge 2" : null,
+		"Challenge 3" : null,
+		"Challenge 3 (TD3)" : null,
+		"Challenge 9" : null,
+		"Challenge 14": null,
 		"Achievements": {},
 		"Eternity Upgrades": {},
 		"Overcome Eternity Upgrades": {}
@@ -545,29 +553,26 @@ func _process(delta):
 		
 		if Globals.Challenge in [2, 16]:
 			multiplier.mult2self(C2Multiplier)
-			if not Currencies.Tachyons.mults.has("Challenge 2"):
-				Currencies.Tachyons.mults["Challenge 2"] = \
-				Currencies.Multiplier.new(largenum.new(C2Multiplier), 8)
+			Currencies.Tachyons.mults["Challenge 2"] = \
+			Currencies.Multiplier.new(largenum.new(C2Multiplier), 8)
 		if Globals.Challenge == 3:
 			if i == 3:
 				multiplier.mult2self(3)
-				Currencies.Tachyons.mults["Challenge 3 (TD3)"] = \
-				Currencies.Multiplier.new(largenum.new(3), 1)
+				if DimAmount[i-1].exponent != -INF:
+					Currencies.Tachyons.mults["Challenge 3 (TD3)"] = \
+					Currencies.Multiplier.new(largenum.new(3), 1)
 			if i <= 2:
 				multiplier.mult2self(0.03)
-				if not Currencies.Tachyons.mults.has("Challenge 3 (TD1, TD2)"):
-					Currencies.Tachyons.mults["Challenge 3 (TD1, TD2)"] = \
-					Currencies.Multiplier.new(largenum.new(0.03), 2)
+				Currencies.Tachyons.mults["Challenge 3"] = \
+				Currencies.Multiplier.new(largenum.new(0.03), 2)
 		if Globals.Challenge == 9 and i != 8:
 			multiplier.div2self(Currencies.Tachyons.AMOUNT.power(0.05))
-			if not Currencies.Tachyons.mults.has("Challenge 9"):
-				Currencies.Tachyons.mults["Challenge 9"] = \
-				Currencies.Multiplier.new(Currencies.Tachyons.AMOUNT.power(-0.05), 7)
+			Currencies.Tachyons.mults["Challenge 9"] = \
+			Currencies.Multiplier.new(Currencies.Tachyons.AMOUNT.power(-0.05), 7)
 		if Globals.Challenge in [14, 16]:
 			multiplier.div2self(C14Divisor)
-			if not Currencies.Tachyons.mults.has("Challenge 14"):
-				Currencies.Tachyons.mults["Challenge 14"] = \
-				Currencies.Multiplier.new(largenum.new(C14Divisor).power(-1), 8)
+			Currencies.Tachyons.mults["Challenge 14"] = \
+			Currencies.Multiplier.new(largenum.new(C14Divisor).power(-1), 8)
 		
 		if Globals.Challenge != 13:
 			if Globals.Achievemer.is_unlocked(2, 5):

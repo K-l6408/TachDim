@@ -87,14 +87,14 @@ func _process(delta):
 				)
 		
 		if k != 0:
-			if TachyonDims.DimAmount[k-1].exponent == -INF:
+			if TachyonDims.DimAmount[k-1].exponent == -INF\
+			or k >= TachyonDims.DimsUnlocked:
 				i.get_node("Buy").disabled = true
 				i.modulate.a = 0.5
-			elif k >= TachyonDims.DimsUnlocked:
-				i.get_node("Buy").disabled = true
-				i.modulate.a = 0.5
+				i.get_node("N&M/Multiplier").hide()
 			else:
 				i.modulate.a = 1.0
+				i.get_node("N&M/Multiplier").show()
 		
 		if i.get_node("Buy").button_pressed:
 			if %TopButtons/BuyMode.button_pressed:
@@ -151,7 +151,6 @@ func _process(delta):
 	%Progress/Label.add_theme_color_override("font_color", get_theme_color("font_color", "ProgressBar"))
 	rewindNode.visible = (TachyonDims.TDilation >= 5) or \
 	(Globals.progress >= Globals.Progression.Galaxy)
-	
 	
 	%Important.text = \
 	"[center]You have [font_size=20]" + Currencies.Tachyons.to_string() + \
@@ -287,6 +286,9 @@ func _process(delta):
 		Globals.int_to_string(TachyonDims.dilacost()),
 		Globals.ordinal(TachyonDims.DimsUnlocked)
 	]
+	
+	if %Prestiges/Reset.button_pressed:
+		TachyonDims.antisoftlock()
 	
 	%Prestiges/GaButton.disabled = not TachyonDims.canGalaxy
 	if %Prestiges/GaButton.button_pressed:

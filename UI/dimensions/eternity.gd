@@ -69,7 +69,7 @@ func buydim(which):
 	if which > DimsUnlocked: return
 	if not Currencies.EternityPts.spend(dimcost(which)): return
 	DimPurchase[which-1] += 1
-	DimAmount[which-1].add2self(1)
+	DimAmount[which-1].add2self(10)
 
 func _process(delta):
 	for k in range(1, len(dims)):

@@ -27,7 +27,8 @@ func _process(_delta):
 			else:
 				k.get_child(j).remove_theme_stylebox_override("disabled")
 				k.get_child(j).disabled = \
-				Eternity.UpgradeCosts[i][j] > Currencies.EternityPts.AMOUNT.to_float()
+				Eternity.UpgradeCosts[i][j] > \
+				Currencies.EternityPts.AMOUNT.to_float()
 				if j > 0 and not Eternity.upgrade_bought(i*4+j):
 					k.get_child(j).disabled = true
 	

@@ -6,7 +6,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngcjy"]
 shader = ExtResource("2_5oiqa")
-shader_parameter/pixelsize = 0.00892857
+shader_parameter/pixelsize = 0.0016276
 shader_parameter/zoom = 1.0
 shader_parameter/ignore = Color(0.8, 0.8, 0.8, 1)
 shader_parameter/disabled = null
@@ -809,7 +809,4 @@ horizontal_alignment = 1
 
 [connection signal="pressed" from="VSplitContainer/TopButtons/Rewind" to="VSplitContainer/TopButtons/Rewind" method="_on_pressed"]
 [connection signal="pressed" from="VSplitContainer/TopButtons/BuyMax" to="." method="set" binds= ["BuyMax", true]]
-[connection signal="pressed" from="VSplitContainer/Prestiges/DiButton" to="." method="dilate"]
-[connection signal="pressed" from="VSplitContainer/Prestiges/GaButton" to="." method="galaxy"]
-[connection signal="pressed" from="VSplitContainer/Prestiges/Reset" to="." method="antisoftlock"]
 [connection signal="pressed" from="ETERNITY" to="." method="eternity"]

@@ -8,6 +8,7 @@ atlas = ExtResource("2_brqqv")
 region = Rect2(0, 0, 64, 64)
 
 [node name="Achievements" type="Control"]
+clip_contents = true
 custom_minimum_size = Vector2(560, 0)
 layout_mode = 3
 anchors_preset = 15

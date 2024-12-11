@@ -41,3 +41,28 @@ func _process(delta):
 			#avg.add2self(i.currency.divide(i.time))
 		#avg.div2self(last10etern.size())
 		#EternityPts.add2self(avg.mult2self(delta * OEUHandler.PasEPBought / 20))
+	
+	process_ep_multipliers()
+
+func process_ep_multipliers():
+	#if "3×2" in Globals.Studies.purchased:
+		#epgain.mult2self(1.5 ** Globals.TGalaxies)
+	#
+	#epgain.integerize()
+	#
+	#return epgain
+	Currencies.EternityPts.mults = {}
+	
+	Currencies.EternityPts.mults["Base gain from Tachyons"] = null
+	if Globals.OEUHandler.is_bought(4):
+		Currencies.EternityPts.mults["Base gain from Tachyons"] = \
+		Currencies.Multiplier.new(largenum.five_to_the((
+			TachyonDims.topTachyonsInEternity.log2() / 900
+		) - 1))
+	else:
+		Currencies.EternityPts.mults["Base gain from Tachyons"] = \
+		Currencies.Multiplier.new(largenum.five_to_the((
+			TachyonDims.topTachyonsInEternity.log2() / 1024
+		) - 1))
+	Currencies.EternityPts.mults["Repeatable ×2 multiplier"] = \
+	Currencies.Multiplier.new(largenum.two_to_the(EPMultBought))

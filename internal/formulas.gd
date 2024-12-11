@@ -24,13 +24,13 @@ static func epgained():
 				TachyonDims.topTachyonsInEternity.log2() / 900
 			) - 1)
 	
-	epgain.mult2self(largenum.two_to_the(Globals.EUHandler.EPMultBought))
+	epgain.mult2self(largenum.two_to_the(Eternity.EPMultBought))
 	
 	if Globals.Achievemer.is_unlocked(7, 5):
 		epgain.mult2self(2)
 	
 	if "3×2" in Globals.Studies.purchased:
-		epgain.mult2self(1.5 ** Globals.TGalaxies)
+		epgain.mult2self(1.5 ** TachyonDims.TGalaxies)
 	
 	epgain.integerize()
 	

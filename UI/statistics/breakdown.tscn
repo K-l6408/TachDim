@@ -11,6 +11,7 @@ grow_vertical = 2
 script = ExtResource("1_2vbu6")
 
 [node name="Tachyons" type="Control" parent="."]
+clip_contents = true
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Tachyons"]
@@ -45,7 +46,8 @@ text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Slices" type="HBoxContainer" parent="Tachyons"]
+[node name="Slices" type="VBoxContainer" parent="Tachyons"]
+z_index = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -53,6 +55,50 @@ offset_top = 14.0
 offset_right = -2.0
 offset_bottom = 57.0
 grow_horizontal = 2
+
+[node name="Mult" type="HBoxContainer" parent="Tachyons/Slices"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="0" type="ColorRect" parent="Tachyons/Slices/Mult"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.282353, 0.282353, 0.282353, 1)
+
+[node name="Label" type="Label" parent="Tachyons/Slices/Mult/0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 24
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="1" type="ColorRect" parent="Tachyons/Slices/Mult"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+color = Color(1, 1, 1, 0)
+
+[node name="Div" type="HBoxContainer" parent="Tachyons/Slices"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="0" type="ColorRect" parent="Tachyons/Slices/Div"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+color = Color(1, 1, 1, 0)
 
 [node name="Tree" type="Tree" parent="Tachyons"]
 layout_mode = 1
@@ -65,3 +111,135 @@ offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 hide_root = true
+
+[node name="Resource" type="Label" parent="Tachyons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.133333)
+theme_override_font_sizes/font_size = 600
+text = "Ψ"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Eternity Points" type="Control" parent="."]
+visible = false
+clip_contents = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Eternity Points"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -2.0
+offset_bottom = 13.0
+grow_horizontal = 2
+text = "Eternity Points gained on Big Bang: 9.99e9999"
+
+[node name="ColorRect" type="ColorRect" parent="Eternity Points"]
+visible = false
+clip_contents = true
+layout_mode = 2
+offset_right = 40.0
+offset_bottom = 43.0
+color = Color(0.701961, 0.254902, 0.878431, 1)
+
+[node name="Label" type="Label" parent="Eternity Points/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slices" type="VBoxContainer" parent="Eternity Points"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 14.0
+offset_right = -2.0
+offset_bottom = 57.0
+grow_horizontal = 2
+
+[node name="Mult" type="HBoxContainer" parent="Eternity Points/Slices"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="0" type="ColorRect" parent="Eternity Points/Slices/Mult"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.282353, 0.282353, 0.282353, 1)
+
+[node name="Label" type="Label" parent="Eternity Points/Slices/Mult/0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 24
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="1" type="ColorRect" parent="Eternity Points/Slices/Mult"]
+visible = false
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+color = Color(1, 1, 1, 0)
+
+[node name="Div" type="HBoxContainer" parent="Eternity Points/Slices"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="0" type="ColorRect" parent="Eternity Points/Slices/Div"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+color = Color(1, 1, 1, 0)
+
+[node name="Tree" type="Tree" parent="Eternity Points"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 63.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+hide_root = true
+
+[node name="Resource" type="Label" parent="Eternity Points"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.133333)
+theme_override_font_sizes/font_size = 600
+text = "Δ·"
+horizontal_alignment = 1
+vertical_alignment = 1

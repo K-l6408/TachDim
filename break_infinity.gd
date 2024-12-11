@@ -369,7 +369,7 @@ static func standard(e) -> String:
 
 static func dozenal(f:float, precision:=2) -> String:
 	var S = \
-	String.num_int64(f * 12**precision, 12).\
+	String.num_int64(int(f * 12**precision), 12).\
 	replace("a", "↊").\
 	replace("b", "↋")
 	if precision > 0: S = S.insert(S.length()-precision, ";")
@@ -474,7 +474,7 @@ func from_bytes(data : PackedByteArray):
 	return self
 
 func to_bytes() -> PackedByteArray:
-	var result : PackedByteArray
+	var result : PackedByteArray = []
 	result.resize(16)
 	result.encode_u64   (0, mantissa * sign)
 	result.encode_double(8, exponent)
