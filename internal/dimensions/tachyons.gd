@@ -338,14 +338,23 @@ func dilate_max():
 	while dim8 >= dilacost():
 		if not dilate(dim8): return
 
-func galaxy():
-	if Globals.Challenge == 22: return
+func galaxy(dim8 = null):
+	if dim8 == null:
+		if not canGalaxy: return false
+	else:
+		if dim8 < galacost(): return false
+	if Globals.Challenge in [8, 22]: return false
 	TGalaxies += 1
 	reset(1)
 	if  Globals.progress   < Globals.Progression.Galaxy:
 		Globals.progress   = Globals.Progression.Galaxy
 	if  Globals.progressBL < Globals.Progression.Galaxy:
 		Globals.progressBL = Globals.Progression.Galaxy
+
+func galaxy_max():
+	var dim8 = DimPurchase[-1]
+	while dim8 >= galacost():
+		if not galaxy(dim8): return
 
 
 func eternity(resetchallenge := true):

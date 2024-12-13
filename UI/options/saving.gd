@@ -347,9 +347,9 @@ func loadF(file : String = saveFilePath):
 	TachyonDims.TDilation = DATA["time dilation"]
 	TachyonDims.TGalaxies = DATA["tachyon galaxies"]
 	
-	Globals.Automation.Unlocked = DATA["unlocked autobuyers"]
-	Globals.Automation.TDModes = DATA["tach dim buyers modes"]
-	Globals.Automation.TDEnabl = DATA["tach dim buyers enabled"]
+	Autobuyers.NormUnlocked = DATA["unlocked autobuyers"]
+	Autobuyers.NormModes    = DATA["tach dim buyers modes"]
+	Autobuyers.NormEnabled  = DATA["tach dim buyers enabled"]
 	
 	if Globals.progress >= GL.Progression.Eternity:
 		Currencies.EternityPts._load(DATA["eternity points"])
@@ -369,36 +369,36 @@ func loadF(file : String = saveFilePath):
 			TachyonDims.C10Power = DATA["c10 power"]
 		Globals.CompletedChallenges = DATA["completed challenges"]
 		Eternity.BoughtUpgrades = DATA["bought eternity upgrades"]
-		Globals.Automation.TDUpgrades = DATA["tach dim buyers upgrades"]
-		Globals.Automation.TSUpgrades = DATA["timespeed buyer upgrades"]
-		Globals.Automation.DilUpgrades = DATA["dilation buyer upgrades"]
-		Globals.Automation.GalUpgrades = DATA["tach gal buyer upgrades"]
-		Globals.Automation.BangUpgrades = DATA["autobanger upgrades"]
-		Globals.Automation.get_node("Auto/Buyers/Dilation/Enabled").button_pressed\
-		= DATA["dilation buyer enabled"]
-		Globals.Automation.get_node("Auto/Buyers/Galaxy/Enabled").button_pressed\
-		= DATA["tach gal buyer enabled"]
-		Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed\
-		= DATA["autobanger enabled"]
+		Autobuyers.NormUpgrades      = DATA["tach dim buyers upgrades"]
+		Autobuyers.NormUpgrades.append(DATA["timespeed buyer upgrades"])
+		Autobuyers.DilUpgrades = DATA["dilation buyer upgrades"]
+		Autobuyers.GalUpgrades = DATA["tach gal buyer upgrades"]
+		Autobuyers.BangUpgrades = DATA["autobanger upgrades"]
+		#Globals.Automation.get_node("Auto/Buyers/Dilation/Enabled").button_pressed\
+		#= DATA["dilation buyer enabled"]
+		#Globals.Automation.get_node("Auto/Buyers/Galaxy/Enabled").button_pressed\
+		#= DATA["tach gal buyer enabled"]
+		#Globals.Automation.get_node("Auto/Buyers/BigBang/Enabled").button_pressed\
+		#= DATA["autobanger enabled"]
 		if DATA.has("rewind buyer objective"):
-			Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value\
+			Autobuyers.RewindObjective\
 			= DATA["rewind buyer objective"]
 		if DATA.has("rewind buyer int. updrades"):
-			Globals.Automation.RewdAQups = DATA["rewind buyer int. updrades"]
+			Autobuyers.RewdAQups = DATA["rewind buyer int. updrades"]
 		if DATA.has("rewind buyer acc. updrades"):
-			Globals.Automation.RewdUpgrades = DATA["rewind buyer acc. updrades"]
-		if DATA.has("timespeed buyer mode"):
-			Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Mode").button_pressed\
-			= DATA["timespeed buyer mode"]
-		if DATA.has("big bang buyer amount"):
-			Globals.Automation.get_node("Auto/Buyers/BigBang/Amount").text = DATA["big bang buyer amount"]
-			Globals.Automation.update_bigbang_ep(DATA["big bang buyer amount"])
-		Globals.Automation.DilLimit = DATA["dilation buy limit"]
-		Globals.Automation.DilIgnore = DATA["dilation limit ignore"]
-		Globals.Automation.GalLimit = DATA["tach gal buy limit"]
+			Autobuyers.RewdUpgrades = DATA["rewind buyer acc. updrades"]
+		#if DATA.has("timespeed buyer mode"):
+			#Globals.Automation.get_node("Auto/Buyers/TimeSpeed/Mode").button_pressed\
+			#= DATA["timespeed buyer mode"]
+		#if DATA.has("big bang buyer amount"):
+			#Globals.Automation.get_node("Auto/Buyers/BigBang/Amount").text = DATA["big bang buyer amount"]
+			#Globals.Automation.update_bigbang_ep(DATA["big bang buyer amount"])
+		Autobuyers.DilLimit  = DATA["dilation buy limit"]
+		Autobuyers.DilIgnore = DATA["dilation limit ignore"]
+		Autobuyers.GalLimit  = DATA["tach gal buy limit"]
 		
-		if DATA.has("eu12 timer"):
-			Globals.EU12Timer = get_tree().create_timer(DATA["eu12 timer"])
+		#if DATA.has("eu12 timer"):
+			#Globals.EU12Timer = get_tree().create_timer(DATA["eu12 timer"])
 		
 		if DATA.has("last 10 eternities"):
 			Globals.last10etern = []
@@ -449,7 +449,7 @@ func loadF(file : String = saveFilePath):
 			TachyonDims.topTachyonsInEternity.from_bytes(DATA["TTIE"])
 		
 		if DATA.has("dila buyer max time"):
-			Globals.Automation.get_node("Auto/Buyers/Dilation/BuyMax").value = \
+			Autobuyers.DilaTimeOverride = \
 			DATA["dila buyer max time"]
 		
 		if DATA.has("ECcompl"):

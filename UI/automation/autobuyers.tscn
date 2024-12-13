@@ -140,10 +140,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/BigBang"]
-wait_time = 10.0
-one_shot = true
-
 [node name="Galaxy" type="Control" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
@@ -250,10 +246,6 @@ grow_horizontal = 0
 toggle_mode = true
 button_pressed = true
 text = "Enabled"
-
-[node name="Timer" type="Timer" parent="Auto/Buyers/Galaxy"]
-wait_time = 10.0
-one_shot = true
 
 [node name="Dilation" type="Control" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(952, 45)
@@ -385,11 +377,8 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/Dilation"]
-wait_time = 4.0
-one_shot = true
-
 [node name="EPMult" type="Control" parent="Auto/Buyers"]
+visible = false
 clip_contents = true
 custom_minimum_size = Vector2(180, 35)
 layout_mode = 2
@@ -464,6 +453,7 @@ button_pressed = true
 text = "Enabled"
 
 [node name="DupInt" type="Control" parent="Auto/Buyers"]
+visible = false
 clip_contents = true
 custom_minimum_size = Vector2(187, 35)
 layout_mode = 2
@@ -539,6 +529,7 @@ button_pressed = true
 text = "Enabled"
 
 [node name="Rewind" type="Control" parent="Auto/Buyers"]
+visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
 
@@ -616,10 +607,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/Rewind"]
-wait_time = 0.5
-one_shot = true
-
 [node name="TimeSpeedLocked" type="Button" parent="Auto/Buyers"]
 visible = false
 custom_minimum_size = Vector2(952, 45)
@@ -630,6 +617,7 @@ text = "Timespeed Autobuyer locked
 [node name="TimeSpeed" type="Control" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TimeSpeed"]
 layout_mode = 1
@@ -688,9 +676,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/TimeSpeed"]
-wait_time = 0.5
-
 [node name="TDs" type="Control" parent="Auto/Buyers"]
 visible = false
 custom_minimum_size = Vector2(952, 25)
@@ -728,6 +713,7 @@ text = "1st Tachyon Dimension Autobuyer locked
 [node name="TD1" type="Control" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD1"]
 layout_mode = 1
@@ -786,9 +772,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/TD1"]
-wait_time = 0.5
-
 [node name="TD2Locked" type="Button" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
@@ -799,6 +782,7 @@ text = "2nd Tachyon Dimension Autobuyer locked
 visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD2"]
 layout_mode = 1
@@ -856,9 +840,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/TD2"]
-wait_time = 0.6
-
 [node name="TD3Locked" type="Button" parent="Auto/Buyers"]
 visible = false
 custom_minimum_size = Vector2(952, 45)
@@ -870,6 +851,7 @@ text = "3rd Tachyon Dimension Autobuyer locked
 visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD3"]
 layout_mode = 1
@@ -927,9 +909,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/TD3"]
-wait_time = 0.7
-
 [node name="TD4Locked" type="Button" parent="Auto/Buyers"]
 visible = false
 custom_minimum_size = Vector2(952, 45)
@@ -941,6 +920,7 @@ text = "4th Tachyon Dimension Autobuyer locked
 visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD4"]
 layout_mode = 1
@@ -998,9 +978,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/TD4"]
-wait_time = 0.8
-
 [node name="TD5Locked" type="Button" parent="Auto/Buyers"]
 visible = false
 custom_minimum_size = Vector2(952, 45)
@@ -1012,6 +989,7 @@ text = "5th Tachyon Dimension Autobuyer locked
 visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD5"]
 layout_mode = 1
@@ -1069,9 +1047,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/TD5"]
-wait_time = 0.8
-
 [node name="TD6Locked" type="Button" parent="Auto/Buyers"]
 visible = false
 custom_minimum_size = Vector2(952, 45)
@@ -1083,6 +1058,7 @@ text = "6th Tachyon Dimension Autobuyer locked
 visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD6"]
 layout_mode = 1
@@ -1140,9 +1116,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/TD6"]
-wait_time = 0.8
-
 [node name="TD7Locked" type="Button" parent="Auto/Buyers"]
 visible = false
 custom_minimum_size = Vector2(952, 45)
@@ -1154,6 +1127,7 @@ text = "7th Tachyon Dimension Autobuyer locked
 visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD7"]
 layout_mode = 1
@@ -1211,9 +1185,6 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[node name="Timer" type="Timer" parent="Auto/Buyers/TD7"]
-wait_time = 0.8
-
 [node name="TD8Locked" type="Button" parent="Auto/Buyers"]
 visible = false
 custom_minimum_size = Vector2(952, 45)
@@ -1225,6 +1196,7 @@ text = "8th Tachyon Dimension Autobuyer locked
 visible = false
 custom_minimum_size = Vector2(952, 45)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Auto/Buyers/TD8"]
 layout_mode = 1
@@ -1281,9 +1253,6 @@ grow_horizontal = 0
 toggle_mode = true
 button_pressed = true
 text = "Enabled"
-
-[node name="Timer" type="Timer" parent="Auto/Buyers/TD8"]
-wait_time = 0.8
 
 [node name="EDs" type="Panel" parent="Auto/Buyers"]
 visible = false
@@ -1576,54 +1545,17 @@ toggle_mode = true
 button_pressed = true
 text = "Enabled"
 
-[connection signal="pressed" from="Auto/Buyers/BigBang/Interval" to="." method="improve_interval" binds= [11]]
-[connection signal="text_changed" from="Auto/Buyers/BigBang/Amount" to="." method="update_bigbang_ep"]
-[connection signal="pressed" from="Auto/Buyers/Galaxy/Interval" to="." method="improve_interval" binds= [10]]
-[connection signal="pressed" from="Auto/Buyers/Dilation/Interval" to="." method="improve_interval" binds= [9]]
-[connection signal="pressed" from="Auto/Buyers/Rewind/Interval" to="." method="improve_interval" binds= [12]]
 [connection signal="pressed" from="Auto/Buyers/Rewind/Accuracy" to="." method="improve_rewd_accuracy"]
-[connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="Auto/Buyers/TimeSpeedLocked" method="hide"]
-[connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="Auto/Buyers/TimeSpeed" method="show"]
-[connection signal="pressed" from="Auto/Buyers/TimeSpeedLocked" to="." method="unlock" binds= [0]]
 [connection signal="pressed" from="Auto/Buyers/TimeSpeed/Interval" to="." method="improve_interval"]
-[connection signal="timeout" from="Auto/Buyers/TimeSpeed/Timer" to="." method="buyTSpeed"]
-[connection signal="pressed" from="Auto/Buyers/TD1Locked" to="Auto/Buyers/TD1Locked" method="hide"]
-[connection signal="pressed" from="Auto/Buyers/TD1Locked" to="Auto/Buyers/TD1" method="show"]
-[connection signal="pressed" from="Auto/Buyers/TD1Locked" to="." method="unlock" binds= [1]]
-[connection signal="pressed" from="Auto/Buyers/TD1/Interval" to="." method="improve_interval" binds= [1]]
-[connection signal="timeout" from="Auto/Buyers/TD1/Timer" to="." method="buytdim" binds= [1]]
-[connection signal="pressed" from="Auto/Buyers/TD2Locked" to="Auto/Buyers/TD2Locked" method="hide"]
-[connection signal="pressed" from="Auto/Buyers/TD2Locked" to="Auto/Buyers/TD2" method="show"]
-[connection signal="pressed" from="Auto/Buyers/TD2Locked" to="." method="unlock" binds= [2]]
-[connection signal="pressed" from="Auto/Buyers/TD2/Interval" to="." method="improve_interval" binds= [2]]
-[connection signal="timeout" from="Auto/Buyers/TD2/Timer" to="." method="buytdim" binds= [2]]
 [connection signal="pressed" from="Auto/Buyers/TD3Locked" to="Auto/Buyers/TD3Locked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TD3Locked" to="Auto/Buyers/TD3" method="show"]
-[connection signal="pressed" from="Auto/Buyers/TD3Locked" to="." method="unlock" binds= [3]]
-[connection signal="pressed" from="Auto/Buyers/TD3/Interval" to="." method="improve_interval" binds= [3]]
-[connection signal="timeout" from="Auto/Buyers/TD3/Timer" to="." method="buytdim" binds= [3]]
 [connection signal="pressed" from="Auto/Buyers/TD4Locked" to="Auto/Buyers/TD4Locked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TD4Locked" to="Auto/Buyers/TD4" method="show"]
-[connection signal="pressed" from="Auto/Buyers/TD4Locked" to="." method="unlock" binds= [4]]
-[connection signal="pressed" from="Auto/Buyers/TD4/Interval" to="." method="improve_interval" binds= [4]]
-[connection signal="timeout" from="Auto/Buyers/TD4/Timer" to="." method="buytdim" binds= [4]]
 [connection signal="pressed" from="Auto/Buyers/TD5Locked" to="Auto/Buyers/TD5Locked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TD5Locked" to="Auto/Buyers/TD5" method="show"]
-[connection signal="pressed" from="Auto/Buyers/TD5Locked" to="." method="unlock" binds= [5]]
-[connection signal="pressed" from="Auto/Buyers/TD5/Interval" to="." method="improve_interval" binds= [5]]
-[connection signal="timeout" from="Auto/Buyers/TD5/Timer" to="." method="buytdim" binds= [5]]
 [connection signal="pressed" from="Auto/Buyers/TD6Locked" to="Auto/Buyers/TD6Locked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TD6Locked" to="Auto/Buyers/TD6" method="show"]
-[connection signal="pressed" from="Auto/Buyers/TD6Locked" to="." method="unlock" binds= [6]]
-[connection signal="pressed" from="Auto/Buyers/TD6/Interval" to="." method="improve_interval" binds= [6]]
-[connection signal="timeout" from="Auto/Buyers/TD6/Timer" to="." method="buytdim" binds= [6]]
 [connection signal="pressed" from="Auto/Buyers/TD7Locked" to="Auto/Buyers/TD7Locked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TD7Locked" to="Auto/Buyers/TD7" method="show"]
-[connection signal="pressed" from="Auto/Buyers/TD7Locked" to="." method="unlock" binds= [7]]
-[connection signal="pressed" from="Auto/Buyers/TD7/Interval" to="." method="improve_interval" binds= [7]]
-[connection signal="timeout" from="Auto/Buyers/TD7/Timer" to="." method="buytdim" binds= [7]]
 [connection signal="pressed" from="Auto/Buyers/TD8Locked" to="Auto/Buyers/TD8Locked" method="hide"]
 [connection signal="pressed" from="Auto/Buyers/TD8Locked" to="Auto/Buyers/TD8" method="show"]
-[connection signal="pressed" from="Auto/Buyers/TD8Locked" to="." method="unlock" binds= [8]]
-[connection signal="pressed" from="Auto/Buyers/TD8/Interval" to="." method="improve_interval" binds= [8]]
-[connection signal="timeout" from="Auto/Buyers/TD8/Timer" to="." method="buytdim" binds= [8]]

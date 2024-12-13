@@ -24,6 +24,7 @@ DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 Currencies="*res://internal/currencies.gd"
 TachyonDims="*res://internal/dimensions/tachyons.gd"
 Eternity="*res://internal/eternity.gd"
+Autobuyers="*res://internal/autobuyers.gd"
 
 [display]
 
@@ -37,7 +38,7 @@ movie_writer/movie_file="/home/ale/Desktop/TachDym.avi"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
 
 [gui]
 
