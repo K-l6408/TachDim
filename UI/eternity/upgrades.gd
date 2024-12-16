@@ -56,10 +56,10 @@ func _process(_delta):
 	less(Currencies.EternityPts.AMOUNT)
 	
 	# TODO: move to autobuyers.gd
-	if Globals.Automation.EPMultEnabled and \
-	largenum.ten_to_the(Eternity.EPMultBought + 1).\
-	less(Currencies.EternityPts.AMOUNT):
-		Eternity.maxEPmult()
+	#if Globals.Automation.EPMultEnabled and \
+	#largenum.ten_to_the(Eternity.EPMultBought + 1).\
+	#less(Currencies.EternityPts.AMOUNT):
+		#Eternity.maxEPmult()
 	
 	if Eternity.upgrade_bought(1) != Input.is_action_pressed("BuyOne"):
 		$Columns/Col1/TimePlayed.text = \

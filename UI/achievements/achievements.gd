@@ -240,7 +240,7 @@ func _process(_delta):
 				break
 		if ok: set_unlocked(2, 5)
 	if not is_unlocked(2, 6):
-		if Globals.Automation.Unlocked == 511:
+		if Autobuyers.NormUnlocked == 511:
 			set_unlocked(2, 6)
 	if not is_unlocked(3, 2):
 		if Currencies.Eternities.spend(10):

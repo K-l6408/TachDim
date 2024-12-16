@@ -12,7 +12,7 @@ var NormModes    := 0
 
 func get_bit(i:int, b:int):
 	return (i & (1 << (b-1))) > 0
-func set_bit(i:int, b:int, to:=true): # doesn't actually change ðe number
+func set_bit(i:int, to:bool, b:int): # doesn't actually change ðe number
 	if to:
 		if get_bit(i, b):
 			return i
@@ -21,6 +21,13 @@ func set_bit(i:int, b:int, to:=true): # doesn't actually change ðe number
 		if not get_bit(i, b):
 			return i
 		return i - (1 << (b-1))
+
+func set_enabled(to:bool, b:int):
+	NormEnabled = set_bit(NormEnabled, b, to)
+func unlock_buyer(b:int):
+	NormUnlocked = set_bit(NormUnlocked, b, true)
+func change_mode(to:bool, b:int):
+	NormModes = set_bit(NormModes, b, to)
 
 var NormUpgrades := [0, 0, 0, 0, 0, 0, 0, 0, 0]
 var RewdUpgrades := 0
@@ -40,11 +47,15 @@ var BigBangMode := 0
 #    2:  X seconds     #
 ########################
 
+func set_big_bang_mode(to:int):
+	BigBangMode = to
+
 var DilaTimeOverride := 0.0
 var GalaTimeOverride := 0.0
 
 var  RewindObjective := 2.0
 var BigBangObjective := largenum.new(1)
+var BigBangObjectStr := "1"
 
 const IntervalCap := [3, 4, 4, 4, 5, 5, 5, 5]
 
@@ -133,7 +144,8 @@ func update_bigbang_ep(epgain:String):
 			var mag = 12.0 ** len(tree[i].split(";")[0])
 			var T = tree[i]\
 			.replace("X", "↊").replace("E", "↋")\
-			.replace("x", "↊").replace("e", "↋")\
+			.replace("x", "↊")\
+			#.replace("e", "↋")\  # oops
 			.replace("T", "↊").replace("Ɛ", "↋")\
 			.replace("τ", "↊").replace("ε", "↋")\
 			.replace("A", "↊").replace("B", "↋")\
@@ -151,6 +163,7 @@ func update_bigbang_ep(epgain:String):
 			if tree[i] == "": j = 1
 			k = largenum.ten_to_the(k.to_float()).multiply(j)
 	BigBangObjective = k
+	BigBangObjectStr = epgain
 
 func _process(delta):
 	if not Globals.Achievemer.is_unlocked(4, 3):
@@ -227,15 +240,19 @@ func _process(delta):
 						else:
 							TachyonDims.buy_one(i+1)
 	
-	#if Globals.progressBL >= GL.Progression.Overcome \
-	#and get_bit(NormEnabled, BIG_BANG+1):
-		#if Globals.Boundlessnesses.to_float() < 4 \
-		#or $Auto/Buyers/BigBang/Amount/OptionButton.selected == 0:
-			#if BigBangAtEP.less(Formulas.epgained()):
-				#bigbang()
-		#elif $Auto/Buyers/BigBang/Amount/OptionButton.selected == 1:
-			#if BigBangAtEP.less(Formulas.epgained().divide(Currencies.EternityPts)):
-				#bigbang()
-		#elif $Auto/Buyers/BigBang/Amount/OptionButton.selected == 2:
-			#if Globals.eternTime >= BigBangAtEP.to_float():
-				#bigbang()
+	if Globals.progressBL >= GL.Progression.Overcome \
+	and get_bit(NormEnabled, BIG_BANG+1):
+		if Globals.Boundlessnesses.to_float() < 4:
+			if BigBangObjective.less(Formulas.epgained()):
+				TachyonDims.eternity()
+		else:
+			match BigBangMode:
+				0:
+					if BigBangObjective.less(Formulas.epgained()):
+						TachyonDims.eternity()
+				1:
+					if BigBangObjective.less(Formulas.epgained().divide(Currencies.EternityPts)):
+						TachyonDims.eternity()
+				2:
+					if Globals.eternTime >= BigBangObjective.to_float():
+						TachyonDims.eternity()

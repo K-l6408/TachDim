@@ -121,7 +121,7 @@ func _process(delta):
 			"Cost:", pasep_cost(), "EP"
 		]
 	
-	$"holy shit".disabled = Globals.Automation.BangUpgrades < 13
+	$"holy shit".disabled = Autobuyers.BangUpgrades < 13
 	$"holy shit/Label".text = "Max out the Big Bang Autobuyer Interval\n" + \
 	"to %s to Overcome Eternity." % Globals.format_time(0.1)
 	$"holy shit".visible  = Globals.progressBL <  GL.Progression.Overcome
