@@ -56,6 +56,12 @@ var RewindMult := largenum.new(1)
 
 var canDilate :
 	get: return (DimPurchase[DimsUnlocked - 1] >= dilacost())
+var canRewind :
+	get:
+		if rewindBoost().less(RewindMult): return false
+		if Globals.Challenge != 13 and TDilation < 5: return false
+		if DimPurchase[7] == 0: return false
+		return true
 var canGalaxy :
 	get:
 		if Globals.Challenge in [8, 22]: return false

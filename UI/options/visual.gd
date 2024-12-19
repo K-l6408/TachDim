@@ -7,6 +7,7 @@ const THEMES = {
 	"Dark" : preload("res://themes/Dark.tres"),
 	"Light": preload("res://themes/Light.tres"),
 	"Blob" : preload("res://themes/Blob.tres"),
+	"Glass": preload("res://themes/Glass.tres"),
 }
 var theme_txt = "Dark"
 

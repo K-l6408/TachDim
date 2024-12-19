@@ -21,13 +21,12 @@ func _ready():
 	connect("toggled", Autobuyers.set_enabled.bind(Autobuyers.DILATION))
 	%"PreInf/Timespeed/Enabled".\
 	connect("toggled", Autobuyers.set_enabled.bind(Autobuyers.TIMESPEED))
-	for i in 8:
-		%PreInf.get_node("TD%d/Enabled" % (i+1)).\
-		connect("pressed", Autobuyers.set_enabled.bind(i+1))
 	
 	for i in 8:
 		%PreInf.get_node("TD%d/Enabled" % (i+1)).\
-		connect("pressed", Autobuyers.change_mode.bind(i+1))
+		connect("toggled", Autobuyers.set_enabled.bind(i+1))
+		%PreInf.get_node("TD%d/Mode" % (i+1)).\
+		connect("toggled", Autobuyers.change_mode.bind(i+1))
 	
 	$"Auto/Buyers/Big Bang/Mode".\
 	connect("item_selected", Autobuyers.set_big_bang_mode)
@@ -72,6 +71,13 @@ func _process(_delta):
 					panel.get_node("Mode").text = "Buys singles"
 				panel.get_node("Interval").disabled = \
 				not Currencies.EternityPts.less(2 ** Autobuyers.NormUpgrades[8])
+				panel.get_node("Interval").text = "%s: %s → %s\n%s: %s EP" % [
+					"Interval",
+					Globals.format_time(Autobuyers.TSpeedInterval()),
+					Globals.format_time(Autobuyers.TSpeedInterval() * 0.6),
+					"Cost",
+					Globals.float_to_string(2 ** Autobuyers.NormUpgrades[8], 1),
+				]
 			
 			if Autobuyers.TSpeedInterval() == 0.1:
 				panel.custom_minimum_size.x = 300
@@ -83,13 +89,6 @@ func _process(_delta):
 				panel.get_node("Mode").anchor_right = 0.8
 				panel.get_node("Mode").anchor_left  = 0.5
 				panel.get_node("Interval").show()
-				panel.get_node("Interval").text = "%s: %s → %s\n%s: %s EP" % [
-					"Interval",
-					Globals.format_time(Autobuyers.TSpeedInterval()),
-					Globals.format_time(Autobuyers.TSpeedInterval() * 0.6),
-					"Cost",
-					Globals.float_to_string(2 ** Autobuyers.NormUpgrades[8], 1),
-				]
 		else:
 			var panel = %PreInf.get_node("TD%d" % i)
 			if not Globals.challengeCompleted(i):
@@ -98,6 +97,13 @@ func _process(_delta):
 			else:
 				panel.get_node("Interval").disabled = \
 				not Currencies.EternityPts.less(2 ** Autobuyers.NormUpgrades[8])
+				panel.get_node("Interval").text = "%s: %s → %s\n%s: %s EP" % [
+					"Interval",
+					Globals.format_time(Autobuyers.TDInterval(i)),
+					Globals.format_time(Autobuyers.TDInterval(i) * 0.6),
+					"Cost",
+					Globals.float_to_string(2 ** Autobuyers.NormUpgrades[i-1], 1),
+				]
 			
 			if panel.get_node("Mode").button_pressed:
 				if Autobuyers.TDBulk(i) == INF:
@@ -107,6 +113,11 @@ func _process(_delta):
 					Globals.int_to_string(TachyonDims.buylim * Autobuyers.TDBulk(i))
 			else:
 				panel.get_node("Mode").text = "Buys singles"
+			
+			if panel.get_node("Mode").button_pressed != \
+			Autobuyers.get_bit(Autobuyers.NormModes, i):
+				panel.get_node("Mode").button_pressed = \
+				Autobuyers.get_bit(Autobuyers.NormModes, i)
 			
 			if Autobuyers.TDBulk(i) == INF:
 				panel.custom_minimum_size.x = 250
@@ -120,10 +131,3 @@ func _process(_delta):
 				panel.get_node("Mode").anchor_right = 0.8
 				panel.get_node("Mode").anchor_left  = 0.5
 				panel.get_node("Interval").show()
-				panel.get_node("Interval").text = "%s: %s → %s\n%s: %s EP" % [
-					"Interval",
-					Globals.format_time(Autobuyers.TDInterval(i)),
-					Globals.format_time(Autobuyers.TDInterval(i) * 0.6),
-					"Cost",
-					Globals.float_to_string(2 ** Autobuyers.NormUpgrades[i-1], 1),
-				]

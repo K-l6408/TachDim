@@ -12,6 +12,29 @@ extends Control
 ]
 @onready var rewindNode = %TopButtons/Rewind
 
+func _ready():
+	# connecting signals
+	for k in 8:
+		var i = dims[k]
+		i.get_node("Buy").connect("pressed", func():
+			if %TopButtons/BuyMode.button_pressed:
+				TachyonDims.buy_until_mult(k+1)
+			else:
+				TachyonDims.buy_one(k+1)
+		)
+	
+	%TopButtons/Timespeed.connect("pressed", TachyonDims.buy_tspeed)
+	%TopButtons/Timespeed/BuyMax.connect("pressed", TachyonDims.buy_max_tspeed)
+	%TopButtons/BuyMax.connect("pressed", func():
+		for i in 8:
+			TachyonDims.buy_max(i+1)
+		TachyonDims.buy_max_tspeed()
+	)
+	
+	%Prestiges/DiButton.connect("pressed", TachyonDims.dilate)
+	%Prestiges/GaButton.connect("pressed", TachyonDims.galaxy)
+	%Prestiges/Reset.connect("pressed", TachyonDims.antisoftlock)
+
 func _process(delta):
 	var logfinity = 2048 if Globals.Challenge == 15 else 1024
 	
@@ -96,24 +119,13 @@ func _process(delta):
 				i.modulate.a = 1.0
 				i.get_node("N&M/Multiplier").show()
 		
-		if i.get_node("Buy").button_pressed:
-			if %TopButtons/BuyMode.button_pressed:
-				TachyonDims.buy_until_mult(k+1)
-			else:
-				TachyonDims.buy_one(k+1)
-		
 		if Input.is_action_pressed("BuyTD%d" % (k+1)):
 			if Input.is_action_pressed("BuyOne"):
 				TachyonDims.buy_one(k+1)
 			else:
 				TachyonDims.buy_until_mult(k+1, true)
 	
-	if %TopButtons/Timespeed.button_pressed: # and Globals.Challenge != 20
-		TachyonDims.buy_tspeed()
-	if %TopButtons/Timespeed/BuyMax.button_pressed:
-		TachyonDims.buy_max_tspeed()
-	
-	if Input.is_action_pressed("BuyMax") or %TopButtons/BuyMax.button_pressed:
+	if Input.is_action_pressed("BuyMax"):
 		for i in 8:
 			TachyonDims.buy_max(i+1)
 		TachyonDims.buy_max_tspeed()
@@ -278,8 +290,6 @@ func _process(delta):
 				]
 	
 	%Prestiges/DiButton.disabled = not TachyonDims.canDilate
-	if %Prestiges/DiButton.button_pressed:
-		TachyonDims.dilate()
 	%Prestiges/DiLabel.text = \
 	"[center]Time Dilation (%s)\n[font_size=2] \n[font_size=10]Requires: %s %s Tachyon Dimensions" % [
 		Globals.int_to_string(TachyonDims.TDilation),
@@ -287,12 +297,8 @@ func _process(delta):
 		Globals.ordinal(TachyonDims.DimsUnlocked)
 	]
 	
-	if %Prestiges/Reset.button_pressed:
-		TachyonDims.antisoftlock()
 	
 	%Prestiges/GaButton.disabled = not TachyonDims.canGalaxy
-	if %Prestiges/GaButton.button_pressed:
-		TachyonDims.galaxy()
 	%Prestiges/GaLabel.text = "[center]%sTachyon Galaxies (%s)\n%s[font_size=10]Requires: %s %s Tachyon Dimensions%s" % [
 		("" if TachyonDims.TGalaxies < TachyonDims.DistantScaling else "Distant "),
 		(

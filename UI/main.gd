@@ -61,6 +61,8 @@ func _process(_delta):
 	else:
 		$Background.theme_type_variation = ""
 	
+	$Window.visible = not get_tree().root.has_focus()
+	
 	TBar.set_tab_hidden(1, Globals.TachTotal.less(largenum.new(10).pow2self(20)))
 	TBar.set_tab_hidden(2, Globals.progress < Globals.Progression.Eternity)
 	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Eternity)

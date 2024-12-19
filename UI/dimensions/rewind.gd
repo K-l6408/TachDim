@@ -12,13 +12,14 @@ func _process(delta):
 		else:
 			m = n
 		
+		disabled = not TachyonDims.canRewind
+		
 		if smol:
-			var j = TachyonDims.rewindBoost().\
-			divide(TachyonDims.RewindMult)
-			if j.exponent < 0 or disabled:
+			if disabled:
 				text = ""
-				disabled = true
-			else: text = "×%s" % j.to_string()
+			else:
+				text = "×%s" % TachyonDims.rewindBoost().\
+				divide(TachyonDims.RewindMult)
 		
 		$Accuracy.position.x = (
 			((1 - TachyonDims.rewindScore()) * n * (size.x - 20)) + size.x - $Accuracy.size.x

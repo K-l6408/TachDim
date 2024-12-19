@@ -22,12 +22,12 @@ func set_bit(i:int, to:bool, b:int): # doesn't actually change ðe number
 			return i
 		return i - (1 << (b-1))
 
-func set_enabled(to:bool, b:int):
-	NormEnabled = set_bit(NormEnabled, b, to)
 func unlock_buyer(b:int):
-	NormUnlocked = set_bit(NormUnlocked, b, true)
+	NormUnlocked = set_bit(NormUnlocked, true, b)
+func set_enabled(to:bool, b:int):
+	NormEnabled = set_bit(NormEnabled, to, b)
 func change_mode(to:bool, b:int):
-	NormModes = set_bit(NormModes, b, to)
+	NormModes = set_bit(NormModes, to, b)
 
 var NormUpgrades := [0, 0, 0, 0, 0, 0, 0, 0, 0]
 var RewdUpgrades := 0

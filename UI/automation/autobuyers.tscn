@@ -283,6 +283,7 @@ offset_bottom = 7.0
 grow_vertical = 2
 text = "Timespeed Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Panel1/PreInf/Timespeed"]
@@ -328,6 +329,7 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Locked1" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
@@ -356,6 +358,7 @@ offset_bottom = 14.0
 grow_vertical = 2
 text = "1st Tachyon Dimension Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Panel1/PreInf/TD1"]
@@ -401,6 +404,7 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Locked2" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
@@ -429,6 +433,7 @@ offset_bottom = 7.0
 grow_vertical = 2
 text = "2nd TD"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Panel1/PreInf/TD2"]
@@ -475,6 +480,7 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Locked3" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
@@ -503,6 +509,7 @@ offset_bottom = 14.0
 grow_vertical = 2
 text = "3rd Tachyon Dimension Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Panel1/PreInf/TD3"]
@@ -548,6 +555,7 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Locked4" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
@@ -576,6 +584,7 @@ offset_bottom = 14.0
 grow_vertical = 2
 text = "4th Tachyon Dimension Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Panel1/PreInf/TD4"]
@@ -621,6 +630,7 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Locked5" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
@@ -650,6 +660,7 @@ offset_bottom = 14.0
 grow_vertical = 2
 text = "5th Tachyon Dimension Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Panel1/PreInf/TD5"]
@@ -695,6 +706,7 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Locked6" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
@@ -724,6 +736,7 @@ offset_bottom = 14.0
 grow_vertical = 2
 text = "3rd Tachyon Dimension Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Panel1/PreInf/TD6"]
@@ -769,6 +782,7 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Locked7" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
@@ -798,6 +812,7 @@ offset_bottom = 14.0
 grow_vertical = 2
 text = "3rd Tachyon Dimension Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Panel1/PreInf/TD7"]
@@ -843,6 +858,7 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Locked8" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
@@ -872,6 +888,7 @@ offset_bottom = 14.0
 grow_vertical = 2
 text = "3rd Tachyon Dimension Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Panel1/PreInf/TD8"]
@@ -917,4 +934,5 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
