@@ -37,6 +37,7 @@ enum DisplayMode {
 enum Progression {
 	None, Dilation, Galaxy, Eternity, Overcome, Duplicantes, Boundlessness
 }
+
 const LOG2  = log(2)
 const LOG10 = log(10)
 const LOG12 = log(12)
@@ -44,6 +45,10 @@ const LOG12 = log(12)
 var display    : DisplayMode = DisplayMode.Scientific
 var progress   : Progression = Progression.None
 var progressBL : Progression = Progression.None
+
+var Overcame :
+	get:
+		return (15 > Challenge and Challenge > 0) or progressBL < Progression.Overcome
 
 var TachTotal := largenum.new(10)
 var TachTotalBL     := largenum.new(10)

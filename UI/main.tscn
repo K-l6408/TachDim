@@ -140,7 +140,7 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sl1qb"]
 shader = ExtResource("24_irn3s")
-shader_parameter/replace = null
+shader_parameter/replace = Color(0.0755101, 0.0755101, 0.0755101, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cee3c"]
 particles_animation = true
@@ -238,6 +238,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = -2
+
+[node name="HSeparator" type="HSeparator" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+layout_mode = 2
 
 [node name="Tachyons" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
@@ -475,10 +478,8 @@ size_flags_vertical = 3
 [node name="Tabs" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-current_tab = 8
 
 [node name="Dimensions" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
-visible = false
 layout_mode = 2
 
 [node name="Tachyons" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("1_8gea7")]
@@ -559,6 +560,7 @@ B⃣ : Big Bang"
 autowrap_mode = 0
 
 [node name="Statistics" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+visible = false
 layout_mode = 2
 current_tab = 3
 

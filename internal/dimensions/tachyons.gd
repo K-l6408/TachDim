@@ -55,15 +55,19 @@ func C10Score():
 var RewindMult := largenum.new(1)
 
 var canDilate :
-	get: return (DimPurchase[DimsUnlocked - 1] >= dilacost())
+	get:
+		if not Globals.Overcame and canBigBang: return false
+		return (DimPurchase[DimsUnlocked - 1] >= dilacost())
 var canRewind :
 	get:
+		if not Globals.Overcame and canBigBang: return false
 		if rewindBoost().less(RewindMult): return false
 		if Globals.Challenge != 13 and TDilation < 5: return false
 		if DimPurchase[7] == 0: return false
 		return true
 var canGalaxy :
 	get:
+		if not Globals.Overcame and canBigBang: return false
 		if Globals.Challenge in [8, 22]: return false
 		if Globals.Challenge in [6, 16]:
 			return (DimPurchase[5] >= galacost())
@@ -202,7 +206,7 @@ func rewindBoost() -> largenum:
 	if Globals.Challenge == 8:
 		RBoost = DimAmount[0].power(0.2)
 	elif Globals.OEUHandler.is_bought(6):
-		RBoost = DimAmount[0].power(0.05)
+		RBoost = DimAmount[0].power(0.02)
 	else:
 		RBoost = largenum.new(DimAmount[0].log10() ** 1.5 / 10)
 	

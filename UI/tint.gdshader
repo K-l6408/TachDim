@@ -4,9 +4,9 @@ uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_n
 uniform vec4 replace : source_color;
 
 void fragment() {
-	vec4 C = textureLod(screen_texture, SCREEN_UV, 0.0);
-	if (distance(C, replace) < 0.5)
-		COLOR = C * 0.7 + COLOR * 0.3;
+	vec3 C = textureLod(screen_texture, SCREEN_UV, 0.0).rgb;
+	if (distance(C, replace.rgb) < 0.7)
+		COLOR.rgb = C * 0.7 + COLOR.rgb * 0.3;
 	else
 		COLOR = vec4(0);
 }

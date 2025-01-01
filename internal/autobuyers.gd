@@ -71,11 +71,11 @@ func reset():
 
 func TDInterval(which):
 	var i = (0.4 + which * 0.1) * (0.6 ** NormUpgrades[which - 1])
-	if i < 0.11: return 0.1
+	if i < 0.101: return 0.1
 	return i
 func TSpeedInterval():
 	var i = 0.5 * (0.6 ** NormUpgrades[-1])
-	if i < 0.11: return 0.1
+	if i < 0.101: return 0.1
 	return i
 func RewdAccuracy():
 	var i = 0.5 * (1.095 ** RewdAQups)
@@ -86,21 +86,21 @@ func RewdInterval():
 		RewdUpgrades = 7
 		return 0
 	var i = 3 * (0.6 ** RewdUpgrades)
-	if i < 0.11: return 0.1
+	if i < 0.101: return 0.1
 	return i
 func DilInterval():
 	if Globals.OEUHandler.is_bought(2):
 		return DilaTimeOverride
 	var i = 4 * (0.6 ** DilUpgrades)
-	if i < 0.11: return 0.1
+	if i < 0.101: return 0.1
 	return i
 func GalInterval():
 	var i = 10 * (0.6 ** GalUpgrades)
-	if i < 0.11: return 0.1
+	if i < 0.101: return 0.1
 	return i
 func BangInterval():
 	var i = 60 * (0.6 ** BangUpgrades)
-	if i < 0.11: return 0.1
+	if i < 0.101: return 0.1
 	return i
 
 func TDBulk(which):
@@ -144,8 +144,6 @@ func update_bigbang_ep(epgain:String):
 			var mag = 12.0 ** len(tree[i].split(";")[0])
 			var T = tree[i]\
 			.replace("X", "↊").replace("E", "↋")\
-			.replace("x", "↊")\
-			#.replace("e", "↋")\  # oops
 			.replace("T", "↊").replace("Ɛ", "↋")\
 			.replace("τ", "↊").replace("ε", "↋")\
 			.replace("A", "↊").replace("B", "↋")\
@@ -166,6 +164,9 @@ func update_bigbang_ep(epgain:String):
 	BigBangObjectStr = epgain
 
 func _process(delta):
+	if NormUpgrades.size() < 9:
+		NormUpgrades.append(0)
+	
 	if not Globals.Achievemer.is_unlocked(4, 3):
 		var do = true
 		for i in 9:
@@ -189,15 +190,18 @@ func _process(delta):
 			Globals.Achievemer.set_unlocked(5, 3)
 	
 	for i in NormTimers.size():
-		if get_bit(NormUnlocked, i+1) and get_bit(NormEnabled, i+1):
+		if get_bit(NormEnabled, i+1):
+			if i+1 <= TIMESPEED and not get_bit(NormUnlocked, i+1):
+				continue
 			NormTimers[i] -= delta
-			if NormTimers[i] < 0:
+			if NormTimers[i] <= 0:
 				match i + 1:
 					BIG_BANG:
-						if Globals.progressBL < GL.Progression.Overcome\
-						or Globals.Challenge != 0:
-							TachyonDims.eternity()
-							NormTimers[i] += BangInterval()
+						if Globals.challengeCompleted(14):
+							if Globals.progressBL < GL.Progression.Overcome\
+							or Globals.Challenge != 0:
+								TachyonDims.eternity()
+								NormTimers[i] += BangInterval()
 					GALAXY:
 						if Globals.challengeCompleted(12):
 							if Globals.OEUHandler.is_bought(2):
@@ -206,7 +210,8 @@ func _process(delta):
 								TachyonDims.galaxy()
 							NormTimers[i] += DilInterval()
 					DILATION:
-						if Globals.challengeCompleted(11):
+						if Globals.challengeCompleted(11) and \
+						Globals.Challenge != 10:
 							if Globals.OEUHandler.is_bought(2) and \
 								TachyonDims.TDilation >= (
 									2 if Globals.Challenge in [6, 16] else 4
@@ -222,6 +227,8 @@ func _process(delta):
 							divide(TachyonDims.RewindMult).less(RewindObjective):
 								TachyonDims.rewind()
 								NormTimers[i] += RewdInterval()
+							else:
+								NormTimers[i] += delta
 					TIMESPEED:
 						NormTimers[i] += TSpeedInterval()
 						if get_bit(NormModes, TIMESPEED):

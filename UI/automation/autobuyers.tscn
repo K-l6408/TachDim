@@ -26,8 +26,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Big Bang" type="Panel" parent="Auto/Buyers"]
-visible = false
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -61,50 +60,50 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2
 anchor_top = 0.5
-anchor_right = 0.4
+anchor_right = 0.8
 anchor_bottom = 0.5
-offset_left = -2.56003
-offset_top = -22.5
-offset_right = -3.44003
-offset_bottom = 22.5
+offset_top = -23.0
+offset_right = -3.0
+offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Interval: 01:00 → 36 s
 Cost: 1.0 EP"
 
 [node name="Mode" type="OptionButton" parent="Auto/Buyers/Big Bang"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4
+anchor_left = 0.2
 anchor_top = 0.5
-anchor_right = 0.6
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 0.440002
-offset_top = -22.5
-offset_right = -0.440002
-offset_bottom = 22.5
+offset_top = -22.0
+offset_right = -4.0
+offset_bottom = 23.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 item_count = 3
 selected = 0
-popup/item_0/text = "Big Bang at X EP:"
+popup/item_0/text = "  Big Bang at X EP:"
 popup/item_0/id = 0
-popup/item_1/text = "X times top EP:"
+popup/item_1/text = "  X times top EP:"
 popup/item_1/id = 1
-popup/item_2/text = "Time in Eternity:"
+popup/item_2/text = "  Time in Eternity:"
 popup/item_2/id = 2
 
 [node name="Objective" type="LineEdit" parent="Auto/Buyers/Big Bang"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.6
+anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.8
 anchor_bottom = 0.5
-offset_left = 3.0
+offset_left = 1.0
 offset_top = -22.0
-offset_right = 3.0
+offset_right = -3.0
 offset_bottom = 23.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -124,9 +123,23 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "(1.80e308)"
 
-[node name="TGalaxy" type="Panel" parent="Auto/Buyers"]
+[node name="preMode" type="Label" parent="Auto/Buyers/Big Bang/Objective"]
 visible = false
-custom_minimum_size = Vector2(0, 60)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.013
+anchor_right = -0.021
+anchor_bottom = 0.989
+offset_left = -0.294983
+offset_right = 0.985001
+offset_bottom = 0.494999
+grow_vertical = 2
+text = "Big Bang at X EP:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TGalaxy" type="Panel" parent="Auto/Buyers"]
+custom_minimum_size = Vector2(0, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -158,16 +171,16 @@ text = "Enabled
 [node name="Interval" type="Button" parent="Auto/Buyers/TGalaxy"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
+anchor_left = 0.2
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -2.56003
-offset_top = -22.5
-offset_right = -3.44003
-offset_bottom = 22.5
+offset_top = -23.0
+offset_right = -5.0
+offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
+toggle_mode = true
 text = "Interval: 01:00 → 36 s
 Cost: 1.0 EP"
 
@@ -176,20 +189,19 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 0.7
+anchor_right = 0.8
 anchor_bottom = 0.5
-offset_left = 1.43997
-offset_top = -22.5
-offset_right = 0.559937
-offset_bottom = 22.5
+offset_left = 1.0
+offset_top = -23.0
+offset_right = -2.0
+offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
 text = "Buys singles"
 
 [node name="Dilation" type="Panel" parent="Auto/Buyers"]
-visible = false
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -221,9 +233,82 @@ text = "Enabled
 [node name="Interval" type="Button" parent="Auto/Buyers/Dilation"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
+anchor_left = 0.2
 anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -23.0
+offset_right = -4.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+toggle_mode = true
+text = "Interval: 01:00 → 36 s
+Cost: 1.0 EP"
+
+[node name="Mode" type="Button" parent="Auto/Buyers/Dilation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.8
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = -23.0
+offset_right = -3.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ToggleButton"
+text = "Buys singles"
+
+[node name="Panel2" type="PanelContainer" parent="Auto/Buyers"]
+layout_mode = 2
+
+[node name="Oðers" type="HFlowContainer" parent="Auto/Buyers/Panel2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Rewind" type="Panel" parent="Auto/Buyers/Panel2/Oðers"]
+custom_minimum_size = Vector2(500, 53)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Auto/Buyers/Panel2/Oðers/Rewind"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 0.2
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = -6.0
+offset_right = -3.0
+offset_bottom = 7.0
+grow_vertical = 2
+text = "Dimensional Rewind Autobuyer"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Enabled" type="Button" parent="Auto/Buyers/Panel2/Oðers/Rewind"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_bottom = 22.0
+grow_horizontal = 0
+toggle_mode = true
+button_pressed = true
+text = "Enabled
+"
+
+[node name="Interval" type="Button" parent="Auto/Buyers/Panel2/Oðers/Rewind"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.5
+anchor_right = 0.4
 anchor_bottom = 0.5
 offset_left = -2.56003
 offset_top = -22.5
@@ -234,21 +319,43 @@ grow_vertical = 2
 text = "Interval: 01:00 → 36 s
 Cost: 1.0 EP"
 
-[node name="Mode" type="Button" parent="Auto/Buyers/Dilation"]
+[node name="Accuracy" type="Button" parent="Auto/Buyers/Panel2/Oðers/Rewind"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
+anchor_left = 0.6
 anchor_top = 0.5
-anchor_right = 0.7
+anchor_right = 0.8
 anchor_bottom = 0.5
-offset_left = 1.43997
+offset_left = 2.0
 offset_top = -22.5
-offset_right = 0.559937
+offset_right = -1.0
 offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"ToggleButton"
-text = "Buys singles"
+text = "Accuracy: 50% → 54%
+Cost: 1.0 EP"
+
+[node name="LineEdit" type="SpinBox" parent="Auto/Buyers/Panel2/Oðers/Rewind"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.5
+anchor_right = 0.6
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -22.5
+offset_right = 2.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+min_value = 1.0
+max_value = 9.22337e+18
+step = 0.0
+value = 1.0
+exp_edit = true
+allow_greater = true
+alignment = 1
+prefix = "Rewind at ×"
 
 [node name="Panel1" type="PanelContainer" parent="Auto/Buyers"]
 layout_mode = 2
@@ -259,14 +366,14 @@ layout_mode = 2
 
 [node name="Locked9" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Timespeed Autobuyer locked
 Requires 1e100 total Tachyons"
 
 [node name="Timespeed" type="Panel" parent="Auto/Buyers/Panel1/PreInf"]
-custom_minimum_size = Vector2(500, 60)
+custom_minimum_size = Vector2(500, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -334,14 +441,14 @@ text = "Buys singles"
 
 [node name="Locked1" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "1st Tachyon Dimension Autobuyer locked
 Requires 1e20 total Tachyons"
 
 [node name="TD1" type="Panel" parent="Auto/Buyers/Panel1/PreInf"]
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -409,14 +516,14 @@ text = "Buys singles"
 
 [node name="Locked2" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "2nd Tachyon Dimension Autobuyer locked
 Requires 1e30 total Tachyons"
 
 [node name="TD2" type="Panel" parent="Auto/Buyers/Panel1/PreInf"]
-custom_minimum_size = Vector2(250, 60)
+custom_minimum_size = Vector2(250, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -485,14 +592,14 @@ text = "Buys singles"
 
 [node name="Locked3" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "3rd Tachyon Dimension Autobuyer locked
 Requires 1e40 total Tachyons"
 
 [node name="TD3" type="Panel" parent="Auto/Buyers/Panel1/PreInf"]
-custom_minimum_size = Vector2(500, 60)
+custom_minimum_size = Vector2(500, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -559,7 +666,7 @@ toggle_mode = true
 text = "Buys singles"
 
 [node name="Locked4" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "4th Tachyon Dimension Autobuyer locked
@@ -567,7 +674,7 @@ Requires 1e50 total Tachyons"
 
 [node name="TD4" type="Panel" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(500, 60)
+custom_minimum_size = Vector2(500, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -635,7 +742,7 @@ text = "Buys singles"
 
 [node name="Locked5" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "5th Tachyon Dimension Autobuyer locked
@@ -643,7 +750,7 @@ Requires 1e60 total Tachyons"
 
 [node name="TD5" type="Panel" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(500, 60)
+custom_minimum_size = Vector2(500, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -711,7 +818,7 @@ text = "Buys singles"
 
 [node name="Locked6" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "6th Tachyon Dimension Autobuyer locked
@@ -719,7 +826,7 @@ Requires 1e70 total Tachyons"
 
 [node name="TD6" type="Panel" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(500, 60)
+custom_minimum_size = Vector2(500, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -787,7 +894,7 @@ text = "Buys singles"
 
 [node name="Locked7" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "7th Tachyon Dimension Autobuyer locked
@@ -795,7 +902,7 @@ Requires 1e80 total Tachyons"
 
 [node name="TD7" type="Panel" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(500, 60)
+custom_minimum_size = Vector2(500, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -863,7 +970,7 @@ text = "Buys singles"
 
 [node name="Locked8" type="Button" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(620, 60)
+custom_minimum_size = Vector2(620, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "8th Tachyon Dimension Autobuyer locked
@@ -871,7 +978,7 @@ Requires 1e90 total Tachyons"
 
 [node name="TD8" type="Panel" parent="Auto/Buyers/Panel1/PreInf"]
 visible = false
-custom_minimum_size = Vector2(500, 60)
+custom_minimum_size = Vector2(500, 53)
 layout_mode = 2
 size_flags_horizontal = 3
 

@@ -81,7 +81,7 @@ func buy_galaxy():
 	if "4×1" not in Globals.Studies.purchased:
 		intervUpgrades = 0
 	dupGalaxies += 1
-	Globals.TDHandler.updateTSpeed()
+	#Globals.TDHandler.updateTSpeed()
 	%Galaxy.disabled = true
 
 func _process(delta):
@@ -182,9 +182,9 @@ func _process(delta):
 		Globals.Duplicantes.log2() < 1024 or chance < 100
 		or interval() < intervalCap or dupGalaxies >= maxGalaxies
 	)
-	if not %Galaxy.disabled and Globals.Automation.DupGalEnabled:
-		buy_galaxy()
-		%Galaxy.disabled = true
+	#if not %Galaxy.disabled and Globals.Automation.DupGalEnabled:
+		#buy_galaxy()
+		#%Galaxy.disabled = true
 	
 	tickFraction += delta / interval()
 	if limit().less(Globals.Duplicantes):

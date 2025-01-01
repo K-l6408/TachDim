@@ -136,10 +136,10 @@ func _process(delta):
 		NextUpgrade.mult2self(TreshMult)
 		FreeTSpeed += 1
 	
-	for i in DimsUnlocked:
-		if Globals.Automation.EDenabled(i+1):
-			while not Currencies.EternityPts.less(dimcost(i+1)):
-				buydim(i+1)
+	#for i in DimsUnlocked:
+		#if Globals.Automation.EDenabled(i+1):
+			#while not Currencies.EternityPts.less(dimcost(i+1)):
+				#buydim(i+1)
 	
 	#if false:
 		#if not Input.is_action_pressed("ToggleAB"):

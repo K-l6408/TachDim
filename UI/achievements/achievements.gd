@@ -125,7 +125,7 @@ func achreqs(r, c):
 			6: return "Purchase %s Eternity Upgrades." % Globals.int_to_string(16) + \
 			"\n(Reward: Unlock two more Eternity Upgrades)"
 			7: return "Complete Challenge %s." % Globals.int_to_string(15) + \
-			"\n(Reward: Gain ×%s more Eternity Points for each C%s completion.)" % [
+			"\n(Reward: Gain ×%s more Eternity Points when completing C%s.)" % [
 				Globals.int_to_string(5), Globals.int_to_string(15)
 			]
 			8: return "Complete all Challenges.\n(Reward: All TDs are %s stronger.)" % \
