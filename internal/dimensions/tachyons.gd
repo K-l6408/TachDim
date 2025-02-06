@@ -22,11 +22,11 @@ var TSpeedBoost :
 		var GalaxyBoost = 0.975
 		var GalaxyMult = 1
 		
-		if Eternity.upgrade_bought(8): GalaxyMult *= 2
+		if Permanence.upgrade_bought(8): GalaxyMult *= 2
 		if Globals.OEUHandler.is_bought(3): GalaxyMult *= 1.4
 		if Globals.ECCompleted(4): GalaxyMult *= 1.15
 		
-		return largenum.new(1.10 if Globals.Challenge == 12 else 1.13).\
+		return largenum.new(1.10 if Globals.Challenge == 12 else 1.125).\
 		div2self(largenum.new(GalaxyBoost).power(
 			(TGalaxies + Globals.DupHandler.dupGalaxies) * GalaxyMult
 		))
@@ -56,18 +56,19 @@ var RewindMult := largenum.new(1)
 
 var canDilate :
 	get:
-		if not Globals.Overcame and canBigBang: return false
+		if (not Globals.Overcame) and canBigBang: return false
+		if TDilation >= 5 and Globals.Challenge == 8: return false
 		return (DimPurchase[DimsUnlocked - 1] >= dilacost())
 var canRewind :
 	get:
-		if not Globals.Overcame and canBigBang: return false
+		if (not Globals.Overcame) and canBigBang: return false
 		if rewindBoost().less(RewindMult): return false
 		if Globals.Challenge != 13 and TDilation < 5: return false
-		if DimPurchase[7] == 0: return false
+		if Globals.Challenge != 13 and DimPurchase[7] == 0: return false
 		return true
 var canGalaxy :
 	get:
-		if not Globals.Overcame and canBigBang: return false
+		if (not Globals.Overcame) and canBigBang: return false
 		if Globals.Challenge in [8, 22]: return false
 		if Globals.Challenge in [6, 16]:
 			return (DimPurchase[5] >= galacost())
@@ -75,10 +76,11 @@ var canGalaxy :
 var canBigBang:
 	get:
 		if Globals.Challenge > 15:
-			return Globals.ECTargets[Globals.Challenge - 16].less(topTachyonsInEternity)
+			return Globals.ECTargets[Globals.Challenge - 16].less(topTachyonsInPermanence)
 		var logfinity = 2048 if Globals.Challenge == 15 else 1024
-		return (Currencies.Tachyons.AMOUNT.log2() >= logfinity) or (topTachyonsInEternity.log2() >= logfinity)
-var topTachyonsInEternity := largenum.new(0)
+		return (Currencies.Tachyons.AMOUNT.log2() >= logfinity) or \
+		(Globals.Overcame and topTachyonsInPermanence.log2() >= logfinity)
+var topTachyonsInPermanence := largenum.new(0)
 
 
 # ðese functions calculate ðe costs of tickspeed and dimensions.
@@ -150,6 +152,9 @@ func buy_one(tier, times = 1):
 		
 		if Globals.Challenge in [2, 16]:  C2Multiplier = 0.0
 		if Globals.Challenge in [14, 16]:  C14Divisor = 1.0
+		if Globals.Challenge == 7:
+			for i in tier:
+				DimAmount[i] = largenum.new(DimPurchase[i])
 		
 		return true
 	return false
@@ -254,25 +259,25 @@ func reset(level := 0, challengeReset := true):
 			TDilation = -3
 		elif Globals.Challenge != 0:
 			TDilation = 0
-		elif Eternity.upgrade_bought(17):
+		elif Permanence.upgrade_bought(17):
 			TDilation = 5
-		elif Eternity.upgrade_bought(16):
+		elif Permanence.upgrade_bought(16):
 			TDilation = 4
-		elif Eternity.upgrade_bought(15):
+		elif Permanence.upgrade_bought(15):
 			TDilation = 3
-		elif Eternity.upgrade_bought(14):
+		elif Permanence.upgrade_bought(14):
 			TDilation = 2
-		elif Eternity.upgrade_bought(13):
+		elif Permanence.upgrade_bought(13):
 			TDilation = 1
 		else:
 			TDilation = 0
 		if Globals.Challenge == 10: C10Power = 0
 	if level >= 2:
-		if Globals.Challenge != 0:            TGalaxies = 0
-		elif Eternity.upgrade_bought(17): TGalaxies = 1
-		else:                                 TGalaxies = 0
+		if Globals.Challenge != 0:          TGalaxies = 0
+		elif Permanence.upgrade_bought(17): TGalaxies = 1
+		else:                               TGalaxies = 0
 		Globals.eternTime = 0
-		topTachyonsInEternity = largenum.new(0)
+		topTachyonsInPermanence = largenum.new(0)
 
 # cost of time dilation. takes into account challenge effects.
 func dilacost():
@@ -287,7 +292,7 @@ func dilacost():
 		Cost = Cost * 3 / 2
 	if Globals.Challenge == 19:
 		Cost += TGalaxies * 15
-	if Eternity.upgrade_bought(4):
+	if Permanence.upgrade_bought(4):
 		Cost -= 5
 	if Globals.ECCompleted(4):
 		Cost -= 5
@@ -308,7 +313,7 @@ func galacost():
 		Cost = Cost * 3 / 2
 	if Globals.Challenge == 19:
 		Cost += TDilation * 5
-	if Eternity.upgrade_bought(4):
+	if Permanence.upgrade_bought(4):
 		Cost -= 10
 	if TGalaxies > DistantScaling:
 		var the = (TGalaxies - DistantScaling)
@@ -327,7 +332,8 @@ func antisoftlock():
 
 func dilate(dim8 = null):
 	if dim8 == null:
-		if not canDilate: return false
+		if not canDilate:
+			return false
 	else:
 		if dim8 < dilacost(): return false
 	reset(0)
@@ -367,7 +373,9 @@ func galaxy_max():
 		if not galaxy(dim8): return
 
 
-func eternity(resetchallenge := true):
+func permanence(resetchallenge := true):
+	if not canBigBang: return
+	
 	if resetchallenge:
 		if Globals.Challenge != 0 and Globals.Challenge <= 15:
 			Globals.CompletedChallenges |= 1 << (Globals.Challenge - 1)
@@ -382,24 +390,26 @@ func eternity(resetchallenge := true):
 			or  Globals.ECTimes[Globals.Challenge - 16] < 0:
 				Globals.ECTimes[Globals.Challenge - 16] = Globals.eternTime
 	
-	var epgain = Formulas.epgained()
+	var ppgain = Permanence.process_pp_gain()
 	var etgain = 1
+	
+	ppgain.integerize()
 	
 	if "2×1" in Globals.Studies.purchased:
 		etgain = max(TDilation, 1)
 	
-	Currencies.EternityPts.add(epgain)
-	Currencies.Eternities .add(etgain)
+	Currencies.PermanencePts.add(ppgain)
+	Currencies.Permanences  .add(etgain)
 	
-	if  Globals.progress   < Globals.Progression.Eternity:
-		Globals.progress   = Globals.Progression.Eternity
-	if  Globals.progressBL < Globals.Progression.Eternity:
-		Globals.progressBL = Globals.Progression.Eternity
+	if  Globals.progress   < Globals.Progression.Permanence:
+		Globals.progress   = Globals.Progression.Permanence
+	if  Globals.progressBL < Globals.Progression.Permanence:
+		Globals.progressBL = Globals.Progression.Permanence
 	
 	if Globals.fastestEtern.time > Globals.eternTime \
 	or Globals.fastestEtern.time < 0:
 		Globals.fastestEtern.time		= Globals.eternTime
-		Globals.fastestEtern.currency	= epgain
+		Globals.fastestEtern.currency	= ppgain
 		Globals.fastestEtern.amount		= largenum.new(etgain)
 	
 	if not Globals.Achievemer.is_unlocked(2, 8):
@@ -423,11 +433,11 @@ func eternity(resetchallenge := true):
 	if not Globals.Achievemer.is_unlocked(6, 6) and TGalaxies == 0 and \
 	TDilation <= -3:
 		Globals.Achievemer.set_unlocked(6, 6)
-	if not Globals.Achievemer.is_unlocked(7, 5) and epgain.log10() >= 200:
+	if not Globals.Achievemer.is_unlocked(7, 5) and ppgain.log10() >= 200:
 		Globals.Achievemer.set_unlocked(7, 5)
 	
 	Globals.last10etern.insert(0, Globals.PrestigeData.new(
-		Globals.eternTime, epgain, etgain
+		Globals.eternTime, ppgain, etgain
 	))
 	if Globals.last10etern.size() > 10:
 		Globals.last10etern.resize(10)
@@ -439,23 +449,23 @@ func eternity(resetchallenge := true):
 func _process(delta):
 	var logfinity = 2048 if Globals.Challenge == 15 else 1024
 	
-	# before overcome eternity or in a regular challenge
+	if topTachyonsInPermanence.less(Currencies.Tachyons.AMOUNT):
+		topTachyonsInPermanence = largenum.new(Currencies.Tachyons.AMOUNT)
+	
+	# before overcome or in a regular challenge
 	if Globals.progressBL < GL.Progression.Overcome or \
 	(Globals.Challenge != 0 and Globals.Challenge <= 15):
 		if Currencies.Tachyons.AMOUNT.log2() >= logfinity:
 			Currencies.Tachyons.AMOUNT.exponent = logfinity
 			Currencies.Tachyons.AMOUNT.mantissa = (1 << 62)
 			return
-		
-	if topTachyonsInEternity.less(Currencies.Tachyons.AMOUNT):
-		topTachyonsInEternity = largenum.new(Currencies.Tachyons.AMOUNT)
 	
 	buymult = 2
 	if Globals.Challenge == 4: buymult = 1.0 + 0.2 * TDilation
-	elif Eternity.upgrade_bought(5): buymult = 2.2222222
+	elif Permanence.upgrade_bought(5): buymult = 2.2222222
 	
 	dilamult = 2.0
-	if Eternity.upgrade_bought(10): dilamult = 2.5
+	if Permanence.upgrade_bought(10): dilamult = 2.5
 	if Globals.OEUHandler.is_bought(5): dilamult = 3.0
 	if Globals.ECCompleted(7): dilamult = 5.0
 	if Globals.Challenge == 10:
@@ -485,11 +495,11 @@ func _process(delta):
 		"Challenge 9" : null,
 		"Challenge 14": null,
 		"Achievements": {},
-		"Eternity Upgrades": {},
-		"Overcome Eternity Upgrades": {}
+		"Permanence Upgrades": {},
+		"Overcome Time Upgrades": {}
 	}
 	if Globals.Challenge == 18:
-		Currencies.Tachyons.mults["Eternity Challenge 3"] = {}
+		Currencies.Tachyons.mults["Permanence Challenge 3"] = {}
 	Currencies.Tachyons.mults["Space Studies"] = {}
 	
 	for i in range(DimsUnlocked, 0, -1):
@@ -511,43 +521,43 @@ func _process(delta):
 		Currencies.Tachyons.mults["Time Dilation"].\
 		push_front(Currencies.Multiplier.new(dilationMult))
 		
-		if Globals.Challenge != 13: # mults from Eternity Upgrades are disabled by C13
-			if Eternity.upgrade_bought(1):
-				multiplier.mult2self(Formulas.eternity_11())
-				if not Currencies.Tachyons.mults["Eternity Upgrades"].has("EU 1"):
-					Currencies.Tachyons.mults["Eternity Upgrades"]["EU 1"] = \
-					Currencies.Multiplier.new(largenum.new(Formulas.eternity_11()), 8)
+		if Globals.Challenge != 13: # mults from Permanence Upgrades are disabled by C13
+			if Permanence.upgrade_bought(1):
+				multiplier.mult2self(Formulas.permanence_11())
+				if not Currencies.Tachyons.mults["Permanence Upgrades"].has("PU 1"):
+					Currencies.Tachyons.mults["Permanence Upgrades"]["PU 1"] = \
+					Currencies.Multiplier.new(largenum.new(Formulas.permanence_11()), 8)
 			
 			var k = 0
-			if Eternity.upgrade_bought(2):
-				if i == 1 or i == 8: multiplier.mult2self(Formulas.eternity_23())
+			if Permanence.upgrade_bought(2):
+				if i == 1 or i == 8: multiplier.mult2self(Formulas.permanence_23())
 				k += 2
-			if Eternity.upgrade_bought(3):
-				if i == 2 or i == 7: multiplier.mult2self(Formulas.eternity_23())
+			if Permanence.upgrade_bought(3):
+				if i == 2 or i == 7: multiplier.mult2self(Formulas.permanence_23())
 				k += 2
-			if Eternity.upgrade_bought(7):
-				if i == 3 or i == 6: multiplier.mult2self(Formulas.eternity_23())
+			if Permanence.upgrade_bought(7):
+				if i == 3 or i == 6: multiplier.mult2self(Formulas.permanence_23())
 				k += 2
-			if Eternity.upgrade_bought(6):
-				if i == 4 or i == 5: multiplier.mult2self(Formulas.eternity_23())
+			if Permanence.upgrade_bought(6):
+				if i == 4 or i == 5: multiplier.mult2self(Formulas.permanence_23())
 				k += 2
 			if k > 0 and \
-			not Currencies.Tachyons.mults["Eternity Upgrades"].has("EUs 2, 3, 6, 7"):
-				Currencies.Tachyons.mults["Eternity Upgrades"]["EUs 2, 3, 6, 7"] = \
-				Currencies.Multiplier.new(Formulas.eternity_23(), k)
+			not Currencies.Tachyons.mults["Permanence Upgrades"].has("PUs 2, 3, 6, 7"):
+				Currencies.Tachyons.mults["Permanence Upgrades"]["PUs 2, 3, 6, 7"] = \
+				Currencies.Multiplier.new(Formulas.permanence_23(), k)
 			
-			if Eternity.upgrade_bought(9):
+			if Permanence.upgrade_bought(9):
 				multiplier.mult2self(Formulas.achievement_mult())
-				if not Currencies.Tachyons.mults["Eternity Upgrades"].has("EU 9"):
-					Currencies.Tachyons.mults["Eternity Upgrades"]["EU 9"] = \
+				if not Currencies.Tachyons.mults["Permanence Upgrades"].has("PU 9"):
+					Currencies.Tachyons.mults["Permanence Upgrades"]["PU 9"] = \
 					Currencies.Multiplier.new(Formulas.achievement_mult(), 8)
 			
-			if Eternity.upgrade_bought(11):
-				multiplier.mult2self(Currencies.EternityPts.AMOUNT.add(1))
-				if not Currencies.Tachyons.mults["Eternity Upgrades"].has("EU 11"):
-					Currencies.Tachyons.mults["Eternity Upgrades"]["EU 11"] = \
+			if Permanence.upgrade_bought(11):
+				multiplier.mult2self(Currencies.PermanencePts.AMOUNT.add(1))
+				if not Currencies.Tachyons.mults["Permanence Upgrades"].has("PU 11"):
+					Currencies.Tachyons.mults["Permanence Upgrades"]["PU 11"] = \
 					Currencies.Multiplier.new(
-						Currencies.EternityPts.AMOUNT.add(1), 8
+						Currencies.PermanencePts.AMOUNT.add(1), 8
 					)
 		
 		if i == 8 or Globals.Challenge == 13:
@@ -617,8 +627,8 @@ func _process(delta):
 			if Globals.OEUHandler.is_bought(1):
 				multiplier.mult2self(Formulas.overcome_1())
 				if not Currencies.Tachyons.\
-				mults["Overcome Eternity Upgrades"].has("OEU 1"):
-					Currencies.Tachyons.mults["Overcome Eternity Upgrades"]["OEU 1"] = \
+				mults["Overcome Time Upgrades"].has("OU 1"):
+					Currencies.Tachyons.mults["Overcome Time Upgrades"]["OU 1"] = \
 					Currencies.Multiplier.new(Formulas.overcome_1(), 8)
 			if Globals.Achievemer.is_unlocked(5, 6):
 				multiplier.mult2self(Formulas.achievement_56())
@@ -638,7 +648,7 @@ func _process(delta):
 		# POWER EFFECTS GO HERE
 		
 		if Globals.Challenge == 18 and i != latest_purchased:
-			Currencies.Tachyons.mults["Eternity Challenge 3"][i] = \
+			Currencies.Tachyons.mults["Permanence Challenge 3"][i] = \
 			Currencies.Multiplier.new(multiplier.power(-0.8), 1, true)
 			multiplier.pow2self(0.2)
 		

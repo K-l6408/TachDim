@@ -62,12 +62,12 @@ func dimcost(which):
 
 func buymax():
 	for i in DimsUnlocked:
-		while dimcost(DimsUnlocked - i).less(Currencies.EternityPts):
+		while dimcost(DimsUnlocked - i).less(Currencies.PermanencePts):
 			buydim(DimsUnlocked - i)
 
 func buydim(which):
 	if which > DimsUnlocked: return
-	if not Currencies.EternityPts.spend(dimcost(which)): return
+	if not Currencies.PermanencePts.spend(dimcost(which)): return
 	DimPurchase[which-1] += 1
 	DimAmount[which-1].add2self(10)
 
@@ -85,7 +85,7 @@ func _process(delta):
 			i.modulate.a = 1
 		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % \
 		[Globals.int_to_string(DimPurchase[k-1]), "" if DimPurchase[k-1] == 1 else "s"]
-		i.get_node("Buy").disabled = Currencies.EternityPts.AMOUNT.less(dimcost(k))
+		i.get_node("Buy").disabled = Currencies.PermanencePts.AMOUNT.less(dimcost(k))
 		if k < 8:
 			i.get_node("A&G/Amount").text = DimAmount[k-1].to_string().\
 			trim_suffix(".00").trim_suffix(";00")
@@ -138,7 +138,7 @@ func _process(delta):
 	
 	#for i in DimsUnlocked:
 		#if Globals.Automation.EDenabled(i+1):
-			#while not Currencies.EternityPts.less(dimcost(i+1)):
+			#while not Currencies.PermanencePts.less(dimcost(i+1)):
 				#buydim(i+1)
 	
 	#if false:

@@ -35,7 +35,7 @@ enum DisplayMode {
 	Roman, toki_pona, sitelen_pona, Canonical_toki_pona, Evil, Factorial
 }
 enum Progression {
-	None, Dilation, Galaxy, Eternity, Overcome, Duplicantes, Boundlessness
+	None, Dilation, Galaxy, Permanence, Overcome, Duplicantes, Boundlessness
 }
 
 const LOG2  = log(2)
@@ -48,7 +48,8 @@ var progressBL : Progression = Progression.None
 
 var Overcame :
 	get:
-		return (15 > Challenge and Challenge > 0) or progressBL < Progression.Overcome
+		if (15 > Challenge and Challenge > 0): return false
+		return progressBL >= Progression.Overcome
 
 var TachTotal := largenum.new(10)
 var TachTotalBL     := largenum.new(10)
@@ -83,13 +84,14 @@ var Animater : AnimationPlayer
 func animation(which):
 	if which == "bang" and not AnimOpt[0]: return
 	if which == "boundless" and not AnimOpt[1]: return
+	get_tree().paused = true
 	Animater.play(which)
 
 var existence = 0
 var eternTime = 0
 var boundTime = 0
 
-var EU12Timer : SceneTreeTimer = null
+var PU12Timer : SceneTreeTimer = null
 
 var fastestEtern := PrestigeData.new(-1, 1, 1)
 var fastestBLess := PrestigeData.new(-1, 1, 1)
@@ -132,8 +134,8 @@ func boundlessnessreset():
 	if Boundlessnesses.to_float() < 2:
 		CompletedChallenges = 0
 	CompletedECs = 0
-	Currencies.EternityPts.reset()
-	Currencies.Eternities .reset()
+	Currencies.PermanencePts.reset()
+	Currencies.Permanences  .reset()
 	last10etern = []
 	fastestEtern = PrestigeData.new(-1, 1, 1)
 	progressBL = Progression.None
@@ -142,8 +144,8 @@ func boundlessnessreset():
 	else:
 		progressBL = Progression.Overcome
 	if Boundlessnesses.to_float() < 4:
-		EUHandler.Bought = 0
-	EUHandler.EPMultBought = 0
+		Permanence.BoughtUpgrades = 0
+	Permanence.PPMultBought = 0
 	if Boundlessnesses.to_float() < 6:
 		OEUHandler.Bought = 0
 	if Boundlessnesses.to_float() < 9:
@@ -157,6 +159,9 @@ func boundlessnessreset():
 	SDHandler.boundlessed()
 	TachTotalBL = largenum.new(Currencies.Tachyons.AMOUNT)
 	Studies.on_reset()
+
+
+### displaying numbers
 
 func int_to_string(i:int) -> String:
 	match display:

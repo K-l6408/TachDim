@@ -6,7 +6,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngcjy"]
 shader = ExtResource("2_5oiqa")
-shader_parameter/pixelsize = 0.0016276
+shader_parameter/pixelsize = 0.00217014
 shader_parameter/zoom = 1.0
 shader_parameter/ignore = Color(0.8, 0.8, 0.8, 1)
 shader_parameter/disabled = null
@@ -780,7 +780,7 @@ grow_vertical = 0
 text = "Perform a Dilation reset
 but lose a Time Dilation"
 
-[node name="ETERNITY" type="Button" parent="."]
+[node name="BIG BANG" type="Button" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 10
@@ -794,7 +794,7 @@ theme_type_variation = &"ButtonEtern"
 theme_override_font_sizes/font_size = 75
 text = "Big Bang"
 
-[node name="Label" type="Label" parent="ETERNITY"]
+[node name="Label" type="Label" parent="BIG BANG"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -808,4 +808,3 @@ to the beginning of the universe."
 horizontal_alignment = 1
 
 [connection signal="pressed" from="VSplitContainer/TopButtons/Rewind" to="VSplitContainer/TopButtons/Rewind" method="_on_pressed"]
-[connection signal="pressed" from="ETERNITY" to="." method="eternity"]

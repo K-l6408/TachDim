@@ -1,44 +1,21 @@
 extends Node
 class_name Formulas
 
-static func eternity_11():
+static func permanence_11():
 	return max((Globals.eternTime / 6.0) ** 0.1 * 2, 1)
 
-static func eternity_23():
-	var base = Currencies.Eternities.AMOUNT.multiply(0.2).add(1)
+static func permanence_23():
+	var base = Currencies.Permanences.AMOUNT.multiply(0.2).add(1)
 	if "2×2" in Globals.Studies.purchased:
 		base.pow2self(4)
 	return base
 
 static func achievement_mult():
-	return largenum.new(1.025).power(Globals.Achievemer.achgot)
-
-static func epgained():
-	var epgain = largenum.new(1)
-	if Globals.Challenge == 15 or Globals.progressBL >= Globals.Progression.Overcome:
-		epgain = largenum.five_to_the((
-			TachyonDims.topTachyonsInEternity.log2() / 1024
-		) - 1)
-		if Globals.OEUHandler.is_bought(4):
-			epgain = largenum.five_to_the((
-				TachyonDims.topTachyonsInEternity.log2() / 900
-			) - 1)
-	
-	epgain.mult2self(largenum.two_to_the(Eternity.EPMultBought))
-	
-	if Globals.Achievemer.is_unlocked(7, 5):
-		epgain.mult2self(2)
-	
-	if "3×2" in Globals.Studies.purchased:
-		epgain.mult2self(1.5 ** TachyonDims.TGalaxies)
-	
-	epgain.integerize()
-	
-	return epgain
+	return largenum.new(1.05).power(Globals.Achievemer.achgot)
 
 static func bpgained():
 	var bpgain = largenum.two_to_the(3 * (
-			Currencies.EternityPts.AMOUNT.log2() / 1024
+			Currencies.PermanencePts.AMOUNT.log2() / 1024
 		 - 1))
 	
 	if "5×1" in Globals.Studies.purchased:
@@ -68,7 +45,7 @@ static func overcome_7():
 	return max(300 / i, 1)
 
 static func overcome_9():
-	var base = Currencies.Eternities.AMOUNT.power(2)
+	var base = Currencies.Permanences.AMOUNT.power(2)
 	if "2×2" in Globals.Studies.purchased:
 		base.pow2self(4)
 	return base

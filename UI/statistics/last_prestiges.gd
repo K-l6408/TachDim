@@ -2,18 +2,18 @@ extends Control
 
 func _process(_delta):
 	if Globals.last10etern.is_empty():
-		$Eternity.hide()
+		$Permanence.hide()
 	else:
-		$Eternity.show()
-		setup_table($Eternity, Globals.last10etern, ["EP", "Eternities"])
+		$Permanence.show()
+		setup_table($Permanence, Globals.last10etern, ["PP", "Permanences"])
 	
 	if Globals.last10bless.is_empty():
-		$Eternity.anchor_left  = 0.5
-		$Eternity.anchor_right = 0.5
+		$Permanence.anchor_left  = 0.5
+		$Permanence.anchor_right = 0.5
 		$Boundlessness.hide()
 	else:
-		$Eternity.anchor_left  = 0.3
-		$Eternity.anchor_right = 0.3
+		$Permanence.anchor_left  = 0.3
+		$Permanence.anchor_right = 0.3
 		$Boundlessness.anchor_left  = 0.7
 		$Boundlessness.anchor_right = 0.7
 		$Boundlessness.show()

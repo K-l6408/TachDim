@@ -10,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_4b317")
 
 [node name="Auto" type="ScrollContainer" parent="."]
@@ -24,6 +25,7 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="Big Bang" type="Panel" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(0, 53)
@@ -180,7 +182,6 @@ offset_right = -5.0
 offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
-toggle_mode = true
 text = "Interval: 01:00 → 36 s
 Cost: 1.0 EP"
 
@@ -198,6 +199,7 @@ offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Dilation" type="Panel" parent="Auto/Buyers"]
@@ -242,7 +244,6 @@ offset_right = -4.0
 offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
-toggle_mode = true
 text = "Interval: 01:00 → 36 s
 Cost: 1.0 EP"
 
@@ -260,19 +261,23 @@ offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
+toggle_mode = true
 text = "Buys singles"
 
 [node name="Panel2" type="PanelContainer" parent="Auto/Buyers"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Oðers" type="HFlowContainer" parent="Auto/Buyers/Panel2"]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Rewind" type="Panel" parent="Auto/Buyers/Panel2/Oðers"]
 custom_minimum_size = Vector2(500, 53)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="Auto/Buyers/Panel2/Oðers/Rewind"]
 layout_mode = 1

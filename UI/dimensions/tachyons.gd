@@ -34,24 +34,26 @@ func _ready():
 	%Prestiges/DiButton.connect("pressed", TachyonDims.dilate)
 	%Prestiges/GaButton.connect("pressed", TachyonDims.galaxy)
 	%Prestiges/Reset.connect("pressed", TachyonDims.antisoftlock)
+	
+	$"BIG BANG".connect("pressed", TachyonDims.permanence)
 
 func _process(delta):
 	var logfinity = 2048 if Globals.Challenge == 15 else 1024
 	
 	#if canBigBang and Input.is_action_pressed("BBang"):
-		#eternity()
+		#Permanence()
 	
 	if Globals.progressBL < GL.Progression.Overcome or \
 	(Globals.Challenge != 0 and Globals.Challenge <= 15):
 		$VSplitContainer.visible = (Currencies.Tachyons.AMOUNT.log2() <= logfinity)
-		$ETERNITY.visible        = (Currencies.Tachyons.AMOUNT.log2() >= logfinity)
+		$"BIG BANG".visible      = (Currencies.Tachyons.AMOUNT.log2() >= logfinity)
 		
 		if TachyonDims.canBigBang:
-			custom_minimum_size.y = $ETERNITY.size.y
+			custom_minimum_size.y = $"BIG BANG".size.y
 			return
 	else:
 		$VSplitContainer.visible = true
-		$ETERNITY.visible = false
+		$"BIG BANG".visible = false
 	custom_minimum_size.y = $VSplitContainer.size.y
 	
 	for k in 8:
@@ -154,7 +156,7 @@ func _process(delta):
 	if Globals.Challenge <= 15:
 		%Progress.value = Currencies.Tachyons.AMOUNT.log2()
 		%Progress.max_value = logfinity
-		%Progress.tooltip_text += "Eternity"
+		%Progress.tooltip_text += "Permanence"
 	else:
 		%Progress.value = Currencies.Tachyons.AMOUNT.log2()
 		%Progress.max_value = Globals.ECTargets[Globals.Challenge - 16].log2()
@@ -203,19 +205,15 @@ func _process(delta):
 		set_shader_parameter("disabled", %Prestiges/DiButton.disabled)
 	
 	if TachyonDims.TDilation < 5 and Globals.Challenge != 13:
-		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (requires %s Time Dilation) " % \
 		Globals.int_to_string(5)
 	elif TachyonDims.DimAmount[7].exponent == -INF and Globals.Challenge != 13:
-		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (no %s TD)" % \
 		Globals.ordinal(8)
 	elif TachyonDims.rewindBoost().less(TachyonDims.RewindMult):
-		rewindNode.disabled = true
 		rewindNode.text = "Dimensional Rewind disabled (×%s multiplier)" % \
 		Globals.int_to_string(1)
 	else:
-		rewindNode.disabled = false
 		if Globals.Challenge == 13:
 			rewindNode.text = "Dimensional Rewind (×%s to all TDs)" % [
 				TachyonDims.rewindBoost().\
@@ -327,7 +325,7 @@ func _process(delta):
 	
 	if Globals.Challenge == 22:
 		%Prestiges/GaButton.disabled = true
-		%Prestiges/GaButton.text = "Tachyon Galaxies disabled\n(Eternity Challenge %s)" % \
+		%Prestiges/GaButton.text = "Tachyon Galaxies disabled\n(Permanence Challenge %s)" % \
 		Globals.int_to_string(7)
 	%Prestiges/Reset.visible = (Globals.Challenge in [14, 18, 19]) and \
 	TachyonDims.TDilation > -3
@@ -353,8 +351,8 @@ func _process(delta):
 		#if not %Prestiges/GaButton.disabled:
 			#galaxy()
 	#if Input.is_action_pressed("BBang"):
-		#if $ETERNITY.visible:
-			#eternity()
+		#if $"BIG BANG".visible:
+			#Permanence()
 	
 	if Globals.Challenge == 10:
 		if %Prestiges/DiButton.material == null:
@@ -369,6 +367,3 @@ func _process(delta):
 	else:
 		%Prestiges/DiButton/Accuracy.visible = false
 		%Prestiges/DiButton.material = null
-
-func eternity():
-	TachyonDims.eternity()

@@ -59,24 +59,24 @@ func _process(_delta):
 		
 		text += " to count all your tachyons."
 	
-	if Globals.progress >= Globals.Progression.Eternity:
+	if Globals.progress >= Globals.Progression.Permanence:
 		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s%s%s.\n" % [
 			eternityColor,
-			"Eternity",
-			"You have", Currencies.Eternities.AMOUNT.to_string().trim_suffix(".00"), "Eternit",
-			"y" if Currencies.Eternities.AMOUNT.to_float() == 1 else "ies",
+			"Permanence",
+			"You have", Currencies.Permanences.AMOUNT.to_string().trim_suffix(".00"), "Permanence",
+			"" if Currencies.Permanences.AMOUNT.to_float() == 1 else "s",
 			" this Boundlessness" if Globals.Boundlessnesses.to_float() > 0 else "",
 		]
 		if Globals.fastestEtern.time > 0:
-			text += "Your fastest Eternity %stook %s.\n" % [
+			text += "Your fastest Permanence %stook %s.\n" % [
 				"this Boundlessness " if Globals.Boundlessnesses.to_float() > 0 else "",
 				Globals.format_time(Globals.fastestEtern.time)
 			]
 		else:
-			text += "You have no fastest Eternity%s.\n" % [
+			text += "You have no fastest Permanence%s.\n" % [
 				" this Boundlessness" if Globals.Boundlessnesses.to_float() > 0 else "",
 			]
-		text += "You have spent %s in this Eternity." % Globals.format_time(Globals.eternTime)
+		text += "You have spent %s in this Permanence." % Globals.format_time(Globals.eternTime)
 	
 	if Globals.progress >= Globals.Progression.Boundlessness:
 		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s\n%s %s.\n%s %s %s" % [

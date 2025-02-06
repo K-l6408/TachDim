@@ -23,7 +23,7 @@ Globals="*res://globals.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 Currencies="*res://internal/currencies.gd"
 TachyonDims="*res://internal/dimensions/tachyons.gd"
-Eternity="*res://internal/eternity.gd"
+Permanence="*res://internal/permanence.gd"
 Autobuyers="*res://internal/autobuyers.gd"
 
 [display]

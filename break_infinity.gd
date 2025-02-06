@@ -56,10 +56,13 @@ func fix_mantissa():
 	if sign == 0 and exponent != -INF: sign = 1
 
 func integerize():
-	if Globals.Duplicantes.exponent < 61:
-		Globals.Duplicantes.mantissa >>= 60 - int(Globals.Duplicantes.exponent)
-		Globals.Duplicantes.mantissa += Globals.Duplicantes.mantissa % 2
-		Globals.Duplicantes.mantissa <<= 60 - int(Globals.Duplicantes.exponent)
+	if exponent < 61:
+		mantissa >>= 60 - int(exponent)
+		mantissa += mantissa % 2
+		mantissa <<= 60 - int(exponent)
+	if mantissa == 0:
+		_init(1)
+	return self
 
 func add(b) -> largenum:
 	if not b is largenum:

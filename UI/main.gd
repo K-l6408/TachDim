@@ -6,26 +6,26 @@ var debugMode := false
 var tabSymbolLeft  = "⇠\uf085⁈δΞ∀\uf091\uf11c\uf0ca\uf1de[!"
 var tabSymbolRight = "⇢\uf1de⁉δΞ∀\uf091\uf11c\uf0c9\uf0ad]!"
 
-var dimensionSymbols = "Ψδ∀"
-var challengeSymbols = "Ψδ∀"
-var  eternitySymbols = "↑⭻"
-var boundlessSymbols = "\uf0e8\uf005"
-var     statsSymbols = "\uf036\uf162\uf0cb\uf1ec"
-var   optionsSymbols = "\uf0c7\uf1fc"
-var celestialSymbols = "⏣⚴☾𝄽\uf1e0ɸ⸸"
+var  dimensionSymbols = "Ψδ∀"
+var  challengeSymbols = "Ψδ∀"
+var permanenceSymbols = "↑⭻"
+var  boundlessSymbols = "\uf0e8\uf005"
+var      statsSymbols = "\uf036\uf162\uf0cb\uf1ec"
+var    optionsSymbols = "\uf0c7\uf1fc"
+var  celestialSymbols = "⏣⚴☾𝄽\uf1e0ɸ⸸"
 
 func _ready():
 	Globals.NotifHandler = $Notifs
-	Globals.EDHandler = %Tabs/Dimensions/Eternity
+	Globals.EDHandler = %Tabs/Dimensions/Permanence
 	Globals.SDHandler = %Tabs/Dimensions/Space
 	Globals.Automation = %Tabs/Automation
 	Globals.Achievemer = %Tabs/Achievements
 	Globals.Animater = $AnimationPlayer
 	Globals.VisualSett = %Tabs/Options/Visual
-	Globals.EUHandler = %"Tabs/Eternity/Eternity Upgrades"
-	Globals.OEUHandler = %"Tabs/Eternity/Overcome Eternity"
+	Globals.EUHandler = %"Tabs/Permanence/Permanence Upgrades"
+	Globals.OEUHandler = %"Tabs/Permanence/Overcome Time"
 	Globals.DupHandler = %Tabs/Duplicantes
-	Globals.Studies = %"Tabs/Boundlessness/Space Studies"
+	Globals.Studies = %"Tabs/Transcendence/Space Studies"
 	
 	for i in %Tabs.get_child_count():
 		TBar.set_tab_title(i, "%s %s %s" % \
@@ -36,12 +36,12 @@ func _ready():
 	for i in %Tabs/Challenges.get_child_count():
 		%Tabs/Challenges.get_tab_bar().set_tab_title(i, "%s %s %s" % \
 		[challengeSymbols[i], %Tabs/Challenges.get_child(i).name, challengeSymbols[i]])
-	for i in %Tabs/Eternity.get_child_count():
-		%Tabs/Eternity.get_tab_bar().set_tab_title(i, "%s %s %s" % \
-		[eternitySymbols[i], %Tabs/Eternity.get_child(i).name, eternitySymbols[i]])
-	for i in %Tabs/Boundlessness.get_child_count():
-		%Tabs/Boundlessness.get_tab_bar().set_tab_title(i, "%s %s %s" % \
-		[boundlessSymbols[i], %Tabs/Boundlessness.get_child(i).name, boundlessSymbols[i]])
+	for i in %Tabs/Permanence.get_child_count():
+		%Tabs/Permanence.get_tab_bar().set_tab_title(i, "%s %s %s" % \
+		[permanenceSymbols[i], %Tabs/Permanence.get_child(i).name, permanenceSymbols[i]])
+	for i in %Tabs/Transcendence.get_child_count():
+		%Tabs/Transcendence.get_tab_bar().set_tab_title(i, "%s %s %s" % \
+		[boundlessSymbols[i], %Tabs/Transcendence.get_child(i).name, boundlessSymbols[i]])
 	for i in %Tabs/Statistics.get_child_count():
 		%Tabs/Statistics.get_tab_bar().set_tab_title(i, "%s %s %s" % \
 		[statsSymbols[i], %Tabs/Statistics.get_child(i).name, statsSymbols[i]])
@@ -64,8 +64,8 @@ func _process(_delta):
 	$Window.visible = not get_tree().root.has_focus()
 	
 	TBar.set_tab_hidden(1, Globals.TachTotal.less(largenum.new(10).pow2self(20)))
-	TBar.set_tab_hidden(2, Globals.progress < Globals.Progression.Eternity)
-	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Eternity)
+	TBar.set_tab_hidden(2, Globals.progress < Globals.Progression.Permanence)
+	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Permanence)
 	TBar.set_tab_hidden(4, Globals.progress < Globals.Progression.Duplicantes)
 	TBar.set_tab_hidden(5, Globals.progress < Globals.Progression.Boundlessness)
 	
@@ -83,7 +83,7 @@ func _process(_delta):
 	$ETint.material.set_shader_parameter(
 		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
 	)
-	$ETint.visible = (Globals.progress >= GL.Progression.Eternity)
+	$ETint.visible = (Globals.progress >= GL.Progression.Permanence)
 	
 	$DTint.global_position = TBar.get_tab_rect(4).position + TBar.global_position\
 	+ Vector2(-1, 1)
@@ -111,10 +111,10 @@ func _process(_delta):
 	%Resources/Rewind.visible = \
 	%Tabs/Dimensions/Tachyons.rewindNode.visible
 	
-	%Resources/Eternity.visible = \
+	%Resources/Permanence.visible = \
 	Globals.progressBL >= GL.Progression.Overcome and \
 	(Globals.Challenge == 0 or Globals.Challenge > 15)
-	%Resources/Eternity/EternityButton.disabled = \
+	%Resources/Permanence/PermanenceButton.disabled = \
 	not TachyonDims.canBigBang
 	
 	%Resources/EDunlock.visible = \
@@ -127,9 +127,9 @@ func _process(_delta):
 	%Resources/Boundlessness.visible = \
 	Globals.EDHandler.DimsUnlocked == 8 or \
 	Globals.Boundlessnesses.to_float() >= 25
-	if Currencies.EternityPts.AMOUNT.exponent < 1024:
+	if Currencies.PermanencePts.AMOUNT.exponent < 1024:
 		%Resources/Boundlessness/BoundlessButton.disabled = true
-		%Resources/Boundlessness/BoundlessButton.text = "Reach %s\nEternity Points" % \
+		%Resources/Boundlessness/BoundlessButton.text = "Reach %s\nPermanence Points" % \
 		largenum.two_to_the(1024)
 	else:
 		%Resources/Boundlessness/BoundlessButton.disabled = false
@@ -140,7 +140,7 @@ func _process(_delta):
 			(
 				"(%s%s %s)" % (
 					[
-						"next at ", Formulas.next_bp(), "EP"
+						"next at ", Formulas.next_bp(), "PP"
 					] if Formulas.bpgained().to_float() < 100 else [
 						"", Formulas.bpgained().divide(Globals.boundTime),
 						"BP/s"
@@ -149,18 +149,18 @@ func _process(_delta):
 			)
 		]
 	
-	%Resources/EP.visible = (Globals.progress >= GL.Progression.Eternity)
-	%Resources/Challenge.visible = (Globals.progress >= GL.Progression.Eternity)
+	%Resources/PP.visible = (Globals.progress >= GL.Progression.Permanence)
+	%Resources/Challenge.visible = (Globals.progress >= GL.Progression.Permanence)
 	%Resources/Dupl.visible = (Globals.progress >= GL.Progression.Duplicantes)
 	%Resources/BP.visible = (Globals.progress >= GL.Progression.Boundlessness)
 	
 	%Resources/Tachyons/Text.text = \
 	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Currencies.Tachyons.to_string()
-	%Resources/EP/Text.text = \
-	"[center][color=%s][font_size=16]%s[/font_size]\nEternity Point%s[/color][/center]" % [
+	%Resources/PP/Text.text = \
+	"[center][color=%s][font_size=16]%s[/font_size]\nPermanence Point%s[/color][/center]" % [
 		get_theme_color("font_color", "ButtonEtern").to_html(false),
-		Currencies.EternityPts.AMOUNT.to_string().trim_suffix(".00").trim_suffix(";00"),
-		"" if Currencies.EternityPts.AMOUNT.exponent == 0 else "s"
+		Currencies.PermanencePts.AMOUNT.to_string().trim_suffix(".00").trim_suffix(";00"),
+		"" if Currencies.PermanencePts.AMOUNT.exponent == 0 else "s"
 	]
 	%Resources/Dupl/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nDuplican%ss[/color][/center]" % [
@@ -186,17 +186,17 @@ func _process(_delta):
 		%Resources/Challenge/Text.text = \
 		"[center]Current Challenge:\n[font_size=16]None[/font_size][/center]"
 	
-	if %Resources/Eternity/EternityButton.disabled:
-		%Resources/Eternity/EternityButton.text = "Reach\n%s Tachyons" % (
+	if %Resources/Permanence/PermanenceButton.disabled:
+		%Resources/Permanence/PermanenceButton.text = "Reach\n%s Tachyons" % (
 			largenum.two_to_the(1024) if Globals.Challenge <= 15 else
 			Globals.ECTargets[Globals.Challenge - 16]
 		).to_string()
 	elif Globals.Challenge > 15:
-		%Resources/Eternity/EternityButton.text = "Big Bang to\ncomplete the\nchallenge"
+		%Resources/Permanence/PermanenceButton.text = "Big Bang to\ncomplete the\nchallenge"
 	else:
-		%Resources/Eternity/EternityButton.text = "Big Bang for\n%s EP\n(%s EP/s)" % [
-			Formulas.epgained().to_string().trim_suffix(".00").trim_suffix(";00"),
-			Formulas.epgained().divide(Globals.eternTime).to_string()
+		%Resources/Permanence/PermanenceButton.text = "Big Bang for\n%s PP\n(%s PP/s)" % [
+			Permanence.process_pp_gain().to_string().trim_suffix(".00").trim_suffix(";00"),
+			Permanence.process_pp_gain().divide(Globals.eternTime).to_string()
 		]
 
 func rewind(score):
@@ -204,3 +204,6 @@ func rewind(score):
 
 func theme_change(which):
 	theme = which
+
+func UNPAUSE():
+	get_tree().paused = false

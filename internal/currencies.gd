@@ -65,8 +65,8 @@ var Tachyons := Currency.new(
 			return largenum.ten_to_the(1)
 )
 
-var EternityPts := Currency.new(
+var PermanencePts := Currency.new(
 	func():
 		return largenum.new(0)
 )
-var Eternities := Currency.new(null, false)
+var Permanences := Currency.new(null, false)

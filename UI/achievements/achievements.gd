@@ -111,7 +111,7 @@ func achreqs(r, c):
 			6: return "Big Bang in under %s.\n(Reward: Start with %s Tachyons.)" % \
 			[Globals.format_time(600), Globals.int_to_string(5000)]
 			7: return "Big Bang with a single Tachyon Galaxy."
-			8: return "Purchase the first %s Eternity Upgrades." % Globals.int_to_string(12)
+			8: return "Purchase the first %s Permanence Upgrades." % Globals.int_to_string(12)
 		4: match c:
 			1: return "Complete a Challenge."
 			2: return "Big Bang in under %s.\n(Reward: Start with %s Tachyons.)" % [
@@ -119,25 +119,25 @@ func achreqs(r, c):
 			]
 			3: return "Max the interval for all TD autobuyers, and Timespeed."
 			4: return "Big Bang without any %s Dimensions." % Globals.ordinal(7)
-			5: return "Get to %s Tachyons with less than %s in your current Eternity." % [
+			5: return "Get to %s Tachyons with less than %s in your current Permanence." % [
 				largenum.ten_to_the(100).to_string(), Globals.format_time(30)
 			]
-			6: return "Purchase %s Eternity Upgrades." % Globals.int_to_string(16) + \
-			"\n(Reward: Unlock two more Eternity Upgrades)"
+			6: return "Purchase %s Permanence Upgrades." % Globals.int_to_string(16) + \
+			"\n(Reward: Unlock two more Permanence Upgrades)"
 			7: return "Complete Challenge %s." % Globals.int_to_string(15) + \
-			"\n(Reward: Gain ×%s more Eternity Points when completing C%s.)" % [
+			"\n(Reward: Gain ×%s more Permanence Points when completing C%s.)" % [
 				Globals.int_to_string(5), Globals.int_to_string(15)
 			]
 			8: return "Complete all Challenges.\n(Reward: All TDs are %s stronger.)" % \
 			Globals.percent_to_string(0.2)
 		5: match c:
-			1: return "Overcome Eternity."
+			1: return "Overcome Time."
 			2: return "Fully improve the Rewind Autobuyer (interval and accuracy).\n" + \
 			"(Reward: Rewind is ×%s faster and its autobuyer activates every frame.)" % \
 			Globals.int_to_string(7)
 			3: return "Get all your TD autobuyers' bulks to %s." % \
 			Globals.int_to_string(512) + "\n(Reward: TD autobuyers have unlimited bulk.)"
-			4: return "Purchase a %s Eternity Dimension." % Globals.ordinal(1)
+			4: return "Purchase a %s Permanence Dimension." % Globals.ordinal(1)
 			5: return "Complete Challenge %s in %s or less." % [
 				Globals.int_to_string(8), Globals.format_time(30)
 			] + "\n(Reward: Rewind multiplier is raised ^%s.)" % \
@@ -145,10 +145,10 @@ func achreqs(r, c):
 			6: return "Complete Challenge %s in %s or less." % [
 				Globals.int_to_string(2), Globals.format_time(30)
 			] + "\n(Reward: Tachyon Dimensions are stronger" + \
-			"\nin the first %s each Eternity.)\n(Currently: ×%s)" % [
+			"\nin the first %s each Permanence.)\n(Currently: ×%s)" % [
 				Globals.format_time(120), Globals.float_to_string(Formulas.achievement_56())
 			]
-			7: return "Complete an Eternity Challenge."
+			7: return "Complete a Permanence Challenge."
 			8: return "Get the Overcome upgrade that powers up Galaxies."
 		6: match c:
 			1: return "Have over %s Tachyons." % largenum.ten_to_the(9999).multiply(9)
@@ -163,22 +163,22 @@ func achreqs(r, c):
 				Globals.format_time(0.5),
 				Globals.float_to_string(5e25)
 			]
-			5: return "Have more Duplicantes than Eternity Points."
+			5: return "Have more Duplicantes than Permanence Points."
 			6: return "Big Bang with -%s Dilation and no Tachyon Galaxies." % \
 			Globals.int_to_string(3)
 			7: return "Upgrade your Duplicantes' duplication chance to at least %s." % \
 			Globals.percent_to_string(.5, 0)
 			8: return "Max out the Duplicantes limit." + \
-			"\n(Reward: Duplicantes don't reset on Eternity.)"
+			"\n(Reward: Duplicantes don't reset on Permanence.)"
 		7: match c:
 			1: return "Get a Duplicantes Galaxy."
-			2: return "Complete Eternity Challenge %s in %s or less." % [
+			2: return "Complete Permanence Challenge %s in %s or less." % [
 				Globals.int_to_string(3), Globals.format_time(30)
 			]
 			
-			5: return "Big Bang for %s Eternity Points.\n" % \
+			5: return "Big Bang for %s Permanence Points.\n" % \
 			Globals.float_to_string(1e200) + \
-			"Reward: Gain ×%s Eternity Points." % \
+			"Reward: Gain ×%s Permanence Points." % \
 			Globals.int_to_string(2)
 			
 			7: return "Have %s Duplicantes Galaxies." % \
@@ -243,12 +243,12 @@ func _process(_delta):
 		if Autobuyers.NormUnlocked == 511:
 			set_unlocked(2, 6)
 	if not is_unlocked(3, 2):
-		if Currencies.Eternities.spend(10):
+		if Currencies.Permanences.spend(10):
 			set_unlocked(3, 2)
 	if not is_unlocked(3, 8):
-		if  Eternity.upgrade_bought(4) \
-		and Eternity.upgrade_bought(8) \
-		and Eternity.upgrade_bought(12):
+		if  Permanence.upgrade_bought(4) \
+		and Permanence.upgrade_bought(8) \
+		and Permanence.upgrade_bought(12):
 			set_unlocked(3, 8)
 	if not is_unlocked(4, 1):
 		if Globals.CompletedChallenges > 0:
@@ -257,10 +257,10 @@ func _process(_delta):
 		if Currencies.Tachyons.AMOUNT.log10() >= 100 and Globals.eternTime < 30:
 			set_unlocked(4, 5)
 	if not is_unlocked(4, 6):
-		if  Eternity.upgrade_bought(4) \
-		and Eternity.upgrade_bought(8) \
-		and Eternity.upgrade_bought(12)\
-		and Eternity.upgrade_bought(16):
+		if  Permanence.upgrade_bought(4) \
+		and Permanence.upgrade_bought(8) \
+		and Permanence.upgrade_bought(12)\
+		and Permanence.upgrade_bought(16):
 			set_unlocked(4, 6)
 	if not is_unlocked(4, 7):
 		if Globals.challengeCompleted(15):
@@ -287,7 +287,7 @@ func _process(_delta):
 		if not Currencies.Tachyons.AMOUNT.less(largenum.ten_to_the(9999).multiply(9)):
 			set_unlocked(6, 1)
 	if not is_unlocked(6, 5):
-		if not Globals.Duplicantes.less(Currencies.EternityPts.AMOUNT):
+		if not Globals.Duplicantes.less(Currencies.PermanencePts.AMOUNT):
 			set_unlocked(6, 5)
 	if not is_unlocked(6, 7):
 		if Globals.DupHandler.chance >= 50:

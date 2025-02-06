@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=48 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_fid5e"]
@@ -9,14 +9,14 @@
 [ext_resource type="Shader" path="res://UI/dimensions/rewind.gdshader" id="3_o4cqe"]
 [ext_resource type="PackedScene" uid="uid://di8p3xe1w45pw" path="res://UI/automation/autobuyers.tscn" id="5_f3s3t"]
 [ext_resource type="Script" path="res://UI/dimensions/EDunlock.gd" id="5_htsl0"]
-[ext_resource type="PackedScene" uid="uid://f1s25k1un5sf" path="res://UI/eternity/upgrades.tscn" id="6_0l55j"]
+[ext_resource type="PackedScene" uid="uid://f1s25k1un5sf" path="res://UI/permanence/upgrades.tscn" id="6_0l55j"]
 [ext_resource type="PackedScene" uid="uid://cpyhr1o2ep885" path="res://UI/challenges/normal.tscn" id="6_agbn0"]
 [ext_resource type="PackedScene" uid="uid://dfqmisim44jab" path="res://UI/dimensions/eternity.tscn" id="6_eboqi"]
 [ext_resource type="PackedScene" uid="uid://cy1o0vjg4sdbt" path="res://UI/achievements/achievements.tscn" id="6_mtmcd"]
 [ext_resource type="PackedScene" uid="uid://bb23v4wug50t3" path="res://UI/options/saving.tscn" id="6_rxys2"]
 [ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
 [ext_resource type="Script" path="res://UI/boundlessness/resetbutton.gd" id="8_x0h36"]
-[ext_resource type="PackedScene" uid="uid://cbherf2m8xvad" path="res://UI/eternity/overcome.tscn" id="9_ug0mq"]
+[ext_resource type="PackedScene" uid="uid://cbherf2m8xvad" path="res://UI/permanence/overcome.tscn" id="9_ug0mq"]
 [ext_resource type="PackedScene" uid="uid://d1v3rvuka8dmn" path="res://UI/challenges/eternity.tscn" id="10_s4e3g"]
 [ext_resource type="PackedScene" uid="uid://damsts43cifm8" path="res://UI/statistics/statistics.tscn" id="10_whf7c"]
 [ext_resource type="PackedScene" uid="uid://b7ilo43kpte1u" path="res://UI/dimensions/space.tscn" id="11_m4fhr"]
@@ -25,13 +25,15 @@
 [ext_resource type="Script" path="res://UI/notifs.gd" id="12_ab4py"]
 [ext_resource type="PackedScene" uid="uid://d0jbprr882fjc" path="res://UI/statistics/challenges.tscn" id="13_1u8bp"]
 [ext_resource type="PackedScene" uid="uid://ckigo0tgi2x53" path="res://UI/duplicantes/duplicantes.tscn" id="13_vhw6w"]
-[ext_resource type="Texture2D" uid="uid://d070fk356hwgi" path="res://images/glass.png" id="15_7ies4"]
-[ext_resource type="Shader" path="res://UI/eternity/glass.gdshader" id="15_hde6e"]
 [ext_resource type="PackedScene" uid="uid://br0msw23i7kmv" path="res://UI/boundlessness/studies.tscn" id="17_uosw5"]
 [ext_resource type="PackedScene" uid="uid://cbiebd0j27hoy" path="res://UI/boundlessness/milestones.tscn" id="19_u3snt"]
 [ext_resource type="Shader" path="res://UI/tint.gdshader" id="24_irn3s"]
 [ext_resource type="PackedScene" uid="uid://bu4y01w5qnw72" path="res://UI/statistics/breakdown.tscn" id="24_mt7op"]
 [ext_resource type="FontFile" uid="uid://bbb4ct4acdbbl" path="res://fonts/Blobmoji.ttf" id="25_na6n0"]
+[ext_resource type="Script" path="res://UI/shaders.gd" id="29_nnwlg"]
+[ext_resource type="Script" path="res://internal/shatter.gd" id="30_g6sfq"]
+[ext_resource type="Shader" path="res://UI/screen_shaders.gdshader" id="30_iqdd2"]
+[ext_resource type="Script" path="res://internal/screenshot.gd" id="30_nqics"]
 [ext_resource type="PackedScene" uid="uid://b15baj8equdto" path="res://UI/bar.tscn" id="33_yxlw4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
@@ -41,11 +43,9 @@ shader_parameter/zoom = 1.0
 shader_parameter/ignore = Color(0.8, 0.8, 0.8, 1)
 shader_parameter/disabled = null
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_itacs"]
-shader = ExtResource("15_hde6e")
-shader_parameter/refloffset = Vector2(20, 10)
-shader_parameter/refroffset = Vector2(1, 1)
-shader_parameter/refrcolor = Vector4(1, 1, 1, 0.7)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gj34f"]
+shader = ExtResource("30_iqdd2")
+shader_parameter/fisheye = 0.0
 
 [sub_resource type="Animation" id="Animation_m0sop"]
 resource_name = "bang"
@@ -53,26 +53,40 @@ length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:zoom")
-tracks/0/interp = 1
+tracks/0/path = NodePath("Camera2D/CanvasLayer/Shaders:fisheye")
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7, 0.8, 1.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(100, 100), Vector2(0.1, 0.1), Vector2(1, 1)]
+"values": [0.0, -1.0, 0.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D/CanvasModulate:color")
+tracks/1/path = NodePath("Camera2D/CanvasLayer/TintScreen:color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7, 1.5),
-"transitions": PackedFloat32Array(0.148651, 4.59479, 1),
+"times": PackedFloat32Array(0, 0.9, 1.3, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"UNPAUSE"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_sfx5g"]
@@ -94,41 +108,50 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_a3cka"]
 resource_name = "overcome"
 length = 2.0
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D/CanvasLayer:visible")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"UNPAUSE"
+}]
 }
-tracks/1/type = "value"
+tracks/1/type = "method"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D/CanvasLayer/TextureRect:rotation")
-tracks/1/interp = 4
+tracks/1/path = NodePath("Camera2D/CanvasLayer/Sprite2D")
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6, 1.2, 2),
-"transitions": PackedFloat32Array(1, 1, 1, -0.5, 1),
-"update": 0,
-"values": [0.0, 0.0, 0.0, 0.523599, 1.5708]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"screenshot"
+}]
 }
-tracks/2/type = "value"
+tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Camera2D/CanvasLayer/TextureRect:position")
-tracks/2/interp = 2
+tracks/2/path = NodePath("Camera2D/CanvasLayer/Sprite2D/Node2D")
+tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3, 1.2, 1.4, 2),
-"transitions": PackedFloat32Array(1, 0, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(200, -100), Vector2(400, 700)]
+"times": PackedFloat32Array(0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"start"
+}, {
+"args": [],
+"method": &"shatter"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8dv4p"]
@@ -303,12 +326,12 @@ grow_vertical = 0
 text = "Rewind"
 horizontal_alignment = 1
 
-[node name="EP" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+[node name="PP" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EP"]
+[node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/PP"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 14
@@ -321,7 +344,7 @@ grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center][color=b241e3][font_size=16]1.80e308[/font_size]
-Eternity Points[/color][/center]"
+Permanence Points[/color][/center]"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -348,12 +371,12 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Eternity" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+[node name="Permanence" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
-[node name="EternityButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Eternity"]
+[node name="PermanenceButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Permanence"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -366,8 +389,8 @@ offset_bottom = -5.0
 grow_horizontal = 2
 theme_type_variation = &"ButtonEtern"
 text = "Big Bang for
-1.75e115 EP
-(1.24e114 EP/s)"
+1.75e115 PP
+(1.24e114 PP/s)"
 
 [node name="Dupl" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
@@ -485,7 +508,7 @@ layout_mode = 2
 [node name="Tachyons" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("1_8gea7")]
 layout_mode = 2
 
-[node name="Eternity" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("6_eboqi")]
+[node name="Permanence" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("6_eboqi")]
 visible = false
 layout_mode = 2
 
@@ -508,14 +531,14 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="Eternity" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+[node name="Permanence" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="Eternity Upgrades" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity" instance=ExtResource("6_0l55j")]
+[node name="Permanence Upgrades" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Permanence" instance=ExtResource("6_0l55j")]
 layout_mode = 2
 
-[node name="Overcome Eternity" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity" instance=ExtResource("9_ug0mq")]
+[node name="Overcome Time" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Permanence" instance=ExtResource("9_ug0mq")]
 visible = false
 layout_mode = 2
 
@@ -523,14 +546,14 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="Boundlessness" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
+[node name="Transcendence" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 
-[node name="Space Studies" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Boundlessness" instance=ExtResource("17_uosw5")]
+[node name="Space Studies" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Transcendence" instance=ExtResource("17_uosw5")]
 layout_mode = 2
 
-[node name="Milestones" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Boundlessness" instance=ExtResource("19_u3snt")]
+[node name="Milestones" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Transcendence" instance=ExtResource("19_u3snt")]
 visible = false
 layout_mode = 2
 
@@ -595,6 +618,7 @@ visible = false
 layout_mode = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
+process_mode = 3
 position = Vector2(480, 320)
 ignore_rotation = false
 
@@ -602,25 +626,40 @@ ignore_rotation = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
 layer = 2
-visible = false
 
-[node name="TextureRect" type="TextureRect" parent="Camera2D/CanvasLayer"]
-texture_filter = 1
-material = SubResource("ShaderMaterial_itacs")
+[node name="Shaders" type="ColorRect" parent="Camera2D/CanvasLayer"]
+material = SubResource("ShaderMaterial_gj34f")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 400.0
-offset_top = 700.0
-offset_right = 399.999
-offset_bottom = 700.001
 grow_horizontal = 2
 grow_vertical = 2
-rotation = 1.5708
-texture = ExtResource("15_7ies4")
-expand_mode = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("29_nnwlg")
+
+[node name="TintScreen" type="ColorRect" parent="Camera2D/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D/CanvasLayer"]
+centered = false
+script = ExtResource("30_nqics")
+
+[node name="Node2D" type="Node2D" parent="Camera2D/CanvasLayer/Sprite2D"]
+script = ExtResource("30_g6sfq")
+nbr_of_shards = 25
+
+[node name="DeleteTimer" type="Timer" parent="Camera2D/CanvasLayer/Sprite2D/Node2D"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_8dv4p")
 }
@@ -666,7 +705,7 @@ material = SubResource("ShaderMaterial_sl1qb")
 layout_mode = 0
 offset_left = 373.0
 offset_top = 25.0
-offset_right = 431.0
+offset_right = 443.0
 offset_bottom = 45.0
 mouse_filter = 2
 color = Color(0.698039, 0.254902, 0.890196, 1)
@@ -674,9 +713,9 @@ color = Color(0.698039, 0.254902, 0.890196, 1)
 [node name="DTint" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_sl1qb")
 layout_mode = 0
-offset_left = 431.0
+offset_left = 443.0
 offset_top = 25.0
-offset_right = 507.0
+offset_right = 519.0
 offset_bottom = 45.0
 mouse_filter = 2
 color = Color(0.254902, 0.447059, 0.890196, 1)
@@ -684,9 +723,9 @@ color = Color(0.254902, 0.447059, 0.890196, 1)
 [node name="BTint" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_sl1qb")
 layout_mode = 0
-offset_left = 507.0
+offset_left = 519.0
 offset_top = 25.0
-offset_right = 595.0
+offset_right = 607.0
 offset_bottom = 45.0
 mouse_filter = 2
 color = Color(0.713726, 0.498039, 0.2, 1)
@@ -732,7 +771,7 @@ visibility_rect = Rect2(-5000, -1000, 9999, 9999)
 visible = false
 
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" method="_on_pressed"]
-[connection signal="button_down" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Eternity" method="unlocknewdim"]
+[connection signal="button_down" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Permanence" method="unlocknewdim"]
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" method="boundlessness"]
-[connection signal="YEAAAH" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Eternity/Overcome Eternity" to="AnimationPlayer" method="play" binds= ["overcome"]]
+[connection signal="YEAAAH" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Permanence/Overcome Time" to="AnimationPlayer" method="play" binds= ["overcome"]]
 [connection signal="theme_change" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options/Visual" to="." method="theme_change"]

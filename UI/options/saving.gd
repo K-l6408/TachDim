@@ -89,12 +89,12 @@ func openDialog():
 		sf.get_8()
 		var D = sf.get_var()
 		if D is Dictionary:
-			if progress < Globals.Progression.Eternity:
+			if progress < Globals.Progression.Permanence:
 				get_node("FilesContainer/Files/%d/Tachyons" % (f+1)).text = \
 				"%s Tachyons" % largenum.new(1).from_bytes(D["tachyons"]).to_string()
 			else:
 				get_node("FilesContainer/Files/%d/Tachyons" % (f+1)).text = \
-				"%s Eternity Points" % largenum.new(1).from_bytes(D["eternity points"]).to_string()
+				"%s Permanence Points" % largenum.new(1).from_bytes(D["eternity points"]).to_string()
 		else:
 			get_node("FilesContainer/Files/%d/Tachyons" % (f+1)).text = "Outdated or corrupted file"
 
@@ -146,9 +146,9 @@ func saveF(file : String = saveFilePath):
 		"tach dim buyers enabled" : Autobuyers.NormEnabled
 	}
 	
-	if Globals.progress >= GL.Progression.Eternity:
-		DATA["eternity points"] = Currencies.EternityPts._save()
-		DATA["eternities"] = Currencies.Eternities._save()
+	if Globals.progress >= GL.Progression.Permanence:
+		DATA["eternity points"] = Currencies.PermanencePts._save()
+		DATA["eternities"] = Currencies.Permanences._save()
 		DATA["fastest eternity"] = {
 			time = Globals.fastestEtern.time,
 			currency = Globals.fastestEtern.currency.to_bytes(),
@@ -158,7 +158,7 @@ func saveF(file : String = saveFilePath):
 		if Globals.Challenge == 10:
 			DATA["c10 power"] = TachyonDims.C10Power
 		DATA["completed challenges"] = Globals.CompletedChallenges
-		DATA["bought eternity upgrades"] = Eternity.BoughtUpgrades
+		DATA["bought eternity upgrades"] = Permanence.BoughtUpgrades
 		DATA["tach dim buyers upgrades"] = Autobuyers.NormUpgrades
 		DATA["dilation buyer upgrades"] = Autobuyers.DilUpgrades
 		DATA["tach gal buyer upgrades"] = Autobuyers.GalUpgrades
@@ -171,10 +171,10 @@ func saveF(file : String = saveFilePath):
 		DATA["tach gal buy limit"] = Autobuyers.GalLimit
 		DATA["big bang buyer amount"] = Autobuyers.BigBangObjectStr
 		
-		DATA["ep multiplier buys"] = Eternity.EPMultBought
+		DATA["ep multiplier buys"] = Permanence.PPMultBought
 		
-		if Globals.EU12Timer != null:
-			DATA["eu12 timer"] = Globals.EU12Timer.time_left
+		if Globals.PU12Timer != null:
+			DATA["eu12 timer"] = Globals.PU12Timer.time_left
 		else:
 			DATA["eu12 timer"] = 0
 		
@@ -205,7 +205,7 @@ func saveF(file : String = saveFilePath):
 		DATA["time shards"] = Globals.EDHandler.TimeShards.to_bytes()
 		DATA["free timespeed"] = Globals.EDHandler.FreeTSpeed
 		DATA["next timespeed"] = Globals.EDHandler.NextUpgrade.to_bytes()
-		DATA["TTIE"] = TachyonDims.topTachyonsInEternity.to_bytes()
+		DATA["TTIE"] = TachyonDims.topTachyonsInPermanence.to_bytes()
 		
 		DATA["dila buyer max time"] = Autobuyers.DilaTimeOverride
 		DATA["ECcompl"] = Globals.CompletedECs
@@ -339,9 +339,9 @@ func loadF(file : String = saveFilePath):
 	Autobuyers.NormModes    = DATA["tach dim buyers modes"]
 	Autobuyers.NormEnabled  = DATA["tach dim buyers enabled"]
 	
-	if Globals.progress >= GL.Progression.Eternity:
-		Currencies.EternityPts._load(DATA["eternity points"])
-		Currencies.Eternities ._load(DATA["eternities"])
+	if Globals.progress >= GL.Progression.Permanence:
+		Currencies.PermanencePts._load(DATA["eternity points"])
+		Currencies.Permanences  ._load(DATA["eternities"])
 		if DATA.has("time in eternity"):
 			Globals.eternTime = DATA["time in eternity"]
 		
@@ -356,7 +356,7 @@ func loadF(file : String = saveFilePath):
 		if Globals.Challenge == 10:
 			TachyonDims.C10Power = DATA["c10 power"]
 		Globals.CompletedChallenges = DATA["completed challenges"]
-		Eternity.BoughtUpgrades = DATA["bought eternity upgrades"]
+		Permanence.BoughtUpgrades = DATA["bought eternity upgrades"]
 		Autobuyers.NormUpgrades = DATA["tach dim buyers upgrades"]
 		Autobuyers.DilUpgrades = DATA["dilation buyer upgrades"]
 		Autobuyers.GalUpgrades = DATA["tach gal buyer upgrades"]
@@ -370,7 +370,7 @@ func loadF(file : String = saveFilePath):
 			Autobuyers.RewdUpgrades = DATA["rewind buyer acc. updrades"]
 		if DATA.has("big bang buyer amount"):
 			Autobuyers.BigBangObjectStr = DATA["big bang buyer amount"]
-			Autobuyers.update_bigbang_ep( DATA["big bang buyer amount"] )
+			Autobuyers.update_bigbang_pp( DATA["big bang buyer amount"] )
 		Autobuyers.DilLimit  = DATA["dilation buy limit"]
 		Autobuyers.DilIgnore = DATA["dilation limit ignore"]
 		Autobuyers.GalLimit  = DATA["tach gal buy limit"]
@@ -387,7 +387,7 @@ func loadF(file : String = saveFilePath):
 					)
 		
 		if DATA.has("ep multiplier buys"):
-			Eternity.EPMultBought = DATA["ep multiplier buys"]
+			Permanence.PPMultBought = DATA["ep multiplier buys"]
 		
 		var idletime = Time.get_unix_time_from_system() - DATA["last time"]
 		if not Globals.Achievemer.is_unlocked(3, 3) and idletime >= 3600 * 6:
@@ -424,7 +424,7 @@ func loadF(file : String = saveFilePath):
 			Globals.EDHandler.NextUpgrade.from_bytes(DATA["next timespeed"])
 		
 		if DATA.has("TTIE"):
-			TachyonDims.topTachyonsInEternity.from_bytes(DATA["TTIE"])
+			TachyonDims.topTachyonsInPermanence.from_bytes(DATA["TTIE"])
 		
 		if DATA.has("dila buyer max time"):
 			Autobuyers.DilaTimeOverride = \
@@ -504,11 +504,11 @@ func gameReset():
 	Globals.eternTime   = 0
 	Globals.Challenge   = 0
 	Globals.CompletedChallenges   = 0
-	Eternity.BoughtUpgrades       = 0
-	Eternity.EPMultBought         = 0
+	Permanence.BoughtUpgrades       = 0
+	Permanence.PPMultBought         = 0
 	Autobuyers.NormUpgrades = [0,0,0,0,0,0,0,0,0]
 	#Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value = 4
-	Globals.EU12Timer = null
+	Permanence.PU12Timer = 0
 	Globals.OEUHandler.Bought      = 0
 	Globals.OEUHandler.TSpScBought = 0
 	Globals.OEUHandler.TDmScBought = 0
@@ -547,8 +547,8 @@ func gameReset():
 	Globals.EDHandler.reset()
 	
 	Currencies.Tachyons.reset()
-	Currencies.EternityPts.reset()
-	Currencies.Eternities .reset()
+	Currencies.PermanencePts.reset()
+	Currencies.Permanences  .reset()
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value

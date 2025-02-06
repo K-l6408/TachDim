@@ -2,7 +2,7 @@ extends Control
 
 var tickFraction := 0.0
 
-func on_eternity():
+func on_permanence():
 	if not Globals.Achievemer.is_unlocked(6, 8):
 		Globals.Duplicantes = largenum.new(1)
 	if dupGalaxies > 5:
@@ -61,13 +61,13 @@ func limit():
 func limit_cost():
 	return largenum.ten_to_the(45 + 15 * limitUpgrades)
 func buy_limit():
-	if Currencies.EternityPts.spend(limit_cost()):
+	if Currencies.PermanencePts.spend(limit_cost()):
 		limitUpgrades += 1
 		%Limit.disabled = true
 
 var maxGalaxies := 0
 func buy_maxgal():
-	if Currencies.EternityPts.spend(
+	if Currencies.PermanencePts.spend(
 		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies))
 	):
 		maxGalaxies += 1
@@ -101,7 +101,7 @@ func _process(delta):
 		Globals.Duplicantes.to_string().trim_suffix(".00").trim_suffix(";00"),
 		"" if Globals.Duplicantes.exponent == 0 else "te"
 	] + \
-	"giving a [font_size=20]×%s[/font_size] multiplier to all Eternity Dimensions." % \
+	"giving a [font_size=20]×%s[/font_size] multiplier to all Permanence Dimensions." % \
 	(
 		Formulas.duplicantes().to_string() if
 		Formulas.duplicantes() is largenum else
@@ -151,13 +151,13 @@ func _process(delta):
 			limit().to_string(), limit().power(2).to_string(),
 			limit_cost().to_string().replace(".00", "")
 		]
-	%Limit.disabled = Currencies.EternityPts.AMOUNT.less(limit_cost()) or limitUpgrades >= 6
+	%Limit.disabled = Currencies.PermanencePts.AMOUNT.less(limit_cost()) or limitUpgrades >= 6
 	
 	%MaxGal.text = "Max Duplicantes\nGalaxies: %s\nCost: %s EP" % [
 		Globals.int_to_string(maxGalaxies),
 		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies)).to_string().replace(".00", "")
 	]
-	%MaxGal.disabled = Currencies.EternityPts.AMOUNT.less(
+	%MaxGal.disabled = Currencies.PermanencePts.AMOUNT.less(
 		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies))
 	)
 	
@@ -206,19 +206,19 @@ func _process(delta):
 	
 	tickFraction = fmod(tickFraction, 1.0)
 	
-	%Chance.disabled = Globals.Duplicantes.less(2.0 ** chance - 0.001) or chance >= 100
+	%Chance.disabled = Globals.Duplicantes.less(2.0 ** chance) or chance >= 100
 	while not %Chance.disabled and Globals.Automation.DupChEnabled:
 		buy_chance()
 		%Chance.disabled = \
-		Globals.Duplicantes.less(2.0 ** chance - 0.001) or chance >= 100
+		Globals.Duplicantes.less(2.0 ** chance) or chance >= 100
 	
 	%Interval.disabled = Globals.Duplicantes.less(3.0 ** (intervUpgrades + 1) - 0.001) or \
 	interval() <= intervalCap
-	while not %Interval.disabled and Globals.Automation.DupIntEnabled:
-		buy_interval()
-		%Interval.disabled = \
-		Globals.Duplicantes.less(3.0 ** (intervUpgrades + 1) - 0.001) or \
-		interval() <= intervalCap
+	#while not %Interval.disabled and Globals.Automation.DupIntEnabled:
+		#buy_interval()
+		#%Interval.disabled = \
+		#Globals.Duplicantes.less(3.0 ** (intervUpgrades + 1) - 0.001) or \
+		#interval() <= intervalCap
 	
 	if chance >= 100:
 		%Chance.text = "Duplication chance:\n%s (capped)" % [

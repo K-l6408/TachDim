@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://f1s25k1un5sf"]
 
-[ext_resource type="Script" path="res://UI/eternity/upgrades.gd" id="1_f5okh"]
+[ext_resource type="Script" path="res://UI/permanence/upgrades.gd" id="1_f5okh"]
 
 [sub_resource type="Gradient" id="Gradient_4giol"]
 offsets = PackedFloat32Array(0, 0.125, 0.375, 0.625, 0.875, 1)
@@ -195,7 +195,7 @@ multiplier is increased.
 Cost: 5 EP"
 text_overrun_behavior = 2
 
-[node name="EPMult" type="Button" parent="Columns/Col3"]
+[node name="PPMult" type="Button" parent="Columns/Col3"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"
@@ -208,7 +208,7 @@ based on unspent EP.
 Cost: 7 EP"
 text_overrun_behavior = 2
 
-[node name="PassiveEP" type="Button" parent="Columns/Col3"]
+[node name="PassivePP" type="Button" parent="Columns/Col3"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"
@@ -316,7 +316,7 @@ unlocking Rewind, and
 Cost: 300 EP"
 text_overrun_behavior = 2
 
-[node name="EPMult" type="Button" parent="."]
+[node name="PPMult" type="Button" parent="."]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 1
 anchors_preset = 7
@@ -340,7 +340,7 @@ Currently: ×1
 Cost: 10 EP"
 text_overrun_behavior = 2
 
-[node name="Max" type="Button" parent="EPMult"]
+[node name="Max" type="Button" parent="PPMult"]
 layout_mode = 0
 offset_top = -25.0
 offset_right = 189.0
@@ -359,12 +359,12 @@ text = "(Buy max ↓)"
 [connection signal="pressed" from="Columns/Col2/GalaxyBoost" to="." method="buy" binds= [8]]
 [connection signal="pressed" from="Columns/Col3/AchMult" to="." method="buy" binds= [9]]
 [connection signal="pressed" from="Columns/Col3/DilaMult" to="." method="buy" binds= [10]]
-[connection signal="pressed" from="Columns/Col3/EPMult" to="." method="buy" binds= [11]]
-[connection signal="pressed" from="Columns/Col3/PassiveEP" to="." method="buy" binds= [12]]
+[connection signal="pressed" from="Columns/Col3/PPMult" to="." method="buy" binds= [11]]
+[connection signal="pressed" from="Columns/Col3/PassivePP" to="." method="buy" binds= [12]]
 [connection signal="pressed" from="Columns/Col4/Dila1" to="." method="buy" binds= [13]]
 [connection signal="pressed" from="Columns/Col4/Dila2" to="." method="buy" binds= [14]]
 [connection signal="pressed" from="Columns/Col4/Dila3" to="." method="buy" binds= [15]]
 [connection signal="pressed" from="Columns/Col4/Dila4" to="." method="buy" binds= [16]]
 [connection signal="pressed" from="AutoGal" to="." method="buy" binds= [17]]
-[connection signal="pressed" from="EPMult" to="." method="buyEPmult"]
-[connection signal="pressed" from="EPMult/Max" to="." method="maxEPmult"]
+[connection signal="pressed" from="PPMult" to="." method="buyEPmult"]
+[connection signal="pressed" from="PPMult/Max" to="." method="maxEPmult"]

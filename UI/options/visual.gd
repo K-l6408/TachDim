@@ -52,7 +52,7 @@ func _process(_delta):
 	for i in ANIMATION.size():
 		var j = false
 		match i:
-			0: j = (Globals.progress >= Globals.Progression.Eternity)
+			0: j = (Globals.progress >= Globals.Progression.Permanence)
 			1: j = (Globals.progress >= Globals.Progression.Boundlessness)
 		%AnimOptions.get_node(ANIMATION[i]).visible = j
 		if not j and not Globals.AnimOpt[i]:

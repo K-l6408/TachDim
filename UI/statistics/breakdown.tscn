@@ -127,12 +127,12 @@ text = "Ψ"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Eternity Points" type="Control" parent="."]
+[node name="Permanence Points" type="Control" parent="."]
 visible = false
 clip_contents = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Eternity Points"]
+[node name="Label" type="Label" parent="Permanence Points"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -141,7 +141,7 @@ offset_bottom = 13.0
 grow_horizontal = 2
 text = "Eternity Points gained on Big Bang: 9.99e9999"
 
-[node name="ColorRect" type="ColorRect" parent="Eternity Points"]
+[node name="ColorRect" type="ColorRect" parent="Permanence Points"]
 visible = false
 clip_contents = true
 layout_mode = 2
@@ -149,7 +149,7 @@ offset_right = 40.0
 offset_bottom = 43.0
 color = Color(0.701961, 0.254902, 0.878431, 1)
 
-[node name="Label" type="Label" parent="Eternity Points/ColorRect"]
+[node name="Label" type="Label" parent="Permanence Points/ColorRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -164,7 +164,7 @@ text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Slices" type="VBoxContainer" parent="Eternity Points"]
+[node name="Slices" type="VBoxContainer" parent="Permanence Points"]
 z_index = 1
 layout_mode = 1
 anchors_preset = 10
@@ -174,17 +174,17 @@ offset_right = -2.0
 offset_bottom = 57.0
 grow_horizontal = 2
 
-[node name="Mult" type="HBoxContainer" parent="Eternity Points/Slices"]
+[node name="Mult" type="HBoxContainer" parent="Permanence Points/Slices"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="0" type="ColorRect" parent="Eternity Points/Slices/Mult"]
+[node name="0" type="ColorRect" parent="Permanence Points/Slices/Mult"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0.282353, 0.282353, 0.282353, 1)
 
-[node name="Label" type="Label" parent="Eternity Points/Slices/Mult/0"]
+[node name="Label" type="Label" parent="Permanence Points/Slices/Mult/0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -199,7 +199,7 @@ text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="1" type="ColorRect" parent="Eternity Points/Slices/Mult"]
+[node name="1" type="ColorRect" parent="Permanence Points/Slices/Mult"]
 visible = false
 clip_contents = true
 layout_mode = 2
@@ -207,19 +207,19 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.0
 color = Color(1, 1, 1, 0)
 
-[node name="Div" type="HBoxContainer" parent="Eternity Points/Slices"]
+[node name="Div" type="HBoxContainer" parent="Permanence Points/Slices"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="0" type="ColorRect" parent="Eternity Points/Slices/Div"]
+[node name="0" type="ColorRect" parent="Permanence Points/Slices/Div"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.0
 color = Color(1, 1, 1, 0)
 
-[node name="Tree" type="Tree" parent="Eternity Points"]
+[node name="Tree" type="Tree" parent="Permanence Points"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -231,7 +231,7 @@ grow_horizontal = 2
 grow_vertical = 2
 hide_root = true
 
-[node name="Resource" type="Label" parent="Eternity Points"]
+[node name="Resource" type="Label" parent="Permanence Points"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

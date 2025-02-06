@@ -3,7 +3,7 @@ extends TabContainer
 var divisors := [
 	"Challenge 2", "Challenge 3",
 	"Challenge 9", "Challenge 14",
-	"Eternity Challenge 3",
+	"Permanence Challenge 3",
 ]
 var text := {
 	"Purchases": "\uf201",
@@ -11,20 +11,21 @@ var text := {
 	"Time Dilation": "\uf102",
 	"Achievements": "\uf091",
 	"Dimensional Rewind": "\uf04a",
-	"Eternity Upgrades": "δ↑",
-	"Overcome Eternity Upgrades": "δ⭻",
+	"Permanence Upgrades": "δ↑",
+	"Overcome Time Upgrades": "δ⭻",
 	"Space Studies": "\uf0e8",
 	"Challenge 2" : "⁈ Ⅱ",
 	"Challenge 3" : "⁈ Ⅲ",
 	"Challenge 3 (TD3)": "⁈ Ⅲ",
 	"Challenge 9" : "⁈ Ⅸ",
 	"Challenge 14": "⁈ ⅩⅣ",
+	"Base gain from Tachyons": "",
 }
 var colors := {
 	"Timespeed": Color("#4D5E42"),
 	"Achievements": Color("#FDC11B"),
-	"Eternity Upgrades": Color("#B341E0"),
-	"Overcome Eternity Upgrades": Color("#B341E0"),
+	"Permanence Upgrades": Color("#B341E0"),
+	"Overcome Time Upgrades": Color("#B341E0"),
 	"Challenge 2" : Color("#B03737"),
 	"Challenge 3" : Color("#B03737"),
 	"Challenge 3 (TD3)": Color("#B03737"),
@@ -34,7 +35,11 @@ var colors := {
 
 func _process(_delta):
 	process_tachyon_mults()
-	process_ep_mults()
+	if Permanence.process_pp_gain().exponent < 0:
+		set_tab_hidden(1, true)
+	else:
+		set_tab_hidden(1, false)
+		process_pp_mults()
 
 func process_tachyon_mults():
 	for i in $Tachyons/Slices/Mult.get_children():
@@ -317,27 +322,20 @@ func process_tachyon_mults():
 		$"Tachyons/Slices/Mult/1".hide()
 		$"Tachyons/Slices/Div/0".show()
 
-func process_ep_mults():
-	for i in $"Eternity Points/Slices/Mult".get_children():
-		if not i.name in Currencies.EternityPts.mults.keys() \
+func process_pp_mults():
+	for i in $"Permanence Points/Slices/Mult".get_children():
+		if not i.name in Currencies.PermanencePts.mults.keys() \
 		and not i.name in ["0", "1"]:
 			i.queue_free()
 	
-	var active_dimensions = TachyonDims.DimsUnlocked
-	for i in range(TachyonDims.DimsUnlocked, 0, -1):
-		if TachyonDims.DimPurchase[i-1] == 0:
-			active_dimensions -= 1
-		else:
-			break
-	
 	var base = largenum.new(1)
 	var divs = largenum.new(1)
-	for i in Currencies.EternityPts.mults.values():
+	for i in Currencies.PermanencePts.mults.values():
 		if i is Currencies.Multiplier:
 			if i.power.exponent < 0:
-				divs.mult2self(i.power.power(min(i.dims, -active_dimensions)))
+				divs.mult2self(i.power.power(-1))
 			else:
-				base.mult2self(i.power.power(min(i.dims, active_dimensions)))
+				base.mult2self(i.power.power(1))
 		if i is Dictionary:
 			for j in i.values():
 				if j is Currencies.Multiplier:
@@ -349,31 +347,30 @@ func process_ep_mults():
 			var k = 0
 			for j in i:
 				k += 1
-				if k > active_dimensions: break
 				if j is Currencies.Multiplier:
 					if j.power.exponent < 0:
 						divs.mult2self(j.power.power(-1))
 					else:
 						base.mult2self(j.power)
 	
-	$"Eternity Points/Label".text = "Eternity Points gained on prestige: %s" % \
+	$"Permanence Points/Label".text = "Permanence Points gained on prestige: %s" % \
 	base.divide(divs).to_string()
 	
-	if base.exponent < 0: base.pow2self(-1)
+	#if base.exponent < 0: base.pow2self(-1)
 	
-	var tree_root : TreeItem = $"Eternity Points/Tree".get_root()
+	var tree_root : TreeItem = $"Permanence Points/Tree".get_root()
 	if tree_root == null:
-		tree_root = $"Eternity Points/Tree".create_item()
+		tree_root = $"Permanence Points/Tree".create_item()
 	
 	var HOW_MANY = 0
 	
-	for key in Currencies.EternityPts.mults:
+	for key in Currencies.PermanencePts.mults:
 		HOW_MANY += 1
 		var slice : ColorRect
 		if key in divisors:
-			if $"Eternity Points/Slices/Div".get_node_or_null(key) == null:
-				slice = $"Eternity Points/ColorRect".duplicate()
-				$"Eternity Points/Slices/Div".add_child(slice)
+			if $"Permanence Points/Slices/Div".get_node_or_null(key) == null:
+				slice = $"Permanence Points/ColorRect".duplicate()
+				$"Permanence Points/Slices/Div".add_child(slice)
 				slice.name = key
 				if text.has(key):
 					slice.get_node("Label").text = text[key]
@@ -382,11 +379,11 @@ func process_ep_mults():
 				slice.show()
 				slice.size_flags_horizontal = SIZE_EXPAND_FILL
 			else:
-				slice = $"Eternity Points/Slices/Div".get_node(key)
+				slice = $"Permanence Points/Slices/Div".get_node(key)
 		else:
-			if $"Eternity Points/Slices/Mult".get_node_or_null(key) == null:
-				slice = $"Eternity Points/ColorRect".duplicate()
-				$"Eternity Points/Slices/Mult".add_child(slice)
+			if $"Permanence Points/Slices/Mult".get_node_or_null(key) == null:
+				slice = $"Permanence Points/ColorRect".duplicate()
+				$"Permanence Points/Slices/Mult".add_child(slice)
 				slice.name = key
 				if text.has(key):
 					slice.get_node("Label").text = text[key]
@@ -395,47 +392,25 @@ func process_ep_mults():
 				slice.show()
 				slice.size_flags_horizontal = SIZE_EXPAND_FILL
 			else:
-				slice = $"Eternity Points/Slices/Mult".get_node(key)
-		var mult = Currencies.EternityPts.mults[key]
+				slice = $"Permanence Points/Slices/Mult".get_node(key)
+		var mult = Currencies.PermanencePts.mults[key]
 		#match key:
 			#_:
 		if mult is Currencies.Multiplier:
 			if not mult.is_power:
 				slice.size_flags_stretch_ratio = \
-				mult.power.power(min(mult.dims, active_dimensions)).log2() \
+				mult.power.log2() \
 				/ base.log2()
 				var item : TreeItem
 				if tree_root.get_child_count() < HOW_MANY:
-					item = $"Eternity Points/Tree".create_item(tree_root)
+					item = $"Permanence Points/Tree".create_item(tree_root)
 				else: item = tree_root.get_child(HOW_MANY - 1)
-				if mult.dims > 1:
-					if key in divisors:
-						item.set_text(0, "%s: %s (/%s on %s Dimension%s → /%s)" % [
-							Globals.percent_to_string(
-								mult.power.log2() / base.log2()\
-								 * min(mult.dims, active_dimensions)
-							), key, mult.power.power(-1).to_string(),
-							Globals.int_to_string(min(mult.dims, active_dimensions)),
-							"" if min(mult.dims, active_dimensions) == 1 else "s",
-							mult.power.power(-min(mult.dims, active_dimensions)).to_string()
-						])
-					else:
-						item.set_text(0, "%s: %s (×%s on %s Dimension%s → ×%s)" % [
-							Globals.percent_to_string(
-								mult.power.log2() / base.log2()\
-								 * min(mult.dims, active_dimensions)
-							), key, mult.power.to_string(),
-							Globals.int_to_string(min(mult.dims, active_dimensions)),
-							"" if min(mult.dims, active_dimensions) == 1 else "s",
-							mult.power.power(min(mult.dims, active_dimensions)).to_string()
-						])
-				else:
-					item.set_text(0, "%s: %s (×%s)" % [
-						Globals.percent_to_string(
-							mult.power.log2() / base.log2()\
-							 * min(mult.dims, active_dimensions)
-						), key, mult.power.to_string()
-					])
+				
+				item.set_text(0, "%s: %s (×%s)" % [
+					Globals.percent_to_string(
+						mult.power.log2() / base.log2()
+					), key, mult.power.to_string()
+				])
 				if mult.power.log2() == 0:
 					slice.hide()
 					item.visible = false
@@ -449,13 +424,13 @@ func process_ep_mults():
 		if mult is Dictionary:
 			var total = largenum.new(1)
 			for i in mult:
-				total.mult2self(mult[i].power.power(min(mult[i].dims, active_dimensions)))
+				total.mult2self(mult[i].power)
 			slice.size_flags_stretch_ratio = \
 			total.log2() / base.log2()
 			
 			var item : TreeItem
 			if tree_root.get_child_count() < HOW_MANY:
-				item = $"Eternity Points/Tree".create_item(tree_root)
+				item = $"Permanence Points/Tree".create_item(tree_root)
 			else: item = tree_root.get_child(HOW_MANY - 1)
 			
 			item.set_text(0, "%s: %s (×%s)" % [
@@ -468,29 +443,14 @@ func process_ep_mults():
 			for i in mult:
 				if mult[i].power.log2() == 0:
 					continue
-				var lower : TreeItem = $"Eternity Points/Tree".create_item(item)
-				if min(mult[i].dims, active_dimensions) > 1:
-					lower.set_text(0, "%s: %s (×%s on %s Dimensions → ×%s)" % [
-						Globals.percent_to_string(
-							mult[i].power.power(
-								min(mult[i].dims, active_dimensions)
-							).log2() / \
-							total.log2()
-						), i,
-						mult[i].power.to_string(),
-						Globals.int_to_string(min(mult[i].dims, active_dimensions)),
-						mult[i].power.power(
-							min(mult[i].dims, active_dimensions)
-						).to_string()
-					])
-				else:
-					lower.set_text(0, "%s: %s (×%s)" % [
-						Globals.percent_to_string(
-							mult[i].power.log2() / \
-							total.log2()
-						), i,
-						mult[i].power.to_string()
-					])
+				var lower : TreeItem = $"Permanence Points/Tree".create_item(item)
+				lower.set_text(0, "%s: %s (×%s)" % [
+					Globals.percent_to_string(
+						mult[i].power.log2() / \
+						total.log2()
+					), i,
+					mult[i].power.to_string()
+				])
 			
 			if total.log2() == 0:
 				slice.hide()
@@ -506,15 +466,15 @@ func process_ep_mults():
 			slice.hide()
 		slice.size_flags_stretch_ratio = abs(slice.size_flags_stretch_ratio)
 	
-	$"Eternity Points/Slices/Div".visible = (divs.log2() > 0)
-	$"Eternity Points/Slices/Mult/0".visible = base.log2() == 0
+	$"Permanence Points/Slices/Div".visible = (divs.log2() > 0)
+	$"Permanence Points/Slices/Mult/0".visible = base.log2() == 0
 	
 	if divs.exponent > base.exponent:
-		$"Eternity Points/Slices/Mult/1".size_flags_stretch_ratio = \
+		$"Permanence Points/Slices/Mult/1".size_flags_stretch_ratio = \
 		abs(divs.log2() / base.log2())
-		$"Eternity Points/Slices/Mult/1".show()
-		$"Eternity Points/Slices/Div/0".hide()
+		$"Permanence Points/Slices/Mult/1".show()
+		$"Permanence Points/Slices/Div/0".hide()
 	else:
-		$"Eternity Points/Slices/Div/0".size_flags_stretch_ratio = 1
-		$"Eternity Points/Slices/Mult/1".hide()
-		$"Eternity Points/Slices/Div/0".show()
+		$"Permanence Points/Slices/Div/0".size_flags_stretch_ratio = 1
+		$"Permanence Points/Slices/Mult/1".hide()
+		$"Permanence Points/Slices/Div/0".show()

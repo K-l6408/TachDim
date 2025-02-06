@@ -109,34 +109,34 @@ func TDBulk(which):
 	elif NormUpgrades[which-1] <= IntervalCap[which-1]:
 		return 1
 	else:
-		return max(2 ** (NormUpgrades[which-1] - IntervalCap[which-1]), 512)
+		return min(2 ** (NormUpgrades[which-1] - IntervalCap[which-1]), 512)
 
 func improve_interval(which : int):
 	match which:
 		TIMESPEED:
-			Currencies.EternityPts.spend(2 ** NormUpgrades[-1])
-			NormUpgrades[-1]		+= 1
+			if Currencies.PermanencePts.spend(2 ** NormUpgrades[-1]):
+				NormUpgrades[-1]		+= 1
 		REWIND:
-			Currencies.EternityPts.spend(2 ** RewdUpgrades)
-			RewdUpgrades			+= 1
+			if Currencies.PermanencePts.spend(2 ** RewdUpgrades):
+				RewdUpgrades			+= 1
 		DILATION:
-			Currencies.EternityPts.spend(2 ** DilUpgrades)
-			DilUpgrades				+= 1
+			if Currencies.PermanencePts.spend(2 ** DilUpgrades):
+				DilUpgrades				+= 1
 		GALAXY:
-			Currencies.EternityPts.spend(2 ** GalUpgrades)
-			GalUpgrades				+= 1
+			if Currencies.PermanencePts.spend(2 ** GalUpgrades):
+				GalUpgrades				+= 1
 		BIG_BANG:
-			Currencies.EternityPts.spend(2 ** BangUpgrades)
-			BangUpgrades			+= 1
+			if Currencies.PermanencePts.spend(2 ** BangUpgrades):
+				BangUpgrades			+= 1
 		_: # Tachyon Dimensions
-			Currencies.EternityPts.spend(2 ** NormUpgrades[which-1])
-			NormUpgrades[which-1]	+= 1
+			if Currencies.PermanencePts.spend(2 ** NormUpgrades[which-1]):
+				NormUpgrades[which-1]	+= 1
 func improve_rewd_accuracy():
-	Currencies.EternityPts.spend(3 ** RewdAQups)
-	RewdAQups += 1
+	if Currencies.PermanencePts.spend(3 ** RewdAQups):
+		RewdAQups += 1
 
-func update_bigbang_ep(epgain:String):
-	var tree = epgain.split("e")
+func update_bigbang_pp(ppgain:String):
+	var tree = ppgain.split("e")
 	var k = largenum.new(0)
 	for i in range(tree.size()-1, -1, -1):
 		if ";" in tree[i]: # dozenal!
@@ -161,7 +161,7 @@ func update_bigbang_ep(epgain:String):
 			if tree[i] == "": j = 1
 			k = largenum.ten_to_the(k.to_float()).multiply(j)
 	BigBangObjective = k
-	BigBangObjectStr = epgain
+	BigBangObjectStr = ppgain
 
 func _process(delta):
 	if NormUpgrades.size() < 9:
@@ -197,10 +197,10 @@ func _process(delta):
 			if NormTimers[i] <= 0:
 				match i + 1:
 					BIG_BANG:
-						if Globals.challengeCompleted(14):
-							if Globals.progressBL < GL.Progression.Overcome\
-							or Globals.Challenge != 0:
-								TachyonDims.eternity()
+						if Globals.challengeCompleted(14) and\
+						TachyonDims.canBigBang:
+							if not Globals.Overcame:
+								TachyonDims.permanence()
 								NormTimers[i] += BangInterval()
 					GALAXY:
 						if Globals.challengeCompleted(12):
@@ -250,16 +250,16 @@ func _process(delta):
 	if Globals.progressBL >= GL.Progression.Overcome \
 	and get_bit(NormEnabled, BIG_BANG+1):
 		if Globals.Boundlessnesses.to_float() < 4:
-			if BigBangObjective.less(Formulas.epgained()):
-				TachyonDims.eternity()
+			if BigBangObjective.less(Permanence.process_pp_gain()):
+				TachyonDims.permanence()
 		else:
 			match BigBangMode:
 				0:
-					if BigBangObjective.less(Formulas.epgained()):
-						TachyonDims.eternity()
+					if BigBangObjective.less(Permanence.process_pp_gain()):
+						TachyonDims.permanence()
 				1:
-					if BigBangObjective.less(Formulas.epgained().divide(Currencies.EternityPts)):
-						TachyonDims.eternity()
+					if BigBangObjective.less(Permanence.process_pp_gain().divide(Currencies.PermanencePts)):
+						TachyonDims.permanence()
 				2:
 					if Globals.eternTime >= BigBangObjective.to_float():
-						TachyonDims.eternity()
+						TachyonDims.permanence()
