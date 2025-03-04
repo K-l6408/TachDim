@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bu4y01w5qnw72"]
 
-[ext_resource type="Script" path="res://UI/statistics/breakdown.gd" id="1_2vbu6"]
+[ext_resource type="Script" uid="uid://b403i2ku4exwu" path="res://UI/statistics/breakdown.gd" id="1_2vbu6"]
 
 [node name="Multiplier Breakdown" type="TabContainer"]
 anchors_preset = 15
@@ -8,11 +8,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+current_tab = 0
 script = ExtResource("1_2vbu6")
 
 [node name="Tachyons" type="Control" parent="."]
 clip_contents = true
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Label" type="Label" parent="Tachyons"]
 layout_mode = 1
@@ -131,6 +133,7 @@ vertical_alignment = 1
 visible = false
 clip_contents = true
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Label" type="Label" parent="Permanence Points"]
 layout_mode = 1

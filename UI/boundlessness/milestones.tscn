@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cbiebd0j27hoy"]
 
-[ext_resource type="Script" path="res://UI/boundlessness/milestones.gd" id="1_62jlh"]
+[ext_resource type="Script" uid="uid://6dvveorfhdnd" path="res://UI/boundlessness/milestones.gd" id="1_62jlh"]
 
 [node name="Milestones" type="MarginContainer"]
 anchors_preset = 15

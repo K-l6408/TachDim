@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ccgn0cmks56jk"]
 
-[ext_resource type="Script" path="res://UI/debug/debug.gd" id="1_ib462"]
+[ext_resource type="Script" uid="uid://bhah87el8l0oa" path="res://UI/debug/debug.gd" id="1_ib462"]
 
 [node name="Debug" type="Control"]
 custom_minimum_size = Vector2(650, 0)

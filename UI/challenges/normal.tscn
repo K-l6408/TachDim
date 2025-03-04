@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://cpyhr1o2ep885"]
 
-[ext_resource type="Script" path="res://UI/challenges/normal.gd" id="1_3pc03"]
+[ext_resource type="Script" uid="uid://6oga552rdqi0" path="res://UI/challenges/normal.gd" id="1_3pc03"]
 [ext_resource type="Texture2D" uid="uid://cxfooampya5rj" path="res://images/challenges/C1.png" id="1_nyqtu"]
 [ext_resource type="Texture2D" uid="uid://cu3vqgqona2nt" path="res://images/challenges/C2.png" id="2_44jri"]
 [ext_resource type="Texture2D" uid="uid://dsxwfo6og6cmt" path="res://images/challenges/C3.png" id="4_cfjoj"]

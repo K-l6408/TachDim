@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://di8p3xe1w45pw"]
 
-[ext_resource type="Script" path="res://UI/automation/autobuyers.gd" id="1_4b317"]
+[ext_resource type="Script" uid="uid://dgsi3hv3wntsq" path="res://UI/automation/autobuyers.gd" id="1_4b317"]
 
 [node name="Autobuyers" type="Control"]
 custom_minimum_size = Vector2(650, 0)
@@ -86,8 +86,8 @@ offset_bottom = 23.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "  Big Bang at X EP:"
 popup/item_0/id = 0
 popup/item_1/text = "  X times top EP:"
@@ -357,7 +357,6 @@ min_value = 1.0
 max_value = 9.22337e+18
 step = 0.0
 value = 1.0
-exp_edit = true
 allow_greater = true
 alignment = 1
 prefix = "Rewind at ×"

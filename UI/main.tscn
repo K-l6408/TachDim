@@ -2,38 +2,38 @@
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_fid5e"]
-[ext_resource type="Script" path="res://UI/main.gd" id="1_qdidp"]
-[ext_resource type="Script" path="res://UI/dimensions/rewind.gd" id="2_4w04a"]
-[ext_resource type="Script" path="res://UI/newsticker/newsticker.gd" id="3_7hxj0"]
+[ext_resource type="Script" uid="uid://ohsjtsuph3ni" path="res://UI/main.gd" id="1_qdidp"]
+[ext_resource type="Script" uid="uid://d2tstfb71chju" path="res://UI/dimensions/rewind.gd" id="2_4w04a"]
+[ext_resource type="Script" uid="uid://uajon8f0jvn7" path="res://UI/newsticker/newsticker.gd" id="3_7hxj0"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="3_ky8nc"]
-[ext_resource type="Shader" path="res://UI/dimensions/rewind.gdshader" id="3_o4cqe"]
+[ext_resource type="Shader" uid="uid://coo4helkpeke7" path="res://UI/dimensions/rewind.gdshader" id="3_o4cqe"]
 [ext_resource type="PackedScene" uid="uid://di8p3xe1w45pw" path="res://UI/automation/autobuyers.tscn" id="5_f3s3t"]
-[ext_resource type="Script" path="res://UI/dimensions/EDunlock.gd" id="5_htsl0"]
+[ext_resource type="Script" uid="uid://dnu233kx1kbd0" path="res://UI/dimensions/EDunlock.gd" id="5_htsl0"]
 [ext_resource type="PackedScene" uid="uid://f1s25k1un5sf" path="res://UI/permanence/upgrades.tscn" id="6_0l55j"]
 [ext_resource type="PackedScene" uid="uid://cpyhr1o2ep885" path="res://UI/challenges/normal.tscn" id="6_agbn0"]
 [ext_resource type="PackedScene" uid="uid://dfqmisim44jab" path="res://UI/dimensions/eternity.tscn" id="6_eboqi"]
 [ext_resource type="PackedScene" uid="uid://cy1o0vjg4sdbt" path="res://UI/achievements/achievements.tscn" id="6_mtmcd"]
 [ext_resource type="PackedScene" uid="uid://bb23v4wug50t3" path="res://UI/options/saving.tscn" id="6_rxys2"]
 [ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
-[ext_resource type="Script" path="res://UI/boundlessness/resetbutton.gd" id="8_x0h36"]
+[ext_resource type="Script" uid="uid://bdj8ecxuylviy" path="res://UI/boundlessness/resetbutton.gd" id="8_x0h36"]
 [ext_resource type="PackedScene" uid="uid://cbherf2m8xvad" path="res://UI/permanence/overcome.tscn" id="9_ug0mq"]
 [ext_resource type="PackedScene" uid="uid://d1v3rvuka8dmn" path="res://UI/challenges/eternity.tscn" id="10_s4e3g"]
 [ext_resource type="PackedScene" uid="uid://damsts43cifm8" path="res://UI/statistics/statistics.tscn" id="10_whf7c"]
 [ext_resource type="PackedScene" uid="uid://b7ilo43kpte1u" path="res://UI/dimensions/space.tscn" id="11_m4fhr"]
 [ext_resource type="PackedScene" uid="uid://ccgn0cmks56jk" path="res://UI/debug/debug.tscn" id="11_t3vch"]
 [ext_resource type="PackedScene" uid="uid://ptwedehhp243" path="res://UI/statistics/last_prestiges.tscn" id="11_t22am"]
-[ext_resource type="Script" path="res://UI/notifs.gd" id="12_ab4py"]
+[ext_resource type="Script" uid="uid://18oep6elfs7e" path="res://UI/notifs.gd" id="12_ab4py"]
 [ext_resource type="PackedScene" uid="uid://d0jbprr882fjc" path="res://UI/statistics/challenges.tscn" id="13_1u8bp"]
 [ext_resource type="PackedScene" uid="uid://ckigo0tgi2x53" path="res://UI/duplicantes/duplicantes.tscn" id="13_vhw6w"]
 [ext_resource type="PackedScene" uid="uid://br0msw23i7kmv" path="res://UI/boundlessness/studies.tscn" id="17_uosw5"]
 [ext_resource type="PackedScene" uid="uid://cbiebd0j27hoy" path="res://UI/boundlessness/milestones.tscn" id="19_u3snt"]
-[ext_resource type="Shader" path="res://UI/tint.gdshader" id="24_irn3s"]
+[ext_resource type="Shader" uid="uid://b6ikesbewgsf5" path="res://UI/tint.gdshader" id="24_irn3s"]
 [ext_resource type="PackedScene" uid="uid://bu4y01w5qnw72" path="res://UI/statistics/breakdown.tscn" id="24_mt7op"]
 [ext_resource type="FontFile" uid="uid://bbb4ct4acdbbl" path="res://fonts/Blobmoji.ttf" id="25_na6n0"]
-[ext_resource type="Script" path="res://UI/shaders.gd" id="29_nnwlg"]
-[ext_resource type="Script" path="res://internal/shatter.gd" id="30_g6sfq"]
-[ext_resource type="Shader" path="res://UI/screen_shaders.gdshader" id="30_iqdd2"]
-[ext_resource type="Script" path="res://internal/screenshot.gd" id="30_nqics"]
+[ext_resource type="Script" uid="uid://bbs2312f1rn1c" path="res://UI/shaders.gd" id="29_nnwlg"]
+[ext_resource type="Script" uid="uid://d12pb4x5hpnh2" path="res://internal/shatter.gd" id="30_g6sfq"]
+[ext_resource type="Shader" uid="uid://b87el0lw56bju" path="res://UI/screen_shaders.gdshader" id="30_iqdd2"]
+[ext_resource type="Script" uid="uid://bwwdmwucic3v6" path="res://internal/screenshot.gd" id="30_nqics"]
 [ext_resource type="PackedScene" uid="uid://b15baj8equdto" path="res://UI/bar.tscn" id="33_yxlw4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qqelc"]
@@ -41,7 +41,7 @@ shader = ExtResource("3_o4cqe")
 shader_parameter/pixelsize = 0.00740741
 shader_parameter/zoom = 1.0
 shader_parameter/ignore = Color(0.8, 0.8, 0.8, 1)
-shader_parameter/disabled = null
+shader_parameter/disabled = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gj34f"]
 shader = ExtResource("30_iqdd2")
@@ -156,9 +156,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8dv4p"]
 _data = {
-"bang": SubResource("Animation_m0sop"),
-"boundless": SubResource("Animation_sfx5g"),
-"overcome": SubResource("Animation_a3cka")
+&"bang": SubResource("Animation_m0sop"),
+&"boundless": SubResource("Animation_sfx5g"),
+&"overcome": SubResource("Animation_a3cka")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sl1qb"]
@@ -171,9 +171,11 @@ particles_anim_h_frames = 4
 particles_anim_v_frames = 4
 particles_anim_loop = false
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_db5x6"]
+viewport_path = NodePath("Blobs")
+
 [sub_resource type="Curve" id="Curve_ddpyb"]
-min_value = -20.0
-max_value = 20.0
+_limits = [-20.0, 20.0, 0.0, 1.0]
 _data = [Vector2(0, 20), 0.0, 0.0, 0, 0, Vector2(0.25, -20), 0.0, 0.0, 0, 0, Vector2(0.5, 20), 0.0, 0.0, 0, 0, Vector2(0.75, -20), 0.0, 0.0, 0, 0, Vector2(1, 20), 0.0, 0.0, 0, 0]
 point_count = 5
 metadata/_snap_enabled = true
@@ -198,9 +200,6 @@ gravity = Vector3(0, 0, 0)
 scale_min = 0.2
 scale_max = 0.4
 anim_offset_max = 1.0
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_db5x6"]
-viewport_path = NodePath("Blobs")
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -501,65 +500,86 @@ size_flags_vertical = 3
 [node name="Tabs" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+current_tab = 0
 
 [node name="Dimensions" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 layout_mode = 2
+current_tab = 0
+metadata/_tab_index = 0
 
 [node name="Tachyons" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("1_8gea7")]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Permanence" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("6_eboqi")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Space" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions" instance=ExtResource("11_m4fhr")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="Automation" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("5_f3s3t")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Challenges" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
+current_tab = 0
+metadata/_tab_index = 2
 
 [node name="Regular Challenges" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("6_agbn0")]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Eternity Challenges" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("10_s4e3g")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Permanence" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
+current_tab = 0
+metadata/_tab_index = 3
 
 [node name="Permanence Upgrades" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Permanence" instance=ExtResource("6_0l55j")]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Overcome Time" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Permanence" instance=ExtResource("9_ug0mq")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Duplicantes" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("13_vhw6w")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 4
 
 [node name="Transcendence" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
+current_tab = 0
+metadata/_tab_index = 5
 
 [node name="Space Studies" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Transcendence" instance=ExtResource("17_uosw5")]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Milestones" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Transcendence" instance=ExtResource("19_u3snt")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Achievements" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("6_mtmcd")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 6
 
 [node name="Hotkeys" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
@@ -581,41 +601,52 @@ G⃣ : Buy one Tachyon Galaxy
 
 B⃣ : Big Bang"
 autowrap_mode = 0
+metadata/_tab_index = 7
 
 [node name="Statistics" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 current_tab = 3
+metadata/_tab_index = 8
 
 [node name="Statistics" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("10_whf7c")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Last Prestiges" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("11_t22am")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Challenge Records" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("13_1u8bp")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="Multiplier Breakdown" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Statistics" instance=ExtResource("24_mt7op")]
 layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="Options" type="TabContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
+current_tab = 0
+metadata/_tab_index = 9
 
 [node name="Saving" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options" instance=ExtResource("6_rxys2")]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Visual" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options" instance=ExtResource("7_qd5si")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Debug" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs" instance=ExtResource("11_t3vch")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 10
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_mode = 3
@@ -661,7 +692,7 @@ nbr_of_shards = 25
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 process_mode = 3
 libraries = {
-"": SubResource("AnimationLibrary_8dv4p")
+&"": SubResource("AnimationLibrary_8dv4p")
 }
 
 [node name="NotifDeft" type="Label" parent="."]
@@ -761,11 +792,11 @@ z_index = 1
 material = SubResource("CanvasItemMaterial_cee3c")
 position = Vector2(480, -37)
 amount = 100
-process_material = SubResource("ParticleProcessMaterial_a3tro")
 texture = SubResource("ViewportTexture_db5x6")
 lifetime = 30.0
 preprocess = 20.0
 visibility_rect = Rect2(-5000, -1000, 9999, 9999)
+process_material = SubResource("ParticleProcessMaterial_a3tro")
 
 [node name="Window" parent="." instance=ExtResource("33_yxlw4")]
 visible = false

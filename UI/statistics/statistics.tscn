@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://damsts43cifm8"]
 
-[ext_resource type="Script" path="res://UI/statistics/statistics.gd" id="1_5vl1r"]
+[ext_resource type="Script" uid="uid://beakabfc6yyny" path="res://UI/statistics/statistics.gd" id="1_5vl1r"]
 
 [node name="Statistics" type="RichTextLabel"]
 anchors_preset = 15

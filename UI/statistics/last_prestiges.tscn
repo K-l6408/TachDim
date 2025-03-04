@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://ptwedehhp243"]
 
-[ext_resource type="Script" path="res://UI/statistics/last_prestiges.gd" id="1_0uncw"]
-[ext_resource type="Script" path="res://UI/statistics/table.gd" id="1_3cxhd"]
-[ext_resource type="Script" path="res://UI/4Button.gd" id="2_vup05"]
+[ext_resource type="Script" uid="uid://bmmd2438kvud7" path="res://UI/statistics/last_prestiges.gd" id="1_0uncw"]
+[ext_resource type="Script" uid="uid://dw1dt664g050d" path="res://UI/statistics/table.gd" id="1_3cxhd"]
+[ext_resource type="Script" uid="uid://dsu6cvrnwviqj" path="res://UI/4Button.gd" id="2_vup05"]
 
 [node name="Last Prestiges" type="Control"]
 layout_mode = 3

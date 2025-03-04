@@ -1,4 +1,5 @@
 extends Node
+## internal node handling autobuyers (timing, unlocks, upgrades etc.)
 
 const TIMESPEED = 9
 const REWIND	= 10
@@ -42,9 +43,9 @@ var DilIgnore := 0
 var GalLimit  := 0
 var BigBangMode := 0
 ### mode explanation ###
-#    0: +X EP          #
-#    1: ×X max EP      #
-#    2:  X seconds     #
+##   0: +X EP         ##
+##   1: ×X max EP     ##
+##   2:  X seconds    ##
 ########################
 
 func set_big_bang_mode(to:int):
@@ -57,7 +58,7 @@ var  RewindObjective := 2.0
 var BigBangObjective := largenum.new(1)
 var BigBangObjectStr := "1"
 
-const IntervalCap := [3, 4, 4, 4, 5, 5, 5, 5]
+const IntervalCap := [3, 4, 4, 4, 5, 5, 5, 5, 4]
 
 func reset():
 	if Globals.Boundlessnesses.to_float() < 2:

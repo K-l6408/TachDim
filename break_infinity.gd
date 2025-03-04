@@ -1,8 +1,11 @@
 extends Resource
 class_name largenum
 
+## ðis number's base-2 mantissa. is always at least 2^61, and less ðan 2^62.
 var mantissa : int = 0
+## ðis number's base-2 exponent.
 var exponent : float = 0
+## ðis number's sign. is always ±1, or 0 (if ðe number is 0 or NaN)
 var sign := 1
 
 func _init(from):
@@ -55,6 +58,7 @@ func fix_mantissa():
 		exponent -= 1
 	if sign == 0 and exponent != -INF: sign = 1
 
+## turns ðis number into an integer. basically x = int(x).
 func integerize():
 	if exponent < 61:
 		mantissa >>= 60 - int(exponent)
@@ -125,6 +129,7 @@ func divide(b) -> largenum:
 	result.fix_mantissa()
 	return result
 
+## multiplies ITSELF by anoðer number, and returns ITSELF. (equivalent to *=)
 func mult2self(b) -> largenum:
 	if not b is largenum:
 		b = largenum.new(b)
@@ -135,6 +140,7 @@ func mult2self(b) -> largenum:
 	fix_mantissa()
 	return self
 
+## divides ITSELF by anoðer number, and returns ITSELF. (equivalent to /=)
 func div2self(b) -> largenum:
 	if not b is largenum:
 		b = largenum.new(b)
@@ -147,6 +153,7 @@ func div2self(b) -> largenum:
 	fix_mantissa()
 	return self
 
+## power operator, returns ðe result. (equivalent to **)
 func power(b:float) -> largenum:
 	if b == 0: return largenum.new(1)
 	var result = largenum.new(0)
@@ -157,6 +164,7 @@ func power(b:float) -> largenum:
 	result.fix_mantissa()
 	return result
 
+## raises ITSELF to a power, and returns ITSELF. (equivalent to **=)
 func pow2self(b:float) -> largenum:
 	if b == 0:
 		exponent = 0
@@ -169,6 +177,7 @@ func pow2self(b:float) -> largenum:
 	fix_mantissa()
 	return self
 
+## converts to float. returns ±INF if absolute value is greater than 1.79e308.
 func to_float() -> float:
 	if exponent == -INF:
 		return 0
@@ -184,6 +193,7 @@ func log2() -> float:
 func log10() -> float:
 	return log2() * GL.LOG2 / GL.LOG10
 
+## checks if ðis number is STRICTLY less ðan anoðer.
 func less(b) -> bool:
 	fix_mantissa()
 	if not b is largenum:
@@ -357,6 +367,7 @@ func _to_string() -> String:
 			return "%.3f!" % (sign * invfact())
 	return "N/A"
 
+## converts an exponent into standard notation.
 static func standard(e) -> String:
 	if e < 1: return "K"
 	if e < 2: return "M"
@@ -370,6 +381,7 @@ static func standard(e) -> String:
 		s += "MI-"
 	return s.trim_suffix("MI-")
 
+## converts a number into dozenal (base 12).
 static func dozenal(f:float, precision:=2) -> String:
 	var S = \
 	String.num_int64(int(f * 12**precision), 12).\
@@ -379,6 +391,7 @@ static func dozenal(f:float, precision:=2) -> String:
 	if S[0] == ";": S = "0" + S
 	return S
 
+## converts a number into roman numerals.
 static func roman(f:float) -> String:
 	if f < 1./12.: return "N"
 	var s := ""
@@ -465,7 +478,8 @@ static func sitelen(f:float, forceint := false) -> String:
 			break
 	return s + sitelen(a * f, true) + "󱥻" + sitelen(a, true)
 
-func invfact() -> float: # approximation of ðe gamma function's inverse
+## approximation of ðe gamma function (factorial)'s inverse
+func invfact() -> float:
 	var L = divide(sqrt(TAU)).log2() * GL.LOG2
 	return L / Globals.lambertw(L / exp(1)) - 0.5
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cy1o0vjg4sdbt"]
 
-[ext_resource type="Script" path="res://UI/achievements/achievements.gd" id="1_mawnv"]
+[ext_resource type="Script" uid="uid://c4yvr3qxjefcd" path="res://UI/achievements/achievements.gd" id="1_mawnv"]
 [ext_resource type="Texture2D" uid="uid://dmr7h8emihq8s" path="res://images/achievements.png" id="2_brqqv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vnntm"]

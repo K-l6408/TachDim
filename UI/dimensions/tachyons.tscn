@@ -1,15 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cmg6stncirb3o"]
+[gd_scene load_steps=6 format=3 uid="uid://cmg6stncirb3o"]
 
-[ext_resource type="Script" path="res://UI/dimensions/tachyons.gd" id="1_3wvft"]
-[ext_resource type="Shader" path="res://UI/dimensions/rewind.gdshader" id="2_5oiqa"]
-[ext_resource type="Script" path="res://UI/dimensions/rewind.gd" id="2_wyclk"]
+[ext_resource type="Script" uid="uid://bb16pihufrh22" path="res://UI/dimensions/tachyons.gd" id="1_3wvft"]
+[ext_resource type="Shader" uid="uid://coo4helkpeke7" path="res://UI/dimensions/rewind.gdshader" id="2_5oiqa"]
+[ext_resource type="Script" uid="uid://d2tstfb71chju" path="res://UI/dimensions/rewind.gd" id="2_wyclk"]
+[ext_resource type="Script" uid="uid://c2acqosw3x5it" path="res://UI/hovertext.gd" id="4_6afn2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngcjy"]
 shader = ExtResource("2_5oiqa")
-shader_parameter/pixelsize = 0.00217014
+shader_parameter/pixelsize = 0.0016276
 shader_parameter/zoom = 1.0
 shader_parameter/ignore = Color(0.8, 0.8, 0.8, 1)
-shader_parameter/disabled = null
+shader_parameter/disabled = false
 
 [node name="Tachyons" type="Control"]
 custom_minimum_size = Vector2(520, 604)
@@ -111,6 +112,17 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "Buy Max"
 
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/TopButtons/Timespeed"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_top = -28.0
+offset_right = 200.0
+offset_bottom = -5.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
+
 [node name="BuyMax" type="Button" parent="VSplitContainer/TopButtons"]
 layout_mode = 1
 anchors_preset = 6
@@ -194,6 +206,19 @@ step = 1.0
 value = 5.0
 show_percentage = false
 
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension1/Buy"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = -16.0
+offset_right = -5.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+direction = 2
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
+
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension1"]
 layout_mode = 2
 
@@ -260,6 +285,19 @@ max_value = 10.0
 step = 1.0
 value = 5.0
 show_percentage = false
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension2/Buy"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = -205.0
+offset_right = -5.0
+offset_bottom = 23.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+direction = 2
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension2"]
 layout_mode = 2
@@ -328,6 +366,18 @@ step = 1.0
 value = 5.0
 show_percentage = false
 
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension3/Buy"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_left = -205.0
+offset_right = -5.0
+offset_bottom = 23.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+direction = 2
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
+
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension3"]
 layout_mode = 2
 
@@ -394,6 +444,18 @@ max_value = 10.0
 step = 1.0
 value = 5.0
 show_percentage = false
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension4/Buy"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_left = -205.0
+offset_right = -5.0
+offset_bottom = 23.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+direction = 2
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension4"]
 layout_mode = 2
@@ -462,6 +524,18 @@ step = 1.0
 value = 5.0
 show_percentage = false
 
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension5/Buy"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_left = -205.0
+offset_right = -5.0
+offset_bottom = 23.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+direction = 2
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
+
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension5"]
 layout_mode = 2
 
@@ -528,6 +602,18 @@ max_value = 10.0
 step = 1.0
 value = 5.0
 show_percentage = false
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension6/Buy"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_left = -205.0
+offset_right = -5.0
+offset_bottom = 23.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+direction = 2
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension6"]
 layout_mode = 2
@@ -596,6 +682,18 @@ step = 1.0
 value = 5.0
 show_percentage = false
 
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension7/Buy"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_left = -205.0
+offset_right = -5.0
+offset_bottom = 23.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+direction = 2
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
+
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension7"]
 layout_mode = 2
 
@@ -658,6 +756,18 @@ step = 1.0
 value = 5.0
 show_percentage = false
 
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension8/Buy"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_left = -205.0
+offset_right = -5.0
+offset_bottom = 23.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+direction = 2
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
+
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension8"]
 layout_mode = 2
 
@@ -680,6 +790,18 @@ grow_vertical = 2
 text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Progress"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_top = 30.0
+offset_right = 200.0
+offset_bottom = 53.0
+mouse_filter = 2
+script = ExtResource("4_6afn2")
+direction = 1
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="Prestiges" type="Control" parent="VSplitContainer"]
 unique_name_in_owner = true
@@ -783,12 +905,15 @@ but lose a Time Dilation"
 [node name="BIG BANG" type="Button" parent="."]
 visible = false
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 200.0
-offset_top = 124.0
-offset_right = -200.0
-offset_bottom = 316.0
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.344
+anchor_right = 0.5
+anchor_bottom = 0.344
+offset_left = -280.0
+offset_top = -96.16
+offset_right = 280.0
+offset_bottom = 95.84
 grow_horizontal = 2
 theme_type_variation = &"ButtonEtern"
 theme_override_font_sizes/font_size = 75

@@ -681,8 +681,3 @@ func _process(delta):
 	Currencies.Tachyons.mults["Timespeed"] = Currencies.Multiplier.new(
 		TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed), DimsUnlocked
 	)
-
-
-
-
-

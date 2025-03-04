@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://br0msw23i7kmv"]
 
-[ext_resource type="Script" path="res://UI/boundlessness/tree_container.gd" id="1_cryta"]
-[ext_resource type="Script" path="res://UI/boundlessness/studies.gd" id="1_rlv08"]
-[ext_resource type="Script" path="res://UI/boundlessness/study.gd" id="2_egti4"]
+[ext_resource type="Script" uid="uid://bweoj5otmg3jb" path="res://UI/boundlessness/tree_container.gd" id="1_cryta"]
+[ext_resource type="Script" uid="uid://btc35texlo26k" path="res://UI/boundlessness/studies.gd" id="1_rlv08"]
+[ext_resource type="Script" uid="uid://lscxsrwcyu53" path="res://UI/boundlessness/study.gd" id="2_egti4"]
 
 [node name="Studies" type="Control"]
 z_index = 1

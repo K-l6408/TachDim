@@ -32,7 +32,7 @@ func _process(_delta):
 				if mantiss < 1:
 					str1 = "a tachyon"
 					str2 = "%s %ss" % [Globals.float_to_string(1. / mantiss), str2]
-				text += "\n\nIf you counted %s each %s, you'd count them all in a second." % [
+				text += "\n\nIf you counted %s every %s, you'd count them all in a second." % [
 					str1, str2
 				]
 			else:
@@ -51,7 +51,7 @@ func _process(_delta):
 			text += "%s of the average human life expectancy" % \
 			Globals.percent_to_string(years / 73.17)
 		elif years < 25800:
-			text += "%s average human life expectancies" % \
+			text += "%s average human lifespans" % \
 			Globals.float_to_string(years / 73.17)
 		elif years < 1e90:
 			text += "%s precessions of the Earth's axis" %\

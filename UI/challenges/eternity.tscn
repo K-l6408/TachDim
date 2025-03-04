@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://d1v3rvuka8dmn"]
 
 [ext_resource type="Texture2D" uid="uid://cwydckjak8w1f" path="res://images/challenges/EC1.png" id="1_1j2kp"]
-[ext_resource type="Script" path="res://UI/challenges/eternity.gd" id="1_ow2ja"]
+[ext_resource type="Script" uid="uid://crk01kaduksqw" path="res://UI/challenges/eternity.gd" id="1_ow2ja"]
 [ext_resource type="Texture2D" uid="uid://bwavs07as2v2" path="res://images/challenges/EC2.png" id="3_1f1oy"]
 [ext_resource type="Texture2D" uid="uid://ky4p621e6ee2" path="res://images/challenges/EC3.png" id="4_vrk2f"]
 [ext_resource type="Texture2D" uid="uid://ifgbp5d6gavr" path="res://images/challenges/EC4.png" id="5_ukq3o"]

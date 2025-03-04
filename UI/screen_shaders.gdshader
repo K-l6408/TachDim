@@ -5,12 +5,12 @@ uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 uniform float fisheye : hint_range(-0.5, 0) = 0;
 
 void fragment() {
-	
+
 	// glsl -> godot shader
 	vec2 iResolution = 1.0 / SCREEN_PIXEL_SIZE;
 	vec4 fragCoord = FRAGCOORD;
 
-	//normalized coords 
+	//normalized coords
 	vec2 p = fragCoord.xy / iResolution.x;
 
 	//screen proroption
@@ -23,20 +23,20 @@ void fragment() {
 	vec2 d = p - m;
 
 	// distance of pixel from center
-	float r = sqrt(dot(d, d)); 
+	float r = sqrt(dot(d, d));
 
 	float power = fisheye;
 
 	//radius of 1:1 effect
 	float bind;
-	
+
 	//stick to borders
-	if (power > 0.0) 
+	if (power > 0.0)
 		bind = sqrt(dot(m, m));
 	else {
-		if (prop < 1.0) 
-    		bind = m.x; 
-    	else 
+		if (prop < 1.0)
+    		bind = m.x;
+    	else
         	bind = m.y;
 	}
 
@@ -56,7 +56,7 @@ void fragment() {
 		uv = SCREEN_UV;
 	}
 	vec3 col = texture(SCREEN_TEXTURE, uv).rgb;
-    
+
 	COLOR = vec4(col, 1.0);
-	
+
 }

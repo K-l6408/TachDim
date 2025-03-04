@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://b15baj8equdto"]
 
-[ext_resource type="Script" path="res://UI/bar.gd" id="1_6imn8"]
+[ext_resource type="Script" uid="uid://l6wkn1gb4ix8" path="res://UI/bar.gd" id="1_6imn8"]
 [ext_resource type="Texture2D" uid="uid://bd6c646ugsijm" path="res://images/icons/Dilation.png" id="1_7frce"]
 [ext_resource type="Texture2D" uid="uid://bsfvo2ap7qxp4" path="res://images/icons/TGalaxy.png" id="2_l6vpv"]
-[ext_resource type="Script" path="res://UI/dimensions/rewind.gd" id="3_3qt3q"]
-[ext_resource type="Shader" path="res://UI/dimensions/rewind.gdshader" id="3_052do"]
+[ext_resource type="Script" uid="uid://d2tstfb71chju" path="res://UI/dimensions/rewind.gd" id="3_3qt3q"]
+[ext_resource type="Shader" uid="uid://coo4helkpeke7" path="res://UI/dimensions/rewind.gdshader" id="3_052do"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fjw4c"]
 shader = ExtResource("3_052do")

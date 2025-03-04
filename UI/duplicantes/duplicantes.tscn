@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ckigo0tgi2x53"]
 
-[ext_resource type="Script" path="res://UI/duplicantes/duplicantes.gd" id="1_y2w1t"]
+[ext_resource type="Script" uid="uid://dp8m5e3bb3bcd" path="res://UI/duplicantes/duplicantes.gd" id="1_y2w1t"]
 
 [node name="Duplicantes" type="Control"]
 layout_mode = 3

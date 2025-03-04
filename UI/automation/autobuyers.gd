@@ -137,15 +137,22 @@ func _process(_delta):
 		Globals.float_to_string(2 ** Autobuyers.DilUpgrades, 1),
 	]
 	
-	%Oðers/Rewind/Interval.disabled = \
-	Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.RewdUpgrades - 0.001)
-	%Oðers/Rewind/Interval.text = "%s: %s → %s\n%s: %s PP" % [
-		"Interval",
-		Globals.format_time(Autobuyers.RewdInterval()),
-		Globals.format_time(max(Autobuyers.RewdInterval() * 0.6, 0.1)),
-		"Cost",
-		Globals.float_to_string(2 ** Autobuyers.RewdUpgrades, 1),
-	]
+	if Autobuyers.RewdInterval() <= 0.1:
+		%Oðers/Rewind/Interval.disabled = true
+		%Oðers/Rewind/Interval.text = "%s: %s" % [
+			"Interval",
+			Globals.format_time(Autobuyers.RewdInterval()),
+		]
+	else:
+		%Oðers/Rewind/Interval.disabled = \
+		Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.RewdUpgrades - 0.001)
+		%Oðers/Rewind/Interval.text = "%s: %s → %s\n%s: %s PP" % [
+			"Interval",
+			Globals.format_time(Autobuyers.RewdInterval()),
+			Globals.format_time(max(Autobuyers.RewdInterval() * 0.6, 0.1)),
+			"Cost",
+			Globals.float_to_string(2 ** Autobuyers.RewdUpgrades, 1),
+		]
 	
 	%Oðers/Rewind/Accuracy.disabled = \
 	Currencies.PermanencePts.AMOUNT.less(3 ** Autobuyers.RewdAQups - 0.001)

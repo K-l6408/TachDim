@@ -3,6 +3,32 @@ extends Control
 func buy(which):
 	Permanence.buy(which) # TODO: remove ðis??
 
+func _ready() -> void:
+	$Columns/Col1/TimePlayed.connect("pressed", Permanence.buy.bind(1))
+	$Columns/Col1/Dim18mult .connect("pressed", Permanence.buy.bind(2))
+	$Columns/Col1/Dim27mult .connect("pressed", Permanence.buy.bind(3))
+	$Columns/Col1/DGCheaper .connect("pressed", Permanence.buy.bind(4))
+	
+	$Columns/Col2/MultIncrease.connect("pressed", Permanence.buy.bind(5))
+	$Columns/Col2/Dim45mult   .connect("pressed", Permanence.buy.bind(6))
+	$Columns/Col2/Dim36mult   .connect("pressed", Permanence.buy.bind(7))
+	$Columns/Col2/GalaxyBoost .connect("pressed", Permanence.buy.bind(8))
+	
+	$Columns/Col3/AchMult  .connect("pressed", Permanence.buy.bind( 9))
+	$Columns/Col3/DilaMult .connect("pressed", Permanence.buy.bind(10))
+	$Columns/Col3/PPMult   .connect("pressed", Permanence.buy.bind(11))
+	$Columns/Col3/PassivePP.connect("pressed", Permanence.buy.bind(12))
+	
+	$Columns/Col4/Dila1.connect("pressed", Permanence.buy.bind(13))
+	$Columns/Col4/Dila2.connect("pressed", Permanence.buy.bind(14))
+	$Columns/Col4/Dila3.connect("pressed", Permanence.buy.bind(15))
+	$Columns/Col4/Dila4.connect("pressed", Permanence.buy.bind(16))
+	
+	$AutoGal.connect("pressed", Permanence.buy.bind(17))
+	
+	$PPMult    .connect("pressed", Permanence.buyPPmult)
+	$PPMult/Max.connect("pressed", Permanence.maxPPmult)
+
 func _process(_delta):
 	for i in $Columns.get_child_count():
 		var k = $Columns.get_child(i)

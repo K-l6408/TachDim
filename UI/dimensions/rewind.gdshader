@@ -10,15 +10,15 @@ const float j = 0.6;
 void fragment() {
 	float uvx = (UV.x - 0.5) / zoom + 0.5;
 	float psize = pixelsize / zoom;
-	
+
 	if (distance(COLOR, ignore) > 0.7 && !disabled) {
 		vec3 RED = vec3(.9,.1,.1), YELLOW = vec3(.9,.9,.1), GREEN = vec3(.1,.9,.1);
-		
+
 		COLOR.rgb = COLOR.rgb * 0.7 + vec3(
 			min(min(max(4.0*abs(uvx-.25),.5),max(4.0*abs(uvx-.75),.5)),4.0*abs(uvx-.5)),
 			1.0-min(min(max(4.0*abs(uvx-.25),.5),max(4.0*abs(uvx-.75),.5)),4.0*abs(uvx-.5)),
 			0)*0.3;
-		
+
 		if(abs(uvx - 0.1) < psize * 3.0)
 			COLOR.rgb = COLOR.rgb * (1.-j) + RED * j;
 		else if(abs(uvx - 0.1 - mod(TIME,0.4)/2.0) < psize * 3.0) {
@@ -31,7 +31,7 @@ void fragment() {
 			float k = mod(TIME,0.4) / 0.4;
 			COLOR.rgb = k * COLOR.rgb + (1.0-k) * RED;
 		}
-		
+
 		if(abs(uvx - 0.2) < psize * 3.0)
 			COLOR.rgb = COLOR.rgb * (1.-j) + YELLOW * j;
 		else if(abs(uvx - 0.2 - mod(TIME,0.4)/2.0) < psize * 3.0) {
@@ -44,7 +44,7 @@ void fragment() {
 			float k = mod(TIME,0.4) / 0.4;
 			COLOR.rgb = k * COLOR.rgb + (1.0-k) * YELLOW;
 		}
-		
+
 		if(abs(uvx - 0.3) < psize * 3.0)
 			COLOR.rgb = COLOR.rgb * (1.-j) + GREEN * j;
 		else if(abs(uvx - 0.3 - mod(TIME,0.4)/2.0) < psize * 3.0) {

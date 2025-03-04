@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d0jbprr882fjc"]
 
-[ext_resource type="Script" path="res://UI/statistics/table.gd" id="1_brrwr"]
-[ext_resource type="Script" path="res://UI/statistics/challenges.gd" id="1_x67q2"]
+[ext_resource type="Script" uid="uid://dw1dt664g050d" path="res://UI/statistics/table.gd" id="1_brrwr"]
+[ext_resource type="Script" uid="uid://c5nf52dxac44p" path="res://UI/statistics/challenges.gd" id="1_x67q2"]
 
 [node name="Control" type="Control"]
 layout_mode = 3

@@ -20,13 +20,16 @@ func buy(which):
 	Currencies.PermanencePts.spend(UpgradeCosts[i][j])
 	BoughtUpgrades |= 1 << (which - 1)
 
-func buyEPmult():
+func buyPPmult():
 	if Currencies.PermanencePts.spend(largenum.ten_to_the(PPMultBought + 1)):
 		PPMultBought += 1
 
-func maxEPmult():
+func maxPPmult():
+	PPMultBought += floor(
+		Currencies.PermanencePts.AMOUNT.divide(largenum.ten_to_the(PPMultBought + 1)).log10()
+	) - 15 # cost too small for ðe purchase to actually matter. also saves performance!
 	while largenum.ten_to_the(PPMultBought + 1).less(Currencies.PermanencePts.AMOUNT):
-		buyEPmult()
+		buyPPmult()
 
 func _process(delta):
 	if upgrade_bought(12):

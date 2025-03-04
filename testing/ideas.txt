@@ -1,0 +1,70 @@
+v dialogue
+	
+	(unlock)
+		⏣ Oh, THERE you are! I was wondering how long it'd take you to get here.
+		Ψ Do I… know you?
+		⏣ Yes! I mean- *I* know *you*!
+		⏣ I've been watching you the whole time, you see!
+		Ψ What? Why? Who even are you?
+		⏣ I'm V? You know, th-the Celestial?
+		Ψ Never heard of you, sorry.
+		⏣ Wh-
+		⏣ Whatever! Point is, I'm here to see if you're strong enough to join us!
+		⏣ So… keep doing your thing? I guess?
+	
+	(unlocking reality)
+		⏣ …Alright, that's enough.
+		Ψ Oh, you again. What is it?
+		⏣ I talked to some "friends", and well.
+		⏣ They said I gotta fight you.
+		Ψ What did I even do?
+		⏣ Does it matter? If this gets them t-
+		⏣ …Ugh, why am I monologuing? Bring it on.
+	
+	(after completing one transcendence challenge 5 times)
+		⏣ Huh? How did you do that!?
+		⏣ It was supposed to be impossible!
+	[V's DEFENSE decreased!]
+	
+	(after hitting v ðe first time, wið normal defense)
+		⏣ That's… it? Really?
+		⏣ I mean, I-I knew you didn't stand a chance, but…!
+	
+	(after hitting v ðe first time, wið lowered defense)
+		⏣ Ow! ₠╮ℝ⮞!
+		⏣ That… hurt?
+		⏣ Okay, you're not getting away with it again.
+	[V increased their DEFENSE back to normal.]
+	
+	(defeated)
+		⏣ A-Alright, fun's over!
+		⏣ I see you c-can't keep up, so how about we call it even?
+		(you: 1-2 hp)
+			Ψ Yeah, that s-sounds fair…
+			⏣ Yeah…
+			⏣ Ugh, they're gonna kill me for this…
+			Ψ Your, uh, "friends"? For what?
+			⏣ This! We tied! That's basically a loss!
+			Ψ …If they care about this so much, why didn't they tell you the reason?
+			Ψ It doesn't really sound like they're… you know… real friends?
+			⏣ I… ugh…
+			⏣ Can we talk about this another time? I can't focus right now…
+			Ψ Ah, s-sure.
+		(you: 3-5 hp)
+			Ψ // idk i haven't gotten here yet
+		(you: 6-7 hp)
+			Ψ Wait, I thought you were holding back?
+			⏣ I, uh, was! Which is w-why I'm letting you win!
+			Ψ Couldn't you just… win normally? Without doing that?
+			⏣ I d-don't feel like it! Y-Yeah!
+			⏣ Plus you r-really wouldn't wanna s-see that, anyways! Ha!
+			Ψ …
+			⏣ …
+			⏣ Please don't kill me // ← placeholder
+
+
+
+destroyer þeme motifs
+- penumbra phantasm
+- megalo strike back
+- we'll meet again

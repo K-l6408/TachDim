@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dfqmisim44jab"]
 
-[ext_resource type="Script" path="res://UI/dimensions/eternity.gd" id="1_bxmku"]
+[ext_resource type="Script" uid="uid://bwj4u1f8mrqnr" path="res://UI/dimensions/eternity.gd" id="1_bxmku"]
 
 [node name="Control" type="Control"]
 custom_minimum_size = Vector2(520, 404)

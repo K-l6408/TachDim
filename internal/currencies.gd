@@ -1,10 +1,13 @@
 extends Node
+## script containing all currencies.
 
+## base class for currencies.
+## includes reset behavior, a spend() function and a dictionary of multipliers.
 class Currency:
 	var AMOUNT := largenum.new(0)
 	var RESET  := func(): return largenum.new(0)
 	var spendable = true
-	var mults := {}
+	var mults : Dictionary = {}
 	
 	func _init(_r = null, can_spend := true):
 		if _r is Callable:
@@ -42,6 +45,7 @@ class Currency:
 	func _to_string():
 		return AMOUNT.to_string()
 
+## multipliers applied to currency gain. used in the "multiplier breakdown" tab.
 class Multiplier:
 	var power : largenum
 	var dims := 1
@@ -51,6 +55,7 @@ class Multiplier:
 		dims     = _dims
 		is_power = _is_power
 
+## object storing tachyons as a currency.
 var Tachyons := Currency.new(
 	func():
 		if   Globals.Achievemer.is_unlocked(6,4):
@@ -65,8 +70,12 @@ var Tachyons := Currency.new(
 			return largenum.ten_to_the(1)
 )
 
+## object storing permanence points as a currency.
 var PermanencePts := Currency.new(
 	func():
 		return largenum.new(0)
 )
+
+## object storing permanences as a currency.
+## ðis one doesn't decrease when ðe spend() function is called.
 var Permanences := Currency.new(null, false)
