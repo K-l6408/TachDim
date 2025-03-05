@@ -1,7 +1,7 @@
 extends Control
 
 const ANIMATION = [
-	"Big Bang", "Going Boundless"
+	"Big Bang", "Overcoming Time", "Going Boundless"
 ]
 const THEMES = {
 	"Dark" : preload("res://themes/Dark.tres"),
@@ -53,7 +53,8 @@ func _process(_delta):
 		var j = false
 		match i:
 			0: j = (Globals.progress >= Globals.Progression.Permanence)
-			1: j = (Globals.progress >= Globals.Progression.Boundlessness)
+			1: j = (Globals.progress >= Globals.Progression.Overcome)
+			2: j = (Globals.progress >= Globals.Progression.Boundlessness)
 		%AnimOptions.get_node(ANIMATION[i]).visible = j
 		if not j and not Globals.AnimOpt[i]:
 			change_anim_opt(true, i)

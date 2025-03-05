@@ -1,24 +1,61 @@
 extends Node
 
 var BoughtUpgrades := 0
+var OvercomeUpgrades := 0
 var UpgradeCosts := [
 	[1, 1, 1, 2], [1, 1, 1, 2], [3, 5, 7, 10], [20, 35, 50, 75], [300]
 ]
+var OvercomeCosts := [
+	1e3, 1e6, 1e9,
+	3e6, 1e4, 4e4,
+	1e5, 2e8, 1e7
+]
 var PPMultBought := 0
 var PU12Timer = 0
+var TSpScBought := 0
+var TDmScBought := 0
+var PasPPBought := 0
 
 func upgrade_bought(which):
 	return ((BoughtUpgrades >> (which - 1)) & 1) == 1
 
-func unbuy(which):
-	BoughtUpgrades &= 262143 - \
-		1 << (which - 1)
+func overcome_upgrade_bought(which):
+	return ((OvercomeUpgrades >> (which - 1)) & 1) == 1
 
 func buy(which):
 	var i : int = (which - 1) / 4
 	var j : int = (which - 1) % 4
-	Currencies.PermanencePts.spend(UpgradeCosts[i][j])
-	BoughtUpgrades |= 1 << (which - 1)
+	if Currencies.PermanencePts.spend(UpgradeCosts[i][j]):
+		BoughtUpgrades |= 1 << (which - 1)
+func unbuy(which):
+	BoughtUpgrades &= (1 << 12 - 1) - \
+		1 << (which - 1)
+
+func buy_over(which):
+	if Currencies.PermanencePts.spend(OvercomeCosts[which - 1]):
+		OvercomeUpgrades |= 1 << (which - 1)
+func unbuy_over(which):
+	OvercomeUpgrades &= (1 << 9 - 1) - \
+		1 << (which - 1)
+
+func tspsc_cost():
+	return largenum.ten_to_the(4   + 1.5     * TSpScBought)
+func tdmsc_cost():
+	return largenum.ten_to_the(4.5 + 2.33333 * TDmScBought)
+func paspp_cost():
+	return largenum.ten_to_the(5   + 0.66666 * PasPPBought)
+
+func buy_rebuyable(which):
+	match which:
+		1:
+			if Currencies.PermanencePts.spend(tspsc_cost()):
+				TSpScBought += 1
+		2:
+			if Currencies.PermanencePts.spend(tdmsc_cost()):
+				TDmScBought += 1
+		3:
+			if Currencies.PermanencePts.spend(paspp_cost()):
+				PasPPBought += 1
 
 func buyPPmult():
 	if Currencies.PermanencePts.spend(largenum.ten_to_the(PPMultBought + 1)):
@@ -63,7 +100,7 @@ func process_pp_gain():
 	
 	Currencies.PermanencePts.mults["Base gain from Tachyons"] = null
 	
-	if Globals.OEUHandler.is_bought(4):
+	if overcome_upgrade_bought(4):
 		Currencies.PermanencePts.mults["Base gain from Tachyons"] = \
 		Currencies.Multiplier.new(largenum.five_to_the((
 			TachyonDims.topTachyonsInPermanence.log2() / 900

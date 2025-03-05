@@ -209,17 +209,3 @@ over the last 10 Eternities.
 Next: 5%
 Cost: 1.00e5 EP"
 text_overrun_behavior = 2
-
-[connection signal="pressed" from="holy shit" to="." method="overcome"]
-[connection signal="pressed" from="upgrades/TachMult" to="." method="buy" binds= [1]]
-[connection signal="pressed" from="upgrades/MaxDila" to="." method="buy" binds= [2]]
-[connection signal="pressed" from="upgrades/GalStr" to="." method="buy" binds= [3]]
-[connection signal="pressed" from="upgrades/EPForm" to="." method="buy" binds= [4]]
-[connection signal="pressed" from="upgrades/DilaBoost" to="." method="buy" binds= [5]]
-[connection signal="pressed" from="upgrades/RewdFormula" to="." method="buy" binds= [6]]
-[connection signal="pressed" from="upgrades/ChallengeMult" to="." method="buy" binds= [7]]
-[connection signal="pressed" from="upgrades/PasEter" to="." method="buy" binds= [8]]
-[connection signal="pressed" from="upgrades/EterMult" to="." method="buy" binds= [9]]
-[connection signal="pressed" from="upgrades/TSpSc" to="." method="buy_rebuyable" binds= [1]]
-[connection signal="pressed" from="upgrades/TDmSc" to="." method="buy_rebuyable" binds= [2]]
-[connection signal="pressed" from="upgrades/PasEP" to="." method="buy_rebuyable" binds= [3]]

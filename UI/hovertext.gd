@@ -26,14 +26,12 @@ func _process(delta: float) -> void:
 		
 		if direction in Horizontal:
 			label.set_anchors_and_offsets_preset(Control.PRESET_VCENTER_WIDE)
-			if visible:
-				size.x = label.size.x + 5
-				size.y = parent.size.y
+			size.x = label.size.x + 5
+			size.y = parent.size.y
 		if direction in Vertical:
 			label.set_anchors_and_offsets_preset(Control.PRESET_HCENTER_WIDE)
-			if visible:
-				size.x = parent.size.x
-				size.y = label.size.y + 5
+			size.x = parent.size.x
+			size.y = label.size.y + 5
 		
 		match direction:
 			Direction.UP:
@@ -49,12 +47,12 @@ func _process(delta: float) -> void:
 		parent.get_tooltip() != "":
 			# mouse INSIDE parent control
 			modulate.a += delta * 5
-			if modulate.a >= 1: modulate.a = 1
+			if modulate.a >= 1:
+				modulate.a = 1
 			show()
 		else:
 			# mouse OUTSIDE parent control
 			modulate.a -= delta * 5
 			if modulate.a <= 0:
 				modulate.a = 0
-				hide()
 	else: queue_free()

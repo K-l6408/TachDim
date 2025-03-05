@@ -63,7 +63,7 @@ func _process(_delta):
 	$"Auto/Buyers/Big Bang".visible = Globals.challengeCompleted(14)
 	
 	# hiding dilation/galaxy buy max mode if locked
-	if Globals.OEUHandler.is_bought(2):
+	if Permanence.overcome_upgrade_bought(2):
 		$Auto/Buyers/Dilation/Interval.anchor_right = 0.5
 		$Auto/Buyers/Dilation/Mode.show()
 	else:

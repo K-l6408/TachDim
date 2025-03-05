@@ -23,7 +23,7 @@ var TSpeedBoost :
 		var GalaxyMult = 1
 		
 		if Permanence.upgrade_bought(8): GalaxyMult *= 2
-		if Globals.OEUHandler.is_bought(3): GalaxyMult *= 1.4
+		if Permanence.overcome_upgrade_bought(3): GalaxyMult *= 1.4
 		if Globals.ECCompleted(4): GalaxyMult *= 1.15
 		
 		return largenum.new(1.10 if Globals.Challenge == 12 else 1.125).\
@@ -97,7 +97,7 @@ func tspcost():
 	var costlog = start + increase * purchase
 	
 	if costlog >= 308.2547156:
-		var scalingamount = log(10 - Globals.OEUHandler.TSpScBought) / GL.LOG10
+		var scalingamount = log(10 - Permanence.TSpScBought) / GL.LOG10
 		var scaling : int = purchase - (308.2547156 - start) / increase
 		costlog += scaling * (scaling + 1) * scalingamount / 2
 	
@@ -122,12 +122,28 @@ func dimcost(which):
 	var costlog = start + increase * purchase
 	
 	if costlog >= 308.2547156:
-		var scalingamount = log(10 - Globals.OEUHandler.TDmScBought) / GL.LOG10
+		var scalingamount = log(10 - Permanence.TDmScBought) / GL.LOG10
 		var scaling : int = purchase - (308.2547156 - start) / increase
 		costlog += scaling * (scaling + 1) * scalingamount / 2
 	
 	return largenum.ten_to_the(costlog)
 
+func continuum(which, T = Currencies.Tachyons.AMOUNT.log10()):
+	var S = [1, 2, 4, 6, 9, 13, 18, 24][which - 1]
+	var I = [3, 4, 5, 6, 8, 10, 12, 15][which - 1]
+	var X = 308.2547156
+	var J = (X-S)/I
+	var K = log(10 - Permanence.TDmScBought) / GL.LOG10
+	
+	if T < X: return (T-S)/I
+	
+	var a = K/2
+	var b = (K/2 - J*K + I)
+	var c = (J*K/2*(J-1) + S - T)
+	
+	var Δ = b*b - 4*a*c
+	var P = (sqrt(Δ) - b) /a /2
+	return P * buylim
 
 # functions for buying tachyon dimensions.
 # "tier" goes from 1 to 8
@@ -166,6 +182,8 @@ func buy_until_mult(tier, force := false):
 	return true
 
 func buy_max(tier):
+	if largenum.two_to_the(62).less(Currencies.Tachyons.AMOUNT.divide(dimcost(tier))):
+		DimPurchase[tier - 1]
 	while buy_until_mult(tier, true): pass 
 
 # functions for buying timespeed. noþing of note here.
@@ -181,7 +199,6 @@ func buy_tspeed():
 
 func buy_max_tspeed():
 	while buy_tspeed(): pass
-
 
 func rewind():
 	if not (
@@ -210,7 +227,7 @@ func rewindBoost() -> largenum:
 	var RBoost : largenum
 	if Globals.Challenge == 8:
 		RBoost = DimAmount[0].power(0.2)
-	elif Globals.OEUHandler.is_bought(6):
+	elif Permanence.overcome_upgrade_bought(6):
 		RBoost = DimAmount[0].power(0.02)
 	else:
 		RBoost = largenum.new(DimAmount[0].log10() ** 1.5 / 10)
@@ -239,10 +256,10 @@ func rewindScore():
 		return 1
 	return 1 - abs(score)
 
-# resets various content based on "level".
-# 0: dilation reset
-# 1:  galaxy  reset
-# 2: big bang reset
+## resets various content based on "level".
+## 0: dilation reset
+## 1:  galaxy  reset
+## 2: big bang reset
 func reset(level := 0, challengeReset := true):
 	if level >= 2 and challengeReset: Globals.Challenge = 0
 	if Globals.Challenge == 2  or Globals.Challenge == 16: C2Multiplier = 1.0
@@ -279,7 +296,7 @@ func reset(level := 0, challengeReset := true):
 		Globals.eternTime = 0
 		topTachyonsInPermanence = largenum.new(0)
 
-# cost of time dilation. takes into account challenge effects.
+## cost of time dilation. takes into account challenge effects.
 func dilacost():
 	var Cost := 20
 	
@@ -299,7 +316,7 @@ func dilacost():
 	
 	return Cost
 
-# cost of tachyon galaxies. takes into account challenge effects and scaling.
+## cost of tachyon galaxies. takes into account challenge effects and scaling.
 func galacost():
 	var Cost = 80 + 60 * TGalaxies
 	
@@ -324,7 +341,7 @@ func galacost():
 	
 	return Cost
 
-# prevents softlocks by doing a time dilation reset. doing so costs 1 time dilation.
+## prevents softlocks by doing a time dilation reset. doing so costs 1 time dilation.
 func antisoftlock():
 	reset(0)
 	if TDilation > -3:
@@ -444,7 +461,7 @@ func permanence(resetchallenge := true):
 	
 	await get_tree().process_frame
 	reset(2, resetchallenge)
-	Globals.animation("bang")
+	Globals.animation(GL.Animations.BigBang)
 
 func _process(delta):
 	var logfinity = 2048 if Globals.Challenge == 15 else 1024
@@ -466,7 +483,7 @@ func _process(delta):
 	
 	dilamult = 2.0
 	if Permanence.upgrade_bought(10): dilamult = 2.5
-	if Globals.OEUHandler.is_bought(5): dilamult = 3.0
+	if Permanence.overcome_upgrade_bought(5): dilamult = 3.0
 	if Globals.ECCompleted(7): dilamult = 5.0
 	if Globals.Challenge == 10:
 		dilamult = 2.2 ** (1 - abs(C10Score()))
@@ -624,7 +641,7 @@ func _process(delta):
 					Currencies.Tachyons.mults["Achievements"]["4×8"] = \
 					Currencies.Multiplier.new(largenum.new(1.2), 8)
 			
-			if Globals.OEUHandler.is_bought(1):
+			if Permanence.overcome_upgrade_bought(1):
 				multiplier.mult2self(Formulas.overcome_1())
 				if not Currencies.Tachyons.\
 				mults["Overcome Time Upgrades"].has("OU 1"):

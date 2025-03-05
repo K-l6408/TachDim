@@ -20,7 +20,6 @@ static func bpgained():
 	
 	if "5×1" in Globals.Studies.purchased:
 		bpgain.mult2self(5)
-	#bpgain.mult2self(largenum.two_to_the(Globals.EUHandler.EPMultBought))
 	
 	if bpgain.to_float() < 1e10:
 		bpgain = largenum.new(floor(bpgain.to_float()))

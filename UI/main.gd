@@ -22,8 +22,6 @@ func _ready():
 	Globals.Achievemer = %Tabs/Achievements
 	Globals.Animater = $AnimationPlayer
 	Globals.VisualSett = %Tabs/Options/Visual
-	Globals.EUHandler = %"Tabs/Permanence/Permanence Upgrades"
-	Globals.OEUHandler = %"Tabs/Permanence/Overcome Time"
 	Globals.DupHandler = %Tabs/Duplicantes
 	Globals.Studies = %"Tabs/Transcendence/Space Studies"
 	

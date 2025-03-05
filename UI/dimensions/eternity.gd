@@ -33,7 +33,7 @@ var DimCostMult : Array[largenum] :
 
 const TachLogReq := [
 	1000,  1600,  4000,  10000,
-	18000, 26000, 42069, 80000.903
+	18000, 26000, 42000, 80000.903
 ]
 
 var DimsUnlocked := 0
@@ -215,3 +215,4 @@ func reset():
 	for i in 8:
 		DimPurchase[i] = 0
 	eternitied()
+	DimsUnlocked = 0

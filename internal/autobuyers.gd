@@ -54,7 +54,7 @@ func set_big_bang_mode(to:int):
 var DilaTimeOverride := 0.0
 var GalaTimeOverride := 0.0
 
-var  RewindObjective := 2.0
+var  RewindObjective := 4.0
 var BigBangObjective := largenum.new(1)
 var BigBangObjectStr := "1"
 
@@ -90,7 +90,7 @@ func RewdInterval():
 	if i < 0.101: return 0.1
 	return i
 func DilInterval():
-	if Globals.OEUHandler.is_bought(2):
+	if Permanence.overcome_upgrade_bought(2):
 		return DilaTimeOverride
 	var i = 4 * (0.6 ** DilUpgrades)
 	if i < 0.101: return 0.1
@@ -205,7 +205,7 @@ func _process(delta):
 								NormTimers[i] += BangInterval()
 					GALAXY:
 						if Globals.challengeCompleted(12):
-							if Globals.OEUHandler.is_bought(2):
+							if Permanence.overcome_upgrade_bought(2):
 								TachyonDims.galaxy_max()
 							else:
 								TachyonDims.galaxy()
@@ -213,7 +213,7 @@ func _process(delta):
 					DILATION:
 						if Globals.challengeCompleted(11) and \
 						Globals.Challenge != 10:
-							if Globals.OEUHandler.is_bought(2) and \
+							if Permanence.overcome_upgrade_bought(2) and \
 								TachyonDims.TDilation >= (
 									2 if Globals.Challenge in [6, 16] else 4
 								):

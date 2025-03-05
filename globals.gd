@@ -71,21 +71,25 @@ var SDHandler  : Control
 var Automation : Control
 var Achievemer : Control
 var VisualSett : Control
-var EUHandler  : Control
-var OEUHandler : Control
 var DupHandler : Control
 var Studies    : Control
 
 var NotifHandler : Control
 
-var AnimOpt : Array[bool] = [true, true]
+var AnimOpt : Array[bool] = [true, true, true]
+enum Animations {
+	BigBang, Overcome, Transcend
+}
+const ANIMATION_NAMES = [
+	"bang", "overcome", "transcend"
+]
 
 var Animater : AnimationPlayer
-func animation(which):
-	if which == "bang" and not AnimOpt[0]: return
-	if which == "boundless" and not AnimOpt[1]: return
+func animation(which:Animations):
+	if not AnimOpt[which]: return
+	if Animater == null: return
 	get_tree().paused = true
-	Animater.play(which)
+	Animater.play(ANIMATION_NAMES[which])
 
 var existence = 0
 var eternTime = 0
@@ -147,11 +151,11 @@ func boundlessnessreset():
 		Permanence.BoughtUpgrades = 0
 	Permanence.PPMultBought = 0
 	if Boundlessnesses.to_float() < 6:
-		OEUHandler.Bought = 0
+		Permanence.OvercomeUpgrades = 0
 	if Boundlessnesses.to_float() < 9:
-		OEUHandler.TSpScBought = 0
-		OEUHandler.TDmScBought = 0
-		OEUHandler.PasEPBought = 0
+		Permanence.TSpScBought = 0
+		Permanence.TDmScBought = 0
+		Permanence.PasEPBought = 0
 	EDHandler.DimsUnlocked = 0
 	EDHandler.reset()
 	DupHandler.reset()

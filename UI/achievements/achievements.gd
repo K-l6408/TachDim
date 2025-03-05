@@ -281,7 +281,7 @@ func _process(_delta):
 		if Globals.CompletedECs > 0:
 			set_unlocked(5, 7)
 	if not is_unlocked(5, 8):
-		if Globals.OEUHandler.is_bought(3):
+		if Permanence.overcome_upgrade_bought(3):
 			set_unlocked(5, 8)
 	if not is_unlocked(6, 1):
 		if not Currencies.Tachyons.AMOUNT.less(largenum.ten_to_the(9999).multiply(9)):

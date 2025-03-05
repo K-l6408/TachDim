@@ -804,5 +804,4 @@ visible = false
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" method="_on_pressed"]
 [connection signal="button_down" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Permanence" method="unlocknewdim"]
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" method="boundlessness"]
-[connection signal="YEAAAH" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Permanence/Overcome Time" to="AnimationPlayer" method="play" binds= ["overcome"]]
 [connection signal="theme_change" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options/Visual" to="." method="theme_change"]

@@ -185,10 +185,10 @@ func saveF(file : String = saveFilePath):
 		DATA["challenge times"] = Globals.challengeTimes
 	
 	if Globals.progress >= GL.Progression.Overcome:
-		DATA["bought overcome upgrades"] = Globals.OEUHandler.Bought
-		DATA["tmsp scale bought"] = Globals.OEUHandler.TSpScBought
-		DATA["tdim scale bought"] = Globals.OEUHandler.TDmScBought
-		DATA["passive ep bought"] = Globals.OEUHandler.PasEPBought
+		DATA["bought overcome upgrades"] = Permanence.OvercomeUpgrades
+		DATA["tmsp scale bought"] = Permanence.TSpScBought
+		DATA["tdim scale bought"] = Permanence.TDmScBought
+		DATA["passive ep bought"] = Permanence.PasPPBought
 		
 		DATA["eter dim amounts"] = [
 			Globals.EDHandler.DimAmount[0].to_bytes(),
@@ -405,14 +405,14 @@ func loadF(file : String = saveFilePath):
 			Globals.progressBL = DATA["bln progress"]
 		
 		if DATA.has("bought overcome upgrades"):
-			Globals.OEUHandler.Bought = DATA["bought overcome upgrades"]
+			Permanence.OvercomeUpgrades = DATA["bought overcome upgrades"]
 		
 		if DATA.has("tmsp scale bought"):
-			Globals.OEUHandler.TSpScBought = DATA["tmsp scale bought"]
+			Permanence.TSpScBought = DATA["tmsp scale bought"]
 		if DATA.has("tdim scale bought"):
-			Globals.OEUHandler.TDmScBought = DATA["tdim scale bought"]
+			Permanence.TDmScBought = DATA["tdim scale bought"]
 		if DATA.has("passive ep bought"):
-			Globals.OEUHandler.PasEPBought = DATA["passive ep bought"]
+			Permanence.PasEPBought = DATA["passive ep bought"]
 		
 		if DATA.has("eter dim amounts"):
 			for i in 8:
@@ -503,16 +503,16 @@ func gameReset():
 	Globals.fastestEtern = Globals.PrestigeData.new(-1, 1, 1)
 	Globals.eternTime   = 0
 	Globals.Challenge   = 0
-	Globals.CompletedChallenges   = 0
+	Globals.CompletedChallenges     = 0
 	Permanence.BoughtUpgrades       = 0
 	Permanence.PPMultBought         = 0
 	Autobuyers.NormUpgrades = [0,0,0,0,0,0,0,0,0]
-	#Globals.Automation.get_node("Auto/Buyers/Rewind/Objective").value = 4
+	Autobuyers.RewindObjective = 4
 	Permanence.PU12Timer = 0
-	Globals.OEUHandler.Bought      = 0
-	Globals.OEUHandler.TSpScBought = 0
-	Globals.OEUHandler.TDmScBought = 0
-	Globals.OEUHandler.PasEPBought = 0
+	Permanence.OvercomeUpgrades = 0
+	Permanence.TSpScBought      = 0
+	Permanence.TDmScBought      = 0
+	Permanence.PasEPBought      = 0
 	Globals.challengeTimes = [
 		-1, -1, -1,
 		-1, -1, -1,
@@ -549,6 +549,8 @@ func gameReset():
 	Currencies.Tachyons.reset()
 	Currencies.PermanencePts.reset()
 	Currencies.Permanences  .reset()
+	for i in Globals.AnimOpt.size():
+		Globals.AnimOpt[i] = true
 
 func idle(idletime):
 	var idlerealtime = $HFlowContainer/Sidler.value
