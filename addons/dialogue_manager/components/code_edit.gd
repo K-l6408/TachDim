@@ -1,14 +1,10 @@
 @tool
-extends CodeEdit
+class_name DMCodeEdit extends CodeEdit
 
 
 signal active_title_change(title: String)
 signal error_clicked(line_number: int)
 signal external_file_requested(path: String, title: String)
-
-
-const DialogueManagerParser = preload("./parser.gd")
-const DialogueSyntaxHighlighter = preload("./code_edit_syntax_highlighter.gd")
 
 
 # A link back to the owner `MainView`
@@ -19,7 +15,7 @@ var theme_overrides: Dictionary:
 	set(value):
 		theme_overrides = value
 
-		syntax_highlighter = DialogueSyntaxHighlighter.new()
+		syntax_highlighter = DMSyntaxHighlighter.new()
 
 		# General UI
 		add_theme_color_override("font_color", theme_overrides.text_color)
@@ -67,7 +63,7 @@ func _ready() -> void:
 	if not has_comment_delimiter("#"):
 		add_comment_delimiter("#", "", true)
 
-	syntax_highlighter = DialogueSyntaxHighlighter.new()
+	syntax_highlighter = DMSyntaxHighlighter.new()
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -111,26 +107,37 @@ func _can_drop_data(at_position: Vector2, data) -> bool:
 	if typeof(data) != TYPE_DICTIONARY: return false
 	if data.type != "files": return false
 
-	var files: PackedStringArray = Array(data.files).filter(func(f): return f.get_extension() == "dialogue")
+	var files: PackedStringArray = Array(data.files)
 	return files.size() > 0
 
 
 func _drop_data(at_position: Vector2, data) -> void:
 	var replace_regex: RegEx = RegEx.create_from_string("[^a-zA-Z_0-9]+")
 
-	var files: PackedStringArray = Array(data.files).filter(func(f): return f.get_extension() == "dialogue")
+	var files: PackedStringArray = Array(data.files)
 	for file in files:
 		# Don't import the file into itself
 		if file == main_view.current_file_path: continue
 
-		var path = file.replace("res://", "").replace(".dialogue", "")
-		# Find the first non-import line in the file to add our import
-		var lines = text.split("\n")
-		for i in range(0, lines.size()):
-			if not lines[i].begins_with("import "):
-				insert_line_at(i, "import \"%s\" as %s\n" % [file, replace_regex.sub(path, "_", true)])
-				set_caret_line(i)
-				break
+		if file.get_extension() == "dialogue":
+			var path = file.replace("res://", "").replace(".dialogue", "")
+			# Find the first non-import line in the file to add our import
+			var lines = text.split("\n")
+			for i in range(0, lines.size()):
+				if not lines[i].begins_with("import "):
+					insert_line_at(i, "import \"%s\" as %s\n" % [file, replace_regex.sub(path, "_", true)])
+					set_caret_line(i)
+					break
+		else:
+			var cursor: Vector2 = get_line_column_at_pos(at_position)
+			if cursor.x > -1 and cursor.y > -1:
+				set_cursor(cursor)
+				remove_secondary_carets()
+				if has_method("insert_text"):
+					call("insert_text", "\"%s\"" % file, cursor.y, cursor.x)
+				else:
+					call("insert_text_at_cursor", "\"%s\"" % file)
+	grab_focus()
 
 
 func _request_code_completion(force: bool) -> void:
@@ -151,17 +158,18 @@ func _request_code_completion(force: bool) -> void:
 				add_code_completion_option(CodeEdit.KIND_CLASS, "END!", "END!".substr(prompt.length()), theme_overrides.text_color, get_theme_icon("Stop", "EditorIcons"))
 
 		# Get all titles, including those in imports
-		var parser: DialogueManagerParser = DialogueManagerParser.new()
-		parser.prepare(text, main_view.current_file_path, false)
-		for title in parser.titles:
-			if "/" in title:
+		for title: String in DMCompiler.get_titles_in_text(text, main_view.current_file_path):
+			# Ignore any imported titles that aren't resolved to human readable.
+			if title.to_int() > 0:
+				continue
+
+			elif "/" in title:
 				var bits = title.split("/")
 				if matches_prompt(prompt, bits[0]) or matches_prompt(prompt, bits[1]):
 					add_code_completion_option(CodeEdit.KIND_CLASS, title, title.substr(prompt.length()), theme_overrides.text_color, get_theme_icon("CombineLines", "EditorIcons"))
 			elif matches_prompt(prompt, title):
 				add_code_completion_option(CodeEdit.KIND_CLASS, title, title.substr(prompt.length()), theme_overrides.text_color, get_theme_icon("ArrowRight", "EditorIcons"))
 		update_code_completion_options(true)
-		parser.free()
 		return
 
 	var name_so_far: String = WEIGHTED_RANDOM_PREFIX.sub(current_line.strip_edges(), "")
@@ -205,8 +213,8 @@ func get_cursor() -> Vector2:
 
 # Set the caret from a Vector2
 func set_cursor(from_cursor: Vector2) -> void:
-	set_caret_line(from_cursor.y)
-	set_caret_column(from_cursor.x)
+	set_caret_line(from_cursor.y, false)
+	set_caret_column(from_cursor.x, false)
 
 
 # Check if a prompt is the start of a string without actually being that string
@@ -219,8 +227,9 @@ func get_titles() -> PackedStringArray:
 	var titles = PackedStringArray([])
 	var lines = text.split("\n")
 	for line in lines:
-		if line.begins_with("~ "):
-			titles.append(line.substr(2).strip_edges())
+		if line.strip_edges().begins_with("~ "):
+			titles.append(line.strip_edges().substr(2))
+
 	return titles
 
 
@@ -259,6 +268,11 @@ func get_character_names(beginning_with: String) -> PackedStringArray:
 
 # Mark a line as an error or not
 func mark_line_as_error(line_number: int, is_error: bool) -> void:
+	# Lines display counting from 1 but are actually indexed from 0
+	line_number -= 1
+
+	if line_number < 0: return
+
 	if is_error:
 		set_line_background_color(line_number, theme_overrides.error_line_color)
 		set_line_gutter_icon(line_number, 0, get_theme_icon("StatusError", "EditorIcons"))
@@ -372,6 +386,7 @@ func delete_current_line() -> void:
 func move_line(offset: int) -> void:
 	offset = clamp(offset, -1, 1)
 
+	var starting_scroll := scroll_vertical
 	var cursor = get_cursor()
 	var reselect: bool = false
 	var from: int = cursor.y
@@ -395,12 +410,14 @@ func move_line(offset: int) -> void:
 	text = "\n".join(lines)
 
 	cursor.y += offset
+	set_cursor(cursor)
 	from += offset
 	to += offset
 	if reselect:
 		select(from, 0, to, get_line_width(to))
-	set_cursor(cursor)
+
 	text_changed.emit()
+	scroll_vertical = starting_scroll + offset
 
 
 ### Signals

@@ -197,7 +197,7 @@ Next: ×9
 Cost: 5.00e5 EP"
 text_overrun_behavior = 2
 
-[node name="PasEP" type="Button" parent="upgrades"]
+[node name="PasPP" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
 theme_type_variation = &"ButtonEtern"

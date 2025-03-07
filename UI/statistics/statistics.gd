@@ -53,9 +53,12 @@ func _process(_delta):
 		elif years < 25800:
 			text += "%s average human lifespans" % \
 			Globals.float_to_string(years / 73.17)
-		elif years < 1e90:
+		elif years < 1e10:
 			text += "%s precessions of the Earth's axis" %\
 			Globals.float_to_string(years / 25800)
+		elif years < 1e300:
+			text += "%s times the current age of the Universe" %\
+			Globals.float_to_string(years / 1380000000)
 		
 		text += " to count all your tachyons."
 	

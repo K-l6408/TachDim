@@ -7,7 +7,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngcjy"]
 shader = ExtResource("2_5oiqa")
-shader_parameter/pixelsize = 0.0016276
+shader_parameter/pixelsize = 0.00217014
 shader_parameter/zoom = 1.0
 shader_parameter/ignore = Color(0.8, 0.8, 0.8, 1)
 shader_parameter/disabled = false
@@ -121,7 +121,9 @@ offset_top = -28.0
 offset_right = 516.488
 offset_bottom = -5.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
+direction = 1
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="BuyMax" type="Button" parent="VSplitContainer/TopButtons"]
@@ -216,8 +218,8 @@ offset_left = -16.0
 offset_right = -5.0
 offset_bottom = 40.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
-direction = 2
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension1"]
@@ -296,8 +298,8 @@ offset_left = -16.0
 offset_right = -5.0
 offset_bottom = 40.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
-direction = 2
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension2"]
@@ -376,8 +378,8 @@ offset_left = -16.0
 offset_right = -5.0
 offset_bottom = 40.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
-direction = 2
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension3"]
@@ -456,8 +458,8 @@ offset_left = -16.0
 offset_right = -5.0
 offset_bottom = 40.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
-direction = 2
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension4"]
@@ -536,8 +538,8 @@ offset_left = -16.0
 offset_right = -5.0
 offset_bottom = 40.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
-direction = 2
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension5"]
@@ -616,8 +618,8 @@ offset_left = -16.0
 offset_right = -5.0
 offset_bottom = 40.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
-direction = 2
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension6"]
@@ -696,8 +698,8 @@ offset_left = -16.0
 offset_right = -5.0
 offset_bottom = 40.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
-direction = 2
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension7"]
@@ -771,8 +773,8 @@ offset_left = -16.0
 offset_right = -5.0
 offset_bottom = 40.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
-direction = 2
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension8"]
@@ -803,12 +805,12 @@ visible = false
 modulate = Color(1, 1, 1, 0)
 z_index = 400
 layout_mode = 0
-offset_top = 30.0
-offset_right = 960.0
-offset_bottom = 53.0
+offset_left = -16.0
+offset_right = -5.0
+offset_bottom = 25.0
 mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
 script = ExtResource("4_6afn2")
-direction = 1
 metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="Prestiges" type="Control" parent="VSplitContainer"]
@@ -913,16 +915,17 @@ but lose a Time Dilation"
 [node name="BIG BANG" type="Button" parent="."]
 visible = false
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 0.344
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.344
+anchor_bottom = 0.5
 offset_left = -280.0
-offset_top = -96.16
+offset_top = -96.0
 offset_right = 280.0
-offset_bottom = 95.84
+offset_bottom = 96.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"ButtonEtern"
 theme_override_font_sizes/font_size = 75
 text = "Big Bang"

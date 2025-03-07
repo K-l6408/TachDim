@@ -1,8 +1,8 @@
 [gd_scene load_steps=48 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
-[ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_fid5e"]
 [ext_resource type="Script" uid="uid://ohsjtsuph3ni" path="res://UI/main.gd" id="1_qdidp"]
+[ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_wxu8m"]
 [ext_resource type="Script" uid="uid://d2tstfb71chju" path="res://UI/dimensions/rewind.gd" id="2_4w04a"]
 [ext_resource type="Script" uid="uid://uajon8f0jvn7" path="res://UI/newsticker/newsticker.gd" id="3_7hxj0"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="3_ky8nc"]
@@ -50,6 +50,7 @@ shader_parameter/fisheye = 0.0
 [sub_resource type="Animation" id="Animation_m0sop"]
 resource_name = "bang"
 length = 1.5
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -81,7 +82,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(1.1),
+"times": PackedFloat32Array(1.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -108,27 +109,14 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_a3cka"]
 resource_name = "overcome"
 length = 2.0
+step = 0.1
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".")
+tracks/0/path = NodePath("Camera2D/CanvasLayer/Sprite2D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"UNPAUSE"
-}]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D/CanvasLayer/Sprite2D")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -136,21 +124,32 @@ tracks/1/keys = {
 "method": &"screenshot"
 }]
 }
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera2D/CanvasLayer/Sprite2D/Node2D")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1),
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D/CanvasLayer/Sprite2D/Node2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"start"
-}, {
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
 "args": [],
-"method": &"shatter"
+"method": &"UNPAUSE"
 }]
 }
 
@@ -208,7 +207,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_fid5e")
+theme = ExtResource("1_wxu8m")
 script = ExtResource("1_qdidp")
 
 [node name="Background" type="Panel" parent="."]
@@ -376,6 +375,7 @@ custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
 [node name="PermanenceButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Permanence"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -659,6 +659,7 @@ ignore_rotation = false
 layer = 2
 
 [node name="Shaders" type="ColorRect" parent="Camera2D/CanvasLayer"]
+visible = false
 material = SubResource("ShaderMaterial_gj34f")
 anchors_preset = 15
 anchor_right = 1.0
@@ -680,12 +681,14 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Camera2D/CanvasLayer"]
+visible = false
 centered = false
 script = ExtResource("30_nqics")
 
 [node name="Node2D" type="Node2D" parent="Camera2D/CanvasLayer/Sprite2D"]
 script = ExtResource("30_g6sfq")
 nbr_of_shards = 25
+display_triangles = true
 
 [node name="DeleteTimer" type="Timer" parent="Camera2D/CanvasLayer/Sprite2D/Node2D"]
 
@@ -779,6 +782,7 @@ transparent_bg = true
 offset_top = -25.0
 offset_right = 512.0
 offset_bottom = 507.0
+theme_override_constants/line_spacing = -26
 theme_override_fonts/font = ExtResource("25_na6n0")
 theme_override_font_sizes/font_size = 128
 text = "

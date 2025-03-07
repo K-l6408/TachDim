@@ -55,8 +55,5 @@ void fragment() {
 	if (abs(fisheye) <= 1e-3) {
 		uv = SCREEN_UV;
 	}
-	vec3 col = texture(SCREEN_TEXTURE, uv).rgb;
-
-	COLOR = vec4(col, 1.0);
-
+	COLOR.rgb = texture(SCREEN_TEXTURE, uv).rgb;
 }

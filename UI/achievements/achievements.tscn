@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cy1o0vjg4sdbt"]
+[gd_scene load_steps=5 format=3 uid="uid://cy1o0vjg4sdbt"]
 
 [ext_resource type="Script" uid="uid://c4yvr3qxjefcd" path="res://UI/achievements/achievements.gd" id="1_mawnv"]
 [ext_resource type="Texture2D" uid="uid://dmr7h8emihq8s" path="res://images/achievements.png" id="2_brqqv"]
+[ext_resource type="Script" uid="uid://c2acqosw3x5it" path="res://UI/hovertext.gd" id="3_tmajo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vnntm"]
 atlas = ExtResource("2_brqqv")
@@ -19,14 +20,16 @@ grow_vertical = 2
 script = ExtResource("1_mawnv")
 
 [node name="Control" type="ScrollContainer" parent="."]
+clip_contents = false
 custom_minimum_size = Vector2(560, 360)
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -5.0
-offset_right = 5.0
+offset_left = -280.0
+offset_top = 64.0
+offset_right = 280.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -63,3 +66,17 @@ offset_top = -11.0
 offset_right = 15.0
 offset_bottom = 5.0
 text = "11"
+
+[node name="TooltipPanel" type="PanelContainer" parent="Achiev"]
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = -96.0
+offset_top = -44.0
+offset_right = 160.0
+offset_bottom = -5.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("3_tmajo")
+direction = 1
+metadata/_custom_type_script = "uid://c2acqosw3x5it"

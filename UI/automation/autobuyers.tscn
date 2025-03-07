@@ -43,6 +43,8 @@ offset_bottom = 6.5
 grow_vertical = 2
 text = "Big Bang Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Big Bang"]
 layout_mode = 1
@@ -156,6 +158,8 @@ offset_bottom = 6.5
 grow_vertical = 2
 text = "Tachyon Galaxy Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/TGalaxy"]
 layout_mode = 1
@@ -189,18 +193,37 @@ Cost: 1.0 EP"
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.8
-anchor_bottom = 0.5
-offset_left = 1.0
-offset_top = -23.0
+anchor_bottom = 0.55
+offset_left = 3.0
+offset_top = 4.0
 offset_right = -2.0
-offset_bottom = 22.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
 toggle_mode = true
 text = "Buys singles"
+
+[node name="Limit" type="SpinBox" parent="Auto/Buyers/TGalaxy"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.45
+anchor_right = 0.8
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1e+06
+rounded = true
+allow_greater = true
+alignment = 1
+prefix = "Limit to"
+suffix = "(doesn't apply when 0)"
 
 [node name="Dilation" type="Panel" parent="Auto/Buyers"]
 custom_minimum_size = Vector2(0, 53)
@@ -213,11 +236,13 @@ anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.2
 anchor_bottom = 0.5
-offset_top = -6.5
-offset_bottom = 6.5
+offset_top = -14.5
+offset_bottom = 14.5
 grow_vertical = 2
 text = "Time Dilation Autobuyer"
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="Enabled" type="Button" parent="Auto/Buyers/Dilation"]
 layout_mode = 1
@@ -251,18 +276,37 @@ Cost: 1.0 EP"
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.8
-anchor_bottom = 0.5
+anchor_bottom = 0.55
 offset_left = 3.0
-offset_top = -23.0
+offset_top = 4.0
 offset_right = -3.0
-offset_bottom = 22.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ToggleButton"
 toggle_mode = true
 text = "Buys singles"
+
+[node name="Limit" type="SpinBox" parent="Auto/Buyers/Dilation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.45
+anchor_right = 0.8
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1e+06
+rounded = true
+allow_greater = true
+alignment = 1
+prefix = "Limit to"
+suffix = "(doesn't apply when 0)"
 
 [node name="Panel2" type="PanelContainer" parent="Auto/Buyers"]
 layout_mode = 2
@@ -339,6 +383,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Accuracy: 50% → 54%
 Cost: 1.0 EP"
+autowrap_mode = 2
 
 [node name="LineEdit" type="SpinBox" parent="Auto/Buyers/Panel2/Oðers/Rewind"]
 layout_mode = 1
@@ -347,9 +392,9 @@ anchor_left = 0.4
 anchor_top = 0.5
 anchor_right = 0.6
 anchor_bottom = 0.5
-offset_left = 9.0
+offset_left = 4.0
 offset_top = -22.5
-offset_right = 2.0
+offset_right = -5.0
 offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2

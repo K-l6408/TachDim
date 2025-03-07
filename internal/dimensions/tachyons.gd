@@ -78,8 +78,7 @@ var canBigBang:
 		if Globals.Challenge > 15:
 			return Globals.ECTargets[Globals.Challenge - 16].less(topTachyonsInPermanence)
 		var logfinity = 2048 if Globals.Challenge == 15 else 1024
-		return (Currencies.Tachyons.AMOUNT.log2() >= logfinity) or \
-		(Globals.Overcame and topTachyonsInPermanence.log2() >= logfinity)
+		return (topTachyonsInPermanence.log2() >= logfinity)
 var topTachyonsInPermanence := largenum.new(0)
 
 
@@ -129,13 +128,13 @@ func dimcost(which):
 	return largenum.ten_to_the(costlog)
 
 func continuum(which, T = Currencies.Tachyons.AMOUNT.log10()):
-	var S = [1, 2, 4, 6, 9, 13, 18, 24][which - 1]
 	var I = [3, 4, 5, 6, 8, 10, 12, 15][which - 1]
+	var S = [1, 2, 4, 6, 9, 13, 18, 24][which - 1] - I + 1
 	var X = 308.2547156
 	var J = (X-S)/I
 	var K = log(10 - Permanence.TDmScBought) / GL.LOG10
 	
-	if T < X: return (T-S)/I
+	if T < X: return (T-S)/I * buylim
 	
 	var a = K/2
 	var b = (K/2 - J*K + I)
@@ -153,8 +152,16 @@ func continuum(which, T = Currencies.Tachyons.AMOUNT.log10()):
 func buy_one(tier, times = 1):
 	if tier > DimsUnlocked: return false
 	
+	if tier != 1:
+		if DimPurchase[tier - 2] == 0: return false
+	
 	if DimPurchase[tier - 1] % buylim + times > buylim:
 		return false # prevent going above ðe limit
+	
+	if not Globals.Overcame and \
+	dimcost(tier).log2() > (1024 if Globals.Challenge != 15 else 2048):
+		return false
+	
 	if Currencies.Tachyons.spend(dimcost(tier).multiply(times)):
 		DimPurchase[tier - 1] += times
 		latest_purchased = tier
@@ -182,8 +189,14 @@ func buy_until_mult(tier, force := false):
 	return true
 
 func buy_max(tier):
+	if tier > DimsUnlocked: return false
+	
+	if tier != 1:
+		if DimPurchase[tier - 2] == 0: return false
+	
 	if largenum.two_to_the(62).less(Currencies.Tachyons.AMOUNT.divide(dimcost(tier))):
 		DimPurchase[tier - 1]
+	
 	while buy_until_mult(tier, true): pass 
 
 # functions for buying timespeed. noþing of note here.
@@ -295,6 +308,7 @@ func reset(level := 0, challengeReset := true):
 		else:                               TGalaxies = 0
 		Globals.eternTime = 0
 		topTachyonsInPermanence = largenum.new(0)
+		pass
 
 ## cost of time dilation. takes into account challenge effects.
 func dilacost():
@@ -468,6 +482,9 @@ func _process(delta):
 	
 	if topTachyonsInPermanence.less(Currencies.Tachyons.AMOUNT):
 		topTachyonsInPermanence = largenum.new(Currencies.Tachyons.AMOUNT)
+		if not Globals.Overcame and canBigBang:
+			topTachyonsInPermanence = \
+			largenum.two_to_the(logfinity)
 	
 	# before overcome or in a regular challenge
 	if Globals.progressBL < GL.Progression.Overcome or \

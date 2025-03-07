@@ -2,14 +2,12 @@
 extends PanelContainer
 class_name TooltipPanel
 
-enum Direction {
-	UP, DOWN, LEFT, RIGHT
-}
-const Horizontal = [Direction.LEFT, Direction.RIGHT]
-const Vertical   = [Direction.UP  , Direction.DOWN ]
+const Horizontal = [SIDE_LEFT, SIDE_RIGHT ]
+const Vertical   = [SIDE_TOP , SIDE_BOTTOM]
 
 var label := Label.new()
-@export var direction : Direction
+@export var direction : Side = SIDE_LEFT
+@export var offset := 5
 
 func _ready() -> void:
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -18,6 +16,7 @@ func _ready() -> void:
 	mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(label)
 	z_index = 400
+	theme_type_variation = "TooltipPanel"
 
 func _process(delta: float) -> void:
 	if get_parent() is Control:
@@ -34,14 +33,26 @@ func _process(delta: float) -> void:
 			size.y = label.size.y + 5
 		
 		match direction:
-			Direction.UP:
-				position = Vector2(0,-(size.y + 5))
-			Direction.DOWN:
-				position = Vector2(0, parent.size.y + 5)
-			Direction.LEFT:
-				position = Vector2(-(size.x + 5), 0)
-			Direction.RIGHT:
-				position = Vector2(parent.size.x + 5, 0)
+			SIDE_TOP:
+				position = Vector2(
+					(parent.size.x - size.x) / 2,
+					-(size.y + offset)
+				)
+			SIDE_BOTTOM:
+				position = Vector2(
+					(parent.size.x - size.x) / 2,
+					(parent.size.y + offset)
+				)
+			SIDE_LEFT:
+				position = Vector2(
+					-(size.x + offset),
+					(parent.size.y - size.y) / 2
+				)
+			SIDE_RIGHT:
+				position = Vector2(
+					parent.size.x + offset,
+					(parent.size.y - size.y) / 2
+				)
 		
 		if Rect2(Vector2(0,0), parent.size).has_point(parent.get_local_mouse_position()) and \
 		parent.get_tooltip() != "":

@@ -79,14 +79,12 @@ func start():
 			shard.get_node("CollisionPolygon2D").position = -center
 
 		queue_redraw()
-		call_deferred("add_shards")
-
-
-func add_shards() -> void:
-	for s in shards:
-		add_child(s)
-	shards = []
-	triangles = []
+		for s in shards:
+			add_child(s)
+		shatter()
+		shards = []
+		triangles = []
+		get_tree().paused = false
 
 func shatter() -> void:
 	randomize()

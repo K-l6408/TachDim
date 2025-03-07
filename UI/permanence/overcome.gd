@@ -4,7 +4,7 @@ func _ready() -> void:
 	for i in 9:
 		$upgrades.get_child(i).connect("pressed", Permanence.buy.bind(i+1))
 	for i in 3:
-		$upgrades.get_child(i+10).connect("pressed", Permanence.buy_rebuyable.bind(i+1))
+		$upgrades.get_child(i+9).connect("pressed", Permanence.buy_rebuyable.bind(i+1))
 	$"holy shit".connect("pressed", overcome)
 
 func _process(delta):
@@ -77,12 +77,12 @@ func _process(delta):
 		]
 	else:
 		$upgrades/PasPP.remove_theme_stylebox_override("disabled")
-		$upgrades/PasPP.disabled = Currencies.PermanencePts.AMOUNT.less(Permanence.pasep_cost())
+		$upgrades/PasPP.disabled = Currencies.PermanencePts.AMOUNT.less(Permanence.paspp_cost())
 		$upgrades/PasPP.text = "%s %s %s\n%s\n%s %s %s\n\n%s %s\n%s %s %s" % [
 			"Passively generate", Globals.percent_to_string(Permanence.PasPPBought / 20., 0), "of",
 			"your average PP gain", "over the last", Globals.int_to_string(10),
 			"Permanences.", "Next:", Globals.percent_to_string((Permanence.PasPPBought + 1) / 20., 0),
-			"Cost:", Permanence.pasep_cost(), "PP"
+			"Cost:", Permanence.paspp_cost(), "PP"
 		]
 	
 	$"holy shit".disabled = Autobuyers.BangUpgrades < 13
@@ -98,7 +98,7 @@ func _process(delta):
 		Formulas.overcome_1().to_string()
 	else:
 		$upgrades/TachMult.text = \
-		"Tachyon Dimensions\nget a multiplier\nbased on current Tachyon\namount.\n \nCost: %s EP" % \
+		"Tachyon Dimensions\nget a multiplier\nbased on current Tachyon\namount.\n \nCost: %s PP" % \
 		Globals.float_to_string(Permanence.OvercomeCosts[0], 0)
 	
 	if Permanence.overcome_upgrade_bought(2) != Input.is_action_pressed("BuyOne"):
@@ -106,7 +106,7 @@ func _process(delta):
 		"Unlock the Buy Max Dilation\nAutobuyer mode."
 	else:
 		$upgrades/MaxDila.text = \
-		"\nUnlock the Buy Max Dilation\nAutobuyer mode.\n\n\nCost: %s EP" % \
+		"\nUnlock the Buy Max Dilation\nAutobuyer mode.\n\n\nCost: %s PP" % \
 		Globals.float_to_string(Permanence.OvercomeCosts[1], 0)
 	
 	if Permanence.overcome_upgrade_bought(3) != Input.is_action_pressed("BuyOne"):
@@ -114,19 +114,19 @@ func _process(delta):
 		"All Galaxies are\n%s stronger." % Globals.percent_to_string(.4, 0)
 	else:
 		$upgrades/GalStr.text = \
-		"\nAll Galaxies are\n%s stronger.\n\n\nCost: %s EP" % \
+		"\nAll Galaxies are\n%s stronger.\n\n\nCost: %s PP" % \
 		[Globals.percent_to_string(.4, 0), Globals.float_to_string(Permanence.OvercomeCosts[2], 0)]
 	
 	if Permanence.overcome_upgrade_bought(4) != Input.is_action_pressed("BuyOne"):
-		$upgrades/EPForm.text = "Improve the EP gain formula\n" + \
+		$upgrades/EPForm.text = "Improve the PP gain formula\n" + \
 		"(log₂(x)/%s → log₂(x)/%s)" % [
 			Globals.int_to_string(1024), Globals.int_to_string(900)
 		]
 	else:
-		$upgrades/EPForm.text = "\nImprove the EP gain formula\n" + \
+		$upgrades/EPForm.text = "\nImprove the PP gain formula\n" + \
 		"(log₂(x)/%s → log₂(x)/%s)" % [
 			Globals.int_to_string(1024), Globals.int_to_string(900)
-		] + "\n\n\nCost: %s EP" % Globals.float_to_string(Permanence.OvercomeCosts[3], 0)
+		] + "\n\n\nCost: %s PP" % Globals.float_to_string(Permanence.OvercomeCosts[3], 0)
 	
 	if Permanence.overcome_upgrade_bought(5) != Input.is_action_pressed("BuyOne"):
 		$upgrades/DilaBoost.text = \
@@ -135,7 +135,7 @@ func _process(delta):
 		]
 	else:
 		$upgrades/DilaBoost.text = \
-		"Improve the Dilation\nmultiplier further.\n\n(×%s → ×%s)\n\nCost: %s EP" % [
+		"Improve the Dilation\nmultiplier further.\n\n(×%s → ×%s)\n\nCost: %s PP" % [
 			Globals.float_to_string(2.5, 1), Globals.float_to_string(3, 1),
 			Globals.float_to_string(Permanence.OvercomeCosts[4], 0)
 		]
@@ -147,7 +147,7 @@ func _process(delta):
 	else:
 		$upgrades/RewdFormula.text = \
 		"Improve the Rewind formula\nfrom being based on\nthe %s TD's logarithm" % \
-		Globals.ordinal(1) + "\nto using a very low exponent.\n\nCost: %s EP" % \
+		Globals.ordinal(1) + "\nto using a very low exponent.\n\nCost: %s PP" % \
 		Globals.float_to_string(Permanence.OvercomeCosts[5], 0)
 	
 	if Permanence.overcome_upgrade_bought(7) != Input.is_action_pressed("BuyOne"):
@@ -169,7 +169,7 @@ func _process(delta):
 	else:
 		$upgrades/ChallengeMult.text = \
 		"Tachyon Dimensions get a\nmultiplier based on your\nslowest Challenge." + \
-		"\n\n\nCost: %s EP" % Globals.float_to_string(Permanence.OvercomeCosts[6], 0)
+		"\n\n\nCost: %s PP" % Globals.float_to_string(Permanence.OvercomeCosts[6], 0)
 	
 	if Permanence.overcome_upgrade_bought(8) != Input.is_action_pressed("BuyOne"):
 		$upgrades/PasEter.text = \
@@ -179,7 +179,7 @@ func _process(delta):
 	else:
 		$upgrades/PasEter.text = \
 		"\nGain Eternities passively\nbased on your fastest\nEternity." + \
-		"\n\nCost: %s EP" % Globals.float_to_string(Permanence.OvercomeCosts[7], 0)
+		"\n\nCost: %s PP" % Globals.float_to_string(Permanence.OvercomeCosts[7], 0)
 	
 	if Permanence.overcome_upgrade_bought(9) != Input.is_action_pressed("BuyOne"):
 		$upgrades/EterMult.text = \
@@ -188,7 +188,7 @@ func _process(delta):
 	else:
 		$upgrades/EterMult.text = \
 		"\nTachyon Dimensions get a\nmultiplier based on\nEternities." + \
-		"\n\nCost: %s EP" % Globals.float_to_string(Permanence.OvercomeCosts[8], 0)
+		"\n\nCost: %s PP" % Globals.float_to_string(Permanence.OvercomeCosts[8], 0)
 	
 	if Permanence.overcome_upgrade_bought(8):
 		Currencies.PermanencePts.spend(

@@ -90,6 +90,8 @@ func animation(which:Animations):
 	if Animater == null: return
 	get_tree().paused = true
 	Animater.play(ANIMATION_NAMES[which])
+	await Animater.animation_finished
+	get_tree().paused = false
 
 var existence = 0
 var eternTime = 0

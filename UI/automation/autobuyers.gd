@@ -64,17 +64,17 @@ func _process(_delta):
 	
 	# hiding dilation/galaxy buy max mode if locked
 	if Permanence.overcome_upgrade_bought(2):
-		$Auto/Buyers/Dilation/Interval.anchor_right = 0.5
+		$Auto/Buyers/Dilation/Limit.anchor_top = 0.45
 		$Auto/Buyers/Dilation/Mode.show()
 	else:
-		$Auto/Buyers/Dilation/Interval.anchor_right = 0.8
+		$Auto/Buyers/Dilation/Limit.anchor_top = 0.0
 		$Auto/Buyers/Dilation/Mode.hide()
 	
 	if false:
-		$Auto/Buyers/TGalaxy/Interval.anchor_right = 0.5
+		$Auto/Buyers/TGalaxy/Limit.anchor_top = 0.45
 		$Auto/Buyers/TGalaxy/Mode.show()
 	else:
-		$Auto/Buyers/TGalaxy/Interval.anchor_right = 0.8
+		$Auto/Buyers/TGalaxy/Limit.anchor_top = 0.0
 		$Auto/Buyers/TGalaxy/Mode.hide()
 	
 	# hiding panel2 if it's empty
@@ -108,6 +108,30 @@ func _process(_delta):
 			%PreInf.get_node("Locked%d" % (i+1)).disabled = \
 			TachyonDims.topTachyonsInPermanence.less(largenum.ten_to_the(20 + i * 10))
 			panel.hide()
+	
+	
+	if $Auto/Buyers/Dilation/Mode.button_pressed != \
+	Autobuyers.get_bit(Autobuyers.NormModes, Autobuyers.DILATION):
+		$Auto/Buyers/Dilation/Mode.button_pressed = \
+		Autobuyers.get_bit(Autobuyers.NormModes, Autobuyers.DILATION)
+	if $Auto/Buyers/Dilation/Enabled.button_pressed != \
+	Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.DILATION):
+		$Auto/Buyers/Dilation/Enabled.button_pressed = \
+		Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.DILATION)
+	
+	if $Auto/Buyers/TGalaxy/Mode.button_pressed != \
+	Autobuyers.get_bit(Autobuyers.NormModes, Autobuyers.GALAXY):
+		$Auto/Buyers/TGalaxy/Mode.button_pressed = \
+		Autobuyers.get_bit(Autobuyers.NormModes, Autobuyers.GALAXY)
+	if $Auto/Buyers/TGalaxy/Enabled.button_pressed != \
+	Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.GALAXY):
+		$Auto/Buyers/TGalaxy/Enabled.button_pressed = \
+		Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.GALAXY)
+	
+	if $"Auto/Buyers/Big Bang/Enabled".button_pressed != \
+	Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.BIG_BANG):
+		$"Auto/Buyers/Big Bang/Enabled".button_pressed = \
+		Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.BIG_BANG)
 	
 	for panel in $Auto/Buyers.get_children():
 		if panel.has_node("Mode"):
@@ -229,6 +253,23 @@ func _process(_delta):
 				panel.get_node("Mode") .anchor_right = 0.8
 				panel.get_node("Mode") .anchor_left  = 0.5
 				panel.get_node("Interval").show()
+			
+			if panel.get_node("Mode").button_pressed != \
+			Autobuyers.get_bit(
+				Autobuyers.NormModes, Autobuyers.TIMESPEED
+			):
+				panel.get_node("Mode").button_pressed = \
+				Autobuyers.get_bit(
+					Autobuyers.NormModes, Autobuyers.TIMESPEED
+				)
+			if panel.get_node("Enabled").button_pressed != \
+			Autobuyers.get_bit(
+				Autobuyers.NormEnabled, Autobuyers.TIMESPEED
+			):
+				panel.get_node("Enabled").button_pressed = \
+				Autobuyers.get_bit(
+					Autobuyers.NormEnabled, Autobuyers.TIMESPEED
+				)
 		else:
 			var panel = %PreInf.get_node("TD%d" % i)
 			if not Globals.challengeCompleted(i):

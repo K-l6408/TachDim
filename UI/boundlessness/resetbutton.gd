@@ -14,4 +14,4 @@ func boundlessness():
 	Globals.last10bless.insert(0, Globals.PrestigeData.new(time, bpgained, 1))
 	if  Globals.last10bless.size() > 10:
 		Globals.last10bless.resize(10)
-	Globals.animation("boundless")
+	Globals.animation(GL.Animations.Transcend)

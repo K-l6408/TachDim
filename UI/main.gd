@@ -46,6 +46,8 @@ func _ready():
 	for i in %Tabs/Options.get_child_count():
 		%Tabs/Options.get_tab_bar().set_tab_title(i, "%s %s %s" % \
 		[optionsSymbols[i], %Tabs/Options.get_child(i).name, optionsSymbols[i]])
+	
+	%PermanenceButton.connect("pressed", TachyonDims.permanence)
 
 func _process(_delta):
 	$Camera2D.position = get_viewport_rect().size / 2
@@ -54,7 +56,7 @@ func _process(_delta):
 	size.x / 2
 	$Blobrain.visible = (%Tabs/Options/Visual.theme_txt == "Blob")
 	$Blobrain.amount = Globals.VisualSett.get_node("%AnimOptions/Blobs").value
-	if "BGPanel" in theme.get_type_list():
+	if "BGPanel" in get_theme().get_type_list():
 		$Background.theme_type_variation = "BGPanel"
 	else:
 		$Background.theme_type_variation = ""

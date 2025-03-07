@@ -20,11 +20,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 Globals="*res://globals.gd"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 Currencies="*res://internal/currencies.gd"
 TachyonDims="*res://internal/dimensions/tachyons.gd"
 Permanence="*res://internal/permanence.gd"
 Autobuyers="*res://internal/autobuyers.gd"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [display]
 
@@ -45,8 +45,14 @@ enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg", "res://addons/di
 
 [gui]
 
-timers/tooltip_delay_sec=10.0
+timers/tooltip_delay_sec=999.0
 theme/custom="res://themes/Dark.tres"
+
+[importer_defaults]
+
+dialogue_manager_compiler_14={
+"defaults": true
+}
 
 [input]
 
@@ -174,5 +180,4 @@ locale/translations_pot_files=PackedStringArray("res://UI/newsticker/news.dialog
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 viewport/transparent_background=true

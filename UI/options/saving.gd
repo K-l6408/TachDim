@@ -266,9 +266,10 @@ func saveF(file : String = saveFilePath):
 	lsf.store_string("%d" % currentFile)
 
 func loadF(file : String = saveFilePath):
-	var pause = get_tree().paused
 	get_tree().paused = true
 	$CanvasLayer.visible = true
+	
+	gameReset()
 	
 	var settf := FileAccess.open(file.trim_suffix(".txt") + "_settings.txt", FileAccess.READ)
 	if settf != null:
@@ -302,10 +303,8 @@ func loadF(file : String = saveFilePath):
 	
 	var sf := FileAccess.open(file, FileAccess.READ)
 	
-	gameReset()
-	
 	if sf == null:
-		get_tree().paused = pause
+		get_tree().paused = false
 		$CanvasLayer.visible = false
 		return
 	if sf.get_line() != "TachDimSave":	return
@@ -317,6 +316,8 @@ func loadF(file : String = saveFilePath):
 	if not DATA is Dictionary:
 		Globals.progress = GL.Progression.None
 		Globals.Challenge = 0
+		get_tree().paused = false
+		$CanvasLayer.visible = false
 		return
 	
 	Globals.existence = DATA["time played"]
@@ -412,7 +413,7 @@ func loadF(file : String = saveFilePath):
 		if DATA.has("tdim scale bought"):
 			Permanence.TDmScBought = DATA["tdim scale bought"]
 		if DATA.has("passive ep bought"):
-			Permanence.PasEPBought = DATA["passive ep bought"]
+			Permanence.PasPPBought = DATA["passive ep bought"]
 		
 		if DATA.has("eter dim amounts"):
 			for i in 8:
@@ -480,7 +481,7 @@ func loadF(file : String = saveFilePath):
 		Globals.boundTime = Globals.existence
 		Globals.TachTotalBL.from_bytes(DATA["total tachyons"])
 	
-	get_tree().paused = pause
+	get_tree().paused = false
 	$CanvasLayer.visible = false
 
 func gameReset():
@@ -493,6 +494,7 @@ func gameReset():
 	for i in 8:
 		TachyonDims.DimAmount[i]   = largenum.new(0)
 		TachyonDims.DimPurchase[i] = 0
+	TachyonDims.topTachyonsInPermanence = largenum.new(0)
 	TachyonDims.TSpeedCount = 0
 	TachyonDims.RewindMult  = largenum.new(1)
 	TachyonDims.TDilation = 0
@@ -512,7 +514,7 @@ func gameReset():
 	Permanence.OvercomeUpgrades = 0
 	Permanence.TSpScBought      = 0
 	Permanence.TDmScBought      = 0
-	Permanence.PasEPBought      = 0
+	Permanence.PasPPBought      = 0
 	Globals.challengeTimes = [
 		-1, -1, -1,
 		-1, -1, -1,
