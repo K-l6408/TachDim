@@ -38,9 +38,8 @@ var GalUpgrades  := 0
 var BangUpgrades := 0
 var NormTimers = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-var DilLimit  := 0
-var DilIgnore := 0
-var GalLimit  := 0
+var DilLimit := 0
+var GalLimit := 0
 var BigBangMode := 0
 ### mode explanation ###
 ##   0: +X EP         ##
@@ -205,21 +204,25 @@ func _process(delta):
 								NormTimers[i] += BangInterval()
 					GALAXY:
 						if Globals.challengeCompleted(12):
-							if Permanence.overcome_upgrade_bought(2):
-								TachyonDims.galaxy_max()
-							else:
-								TachyonDims.galaxy()
+							if TachyonDims.TGalaxies < GalLimit or \
+							GalLimit <= 0:
+								if Permanence.overcome_upgrade_bought(2):
+									TachyonDims.galaxy_max()
+								else:
+									TachyonDims.galaxy()
 							NormTimers[i] += DilInterval()
 					DILATION:
 						if Globals.challengeCompleted(11) and \
 						Globals.Challenge != 10:
-							if Permanence.overcome_upgrade_bought(2) and \
-								TachyonDims.TDilation >= (
-									2 if Globals.Challenge in [6, 16] else 4
-								):
-								TachyonDims.dilate_max()
-							else:
-								TachyonDims.dilate()
+							if TachyonDims.TDilation < DilLimit or \
+							DilLimit <= 0:
+								if Permanence.overcome_upgrade_bought(2) and \
+									TachyonDims.TDilation >= (
+										2 if Globals.Challenge in [6, 16] else 4
+									):
+									TachyonDims.dilate_max()
+								else:
+									TachyonDims.dilate()
 							NormTimers[i] += DilInterval()
 					REWIND:
 						if Globals.challengeCompleted(10):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=49 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Script" uid="uid://ohsjtsuph3ni" path="res://UI/main.gd" id="1_qdidp"]
@@ -47,6 +47,33 @@ shader_parameter/disabled = false
 shader = ExtResource("30_iqdd2")
 shader_parameter/fisheye = 0.0
 
+[sub_resource type="Animation" id="Animation_wxu8m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D/CanvasLayer/Shaders:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_m0sop"]
 resource_name = "bang"
 length = 1.5
@@ -87,6 +114,44 @@ tracks/2/keys = {
 "values": [{
 "args": [],
 "method": &"UNPAUSE"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera2D/CanvasLayer/Shaders:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Camera2D/CanvasLayer/Shaders")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"screenshot"
 }]
 }
 
@@ -155,6 +220,7 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8dv4p"]
 _data = {
+&"RESET": SubResource("Animation_wxu8m"),
 &"bang": SubResource("Animation_m0sop"),
 &"boundless": SubResource("Animation_sfx5g"),
 &"overcome": SubResource("Animation_a3cka")
@@ -657,18 +723,13 @@ ignore_rotation = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
 layer = 2
+follow_viewport_enabled = true
 
-[node name="Shaders" type="ColorRect" parent="Camera2D/CanvasLayer"]
+[node name="Shaders" type="Sprite2D" parent="Camera2D/CanvasLayer"]
+process_mode = 3
 visible = false
 material = SubResource("ShaderMaterial_gj34f")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
+centered = false
 script = ExtResource("29_nnwlg")
 
 [node name="TintScreen" type="ColorRect" parent="Camera2D/CanvasLayer"]

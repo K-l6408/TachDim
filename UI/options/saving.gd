@@ -167,7 +167,6 @@ func saveF(file : String = saveFilePath):
 		DATA["rewind buyer acc. updrades"] = Autobuyers.RewdUpgrades
 		DATA["rewind buyer objective"] = Autobuyers.RewindObjective
 		DATA["dilation buy limit"] = Autobuyers.DilLimit
-		DATA["dilation limit ignore"] = Autobuyers.DilIgnore
 		DATA["tach gal buy limit"] = Autobuyers.GalLimit
 		DATA["big bang buyer amount"] = Autobuyers.BigBangObjectStr
 		
@@ -373,7 +372,6 @@ func loadF(file : String = saveFilePath):
 			Autobuyers.BigBangObjectStr = DATA["big bang buyer amount"]
 			Autobuyers.update_bigbang_pp( DATA["big bang buyer amount"] )
 		Autobuyers.DilLimit  = DATA["dilation buy limit"]
-		Autobuyers.DilIgnore = DATA["dilation limit ignore"]
 		Autobuyers.GalLimit  = DATA["tach gal buy limit"]
 		
 		#if DATA.has("eu12 timer"):

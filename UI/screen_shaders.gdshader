@@ -1,5 +1,4 @@
 shader_type canvas_item;
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
 // Anti fish eye (negative amount) / fish eye (positive)
 uniform float fisheye : hint_range(-0.5, 0) = 0;
@@ -7,7 +6,7 @@ uniform float fisheye : hint_range(-0.5, 0) = 0;
 void fragment() {
 
 	// glsl -> godot shader
-	vec2 iResolution = 1.0 / SCREEN_PIXEL_SIZE;
+	vec2 iResolution = 1.0 / TEXTURE_PIXEL_SIZE;
 	vec4 fragCoord = FRAGCOORD;
 
 	//normalized coords
@@ -53,7 +52,7 @@ void fragment() {
     uv.y *= prop;
 
 	if (abs(fisheye) <= 1e-3) {
-		uv = SCREEN_UV;
+		uv = UV;
 	}
-	COLOR.rgb = texture(SCREEN_TEXTURE, uv).rgb;
+	COLOR.rgb = texture(TEXTURE, uv).rgb;
 }

@@ -1,5 +1,5 @@
-extends Node
 ## script containing all currencies.
+extends Node
 
 ## base class for currencies.
 ## includes reset behavior, a spend() function and a dictionary of multipliers.

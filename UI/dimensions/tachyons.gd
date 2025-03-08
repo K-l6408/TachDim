@@ -62,10 +62,9 @@ func _process(delta):
 		if k > TachyonDims.DimsUnlocked:	i.hide()
 		else:								i.show()
 		
-		i.get_node("Buy").tooltip_text = "Purchased %s time%s (continuum: %s)" % [
+		i.get_node("Buy").tooltip_text = "Purchased %s time%s" % [
 			Globals.int_to_string(TachyonDims.DimPurchase[k]),
-			"" if TachyonDims.DimPurchase[k] == 1 else "s",
-			Globals.float_to_string(TachyonDims.continuum(k+1), 2, true)
+			"" if TachyonDims.DimPurchase[k] == 1 else "s"
 		]
 		
 		var buyable = (
