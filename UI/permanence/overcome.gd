@@ -2,7 +2,7 @@ extends Control
 
 func _ready() -> void:
 	for i in 9:
-		$upgrades.get_child(i).connect("pressed", Permanence.buy.bind(i+1))
+		$upgrades.get_child(i).connect("pressed", Permanence.buy_over.bind(i+1))
 	for i in 3:
 		$upgrades.get_child(i+9).connect("pressed", Permanence.buy_rebuyable.bind(i+1))
 	$"holy shit".connect("pressed", overcome)

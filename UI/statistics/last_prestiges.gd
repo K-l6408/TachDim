@@ -66,7 +66,8 @@ func setup_table(node, data, currencies):
 				value = e.amount
 			3:
 				value = e.currency.divide(e.time)
-		table.get_child(i*4+6).text = value.to_string() + " " + \
+		table.get_child(i*4+6).text = \
+		value.to_string().trim_suffix(".00").trim_suffix(";00") + " " + \
 		row1e.text
 		te.add2self(value)
 	
@@ -80,7 +81,8 @@ func setup_table(node, data, currencies):
 				value = e.amount.divide(e.time)
 			2:
 				value = e.amount
-		table.get_child(i*4+7).text = value.to_string() + " " + \
+		table.get_child(i*4+7).text = \
+		value.to_string().trim_suffix(".00").trim_suffix(";00") + " " + \
 		row1s.text
 		ts.add2self(value)
 	
@@ -89,8 +91,10 @@ func setup_table(node, data, currencies):
 	ts.div2self(data.size())
 	
 	table.get_node("TAv").text = Globals.format_time(tt)
-	table.get_node("EAv").text = te.to_string() + " " + row1e.text
-	table.get_node("SAv").text = ts.to_string() + " " + row1s.text
+	table.get_node("EAv").text = te.to_string().trim_suffix(".00").trim_suffix(";00")\
+	 + " " + row1e.text
+	table.get_node("SAv").text = ts.to_string().trim_suffix(".00").trim_suffix(";00")\
+	 + " " + row1s.text
 	
 	for i in data.size():
 		var e = data[i]

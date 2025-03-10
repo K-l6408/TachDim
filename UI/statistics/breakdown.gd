@@ -19,7 +19,7 @@ var text := {
 	"Challenge 3 (TD3)": "⁈ Ⅲ",
 	"Challenge 9" : "⁈ Ⅸ",
 	"Challenge 14": "⁈ ⅩⅣ",
-	"Base gain from Tachyons": "",
+	"Base gain from Tachyons": "Ψ→",
 }
 var colors := {
 	"Timespeed": Color("#4D5E42"),
@@ -31,6 +31,7 @@ var colors := {
 	"Challenge 3 (TD3)": Color("#B03737"),
 	"Challenge 9" : Color("#B03737"),
 	"Challenge 14": Color("#B03737"),
+	"Base gain from Tachyons": Color("#63DD17"),
 }
 
 func _process(_delta):

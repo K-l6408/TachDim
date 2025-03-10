@@ -89,8 +89,6 @@ func RewdInterval():
 	if i < 0.101: return 0.1
 	return i
 func DilInterval():
-	if Permanence.overcome_upgrade_bought(2):
-		return DilaTimeOverride
 	var i = 4 * (0.6 ** DilUpgrades)
 	if i < 0.101: return 0.1
 	return i
@@ -221,9 +219,10 @@ func _process(delta):
 										2 if Globals.Challenge in [6, 16] else 4
 									):
 									TachyonDims.dilate_max()
+									NormTimers[i] += DilaTimeOverride
 								else:
 									TachyonDims.dilate()
-							NormTimers[i] += DilInterval()
+									NormTimers[i] += DilInterval()
 					REWIND:
 						if Globals.challengeCompleted(10):
 							if TachyonDims.rewindScore() >= RewdAccuracy()\
@@ -251,8 +250,8 @@ func _process(delta):
 						else:
 							TachyonDims.buy_one(i+1)
 	
-	if Globals.progressBL >= GL.Progression.Overcome \
-	and get_bit(NormEnabled, BIG_BANG+1):
+	if Globals.Overcame \
+	and get_bit(NormEnabled, BIG_BANG):
 		if Globals.Boundlessnesses.to_float() < 4:
 			if BigBangObjective.less(Permanence.process_pp_gain()):
 				TachyonDims.permanence()

@@ -3,9 +3,9 @@ extends Control
 func _ready():
 	$"Auto/Buyers/Big Bang/Interval".\
 	connect("pressed", Autobuyers.improve_interval.bind(Autobuyers.BIG_BANG))
-	$"Auto/Buyers/TGalaxy/Interval".\
+	$"Auto/Buyers/TGalaxy/Interval1".\
 	connect("pressed", Autobuyers.improve_interval.bind(Autobuyers.GALAXY))
-	$"Auto/Buyers/Dilation/Interval".\
+	$"Auto/Buyers/Dilation/Interval1".\
 	connect("pressed", Autobuyers.improve_interval.bind(Autobuyers.DILATION))
 	%"Oðers/Rewind/Interval".\
 	connect("pressed", Autobuyers.improve_interval.bind(Autobuyers.REWIND))
@@ -21,6 +21,20 @@ func _ready():
 	%"Oðers/Rewind/LineEdit".\
 	connect("value_changed",
 	func(val): Autobuyers.RewindObjective = val)
+	
+	$Auto/Buyers/Dilation/Limit.\
+	connect("value_changed",
+	func(val): Autobuyers.DilLimit = val)
+	$Auto/Buyers/TGalaxy/Limit.\
+	connect("value_changed",
+	func(val): Autobuyers.GalLimit = val)
+	
+	$Auto/Buyers/Dilation/Interval2.\
+	connect("value_changed",
+	func(val): Autobuyers.DilaTimeOverride = val)
+	$Auto/Buyers/TGalaxy/Interval2.\
+	connect("value_changed",
+	func(val): Autobuyers.GalaTimeOverride = val)
 	
 	$"Auto/Buyers/Big Bang/Enabled".\
 	connect("toggled", Autobuyers.set_enabled.bind(Autobuyers.BIG_BANG))
@@ -64,18 +78,36 @@ func _process(_delta):
 	
 	# hiding dilation/galaxy buy max mode if locked
 	if Permanence.overcome_upgrade_bought(2):
-		$Auto/Buyers/Dilation/Limit.anchor_top = 0.45
+		$Auto/Buyers/Dilation/Limit.hide()
 		$Auto/Buyers/Dilation/Mode.show()
+		
+		if $Auto/Buyers/Dilation/Mode.button_pressed:
+			$Auto/Buyers/Dilation/Interval2.show()
+			$Auto/Buyers/Dilation/Interval1.hide()
+		else:
+			$Auto/Buyers/Dilation/Interval1.show()
+			$Auto/Buyers/Dilation/Interval2.hide()
 	else:
-		$Auto/Buyers/Dilation/Limit.anchor_top = 0.0
+		$Auto/Buyers/Dilation/Limit.show()
 		$Auto/Buyers/Dilation/Mode.hide()
+		$Auto/Buyers/Dilation/Interval1.show()
+		$Auto/Buyers/Dilation/Interval2.hide()
 	
 	if false:
-		$Auto/Buyers/TGalaxy/Limit.anchor_top = 0.45
+		$Auto/Buyers/TGalaxy/Limit.hide()
 		$Auto/Buyers/TGalaxy/Mode.show()
+		
+		if $Auto/Buyers/TGalaxy/Mode.button_pressed:
+			$Auto/Buyers/TGalaxy/Interval2.show()
+			$Auto/Buyers/TGalaxy/Interval1.hide()
+		else:
+			$Auto/Buyers/TGalaxy/Interval1.show()
+			$Auto/Buyers/TGalaxy/Interval2.hide()
 	else:
-		$Auto/Buyers/TGalaxy/Limit.anchor_top = 0.0
+		$Auto/Buyers/TGalaxy/Limit.show()
 		$Auto/Buyers/TGalaxy/Mode.hide()
+		$Auto/Buyers/TGalaxy/Interval1.show()
+		$Auto/Buyers/TGalaxy/Interval2.hide()
 	
 	# hiding panel2 if it's empty
 	var panel2 = false
@@ -94,6 +126,8 @@ func _process(_delta):
 		#$"Auto/Buyers/Big Bang/Mode".show()
 		$"Auto/Buyers/Big Bang/Interval".hide()
 		$"Auto/Buyers/Big Bang/Objective".show()
+		$"Auto/Buyers/Big Bang/Objective/Label".text = "(%s)" % \
+		Autobuyers.BigBangObjective.to_string()
 	
 	# handling locked pre-inf autobuyers
 	for i in 9:
@@ -114,15 +148,32 @@ func _process(_delta):
 	Autobuyers.get_bit(Autobuyers.NormModes, Autobuyers.DILATION):
 		$Auto/Buyers/Dilation/Mode.button_pressed = \
 		Autobuyers.get_bit(Autobuyers.NormModes, Autobuyers.DILATION)
+	
+	if  $Auto/Buyers/Dilation/Limit.value != Autobuyers.DilLimit:
+		$Auto/Buyers/Dilation/Limit.set_value_no_signal(Autobuyers.DilLimit)
+	
+	if  $Auto/Buyers/Dilation/Interval2.value != Autobuyers.DilaTimeOverride:
+		$Auto/Buyers/Dilation/Interval2.set_value_no_signal(Autobuyers.DilaTimeOverride)
+	
 	if $Auto/Buyers/Dilation/Enabled.button_pressed != \
 	Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.DILATION):
 		$Auto/Buyers/Dilation/Enabled.button_pressed = \
 		Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.DILATION)
 	
+	if  %Oðers/Rewind/LineEdit.value != Autobuyers.RewindObjective:
+		%Oðers/Rewind/LineEdit.set_value_no_signal(Autobuyers.RewindObjective)
+	
 	if $Auto/Buyers/TGalaxy/Mode.button_pressed != \
 	Autobuyers.get_bit(Autobuyers.NormModes, Autobuyers.GALAXY):
 		$Auto/Buyers/TGalaxy/Mode.button_pressed = \
 		Autobuyers.get_bit(Autobuyers.NormModes, Autobuyers.GALAXY)
+	
+	if  $Auto/Buyers/TGalaxy/Limit.value != Autobuyers.GalLimit:
+		$Auto/Buyers/TGalaxy/Limit.set_value_no_signal(Autobuyers.GalLimit)
+	
+	if  $Auto/Buyers/TGalaxy/Interval2.value != Autobuyers.GalaTimeOverride:
+		$Auto/Buyers/TGalaxy/Interval2.set_value_no_signal(Autobuyers.GalaTimeOverride)
+	
 	if $Auto/Buyers/TGalaxy/Enabled.button_pressed != \
 	Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.GALAXY):
 		$Auto/Buyers/TGalaxy/Enabled.button_pressed = \
@@ -151,15 +202,22 @@ func _process(_delta):
 			else:
 				panel.get_node("Enabled").text = "Disabled"
 	
-	$Auto/Buyers/Dilation/Interval.disabled = \
-	Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.DilUpgrades - 0.001)
-	$Auto/Buyers/Dilation/Interval.text = "%s: %s → %s\n%s: %s PP" % [
-		"Interval",
-		Globals.format_time(Autobuyers.DilInterval()),
-		Globals.format_time(max(Autobuyers.DilInterval() * 0.6, 0.1)),
-		"Cost",
-		Globals.float_to_string(2 ** Autobuyers.DilUpgrades, 1),
-	]
+	if Autobuyers.DilInterval() <= 0.1:
+		$Auto/Buyers/Dilation/Interval1.disabled = true
+		$Auto/Buyers/Dilation/Interval1.text = "%s: %s" % [
+			"Interval",
+			Globals.format_time(Autobuyers.DilInterval())
+		]
+	else:
+		$Auto/Buyers/Dilation/Interval1.disabled = \
+		Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.DilUpgrades - 0.001)
+		$Auto/Buyers/Dilation/Interval1.text = "%s: %s → %s\n%s: %s PP" % [
+			"Interval",
+			Globals.format_time(Autobuyers.DilInterval()),
+			Globals.format_time(max(Autobuyers.DilInterval() * 0.6, 0.1)),
+			"Cost",
+			Globals.float_to_string(2 ** Autobuyers.DilUpgrades, 1),
+		]
 	
 	if Autobuyers.RewdInterval() <= 0.1:
 		%Oðers/Rewind/Interval.disabled = true
@@ -178,38 +236,56 @@ func _process(_delta):
 			Globals.float_to_string(2 ** Autobuyers.RewdUpgrades, 1),
 		]
 	
-	%Oðers/Rewind/Accuracy.disabled = \
-	Currencies.PermanencePts.AMOUNT.less(3 ** Autobuyers.RewdAQups - 0.001)
-	%Oðers/Rewind/Accuracy.text = "%s: %s → %s\n%s: %s PP" % [
-		"Accuracy",
-		Globals.percent_to_string(Autobuyers.RewdAccuracy(), 1),
-		Globals.percent_to_string(min(Autobuyers.RewdAccuracy() * 1.095, 1), 1),
-		"Cost",
-		Globals.float_to_string(3 ** Autobuyers.RewdAQups, 1),
-	]
+	if Autobuyers.GalInterval() <= 0.1:
+		$Auto/Buyers/TGalaxy/Interval1.disabled = true
+		$Auto/Buyers/TGalaxy/Interval1.text = "%s: %s" % [
+			"Interval",
+			Globals.format_time(Autobuyers.GalInterval())
+		]
+	else:
+		$Auto/Buyers/TGalaxy/Interval1.disabled = \
+		Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.GalUpgrades - 0.001)
+		$Auto/Buyers/TGalaxy/Interval1.text = "%s: %s → %s\n%s: %s PP" % [
+			"Interval",
+			Globals.format_time(Autobuyers.GalInterval()),
+			Globals.format_time(max(Autobuyers.GalInterval() * 0.6, 0.1)),
+			"Cost",
+			Globals.float_to_string(2 ** Autobuyers.GalUpgrades, 1),
+		]
 	
-	if  %Oðers/Rewind/LineEdit.value != Autobuyers.RewindObjective:
-		%Oðers/Rewind/LineEdit.set_value_no_signal(Autobuyers.RewindObjective)
+	if Autobuyers.GalInterval() <= 0.1:
+		$"Auto/Buyers/Big Bang/Interval".disabled = true
+		$"Auto/Buyers/Big Bang/Interval".text = "%s: %s" % [
+			"Interval",
+			Globals.format_time(Autobuyers.BangInterval())
+		]
+	else:
+		$"Auto/Buyers/Big Bang/Interval".disabled = \
+		Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.BangUpgrades - 0.001)
+		$"Auto/Buyers/Big Bang/Interval".text = "%s: %s → %s\n%s: %s PP" % [
+			"Interval",
+			Globals.format_time(Autobuyers.BangInterval()),
+			Globals.format_time(max(Autobuyers.BangInterval() * 0.6, 0.1)),
+			"Cost",
+			Globals.float_to_string(2 ** Autobuyers.BangUpgrades, 1),
+		]
 	
-	$Auto/Buyers/TGalaxy/Interval.disabled = \
-	Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.GalUpgrades - 0.001)
-	$Auto/Buyers/TGalaxy/Interval.text = "%s: %s → %s\n%s: %s PP" % [
-		"Interval",
-		Globals.format_time(Autobuyers.GalInterval()),
-		Globals.format_time(max(Autobuyers.GalInterval() * 0.6, 0.1)),
-		"Cost",
-		Globals.float_to_string(2 ** Autobuyers.GalUpgrades, 1),
-	]
-	
-	$"Auto/Buyers/Big Bang/Interval".disabled = \
-	Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.BangUpgrades - 0.001)
-	$"Auto/Buyers/Big Bang/Interval".text = "%s: %s → %s\n%s: %s PP" % [
-		"Interval",
-		Globals.format_time(Autobuyers.BangInterval()),
-		Globals.format_time(max(Autobuyers.BangInterval() * 0.6, 0.1)),
-		"Cost",
-		Globals.float_to_string(2 ** Autobuyers.BangUpgrades, 1),
-	]
+	if Autobuyers.RewdAccuracy() >= 1:
+		%Oðers/Rewind/Accuracy.disabled = true
+		%Oðers/Rewind/Accuracy.text = "%s: %s" % [
+			"Accuracy",
+			Globals.percent_to_string(Autobuyers.RewdAccuracy(), 1)
+		]
+	else:
+		%Oðers/Rewind/Accuracy.disabled = \
+		Currencies.PermanencePts.AMOUNT.less(3 ** Autobuyers.RewdAQups - 0.001)
+		%Oðers/Rewind/Accuracy.text = "%s: %s → %s\n%s: %s PP" % [
+			"Accuracy",
+			Globals.percent_to_string(Autobuyers.RewdAccuracy(), 1),
+			Globals.percent_to_string(min(Autobuyers.RewdAccuracy() * 1.095, 1), 1),
+			"Cost",
+			Globals.float_to_string(3 ** Autobuyers.RewdAQups, 1),
+		]
 	
 	for i in 9:
 		if i == 0: # timespeed
@@ -226,22 +302,30 @@ func _process(_delta):
 					panel.get_node("Mode").text = " Buys max "
 				else:
 					panel.get_node("Mode").text = "Buys singles"
-				panel.get_node("Interval").disabled = \
-				Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.NormUpgrades[8] - 0.001)
-				panel.get_node("Interval").text = "%s: %s → %s\n%s: %s PP" % [
-					"Interval",
-					Globals.format_time(Autobuyers.TSpeedInterval()),
-					Globals.format_time(max(Autobuyers.TSpeedInterval() * 0.6, 0.1)),
-					"Cost",
-					Globals.float_to_string(2 ** Autobuyers.NormUpgrades[8], 1),
-				]
+				
+				if Autobuyers.TSpeedInterval() <= 0.1:
+					panel.get_node("Interval").disabled = true
+					panel.get_node("Interval").text = "%s: %s" % [
+						"Interval",
+						Globals.format_time(Autobuyers.TSpeedInterval())
+					]
+				else:
+					panel.get_node("Interval").disabled = \
+					Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.NormUpgrades[8] - 0.001)
+					panel.get_node("Interval").text = "%s: %s → %s\n%s: %s PP" % [
+						"Interval",
+						Globals.format_time(Autobuyers.TSpeedInterval()),
+						Globals.format_time(max(Autobuyers.TSpeedInterval() * 0.6, 0.1)),
+						"Cost",
+						Globals.float_to_string(2 ** Autobuyers.NormUpgrades[8], 1),
+					]
 			
 			if panel.get_node("Enabled").button_pressed:
 				panel.get_node("Enabled").text = "Enabled"
 			else:
 				panel.get_node("Enabled").text = "Disabled"
 			
-			if Autobuyers.TSpeedInterval() == 0.1:
+			if Globals.Achievemer.is_unlocked(5, 3):
 				panel.custom_minimum_size.x = 300
 				panel.get_node("Label").anchor_right = 0.3
 				panel.get_node("Mode") .anchor_left  = 0.3
@@ -262,6 +346,7 @@ func _process(_delta):
 				Autobuyers.get_bit(
 					Autobuyers.NormModes, Autobuyers.TIMESPEED
 				)
+			
 			if panel.get_node("Enabled").button_pressed != \
 			Autobuyers.get_bit(
 				Autobuyers.NormEnabled, Autobuyers.TIMESPEED
@@ -277,24 +362,32 @@ func _process(_delta):
 				panel.get_node("Interval").text = "Interval: %s\n(Complete the challenge to upgrade)" % \
 				Globals.format_time(Autobuyers.TDInterval(i))
 			else:
-				panel.get_node("Interval").disabled = \
-				Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.NormUpgrades[i-1] - 0.001)
-				if Autobuyers.NormUpgrades[i-1] < Autobuyers.IntervalCap[i-1]:
-					panel.get_node("Interval").text = "%s: %s → %s\n%s: %s PP" % [
-						"Interval",
-						Globals.format_time(Autobuyers.TDInterval(i)),
-						Globals.format_time(max(Autobuyers.TDInterval(i) * 0.6, 0.1)),
-						"Cost",
-						Globals.float_to_string(2 ** Autobuyers.NormUpgrades[i-1], 1),
-					]
+				if Autobuyers.TDBulk(i) >= 512:
+					panel.get_node("Interval").text = "%s: %s\n%s: ×%s" % [
+							"Interval",
+							Globals.format_time(Autobuyers.TDInterval(i)),
+							"Bulk",
+							Globals.int_to_string(Autobuyers.TDBulk(i)),
+						]
 				else:
-					panel.get_node("Interval").text = "%s: ×%s → ×%s\n%s: %s PP" % [
-						"Bulk",
-						Globals.int_to_string(Autobuyers.TDBulk(i)),
-						Globals.int_to_string(Autobuyers.TDBulk(i) * 2),
-						"Cost",
-						Globals.float_to_string(2 ** Autobuyers.NormUpgrades[i-1], 1),
-					]
+					panel.get_node("Interval").disabled = \
+					Currencies.PermanencePts.AMOUNT.less(2 ** Autobuyers.NormUpgrades[i-1] - 0.001)
+					if Autobuyers.NormUpgrades[i-1] < Autobuyers.IntervalCap[i-1]:
+						panel.get_node("Interval").text = "%s: %s → %s\n%s: %s PP" % [
+							"Interval",
+							Globals.format_time(Autobuyers.TDInterval(i)),
+							Globals.format_time(max(Autobuyers.TDInterval(i) * 0.6, 0.1)),
+							"Cost",
+							Globals.float_to_string(2 ** Autobuyers.NormUpgrades[i-1], 1),
+						]
+					else:
+						panel.get_node("Interval").text = "%s: ×%s → ×%s\n%s: %s PP" % [
+							"Bulk",
+							Globals.int_to_string(Autobuyers.TDBulk(i)),
+							Globals.int_to_string(Autobuyers.TDBulk(i) * 2),
+							"Cost",
+							Globals.float_to_string(2 ** Autobuyers.NormUpgrades[i-1], 1),
+						]
 			
 			if panel.get_node("Mode").button_pressed:
 				if Autobuyers.TDBulk(i) == INF:
@@ -314,6 +407,7 @@ func _process(_delta):
 			Autobuyers.get_bit(Autobuyers.NormModes, i):
 				panel.get_node("Mode").button_pressed = \
 				Autobuyers.get_bit(Autobuyers.NormModes, i)
+			
 			if panel.get_node("Enabled").button_pressed != \
 			Autobuyers.get_bit(Autobuyers.NormEnabled, i):
 				panel.get_node("Enabled").button_pressed = \
