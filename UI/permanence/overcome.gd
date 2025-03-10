@@ -173,21 +173,21 @@ func _process(delta):
 	
 	if Permanence.overcome_upgrade_bought(8) != Input.is_action_pressed("BuyOne"):
 		$upgrades/PasEter.text = \
-		"\nGain Eternities passively\nbased on your fastest\nEternity." + \
+		"\nGain Permanences passively\nbased on your fastest\nPermanence." + \
 		"\n\nCurrently: %s/sec" % \
 		Globals.fastestEtern.amount.divide(Globals.fastestEtern.time / 10)
 	else:
 		$upgrades/PasEter.text = \
-		"\nGain Eternities passively\nbased on your fastest\nEternity." + \
+		"\nGain Permanences passively\nbased on your fastest\nPermanence." + \
 		"\n\nCost: %s PP" % Globals.float_to_string(Permanence.OvercomeCosts[7], 0)
 	
 	if Permanence.overcome_upgrade_bought(9) != Input.is_action_pressed("BuyOne"):
 		$upgrades/EterMult.text = \
-		"\nTachyon Dimensions get a\nmultiplier based on\nEternities." + \
+		"\nTachyon Dimensions get a\nmultiplier based on\nPermanences." + \
 		"\n\nCurrently: ×%s" % Formulas.overcome_9().to_string()
 	else:
 		$upgrades/EterMult.text = \
-		"\nTachyon Dimensions get a\nmultiplier based on\nEternities." + \
+		"\nTachyon Dimensions get a\nmultiplier based on\nPermanences." + \
 		"\n\nCost: %s PP" % Globals.float_to_string(Permanence.OvercomeCosts[8], 0)
 	
 	if Permanence.overcome_upgrade_bought(8):
@@ -196,8 +196,8 @@ func _process(delta):
 				Globals.fastestEtern.time / delta / 10
 			)
 		)
-	#if Globals.Eternities.sign < 0:
-		#Globals.Eternities = largenum.new(0)
+	#if Globals.Permanences.sign < 0:
+		#Globals.Permanences = largenum.new(0)
 
 func overcome():
 	Globals.animation(GL.Animations.Overcome)

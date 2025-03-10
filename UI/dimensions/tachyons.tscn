@@ -944,5 +944,3 @@ text = "Due to continued tachyon exposure,
 you accidentally travelled back in time
 to the beginning of the universe."
 horizontal_alignment = 1
-
-[connection signal="pressed" from="VSplitContainer/TopButtons/Rewind" to="VSplitContainer/TopButtons/Rewind" method="_on_pressed"]

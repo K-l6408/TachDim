@@ -269,7 +269,7 @@ func _process(_delta):
 		if Globals.CompletedChallenges == 32767:
 			set_unlocked(4, 8)
 	if not is_unlocked(5, 4):
-		if Globals.EDHandler.DimPurchase[0] > 0:
+		if PermaDims.DimPurchase[0] > 0:
 			set_unlocked(5, 4)
 	if not is_unlocked(5, 5):
 		if Globals.challengeTimes[8-1] <= 30 and Globals.challengeTimes[8-1] > 0:

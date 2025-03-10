@@ -63,7 +63,7 @@ static func ec1_reward():
 
 static func ec2_reward():
 	return max(TachyonDims.TSpeedBoost.power(
-		TachyonDims.TSpeedCount + Globals.EDHandler.FreeTSpeed
+		TachyonDims.TSpeedCount + PermaDims.FreeTSpeed
 	).log10(), 1)
 
 static func dupli_no11():

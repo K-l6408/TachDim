@@ -66,9 +66,7 @@ var CompletedECs := 0
 func challengeCompleted(which): return (CompletedChallenges >> (which - 1)) & 1
 func ECCompleted(which):		return (CompletedECs >> (which - 1)) & 1
 
-var EDHandler  : Control
 var SDHandler  : Control
-var Automation : Control
 var Achievemer : Control
 var VisualSett : Control
 var DupHandler : Control
@@ -146,7 +144,7 @@ func boundlessnessreset():
 	fastestEtern = PrestigeData.new(-1, 1, 1)
 	progressBL = Progression.None
 	if Boundlessnesses.to_float() < 3:
-		Automation.reset()
+		Autobuyers.reset()
 	else:
 		progressBL = Progression.Overcome
 	if Boundlessnesses.to_float() < 4:
@@ -158,8 +156,7 @@ func boundlessnessreset():
 		Permanence.TSpScBought = 0
 		Permanence.TDmScBought = 0
 		Permanence.PasEPBought = 0
-	EDHandler.DimsUnlocked = 0
-	EDHandler.reset()
+	PermaDims.reset()
 	DupHandler.reset()
 	TachyonDims.reset(2)
 	SDHandler.boundlessed()

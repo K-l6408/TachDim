@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=48 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Script" uid="uid://ohsjtsuph3ni" path="res://UI/main.gd" id="1_qdidp"]
@@ -8,10 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="3_ky8nc"]
 [ext_resource type="Shader" uid="uid://coo4helkpeke7" path="res://UI/dimensions/rewind.gdshader" id="3_o4cqe"]
 [ext_resource type="PackedScene" uid="uid://di8p3xe1w45pw" path="res://UI/automation/autobuyers.tscn" id="5_f3s3t"]
-[ext_resource type="Script" uid="uid://dnu233kx1kbd0" path="res://UI/dimensions/EDunlock.gd" id="5_htsl0"]
 [ext_resource type="PackedScene" uid="uid://f1s25k1un5sf" path="res://UI/permanence/upgrades.tscn" id="6_0l55j"]
 [ext_resource type="PackedScene" uid="uid://cpyhr1o2ep885" path="res://UI/challenges/normal.tscn" id="6_agbn0"]
-[ext_resource type="PackedScene" uid="uid://dfqmisim44jab" path="res://UI/dimensions/eternity.tscn" id="6_eboqi"]
+[ext_resource type="PackedScene" uid="uid://dfqmisim44jab" path="res://UI/dimensions/permanence.tscn" id="6_eboqi"]
 [ext_resource type="PackedScene" uid="uid://cy1o0vjg4sdbt" path="res://UI/achievements/achievements.tscn" id="6_mtmcd"]
 [ext_resource type="PackedScene" uid="uid://bb23v4wug50t3" path="res://UI/options/saving.tscn" id="6_rxys2"]
 [ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
@@ -291,6 +290,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+dragging_enabled = false
 dragger_visibility = 2
 
 [node name="News" type="PanelContainer" parent="VSplitContainer"]
@@ -480,14 +480,14 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="EDunlock" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+[node name="PDunlock" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="EDButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EDunlock"]
+[node name="PDButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/PDunlock"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -503,7 +503,6 @@ disabled = true
 text = "Reach 1e2000 TC to
 unlock a new
 Eternity Dimension."
-script = ExtResource("5_htsl0")
 
 [node name="Boundlessness" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
@@ -866,7 +865,5 @@ process_material = SubResource("ParticleProcessMaterial_a3tro")
 [node name="Window" parent="." instance=ExtResource("33_yxlw4")]
 visible = false
 
-[connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button" method="_on_pressed"]
-[connection signal="button_down" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/EDunlock/EDButton" to="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Dimensions/Permanence" method="unlocknewdim"]
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" method="boundlessness"]
 [connection signal="theme_change" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options/Visual" to="." method="theme_change"]

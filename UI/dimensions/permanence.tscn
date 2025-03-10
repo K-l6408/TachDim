@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfqmisim44jab"]
+[gd_scene load_steps=3 format=3 uid="uid://dfqmisim44jab"]
 
-[ext_resource type="Script" uid="uid://bwj4u1f8mrqnr" path="res://UI/dimensions/eternity.gd" id="1_bxmku"]
+[ext_resource type="Script" uid="uid://bwj4u1f8mrqnr" path="res://UI/dimensions/permanence.gd" id="1_bxmku"]
+[ext_resource type="Script" uid="uid://c2acqosw3x5it" path="res://UI/hovertext.gd" id="2_qftp3"]
 
 [node name="Control" type="Control"]
 custom_minimum_size = Vector2(520, 404)
@@ -84,6 +85,18 @@ shortcut_feedback = false
 shortcut_in_tooltip = false
 text = "Cost: 10 EP"
 
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension1/Buy"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_left = -16.0
+offset_right = -5.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("2_qftp3")
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
+
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension1"]
 layout_mode = 2
 
@@ -128,12 +141,24 @@ text = "(+0.00%/s)"
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "meow"
 theme_type_variation = &"EDButton"
 disabled = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
 text = "Cost: 10 EP"
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension2/Buy"]
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+offset_left = -39.0
+offset_right = -5.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("2_qftp3")
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension2"]
 layout_mode = 2
@@ -468,13 +493,3 @@ action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
 text = "Buy Max"
-
-[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension1/Buy" to="." method="buydim" binds= [1]]
-[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension2/Buy" to="." method="buydim" binds= [2]]
-[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension3/Buy" to="." method="buydim" binds= [3]]
-[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension4/Buy" to="." method="buydim" binds= [4]]
-[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension5/Buy" to="." method="buydim" binds= [5]]
-[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension6/Buy" to="." method="buydim" binds= [6]]
-[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension7/Buy" to="." method="buydim" binds= [7]]
-[connection signal="pressed" from="VSplitContainer/Dimensions/Dimension8/Buy" to="." method="buydim" binds= [8]]
-[connection signal="pressed" from="BuyMax" to="." method="buymax"]

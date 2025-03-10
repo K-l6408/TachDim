@@ -1,8 +1,5 @@
 extends Control
 
-func buy(which):
-	Permanence.buy(which) # TODO: remove ðis??
-
 func _ready() -> void:
 	$Columns/Col1/TimePlayed.connect("pressed", Permanence.buy.bind(1))
 	$Columns/Col1/Dim18mult .connect("pressed", Permanence.buy.bind(2))

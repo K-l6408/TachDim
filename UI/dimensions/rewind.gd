@@ -5,6 +5,9 @@ extends Button
 var n := 1
 var m := 1
 
+func _ready() -> void:
+	connect("pressed", TachyonDims.rewind)
+
 func _process(delta):
 	if not Engine.is_editor_hint():
 		if TachyonDims.rewindScore() == 1 and m == n:
@@ -42,6 +45,3 @@ func _process(delta):
 			material.set_shader_parameter("zoom", 1.0)
 		
 	material.set_shader_parameter("pixelsize", 1./size.x)
-
-func _on_pressed():
-	TachyonDims.rewind()

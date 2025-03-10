@@ -8,7 +8,7 @@ var UpgradeCosts := [
 var OvercomeCosts := [
 	1e3, 1e6, 1e9,
 	3e6, 1e4, 4e4,
-	1e5, 2e8, 1e7
+	1e5, 2e8, 3e5
 ]
 var PPMultBought := 0
 var PU12Timer = 0

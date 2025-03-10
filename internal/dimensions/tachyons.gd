@@ -702,7 +702,7 @@ func _process(delta):
 		
 		Multipliers[i-1] = largenum.new(multiplier)
 		
-		multiplier.mult2self(TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed))
+		multiplier.mult2self(TSpeedBoost.power(TSpeedCount + PermaDims.FreeTSpeed))
 		
 		var production = DimAmount[i-1].multiply(multiplier)
 		if i == 1:
@@ -713,5 +713,5 @@ func _process(delta):
 			DimAmount[i-2].add2self(production.multiply(delta))
 		
 	Currencies.Tachyons.mults["Timespeed"] = Currencies.Multiplier.new(
-		TSpeedBoost.power(TSpeedCount + Globals.EDHandler.FreeTSpeed), DimsUnlocked
+		TSpeedBoost.power(TSpeedCount + PermaDims.FreeTSpeed), DimsUnlocked
 	)

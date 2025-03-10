@@ -184,6 +184,11 @@ func _process(_delta):
 		$"Auto/Buyers/Big Bang/Enabled".button_pressed = \
 		Autobuyers.get_bit(Autobuyers.NormEnabled, Autobuyers.BIG_BANG)
 	
+	if $"Auto/Buyers/Big Bang/Objective".text != \
+	Autobuyers.BigBangObjectStr and not \
+	$"Auto/Buyers/Big Bang/Objective".has_focus():
+		$"Auto/Buyers/Big Bang/Objective".text = Autobuyers.BigBangObjectStr
+	
 	for panel in $Auto/Buyers.get_children():
 		if panel.has_node("Mode"):
 			if panel.get_node("Mode").button_pressed:

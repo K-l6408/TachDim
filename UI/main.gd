@@ -16,9 +16,7 @@ var  celestialSymbols = "⏣⚴☾𝄽\uf1e0ɸ⸸"
 
 func _ready():
 	Globals.NotifHandler = $Notifs
-	Globals.EDHandler = %Tabs/Dimensions/Permanence
 	Globals.SDHandler = %Tabs/Dimensions/Space
-	Globals.Automation = %Tabs/Automation
 	Globals.Achievemer = %Tabs/Achievements
 	Globals.Animater = $AnimationPlayer
 	Globals.VisualSett = %Tabs/Options/Visual
@@ -47,6 +45,7 @@ func _ready():
 		%Tabs/Options.get_tab_bar().set_tab_title(i, "%s %s %s" % \
 		[optionsSymbols[i], %Tabs/Options.get_child(i).name, optionsSymbols[i]])
 	
+	%Resources/PDunlock/PDButton.connect("pressed", PermaDims.unlocknewdim)
 	%PermanenceButton.connect("pressed", TachyonDims.permanence)
 
 func _process(_delta):
@@ -70,7 +69,7 @@ func _process(_delta):
 	TBar.set_tab_hidden(5, Globals.progress < Globals.Progression.Boundlessness)
 	
 	%Tabs/Dimensions.set_tab_hidden(1,
-	Globals.EDHandler.DimsUnlocked == 0 and Globals.progress < GL.Progression.Boundlessness)
+	PermaDims.DimsUnlocked == 0 and Globals.progress < GL.Progression.Boundlessness)
 	%Tabs/Dimensions.set_tab_hidden(2, Globals.SDHandler.DimsUnlocked == 0)
 	%Tabs/Challenges.set_tab_hidden(
 		1, Globals.TachTotal.log10() < Globals.ECUnlocks[0]
@@ -117,15 +116,26 @@ func _process(_delta):
 	%Resources/Permanence/PermanenceButton.disabled = \
 	not TachyonDims.canBigBang
 	
-	%Resources/EDunlock.visible = \
+	%Resources/PDunlock.visible = \
 	Globals.progressBL >= GL.Progression.Overcome and \
 	(Globals.Challenge == 0 or Globals.Challenge > 15) and \
-	Globals.EDHandler.DimsUnlocked < 8 and \
+	PermaDims.DimsUnlocked < 8 and \
 	Globals.Boundlessnesses.to_float() < 25
-	%Resources/EDunlock/EDButton.disabled = true
+	if PermaDims.DimsUnlocked < 8:
+		%Resources/PDunlock/PDButton.disabled = (
+			Currencies.Tachyons.AMOUNT.log10() < \
+			PermaDims.TachLogReq[PermaDims.DimsUnlocked]
+		)
+	%Resources/PDunlock/PDButton.text = \
+	"Reach %s TC\nto unlock a new\n%s Dimension." % [
+		largenum.ten_to_the(PermaDims.TachLogReq[
+			PermaDims.DimsUnlocked]
+		).to_string(),
+		"type of" if PermaDims.DimsUnlocked == 0 else "Permanence"
+	]
 	
 	%Resources/Boundlessness.visible = \
-	Globals.EDHandler.DimsUnlocked == 8 or \
+	PermaDims.DimsUnlocked == 8 or \
 	Globals.Boundlessnesses.to_float() >= 25
 	if Currencies.PermanencePts.AMOUNT.exponent < 1024:
 		%Resources/Boundlessness/BoundlessButton.disabled = true

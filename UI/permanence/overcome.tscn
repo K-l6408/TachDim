@@ -168,7 +168,7 @@ Tachyon Dimensions get a
 multiplier based on
 Eternities.
 
-Cost: 1e7 EP"
+Cost: 3e5 EP"
 text_overrun_behavior = 2
 
 [node name="TSpSc" type="Button" parent="upgrades"]

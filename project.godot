@@ -25,6 +25,7 @@ TachyonDims="*res://internal/dimensions/tachyons.gd"
 Permanence="*res://internal/permanence.gd"
 Autobuyers="*res://internal/autobuyers.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+PermaDims="*res://internal/dimensions/permanence.gd"
 
 [display]
 

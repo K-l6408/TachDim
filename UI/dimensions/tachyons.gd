@@ -106,7 +106,7 @@ func _process(delta):
 				Globals.percent_to_string(
 					TachyonDims.Multipliers[k+1].multiply(
 						TachyonDims.TSpeedBoost.power(
-							TachyonDims.TSpeedCount + Globals.EDHandler.FreeTSpeed
+							TachyonDims.TSpeedCount + PermaDims.FreeTSpeed
 						).multiply(TachyonDims.DimAmount[k+1])
 					).divide(TachyonDims.DimAmount[k]).to_float()
 				)
@@ -142,10 +142,10 @@ func _process(delta):
 		%TopButtons/Timespeed.text = "Timespeed (%s TC) " % TachyonDims.tspcost().to_string()
 	%TopButtons/Timespeed.tooltip_text = "Purchased %s time%s" % \
 	[Globals.int_to_string(TachyonDims.TSpeedCount), "" if TachyonDims.TSpeedCount == 1 else "s"]
-	if Globals.EDHandler.DimsUnlocked > 0:
+	if PermaDims.DimsUnlocked > 0:
 		%TopButtons/Timespeed.tooltip_text += " + %s Free upgrade%s" % [
-			Globals.int_to_string(Globals.EDHandler.FreeTSpeed),
-			"" if Globals.EDHandler.FreeTSpeed == 1 else "s"
+			Globals.int_to_string(PermaDims.FreeTSpeed),
+			"" if PermaDims.FreeTSpeed == 1 else "s"
 		]
 	%TopButtons/BuyMode.text = \
 	"Buy until %s" % Globals.int_to_string(TachyonDims.buylim) if %TopButtons/BuyMode.button_pressed else "Buy singles"
@@ -174,7 +174,7 @@ func _process(delta):
 	"[font_size=10] Tachyons per second.[/font_size]\n[font_size=10]Timespeed strength: [/font_size]" + \
 	TachyonDims.TSpeedBoost.to_string() + "[font_size=10] | Total speed: [/font_size]" + \
 	TachyonDims.TSpeedBoost.power(
-		TachyonDims.TSpeedCount + Globals.EDHandler.FreeTSpeed).to_string() + \
+		TachyonDims.TSpeedCount + PermaDims.FreeTSpeed).to_string() + \
 	"[font_size=10]/sec\nBuy " + Globals.int_to_string(TachyonDims.buylim) + " multiplier: [/font_size]" + \
 	Globals.float_to_string(TachyonDims.buymult)
 	

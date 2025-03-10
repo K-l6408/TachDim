@@ -190,20 +190,20 @@ func saveF(file : String = saveFilePath):
 		DATA["passive ep bought"] = Permanence.PasPPBought
 		
 		DATA["eter dim amounts"] = [
-			Globals.EDHandler.DimAmount[0].to_bytes(),
-			Globals.EDHandler.DimAmount[1].to_bytes(),
-			Globals.EDHandler.DimAmount[2].to_bytes(),
-			Globals.EDHandler.DimAmount[3].to_bytes(),
-			Globals.EDHandler.DimAmount[4].to_bytes(),
-			Globals.EDHandler.DimAmount[5].to_bytes(),
-			Globals.EDHandler.DimAmount[6].to_bytes(),
-			Globals.EDHandler.DimAmount[7].to_bytes()
+			PermaDims.DimAmount[0].to_bytes(),
+			PermaDims.DimAmount[1].to_bytes(),
+			PermaDims.DimAmount[2].to_bytes(),
+			PermaDims.DimAmount[3].to_bytes(),
+			PermaDims.DimAmount[4].to_bytes(),
+			PermaDims.DimAmount[5].to_bytes(),
+			PermaDims.DimAmount[6].to_bytes(),
+			PermaDims.DimAmount[7].to_bytes()
 		]
-		DATA["eter dim purchases"] = Globals.EDHandler.DimPurchase
-		DATA["eter dims unlocked"] = Globals.EDHandler.DimsUnlocked
-		DATA["time shards"] = Globals.EDHandler.TimeShards.to_bytes()
-		DATA["free timespeed"] = Globals.EDHandler.FreeTSpeed
-		DATA["next timespeed"] = Globals.EDHandler.NextUpgrade.to_bytes()
+		DATA["eter dim purchases"] = PermaDims.DimPurchase
+		DATA["eter dims unlocked"] = PermaDims.DimsUnlocked
+		DATA["time shards"] = PermaDims.TimeShards.to_bytes()
+		DATA["free timespeed"] = PermaDims.FreeTSpeed
+		DATA["next timespeed"] = PermaDims.NextUpgrade.to_bytes()
 		DATA["TTIE"] = TachyonDims.topTachyonsInPermanence.to_bytes()
 		
 		DATA["dila buyer max time"] = Autobuyers.DilaTimeOverride
@@ -415,12 +415,12 @@ func loadF(file : String = saveFilePath):
 		
 		if DATA.has("eter dim amounts"):
 			for i in 8:
-				Globals.EDHandler.DimAmount[i].from_bytes(DATA["eter dim amounts"][i])
-				Globals.EDHandler.DimPurchase[i] = DATA["eter dim purchases"][i]
-			Globals.EDHandler.DimsUnlocked = DATA["eter dims unlocked"]
-			Globals.EDHandler.TimeShards.from_bytes(DATA["time shards"])
-			Globals.EDHandler.FreeTSpeed = DATA["free timespeed"]
-			Globals.EDHandler.NextUpgrade.from_bytes(DATA["next timespeed"])
+				PermaDims.DimAmount[i].from_bytes(DATA["eter dim amounts"][i])
+				PermaDims.DimPurchase[i] = DATA["eter dim purchases"][i]
+			PermaDims.DimsUnlocked = DATA["eter dims unlocked"]
+			PermaDims.TimeShards.from_bytes(DATA["time shards"])
+			PermaDims.FreeTSpeed = DATA["free timespeed"]
+			PermaDims.NextUpgrade.from_bytes(DATA["next timespeed"])
 		
 		if DATA.has("TTIE"):
 			TachyonDims.topTachyonsInPermanence.from_bytes(DATA["TTIE"])
@@ -544,7 +544,7 @@ func gameReset():
 		Globals.SDHandler.DimAmount[i] = largenum.new(0)
 		Globals.SDHandler.DimPurchase[i] = 0
 	Globals.SDHandler.BoundlessPower = largenum.new(0)
-	Globals.EDHandler.reset()
+	PermaDims.reset()
 	
 	Currencies.Tachyons.reset()
 	Currencies.PermanencePts.reset()
