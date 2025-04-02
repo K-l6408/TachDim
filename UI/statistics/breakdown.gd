@@ -20,6 +20,7 @@ var text := {
 	"Challenge 9" : "⁈ Ⅸ",
 	"Challenge 14": "⁈ ⅩⅣ",
 	"Base gain from Tachyons": "Ψ→",
+	"Permanence Challenge 1 reward" : "Δ⁈ Ⅰ",
 }
 var colors := {
 	"Timespeed": Color("#4D5E42"),

@@ -3,8 +3,8 @@ extends Control
 @onready var TBar : TabBar = %Tabs.get_tab_bar()
 var debugMode := false
 
-var tabSymbolLeft  = "⇠\uf085⁈δΞ∀\uf091\uf11c\uf0ca\uf1de[!"
-var tabSymbolRight = "⇢\uf1de⁉δΞ∀\uf091\uf11c\uf0c9\uf0ad]!"
+var tabSymbolLeft  = "⇠\uf085⁈δξ∀\uf091\uf11c\uf0ca\uf1de[!"
+var tabSymbolRight = "⇢\uf1de⁉δξ∀\uf091\uf11c\uf0c9\uf0ad]!"
 
 var  dimensionSymbols = "Ψδ∀"
 var  challengeSymbols = "Ψδ∀"
@@ -127,12 +127,17 @@ func _process(_delta):
 			PermaDims.TachLogReq[PermaDims.DimsUnlocked]
 		)
 	%Resources/PDunlock/PDButton.text = \
-	"Reach %s TC\nto unlock a new\n%s Dimension." % [
+	"Reach %s\u00a0TC to unlock a new %s Dimension." % [
 		largenum.ten_to_the(PermaDims.TachLogReq[
 			PermaDims.DimsUnlocked]
 		).to_string(),
 		"type of" if PermaDims.DimsUnlocked == 0 else "Permanence"
 	]
+	%Resources/PDunlock/PDButton.size.y = 0
+	%Resources/PDunlock/PDButton.size.y += 10
+	%Resources/PDunlock/PDButton.position.y = 5
+	%Resources/PDunlock.custom_minimum_size.y = \
+	%Resources/PDunlock/PDButton.size.y + 10
 	
 	%Resources/Boundlessness.visible = \
 	PermaDims.DimsUnlocked == 8 or \
@@ -186,7 +191,7 @@ func _process(_delta):
 	]
 	if Globals.Challenge > 15:
 		%Resources/Challenge/Text.text = \
-		"[center]Current Challenge:\n[font_size=16]EC%s[/font_size][/center]" % \
+		"[center]Current Challenge:\n[font_size=16]PC%s[/font_size][/center]" % \
 		Globals.int_to_string(Globals.Challenge - 15)
 	elif Globals.Challenge > 0:
 		%Resources/Challenge/Text.text = \
@@ -197,17 +202,22 @@ func _process(_delta):
 		"[center]Current Challenge:\n[font_size=16]None[/font_size][/center]"
 	
 	if %Resources/Permanence/PermanenceButton.disabled:
-		%Resources/Permanence/PermanenceButton.text = "Reach\n%s Tachyons" % (
+		%Resources/Permanence/PermanenceButton.text = "Reach %s Tachyons" % (
 			largenum.two_to_the(1024) if Globals.Challenge <= 15 else
 			Globals.ECTargets[Globals.Challenge - 16]
 		).to_string()
 	elif Globals.Challenge > 15:
-		%Resources/Permanence/PermanenceButton.text = "Big Bang to\ncomplete the\nchallenge"
+		%Resources/Permanence/PermanenceButton.text = "Big\u00a0Bang to complete the challenge"
 	else:
-		%Resources/Permanence/PermanenceButton.text = "Big Bang for\n%s PP\n(%s PP/s)" % [
+		%Resources/Permanence/PermanenceButton.text = "Big\u00a0Bang for %s\u00a0PP (%s\u00a0PP/\u2060min)" % [
 			Permanence.process_pp_gain().to_string().trim_suffix(".00").trim_suffix(";00"),
-			Permanence.process_pp_gain().divide(Globals.eternTime).to_string()
+			Permanence.process_pp_gain().divide(Globals.eternTime/60).to_string()
 		]
+	%Resources/Permanence/PermanenceButton.size.y = 0
+	%Resources/Permanence/PermanenceButton.size.y += 10
+	%Resources/Permanence/PermanenceButton.position.y = 5
+	%Resources/Permanence.custom_minimum_size.y = \
+	%Resources/Permanence/PermanenceButton.size.y + 10
 
 func rewind(score):
 	%Tabs/Dimensions/Tachyons.rewind(score)

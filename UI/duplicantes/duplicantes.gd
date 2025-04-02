@@ -5,6 +5,7 @@ var tickFraction := 0.0
 func on_permanence():
 	if not Globals.Achievemer.is_unlocked(6, 8):
 		Globals.Duplicantes = largenum.new(1)
+		dupGalaxies = 0
 	if dupGalaxies > 5:
 		dupGalaxies = 5
 
@@ -59,7 +60,7 @@ var limitUpgrades := 0
 func limit():
 	return largenum.two_to_the(2 ** (limitUpgrades + 4))
 func limit_cost():
-	return largenum.ten_to_the(45 + 15 * limitUpgrades)
+	return largenum.ten_to_the(30 + 15 * limitUpgrades)
 func buy_limit():
 	if Currencies.PermanencePts.spend(limit_cost()):
 		limitUpgrades += 1
@@ -206,11 +207,11 @@ func _process(delta):
 	
 	tickFraction = fmod(tickFraction, 1.0)
 	
-	%Chance.disabled = Globals.Duplicantes.less(2.0 ** chance) or chance >= 100
-	while not %Chance.disabled and Globals.Automation.DupChEnabled:
-		buy_chance()
-		%Chance.disabled = \
-		Globals.Duplicantes.less(2.0 ** chance) or chance >= 100
+	%Chance.disabled = not largenum.two_to_the(chance).less(Globals.Duplicantes) or chance >= 100
+	#while not %Chance.disabled and Globals.Automation.DupChEnabled:
+		#buy_chance()
+		#%Chance.disabled = \
+		#Globals.Duplicantes.less(2.0 ** chance - 0.0001) or chance >= 100
 	
 	%Interval.disabled = Globals.Duplicantes.less(3.0 ** (intervUpgrades + 1) - 0.001) or \
 	interval() <= intervalCap

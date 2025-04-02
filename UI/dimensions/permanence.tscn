@@ -89,6 +89,7 @@ text = "Cost: 10 EP"
 visible = false
 modulate = Color(1, 1, 1, 0)
 z_index = 400
+layout_mode = 0
 offset_left = -16.0
 offset_right = -5.0
 offset_bottom = 40.0
@@ -152,6 +153,7 @@ text = "Cost: 10 EP"
 [node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension2/Buy"]
 modulate = Color(1, 1, 1, 0)
 z_index = 400
+layout_mode = 0
 offset_left = -39.0
 offset_right = -5.0
 offset_bottom = 40.0
@@ -210,6 +212,18 @@ shortcut_feedback = false
 shortcut_in_tooltip = false
 text = "Cost: 10 EP"
 
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension3/Buy"]
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = -39.0
+offset_right = -5.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("2_qftp3")
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
+
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension3"]
 layout_mode = 2
 
@@ -259,6 +273,18 @@ action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
 text = "Cost: 10 EP"
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension4/Buy"]
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = -39.0
+offset_right = -5.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("2_qftp3")
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension4"]
 layout_mode = 2
@@ -310,6 +336,18 @@ action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
 text = "Cost: 10 EP"
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension5/Buy"]
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = -39.0
+offset_right = -5.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("2_qftp3")
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension5"]
 layout_mode = 2
@@ -363,6 +401,18 @@ shortcut_in_tooltip = false
 text = "Buy 10
 Cost: 10 EP"
 
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension6/Buy"]
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = -39.0
+offset_right = -5.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("2_qftp3")
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
+
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension6"]
 layout_mode = 2
 
@@ -414,6 +464,18 @@ shortcut_feedback = false
 shortcut_in_tooltip = false
 text = "Buy 10
 Cost: 10 EP"
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension7/Buy"]
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = -39.0
+offset_right = -5.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("2_qftp3")
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension7"]
 layout_mode = 2
@@ -467,6 +529,18 @@ shortcut_feedback = false
 shortcut_in_tooltip = false
 text = "Buy 10
 Cost: 10 EP"
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/Dimensions/Dimension8/Buy"]
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = -39.0
+offset_right = -5.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("2_qftp3")
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="VSeparator2" type="VSeparator" parent="VSplitContainer/Dimensions/Dimension8"]
 layout_mode = 2

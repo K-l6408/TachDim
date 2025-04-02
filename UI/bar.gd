@@ -13,9 +13,6 @@ func _ready():
 	$HBoxContainer/Prestiges/TGalaxy/Button.connect(
 		"pressed", TachyonDims.galaxy
 	)
-	$HBoxContainer/Rewind/Button.connect(
-		"pressed", TachyonDims.rewind
-	)
 	
 	$"HBoxContainer/Move/To/1".connect("pressed", func():
 		side = CORNER_TOP_LEFT
@@ -75,8 +72,10 @@ func _process(delta):
 	not TachyonDims.canDilate
 	$HBoxContainer/Prestiges/TGalaxy/Button.disabled = \
 	not TachyonDims.canGalaxy
-	$HBoxContainer/Rewind.visible = (TachyonDims.TDilation >= 5) or \
-	(Globals.progress >= Globals.Progression.Galaxy)
+	$HBoxContainer/Rewind.visible = (
+		(TachyonDims.TDilation >= 5) or \
+		(Globals.progress >= Globals.Progression.Galaxy)
+	) and not Globals.Achievemer.is_unlocked(5,2)
 	
 	if get_theme_stylebox("panel", "Panel") is StyleBoxFlat:
 		$HBoxContainer/Prestiges/Dilation/Button.add_theme_color_override(

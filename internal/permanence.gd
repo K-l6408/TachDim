@@ -7,7 +7,7 @@ var UpgradeCosts := [
 ]
 var OvercomeCosts := [
 	1e3, 1e6, 1e9,
-	3e6, 1e4, 4e4,
+	3e7, 1e4, 4e4,
 	1e5, 2e8, 3e5
 ]
 var PPMultBought := 0
@@ -78,12 +78,18 @@ func _process(delta):
 			PU12Timer = (Globals.fastestEtern.time * 3)
 		PU12Timer -= delta
 	
-	#if OEUHandler is Node:
-		#var avg = largenum.new(0)
-		#for i in last10etern:
-			#avg.add2self(i.currency.divide(i.time))
-		#avg.div2self(last10etern.size())
-		#PermanencePts.add2self(avg.mult2self(delta * OEUHandler.PasEPBought / 20))
+	if overcome_upgrade_bought(8):
+		Currencies.Permanences.add(
+			Globals.fastestEtern.amount.divide(Globals.fastestEtern.time / 10).\
+			multiply(delta)
+		)
+	
+	if PasPPBought > 0:
+		var top = largenum.new(0)
+		for i in Globals.last10etern:
+			if top.less(i.currency.divide(i.time)):
+				top = i.currency.divide(i.time)
+		Currencies.PermanencePts.add(top.mult2self(delta * PasPPBought / 20))
 	
 	process_pp_gain()
 
@@ -100,27 +106,24 @@ func process_pp_gain():
 	
 	Currencies.PermanencePts.mults["Base gain from Tachyons"] = null
 	
-	if overcome_upgrade_bought(4):
-		Currencies.PermanencePts.mults["Base gain from Tachyons"] = \
-		Currencies.Multiplier.new(largenum.five_to_the((
-			TachyonDims.topTachyonsInPermanence.log2() / 900
-		) - 1))
-		
-		ppgain.mult2self(largenum.five_to_the((
-			TachyonDims.topTachyonsInPermanence.log2() / 900
-		) - 1))
-	else:
-		Currencies.PermanencePts.mults["Base gain from Tachyons"] = \
-		Currencies.Multiplier.new(largenum.five_to_the((
-			TachyonDims.topTachyonsInPermanence.log2() / 1024
-		) - 1))
-		
-		ppgain.mult2self(largenum.five_to_the((
-			TachyonDims.topTachyonsInPermanence.log2() / 1024
-		) - 1))
+	Currencies.PermanencePts.mults["Base gain from Tachyons"] = \
+	Currencies.Multiplier.new(largenum.five_to_the((
+		TachyonDims.topTachyonsInPermanence.log2() / 1024
+	) - 1))
+	
+	ppgain.mult2self(largenum.five_to_the((
+		TachyonDims.topTachyonsInPermanence.log2() / 1024
+	) - 1))
+	
+	if Globals.ECCompleted(1):
+		ppgain.mult2self(Formulas.ec1_reward())
+		Currencies.PermanencePts.mults["Permanence Challenge 1 reward"] = \
+		Currencies.Multiplier.new(largenum.new(Formulas.ec1_reward()))
 	
 	Currencies.PermanencePts.mults["Repeatable ×2 multiplier"] = \
 	Currencies.Multiplier.new(largenum.two_to_the(PPMultBought))
 	ppgain.mult2self(largenum.two_to_the(PPMultBought))
+	
+	ppgain.integerize()
 	
 	return ppgain

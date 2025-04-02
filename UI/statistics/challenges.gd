@@ -21,7 +21,7 @@ func _process(_delta):
 		
 		sum = 0
 		for i in 7:
-			get_node("ETable/C%d" % (i+1)).text = "EC" + Globals.int_to_string(i+1)
+			get_node("ETable/C%d" % (i+1)).text = "PC" + Globals.int_to_string(i+1)
 			get_node("ETable/T%d" % (i+1)).text = \
 			Globals.format_time(Globals.ECTimes[i]) if Globals.ECTimes[i] > 0 else "N/A"
 			if Globals.ECTimes.size() == i:

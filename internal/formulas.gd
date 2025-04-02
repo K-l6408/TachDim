@@ -11,6 +11,10 @@ static func permanence_23():
 	return base
 
 static func achievement_mult():
+	if Permanence.overcome_upgrade_bought(4):
+		return largenum.new(1.05).power(
+			Globals.Achievemer.achgot * Currencies.Permanences.AMOUNT.log2() ** 1.5
+		)
 	return largenum.new(1.05).power(Globals.Achievemer.achgot)
 
 static func bpgained():
@@ -44,7 +48,7 @@ static func overcome_7():
 	return max(300 / i, 1)
 
 static func overcome_9():
-	var base = Currencies.Permanences.AMOUNT.power(2)
+	var base = Currencies.Permanences.AMOUNT.power(3)
 	if "2×2" in Globals.Studies.purchased:
 		base.pow2self(4)
 	return base
@@ -62,12 +66,12 @@ static func ec1_reward():
 	return m
 
 static func ec2_reward():
-	return max(TachyonDims.TSpeedBoost.power(
-		TachyonDims.TSpeedCount + PermaDims.FreeTSpeed
-	).log10(), 1)
+	return TachyonDims.TSpeedBoost.power(
+		(TachyonDims.TSpeedCount + PermaDims.FreeTSpeed) * 0.01
+	)
 
 static func dupli_no11():
-	return max(Globals.Duplicantes.add(9).log10() ** 2, 1)
+	return max(Globals.Duplicantes.add(9).log10() ** 4, 1)
 static func dupli_yes11():
 	if Globals.Duplicantes.exponent < 0:
 		return largenum.new(1)

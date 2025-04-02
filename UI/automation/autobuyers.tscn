@@ -207,6 +207,7 @@ allow_greater = true
 alignment = 1
 prefix = "Activates every"
 suffix = "seconds"
+custom_arrow_step = 0.1
 
 [node name="Mode" type="Button" parent="Auto/Buyers/TGalaxy"]
 layout_mode = 1

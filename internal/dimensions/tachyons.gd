@@ -23,8 +23,8 @@ var TSpeedBoost :
 		var GalaxyMult = 1
 		
 		if Permanence.upgrade_bought(8): GalaxyMult *= 2
-		if Permanence.overcome_upgrade_bought(3): GalaxyMult *= 1.4
-		if Globals.ECCompleted(4): GalaxyMult *= 1.15
+		if Permanence.overcome_upgrade_bought(3): GalaxyMult *= 1.5
+		if Globals.ECCompleted(4): GalaxyMult *= 1.02
 		
 		return largenum.new(1.10 if Globals.Challenge == 12 else 1.125).\
 		div2self(largenum.new(GalaxyBoost).power(
@@ -94,10 +94,12 @@ func tspcost():
 	var purchase : int = TSpeedCount
 	
 	var costlog = start + increase * purchase
+	var scalestart = 308.2547156
+	if Globals.Challenge == 17: scalestart = 0
 	
-	if costlog >= 308.2547156:
+	if costlog >= scalestart:
 		var scalingamount = log(10 - Permanence.TSpScBought) / GL.LOG10
-		var scaling : int = purchase - (308.2547156 - start) / increase
+		var scaling : int = purchase - (scalestart - start) / increase
 		costlog += scaling * (scaling + 1) * scalingamount / 2
 	
 	return largenum.ten_to_the(costlog)
@@ -119,10 +121,12 @@ func dimcost(which):
 	var purchase : int = DimPurchase[which - 1] / buylim
 	
 	var costlog = start + increase * purchase
+	var scalestart = 308.2547156
+	if Globals.Challenge == 17: scalestart = 0
 	
-	if costlog >= 308.2547156:
+	if costlog >= scalestart:
 		var scalingamount = log(10 - Permanence.TDmScBought) / GL.LOG10
-		var scaling : int = purchase - (308.2547156 - start) / increase
+		var scaling : int = purchase - (scalestart - start) / increase
 		costlog += scaling * (scaling + 1) * scalingamount / 2
 	
 	return largenum.ten_to_the(costlog)
@@ -289,8 +293,6 @@ func reset(level := 0, challengeReset := true):
 			TDilation = -3
 		elif Globals.Challenge != 0:
 			TDilation = 0
-		elif Permanence.upgrade_bought(17):
-			TDilation = 5
 		elif Permanence.upgrade_bought(16):
 			TDilation = 4
 		elif Permanence.upgrade_bought(15):
@@ -302,12 +304,15 @@ func reset(level := 0, challengeReset := true):
 		else:
 			TDilation = 0
 		if Globals.Challenge == 10: C10Power = 0
+		Autobuyers.NormTimers[Autobuyers.DILATION - 1] = \
+		Autobuyers.DilInterval()
 	if level >= 2:
 		if Globals.Challenge != 0:          TGalaxies = 0
 		elif Permanence.upgrade_bought(17): TGalaxies = 1
 		else:                               TGalaxies = 0
 		Globals.eternTime = 0
 		topTachyonsInPermanence = largenum.new(0)
+		PermaDims.eternitied()
 		pass
 
 ## cost of time dilation. takes into account challenge effects.
@@ -664,6 +669,19 @@ func _process(delta):
 				mults["Overcome Time Upgrades"].has("OU 1"):
 					Currencies.Tachyons.mults["Overcome Time Upgrades"]["OU 1"] = \
 					Currencies.Multiplier.new(Formulas.overcome_1(), 8)
+			if Permanence.overcome_upgrade_bought(7):
+				multiplier.mult2self(Formulas.overcome_7())
+				if not Currencies.Tachyons.\
+				mults["Overcome Time Upgrades"].has("OU 7"):
+					Currencies.Tachyons.mults["Overcome Time Upgrades"]["OU 7"] = \
+					Currencies.Multiplier.new(largenum.new(Formulas.overcome_7()), 8)
+			if Permanence.overcome_upgrade_bought(9):
+				multiplier.mult2self(Formulas.overcome_9())
+				if not Currencies.Tachyons.\
+				mults["Overcome Time Upgrades"].has("OU 9"):
+					Currencies.Tachyons.mults["Overcome Time Upgrades"]["OU 9"] = \
+					Currencies.Multiplier.new(Formulas.overcome_9(), 8)
+			
 			if Globals.Achievemer.is_unlocked(5, 6):
 				multiplier.mult2self(Formulas.achievement_56())
 				if not Currencies.Tachyons.mults["Achievements"].has("5×6"):

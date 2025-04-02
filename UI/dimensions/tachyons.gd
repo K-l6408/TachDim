@@ -40,9 +40,6 @@ func _ready():
 func _process(delta):
 	var logfinity = 2048 if Globals.Challenge == 15 else 1024
 	
-	#if canBigBang and Input.is_action_pressed("BBang"):
-		#Permanence()
-	
 	if Globals.progressBL < GL.Progression.Overcome or \
 	(Globals.Challenge != 0 and Globals.Challenge <= 15):
 		$VSplitContainer.visible = (Currencies.Tachyons.AMOUNT.log2() <= logfinity)
@@ -92,7 +89,7 @@ func _process(delta):
 				TachyonDims.buylim - TachyonDims.DimPurchase[k] % TachyonDims.buylim)),
 			TachyonDims.dimcost(k+1).multiply(min(max(buyable, 1),
 				TachyonDims.buylim - TachyonDims.DimPurchase[k] % TachyonDims.buylim)
-			).to_string()
+			).to_string().replace(".00", "").replace(";00", "")
 		]
 		
 		i.get_node("N&M/Name").text = "%s Tachyon Dimension" % Globals.ordinal(k+1)
@@ -121,17 +118,6 @@ func _process(delta):
 				i.modulate.a = 1.0
 				i.get_node("N&M/Multiplier").show()
 		
-		if Input.is_action_pressed("BuyTD%d" % (k+1)):
-			if Input.is_action_pressed("BuyOne"):
-				TachyonDims.buy_one(k+1)
-			else:
-				TachyonDims.buy_until_mult(k+1, true)
-	
-	if Input.is_action_pressed("BuyMax"):
-		for i in 8:
-			TachyonDims.buy_max(i+1)
-		TachyonDims.buy_max_tspeed()
-	
 	if Globals.Challenge == 20:
 		%TopButtons/Timespeed.disabled = true
 		%TopButtons/Timespeed/BuyMax.disabled = true
@@ -224,8 +210,6 @@ func _process(delta):
 				TachyonDims.rewindBoost().\
 				divide(TachyonDims.RewindMult).to_string(), Globals.ordinal(8)
 			]
-		if Input.is_action_pressed("Rewind"):
-			TachyonDims.rewind()
 	
 	%Prestiges/GaButton.text = "Reset your Dimensions and\n" + \
 	"Time Dilation to boost the power\nof Timespeed upgrades"
@@ -327,32 +311,8 @@ func _process(delta):
 		%Prestiges/GaButton.disabled = true
 		%Prestiges/GaButton.text = "Tachyon Galaxies disabled\n(Permanence Challenge %s)" % \
 		Globals.int_to_string(7)
-	%Prestiges/Reset.visible = (Globals.Challenge in [14, 18, 19]) and \
+	%Prestiges/Reset.visible = (Globals.Challenge in [14, 16, 18, 19]) and \
 	TachyonDims.TDilation > -3
-	
-	#if not Input.is_action_pressed("ToggleAB"):
-		#for i in range(8, 0, -1):
-			#if Input.is_action_pressed("BuyTD%d" % i) or BuyMax:
-				#if Input.is_action_pressed("BuyOne") and not BuyMax:
-					#buydim(i, 1)
-				#elif dims[i].get_node("Buy/Progress").value >= \
-				#dims[i].get_node("Buy/Progress").max_value:
-					#buydim(i, 0)
-					#if BuyMax:
-						#buydim(i, 1e9)
-		#if Input.is_action_pressed("BuyTSpeed") or BuyMax:
-			#if tspcost().less(Currencies.Tachyons.AMOUNT):
-				#buytspeed(not Input.is_action_pressed("BuyOne") or BuyMax)
-	#BuyMax = Input.is_action_pressed("BuyMax")
-	#if Input.is_action_pressed("Dilate"):
-		#if not %Prestiges/DiButton.disabled:
-			#dilate()
-	#if Input.is_action_pressed("Galaxy"):
-		#if not %Prestiges/GaButton.disabled:
-			#galaxy()
-	#if Input.is_action_pressed("BBang"):
-		#if $"BIG BANG".visible:
-			#Permanence()
 	
 	if Globals.Challenge == 10:
 		if %Prestiges/DiButton.material == null:

@@ -331,13 +331,15 @@ func _process(_delta):
 				panel.get_node("Enabled").text = "Disabled"
 			
 			if Globals.Achievemer.is_unlocked(5, 3):
-				panel.custom_minimum_size.x = 300
+				panel.custom_minimum_size.x = 200
+				panel.get_node("Label").text = "Timespeed"
 				panel.get_node("Label").anchor_right = 0.3
 				panel.get_node("Mode") .anchor_left  = 0.3
 				panel.get_node("Mode") .anchor_right = 0.7
 				panel.get_node("Interval").hide()
 			else:
 				panel.custom_minimum_size.x = 620
+				panel.get_node("Label").text = "Timespeed Autobuyer"
 				panel.get_node("Label").anchor_right = 0.2
 				panel.get_node("Mode") .anchor_right = 0.8
 				panel.get_node("Mode") .anchor_left  = 0.5
@@ -419,7 +421,7 @@ func _process(_delta):
 				Autobuyers.get_bit(Autobuyers.NormEnabled, i)
 			
 			if Autobuyers.TDBulk(i) == INF:
-				panel.custom_minimum_size.x = 250
+				panel.custom_minimum_size.x = 200
 				panel.get_node("Label").text = Globals.ordinal(i) + " TD"
 				panel.get_node("Label").anchor_right = 0.3
 				panel.get_node("Mode") .anchor_left  = 0.3

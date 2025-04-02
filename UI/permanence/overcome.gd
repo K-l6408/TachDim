@@ -72,7 +72,7 @@ func _process(delta):
 		get_theme_stylebox("enabled", "ButtonEtern"))
 		$upgrades/PasPP.text = "%s %s %s\n%s\n%s %s %s" % [
 			"Passively generate", Globals.percent_to_string(Permanence.PasPPBought / 20., 0), "of",
-			"your average PP gain", "over the last", Globals.int_to_string(10),
+			"your best PP gain over", "the last", Globals.int_to_string(10),
 			"Permanences."
 		]
 	else:
@@ -80,7 +80,7 @@ func _process(delta):
 		$upgrades/PasPP.disabled = Currencies.PermanencePts.AMOUNT.less(Permanence.paspp_cost())
 		$upgrades/PasPP.text = "%s %s %s\n%s\n%s %s %s\n\n%s %s\n%s %s %s" % [
 			"Passively generate", Globals.percent_to_string(Permanence.PasPPBought / 20., 0), "of",
-			"your average PP gain", "over the last", Globals.int_to_string(10),
+			"your best PP gain over", "the last", Globals.int_to_string(10),
 			"Permanences.", "Next:", Globals.percent_to_string((Permanence.PasPPBought + 1) / 20., 0),
 			"Cost:", Permanence.paspp_cost(), "PP"
 		]
@@ -91,8 +91,8 @@ func _process(delta):
 	$"holy shit".visible  = Globals.progressBL <  GL.Progression.Overcome
 	$upgrades.visible     = Globals.progressBL >= GL.Progression.Overcome
 	
-	# "BuyOne" is shift. ðis essentially makes ðe behavior "swappable"
-	if Permanence.overcome_upgrade_bought(1) != Input.is_action_pressed("BuyOne"):
+	# ðis essentially makes ðe behavior "swappable"
+	if Permanence.overcome_upgrade_bought(1) != Input.is_key_label_pressed(KEY_SHIFT):
 		$upgrades/TachMult.text = \
 		"Tachyon Dimensions\nget a multiplier\nbased on current Tachyon\namount.\n \nCurrently: ×%s" % \
 		Formulas.overcome_1().to_string()
@@ -101,7 +101,7 @@ func _process(delta):
 		"Tachyon Dimensions\nget a multiplier\nbased on current Tachyon\namount.\n \nCost: %s PP" % \
 		Globals.float_to_string(Permanence.OvercomeCosts[0], 0)
 	
-	if Permanence.overcome_upgrade_bought(2) != Input.is_action_pressed("BuyOne"):
+	if Permanence.overcome_upgrade_bought(2) != Input.is_key_label_pressed(KEY_SHIFT):
 		$upgrades/MaxDila.text = \
 		"Unlock the Buy Max Dilation\nAutobuyer mode."
 	else:
@@ -109,26 +109,30 @@ func _process(delta):
 		"\nUnlock the Buy Max Dilation\nAutobuyer mode.\n\n\nCost: %s PP" % \
 		Globals.float_to_string(Permanence.OvercomeCosts[1], 0)
 	
-	if Permanence.overcome_upgrade_bought(3) != Input.is_action_pressed("BuyOne"):
+	if Permanence.overcome_upgrade_bought(3) != Input.is_key_label_pressed(KEY_SHIFT):
 		$upgrades/GalStr.text = \
-		"All Galaxies are\n%s stronger." % Globals.percent_to_string(.4, 0)
+		"All Galaxies are\n%s stronger." % Globals.percent_to_string(.5, 0)
 	else:
 		$upgrades/GalStr.text = \
 		"\nAll Galaxies are\n%s stronger.\n\n\nCost: %s PP" % \
-		[Globals.percent_to_string(.4, 0), Globals.float_to_string(Permanence.OvercomeCosts[2], 0)]
+		[Globals.percent_to_string(.45, 0), Globals.float_to_string(Permanence.OvercomeCosts[2], 0)]
 	
-	if Permanence.overcome_upgrade_bought(4) != Input.is_action_pressed("BuyOne"):
-		$upgrades/EPForm.text = "Improve the PP gain formula\n" + \
-		"(log₂(x)/%s → log₂(x)/%s)" % [
-			Globals.int_to_string(1024), Globals.int_to_string(900)
+	if Permanence.overcome_upgrade_bought(4) != Input.is_key_label_pressed(KEY_SHIFT):
+		$upgrades/EPForm.text = "\n%s %s%s\n\n%s ^%s" % [
+			"Permanence Upgrade", Globals.int_to_string(9),
+			"'s\nformula is improved\nby Permanences.",
+			"Currently:",
+			Globals.float_to_string(Currencies.Permanences.AMOUNT.log2() ** 1.5)
 		]
 	else:
-		$upgrades/EPForm.text = "\nImprove the PP gain formula\n" + \
-		"(log₂(x)/%s → log₂(x)/%s)" % [
-			Globals.int_to_string(1024), Globals.int_to_string(900)
-		] + "\n\n\nCost: %s PP" % Globals.float_to_string(Permanence.OvercomeCosts[3], 0)
+		$upgrades/EPForm.text = "\n%s %s%s\n\n%s %s PP" % [
+			"Permanence Upgrade", Globals.int_to_string(9),
+			"'s\nformula is improved\nby Permanences.",
+			"Cost:",
+			Globals.float_to_string(Permanence.OvercomeCosts[3], 0)
+		]
 	
-	if Permanence.overcome_upgrade_bought(5) != Input.is_action_pressed("BuyOne"):
+	if Permanence.overcome_upgrade_bought(5) != Input.is_key_label_pressed(KEY_SHIFT):
 		$upgrades/DilaBoost.text = \
 		"Improve the Dilation\nmultiplier further.\n\n(×%s → ×%s)" % [
 			Globals.float_to_string(2.5, 1), Globals.float_to_string(3, 1)
@@ -140,7 +144,7 @@ func _process(delta):
 			Globals.float_to_string(Permanence.OvercomeCosts[4], 0)
 		]
 	
-	if Permanence.overcome_upgrade_bought(6) != Input.is_action_pressed("BuyOne"):
+	if Permanence.overcome_upgrade_bought(6) != Input.is_key_label_pressed(KEY_SHIFT):
 		$upgrades/RewdFormula.text = \
 		"Improve the Rewind formula\nfrom being based on\nthe %s TD's logarithm" % \
 		Globals.ordinal(1) + "\nto using a very low exponent."
@@ -150,7 +154,7 @@ func _process(delta):
 		Globals.ordinal(1) + "\nto using a very low exponent.\n\nCost: %s PP" % \
 		Globals.float_to_string(Permanence.OvercomeCosts[5], 0)
 	
-	if Permanence.overcome_upgrade_bought(7) != Input.is_action_pressed("BuyOne"):
+	if Permanence.overcome_upgrade_bought(7) != Input.is_key_label_pressed(KEY_SHIFT):
 		var worst = 0
 		var worsttime = -1
 		for ch in 15:
@@ -171,7 +175,7 @@ func _process(delta):
 		"Tachyon Dimensions get a\nmultiplier based on your\nslowest Challenge." + \
 		"\n\n\nCost: %s PP" % Globals.float_to_string(Permanence.OvercomeCosts[6], 0)
 	
-	if Permanence.overcome_upgrade_bought(8) != Input.is_action_pressed("BuyOne"):
+	if Permanence.overcome_upgrade_bought(8) != Input.is_key_label_pressed(KEY_SHIFT):
 		$upgrades/PasEter.text = \
 		"\nGain Permanences passively\nbased on your fastest\nPermanence." + \
 		"\n\nCurrently: %s/sec" % \
@@ -181,7 +185,7 @@ func _process(delta):
 		"\nGain Permanences passively\nbased on your fastest\nPermanence." + \
 		"\n\nCost: %s PP" % Globals.float_to_string(Permanence.OvercomeCosts[7], 0)
 	
-	if Permanence.overcome_upgrade_bought(9) != Input.is_action_pressed("BuyOne"):
+	if Permanence.overcome_upgrade_bought(9) != Input.is_key_label_pressed(KEY_SHIFT):
 		$upgrades/EterMult.text = \
 		"\nTachyon Dimensions get a\nmultiplier based on\nPermanences." + \
 		"\n\nCurrently: ×%s" % Formulas.overcome_9().to_string()

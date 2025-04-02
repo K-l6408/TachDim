@@ -1,0 +1,32 @@
+, .			/ L1 R1 : switch tabs
+, . + shift / L2 R2 : switch subtabs
+
+←↑↓→ / d-pad		: switch focus 
+
+1-8 				: buy t.dims (A)
+1-8 + 		shift	: singles    (B)
+1-8 + alt			: switch autobuyers on/off (X)
+1-8 + alt + shift	: switch autobuyer modes   (Y)
+
+A					: pause/resume autobuyers
+
+M					: buy max tds
+M + shift			: buy max pds
+M + ctrl			: buy max sds
+
+L					: dilation
+R					: rewind
+G					: tachyon galaxy
+
+B					: big bang
+
+D					: duplicantes galaxy
+
+T					: transcendence
+Þ					: buy þeorems
+
+N					: enter/leave annihilation
+
+E					: existence
+W					: pause/resume wormhole(s)
+S					: pause/resume scripter

@@ -5,7 +5,7 @@ func _process(_delta):
 		$Permanence.hide()
 	else:
 		$Permanence.show()
-		setup_table($Permanence, Globals.last10etern, ["PP", "Permanences"])
+		setup_table($Permanence, Globals.last10etern, ["PP", "Perm."])
 	
 	if Globals.last10bless.is_empty():
 		$Permanence.anchor_left  = 0.5
@@ -32,19 +32,19 @@ func setup_table(node, data, currencies):
 		0:
 			button.text = "Currently showing\nPrestige currency"
 			row1e.text = currencies[0]
-			row1s.text = currencies[0] + "/sec"
+			row1s.text = currencies[0] + "/min"
 		1:
 			button.text = "Currently showing\nPrestige amount"
 			row1e.text = currencies[1]
-			row1s.text = currencies[1] + "/sec"
+			row1s.text = currencies[1] + "/min"
 		2:
 			button.text = "Currently showing\nResources"
 			row1e.text = currencies[0]
 			row1s.text = currencies[1]
 		3:
 			button.text = "Currently showing\nResource gain rate"
-			row1e.text = currencies[0] + "/sec"
-			row1s.text = currencies[1] + "/sec"
+			row1e.text = currencies[0] + "/min"
+			row1s.text = currencies[1] + "/min"
 	
 	var tt = 0
 	var te = largenum.new(0)
@@ -65,7 +65,7 @@ func setup_table(node, data, currencies):
 			1:
 				value = e.amount
 			3:
-				value = e.currency.divide(e.time)
+				value = e.currency.divide(e.time / 60)
 		table.get_child(i*4+6).text = \
 		value.to_string().trim_suffix(".00").trim_suffix(";00") + " " + \
 		row1e.text
@@ -76,9 +76,9 @@ func setup_table(node, data, currencies):
 		var value : largenum
 		match button.status:
 			0:
-				value = e.currency.divide(e.time)
+				value = e.currency.divide(e.time / 60)
 			1, 3:
-				value = e.amount.divide(e.time)
+				value = e.amount.divide(e.time / 60)
 			2:
 				value = e.amount
 		table.get_child(i*4+7).text = \

@@ -218,6 +218,7 @@ func _to_string() -> String:
 		return "Infinite"
 	
 	match Globals.display:
+		GL.DisplayMode.Blind: return ""
 		GL.DisplayMode.Scientific:
 			if exponent == -INF:
 				return "0.00"
@@ -232,7 +233,7 @@ func _to_string() -> String:
 					l/10**floor(log(l)/GL.LOG10),
 					floor(log(l)/GL.LOG10)
 				]
-			elif m >= 9.95:
+			elif m >= 9.995:
 				l = ceil(l)
 				m = 1
 			return "%.2fe%.0f" % [m*sign, floor(l)]
@@ -243,7 +244,7 @@ func _to_string() -> String:
 			var m = 1000 ** (l - floor(l))
 			if abs(to_float()) < 1e3 and abs(to_float()) > 0.009:
 				return "%.2f" % to_float()
-			if m > 999.95:
+			if m > 999.995:
 				l = ceil(l)
 				m = 1
 			if l*3 >= 1e5:
@@ -257,7 +258,7 @@ func _to_string() -> String:
 			var m = 1000 ** (l - floor(l))
 			if abs(to_float()) < 1e3:
 				return "%.2f" % to_float()
-			if m > 999.95:
+			if m > 999.995:
 				l = ceil(l)
 				m = 1
 			return "%.2f %s" % [m*sign, largenum.standard(l-1)]
@@ -279,7 +280,7 @@ func _to_string() -> String:
 				return "%.2f" % to_float()
 			var s = ""
 			var alpha = "abcdefghijklmnopqrstuvwxyz"
-			if m > 999.95:
+			if m > 999.995:
 				l = ceil(l)
 				m = 1
 			var k = ceil(fmod(l, 3) - 0.9999999)
@@ -325,7 +326,7 @@ func _to_string() -> String:
 		GL.DisplayMode.sitelen_pona:
 			var l = log10() / 2
 			var m = 100 ** fmod(l, 1)
-			if m > 99.95:
+			if m > 99.995:
 				l = ceil(l)
 				m = 1
 			if l >= 1e4:

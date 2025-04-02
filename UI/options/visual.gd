@@ -22,10 +22,14 @@ func save_anim_settings():
 
 func load_anim_settings(current : int):
 	var mask = 1
-	for i in %AnimOptions.get_children():
+	var setting = 0
+	for k in %AnimOptions.get_child_count():
+		var i = %AnimOptions.get_child(k)
 		if not i is CheckButton: continue
 		i.button_pressed = current & mask
+		change_anim_opt(i.button_pressed, setting)
 		mask <<= 1
+		setting += 1
 
 func _ready():
 	for i in GL.DisplayMode.keys():

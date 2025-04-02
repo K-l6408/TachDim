@@ -14,6 +14,7 @@ extends Control
 func _ready() -> void:
 	for i in range(1, len(dims)):
 		dims[i].get_node("Buy").connect("pressed", PermaDims.buydim.bind(i))
+	$BuyMax.connect("pressed", PermaDims.buymax)
 
 func _process(delta):
 	for k in range(1, len(dims)):
@@ -43,13 +44,20 @@ func _process(delta):
 	
 	for i in 8:
 		dims[i+1].get_node("N&M/Name").text = \
-		"%s Eternity Dimension" % Globals.ordinal(i+1)
-		dims[PermaDims.DimsUnlocked + 1].get_node("N&M/Multiplier").show()
-		if i != 8:
-			if PermaDims.DimAmount[i].exponent == -INF:
+		"%s Permanence Dimension" % Globals.ordinal(i+1)
+		dims[i+1].get_node("N&M/Multiplier").show()
+		dims[i+1].get_node("N&M/Multiplier").text = "×%s" % \
+		PermaDims.Multipliers[i].to_string()
+		if i != 7:
+			if PermaDims.DimAmount[i+1].exponent == -INF:
 				dims[i+1].get_node("A&G/Growth").hide()
 			else:
 				dims[i+1].get_node("A&G/Growth").show()
+				dims[i+1].get_node("A&G/Growth").text = "(+%s)" % \
+				Globals.percent_to_string(
+					PermaDims.Multipliers[i+1].multiply(PermaDims.DimAmount[i+1]).\
+					divide(PermaDims.DimAmount[i]).to_float()
+				)
 	
 	if PermaDims.DimsUnlocked < 8:
 		dims[PermaDims.DimsUnlocked + 1].get_node("A&G/Growth").hide()
@@ -87,5 +95,5 @@ func _process(delta):
 	
 	if Globals.ECCompleted(2):
 		%Important.text += " | Timespeed: [/font_size]%s[font_size=10]/sec" % \
-		Globals.float_to_string(Formulas.ec2_reward())
+		(Formulas.ec2_reward().to_string())
 	

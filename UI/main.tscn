@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
 [ext_resource type="Script" uid="uid://bdj8ecxuylviy" path="res://UI/boundlessness/resetbutton.gd" id="8_x0h36"]
 [ext_resource type="PackedScene" uid="uid://cbherf2m8xvad" path="res://UI/permanence/overcome.tscn" id="9_ug0mq"]
-[ext_resource type="PackedScene" uid="uid://d1v3rvuka8dmn" path="res://UI/challenges/eternity.tscn" id="10_s4e3g"]
+[ext_resource type="PackedScene" uid="uid://d1v3rvuka8dmn" path="res://UI/challenges/permanence.tscn" id="10_s4e3g"]
 [ext_resource type="PackedScene" uid="uid://damsts43cifm8" path="res://UI/statistics/statistics.tscn" id="10_whf7c"]
 [ext_resource type="PackedScene" uid="uid://b7ilo43kpte1u" path="res://UI/dimensions/space.tscn" id="11_m4fhr"]
 [ext_resource type="PackedScene" uid="uid://ccgn0cmks56jk" path="res://UI/debug/debug.tscn" id="11_t3vch"]
@@ -316,6 +316,7 @@ layout_mode = 2
 split_offset = 150
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="VSplitContainer/HSplitContainer"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 horizontal_scroll_mode = 0
 
@@ -442,7 +443,7 @@ layout_mode = 2
 
 [node name="PermanenceButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Permanence"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(30, 0)
+custom_minimum_size = Vector2(30, 40)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -452,10 +453,12 @@ offset_top = 5.0
 offset_right = -7.0
 offset_bottom = -5.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"ButtonEtern"
 text = "Big Bang for
 1.75e115 PP
 (1.24e114 PP/s)"
+autowrap_mode = 2
 
 [node name="Dupl" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
@@ -481,14 +484,13 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="PDunlock" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
-visible = false
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 mouse_filter = 2
 
 [node name="PDButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/PDunlock"]
-custom_minimum_size = Vector2(30, 0)
+custom_minimum_size = Vector2(30, 50)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -498,11 +500,13 @@ offset_top = 5.0
 offset_right = -7.0
 offset_bottom = -5.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"ButtonEtern"
 disabled = true
 text = "Reach 1e2000 TC to
 unlock a new
 Eternity Dimension."
+autowrap_mode = 2
 
 [node name="Boundlessness" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
@@ -510,7 +514,7 @@ custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
 [node name="BoundlessButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness"]
-custom_minimum_size = Vector2(30, 0)
+custom_minimum_size = Vector2(30, 40)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -601,7 +605,7 @@ metadata/_tab_index = 2
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Eternity Challenges" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("10_s4e3g")]
+[node name="Permanence Challenges" parent="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Challenges" instance=ExtResource("10_s4e3g")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1

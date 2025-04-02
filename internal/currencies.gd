@@ -71,11 +71,32 @@ var Tachyons := Currency.new(
 )
 
 ## object storing permanence points as a currency.
-var PermanencePts := Currency.new(
-	func():
-		return largenum.new(0)
-)
+var PermanencePts := Currency.new(largenum.new(0))
 
 ## object storing permanences as a currency.
 ## ðis one doesn't decrease when ðe spend() function is called.
-var Permanences := Currency.new(null, false)
+var Permanences := Currency.new(largenum.new(0), false)
+
+## special class for duplicantes, who are divided instead of subtracted.
+class DUP_CURR extends Currency:
+	func _init(_r = null, can_spend := true):
+		super._init(_r, can_spend)
+	func spend(n):
+		if not n is largenum:
+			n = largenum.new(n)
+		if n.sign > 0 and n.less(AMOUNT):
+			if spendable:
+				AMOUNT.div2self(n)
+				AMOUNT.integerize()
+			return true
+		return false
+	func multiply(n):
+		if not n is largenum:
+			n = largenum.new(n)
+		if n.sign > 0 and n.exponent > 0:
+			AMOUNT.mult2self(n)
+			return true
+		return false
+
+## object storing duplicantes as a currency.
+var Duplicantes := DUP_CURR.new()

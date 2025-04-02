@@ -32,7 +32,7 @@ class PrestigeData:
 
 enum DisplayMode {
 	Scientific, Engineering, Logarithm, Letters, Dozenal, Strict_Logarithm, Standard,
-	Roman, toki_pona, sitelen_pona, Canonical_toki_pona, Evil, Factorial
+	Roman, toki_pona, sitelen_pona, Canonical_toki_pona, Evil, Factorial, Blind
 }
 enum Progression {
 	None, Dilation, Galaxy, Permanence, Overcome, Duplicantes, Boundlessness
@@ -116,13 +116,13 @@ var ECTimes = [
 ]
 
 var ECTargets = [
-	largenum.two_to_the(2048), largenum.ten_to_the(1500),
-	largenum.ten_to_the(9000), largenum.ten_to_the(10500),
+	largenum.two_to_the(2048), largenum.ten_to_the(700),
+	largenum.ten_to_the(5000), largenum.ten_to_the(10500),
 	largenum.ten_to_the(7000), largenum.ten_to_the(13000),
 	largenum.ten_to_the(5000)
 ]
 const ECUnlocks = [
-	1500,  1900,  10000, 12500,
+	1200,  1900,  6000, 12000,
 	22222, 33333, 70000, 80000
 ]
 
@@ -168,6 +168,7 @@ func boundlessnessreset():
 
 func int_to_string(i:int) -> String:
 	match display:
+		DisplayMode.Blind: return ""
 		DisplayMode.Strict_Logarithm:
 			return "e" + String.num(log(i) / LOG10, 2).replace("inf", "∞")
 		_:
@@ -175,6 +176,7 @@ func int_to_string(i:int) -> String:
 
 func float_to_string(f:float, precision:=2, force_dec:=false) -> String:
 	match display:
+		DisplayMode.Blind: return ""
 		DisplayMode.Canonical_toki_pona:
 			if f < 1: return "ala"
 			if f < 2: return "wan"
@@ -292,6 +294,7 @@ func pad_zeroes(s:String, howmany := 2):
 
 func percent_to_string(f:float, precision:=2) -> String:
 	match display:
+		DisplayMode.Blind: return "%"
 		DisplayMode.toki_pona:
 			return float_to_string(f * 100) + " pi ale"
 		DisplayMode.sitelen_pona:
@@ -307,6 +310,7 @@ func percent_to_string(f:float, precision:=2) -> String:
 
 func ordinal(n:int) -> String:
 	match display:
+		DisplayMode.Blind: return "th"
 		DisplayMode.toki_pona, DisplayMode.Canonical_toki_pona:
 			return "nanpa " + int_to_string(n)
 		DisplayMode.sitelen_pona:
