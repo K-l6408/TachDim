@@ -126,13 +126,13 @@ func _process(_delta):
 			Currencies.Tachyons.AMOUNT.log10() < \
 			PermaDims.TachLogReq[PermaDims.DimsUnlocked]
 		)
-	%Resources/PDunlock/PDButton.text = \
-	"Reach %s\u00a0TC to unlock a new %s Dimension." % [
-		largenum.ten_to_the(PermaDims.TachLogReq[
-			PermaDims.DimsUnlocked]
-		).to_string(),
-		"type of" if PermaDims.DimsUnlocked == 0 else "Permanence"
-	]
+		%Resources/PDunlock/PDButton.text = \
+		"Reach %s\u00a0TC to unlock a new %s Dimension." % [
+			largenum.ten_to_the(PermaDims.TachLogReq[
+				PermaDims.DimsUnlocked]
+			).to_string(),
+			"type of" if PermaDims.DimsUnlocked == 0 else "Permanence"
+		]
 	%Resources/PDunlock/PDButton.size.y = 0
 	%Resources/PDunlock/PDButton.size.y += 10
 	%Resources/PDunlock/PDButton.position.y = 5
@@ -147,21 +147,22 @@ func _process(_delta):
 		%Resources/Boundlessness/BoundlessButton.text = "Reach %s\nPermanence Points" % \
 		largenum.two_to_the(1024)
 	else:
-		%Resources/Boundlessness/BoundlessButton.disabled = false
+		%Resources/Boundlessness/BoundlessButton.disabled = true#false
 		%Resources/Boundlessness/BoundlessButton.text = "%s\n%s %s %s\n%s" % [
 			"Other lands await…",
-			"gain", Formulas.bpgained().to_string()\
-			.trim_suffix(".00").trim_suffix(";00"), "BP",
-			(
-				"(%s%s %s)" % (
-					[
-						"next at ", Formulas.next_bp(), "PP"
-					] if Formulas.bpgained().to_float() < 100 else [
-						"", Formulas.bpgained().divide(Globals.boundTime),
-						"BP/s"
-					]
-				)
-			)
+			"gain", Formulas.tpgained().to_string()\
+			.trim_suffix(".00").trim_suffix(";00"), "TP",
+			"congrats  yoy r win !"
+			#(
+				#"(%s%s %s)" % (
+					#[
+						#"next at ", Formulas.next_tp(), "PP"
+					#] if Formulas.tpgained().to_float() < 100 else [
+						#"", Formulas.tpgained().divide(Globals.boundTime),
+						#"TP/s"
+					#]
+				#)
+			#)
 		]
 	
 	%Resources/PP.visible = (Globals.progress >= GL.Progression.Permanence)

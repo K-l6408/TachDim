@@ -76,22 +76,7 @@ func _process(delta):
 		"You're gaining", PermaDims.TSperS.to_string(), "Time Shards per second."
 	]
 	
-	if Globals.ECCompleted(6):
-		%Label.text = "%s ×%s. %s ×%s %s %s %s ×%s %s %s %s." % [
-			"The requirement for free Timespeed upgrades starts at",
-			Globals.float_to_string(1.1), "It jumps to",
-			Globals.float_to_string(1.75), "at", Globals.int_to_string(308),
-			"upgrades and to", Globals.float_to_string(4.375), "at",
-			Globals.int_to_string(4000), "upgrades"
-		]
-	else:
-		%Label.text = "%s ×%s. %s ×%s %s %s %s ×%s %s %s %s." % [
-			"The requirement for free Timespeed upgrades starts at",
-			Globals.float_to_string(1.1), "It jumps to",
-			Globals.float_to_string(2), "at", Globals.int_to_string(308),
-			"upgrades and to", Globals.float_to_string(5), "at",
-			Globals.int_to_string(4000), "upgrades"
-		]
+	%Label.text = ""
 	
 	if Globals.ECCompleted(2):
 		%Important.text += " | Timespeed: [/font_size]%s[font_size=10]/sec" % \

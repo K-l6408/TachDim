@@ -314,7 +314,7 @@ func _to_string() -> String:
 				return largenum.roman(m)
 			var S = ""
 			if l >= 1e18:
-				S = largenum.roman(floor(log(l) / GL.LOG10)) + "/" + largenum.roman(fmod(l, 1000))
+				S = largenum.roman(floor(log(l) / GL.LOG10)) + "/" + largenum.roman(fmod(l, 1000)) + "/"
 			elif l <= 5:
 				for i in floor(l):
 					S += "/"

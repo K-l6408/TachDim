@@ -52,7 +52,7 @@ func _process(_delta):
 	] + "\n(Currently: ×%s)" % Globals.int_to_string(Formulas.ec1_reward())
 	
 	$Chal/lenges/EC2/Condition.text = \
-	"Tachyon Dimension and Tickspeed cost scaling starts immediately."
+	"Tachyon Dimension and Timespeed cost scaling starts immediately."
 	$Chal/lenges/EC2/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
 	Globals.ECTargets[1].to_string() + \
@@ -77,7 +77,7 @@ func _process(_delta):
 	
 	$Chal/lenges/EC5/Condition.text = \
 	"You cannot buy Timespeed Upgrades, but Permanence Dimensions are raised ^%s." % \
-	Globals.float_to_string(1.1, 1)
+	Globals.float_to_string(2, 1)
 	$Chal/lenges/EC5/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
 	Globals.ECTargets[4].to_string() + \
@@ -88,10 +88,8 @@ func _process(_delta):
 	$Chal/lenges/EC6/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
 	Globals.ECTargets[5].to_string() + \
-	"\nReward: Decrease free Timespeed requirement after %s. (×%s → ×%s)" % [
-		Globals.int_to_string(308),
-		Globals.float_to_string(2), Globals.float_to_string(1.75)
-	]
+	"\nReward: Raise all Tachyon Dimension multipliers ^%s." % \
+		Globals.float_to_string(1.05)
 	
 	$Chal/lenges/EC7/Condition.text = \
 	"Tachyon Galaxies are disabled, but Time Dilation's multiplier is ×%s." % \

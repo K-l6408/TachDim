@@ -932,7 +932,7 @@ offset_top = 5.0
 offset_right = -133.0
 offset_bottom = 118.0
 grow_horizontal = 2
-text = "The Tachyon requirement for Eternitying is squared."
+text = "The Tachyon requirement for Big Banging is squared."
 
 [node name="Start" type="Button" parent="Chal/lenges/C15"]
 layout_mode = 1

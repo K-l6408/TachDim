@@ -139,14 +139,24 @@ func _process(delta):
 		%Progress.tooltip_text = "Pergrossage to "
 	else:
 		%Progress.tooltip_text = "Percentage to "
-	if Globals.Challenge <= 15:
-		%Progress.value = Currencies.Tachyons.AMOUNT.log2()
-		%Progress.max_value = logfinity
-		%Progress.tooltip_text += "Permanence"
-	else:
-		%Progress.value = Currencies.Tachyons.AMOUNT.log2()
+	
+	if Globals.Challenge > 15:
+		%Progress.value = TachyonDims.topTachyonsInPermanence.log2()
 		%Progress.max_value = Globals.ECTargets[Globals.Challenge - 16].log2()
 		%Progress.tooltip_text += "Challenge goal"
+	elif Globals.Overcame and PermaDims.DimsUnlocked < 8:
+		%Progress.value = TachyonDims.topTachyonsInPermanence.log10()
+		%Progress.max_value = PermaDims.TachLogReq[PermaDims.DimsUnlocked]
+		%Progress.tooltip_text += "unlocking a new "
+		if PermaDims.DimsUnlocked == 0:
+			%Progress.tooltip_text += "kind of"
+		else:
+			%Progress.tooltip_text += "Permanence"
+		%Progress.tooltip_text += " Dimension"
+	else:
+		%Progress.value = TachyonDims.topTachyonsInPermanence.log2()
+		%Progress.max_value = logfinity
+		%Progress.tooltip_text += "Permanence"
 	%Progress/Label.text = Globals.percent_to_string(%Progress.value / %Progress.max_value, 1)
 	%Progress/Label.add_theme_color_override("font_color", get_theme_color("font_color", "ProgressBar"))
 	rewindNode.visible = (TachyonDims.TDilation >= 5) or \
@@ -296,7 +306,7 @@ func _process(delta):
 		Globals.ordinal(
 			6 if (Globals.Challenge == 6 or Globals.Challenge == 16) else 8),
 		("" if TachyonDims.TGalaxies < TachyonDims.DistantScaling else 
-		"\nEvery Galaxy is more expensive after %s Galaxies" %
+		"\nEach Galaxy is more expensive after %s Galaxies" %
 		Globals.int_to_string(TachyonDims.DistantScaling))
 	]
 	

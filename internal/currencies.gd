@@ -49,11 +49,11 @@ class Currency:
 class Multiplier:
 	var power : largenum
 	var dims := 1
-	var is_power := false
-	func _init(_power : largenum, _dims := 1, _is_power := false):
+	var force_power = 0
+	func _init(_power : largenum, _dims := 1, _force_power = 0):
 		power    = _power
 		dims     = _dims
-		is_power = _is_power
+		force_power = _force_power
 
 ## object storing tachyons as a currency.
 var Tachyons := Currency.new(

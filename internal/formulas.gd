@@ -17,25 +17,25 @@ static func achievement_mult():
 		)
 	return largenum.new(1.05).power(Globals.Achievemer.achgot)
 
-static func bpgained():
-	var bpgain = largenum.two_to_the(3 * (
+static func tpgained():
+	var tpgain = largenum.two_to_the(3 * (
 			Currencies.PermanencePts.AMOUNT.log2() / 1024
 		 - 1))
 	
 	if "5×1" in Globals.Studies.purchased:
-		bpgain.mult2self(5)
+		tpgain.mult2self(5)
 	
-	if bpgain.to_float() < 1e10:
-		bpgain = largenum.new(floor(bpgain.to_float()))
+	if tpgain.to_float() < 1e10:
+		tpgain = largenum.new(floor(tpgain.to_float()))
 	
-	return bpgain
+	return tpgain
 
-static func next_bp():
+static func next_tp():
 	if "5×1" in Globals.Studies.purchased:
 		return largenum.two_to_the(
-			1024 * (bpgained().add(1).divide(5).log2() / 3 + 1)
+			1024 * (tpgained().add(1).divide(5).log2() / 3 + 1)
 		)
-	return largenum.two_to_the(1024 * (bpgained().add(1).log2() / 3 + 1))
+	return largenum.two_to_the(1024 * (tpgained().add(1).log2() / 3 + 1))
 
 static func overcome_1():
 	return Currencies.Tachyons.AMOUNT.power(0.01)
@@ -66,12 +66,16 @@ static func ec1_reward():
 	return m
 
 static func ec2_reward():
-	return TachyonDims.TSpeedBoost.power(
+	var default = TachyonDims.TSpeedBoost.power(
 		(TachyonDims.TSpeedCount + PermaDims.FreeTSpeed) * 0.01
 	)
+	if default.less(largenum.ten_to_the(100)):
+		return default
+	else:
+		return largenum.ten_to_the(100)
 
 static func dupli_no11():
-	return max(Globals.Duplicantes.add(9).log10() ** 4, 1)
+	return max(Globals.Duplicantes.log2() ** 2 * 3, 1)
 static func dupli_yes11():
 	if Globals.Duplicantes.exponent < 0:
 		return largenum.new(1)

@@ -32,15 +32,15 @@ func buy_chance():
 var intervUpgrades := 0
 var intervalCap :
 	get:
-		if "7×1" in Globals.Studies.purchased:
-			if "1×2" in Globals.Studies.purchased:
-				return 0.001
-			else:
-				return 0.005
-		if "1×2" in Globals.Studies.purchased:
-			return 0.01
-		else:
-			return 0.05
+		#if "7×1" in Globals.Studies.purchased:
+			#if "1×2" in Globals.Studies.purchased:
+				#return 0.001
+			#else:
+				#return 0.005
+		#if "1×2" in Globals.Studies.purchased:
+			#return 0.01
+		#else:
+		return 0.01
 func interval():
 	var interv = 0.9 ** intervUpgrades
 	if "1×2" in Globals.Studies.purchased:
@@ -69,7 +69,7 @@ func buy_limit():
 var maxGalaxies := 0
 func buy_maxgal():
 	if Currencies.PermanencePts.spend(
-		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies))
+		largenum.ten_to_the(140 + maxGalaxies * (50 + 5 * maxGalaxies))
 	):
 		maxGalaxies += 1
 		%MaxGal.disabled = true
@@ -148,7 +148,7 @@ func _process(delta):
 		%Limit.text = "Duplicantes limit:\n%s (capped)" % \
 		limit().to_string()
 	else:
-		%Limit.text = "Square Duplicantes\nlimit (%s → %s)\nCost: %s EP" % [
+		%Limit.text = "Square Duplicantes limit\n(%s → %s)\nCost: %s EP" % [
 			limit().to_string(), limit().power(2).to_string(),
 			limit_cost().to_string().replace(".00", "")
 		]
@@ -156,10 +156,10 @@ func _process(delta):
 	
 	%MaxGal.text = "Max Duplicantes\nGalaxies: %s\nCost: %s EP" % [
 		Globals.int_to_string(maxGalaxies),
-		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies)).to_string().replace(".00", "")
+		largenum.ten_to_the(140 + maxGalaxies * (50 + 5 * maxGalaxies)).to_string().replace(".00", "")
 	]
 	%MaxGal.disabled = Currencies.PermanencePts.AMOUNT.less(
-		largenum.ten_to_the(140 + maxGalaxies * (60 + 5 * maxGalaxies))
+		largenum.ten_to_the(140 + maxGalaxies * (50 + 5 * maxGalaxies))
 	)
 	
 	if "4×1" in Globals.Studies.purchased and "4×2" in Globals.Studies.purchased:

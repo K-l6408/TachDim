@@ -118,12 +118,12 @@ var ECTimes = [
 var ECTargets = [
 	largenum.two_to_the(2048), largenum.ten_to_the(700),
 	largenum.ten_to_the(5000), largenum.ten_to_the(10500),
-	largenum.ten_to_the(7000), largenum.ten_to_the(13000),
+	largenum.ten_to_the(7200), largenum.ten_to_the(14000),
 	largenum.ten_to_the(5000)
 ]
 const ECUnlocks = [
 	1200,  1900,  6000, 12000,
-	22222, 33333, 70000, 80000
+	16000, 33333, 60000, 80000
 ]
 
 func _process(delta):
@@ -155,7 +155,7 @@ func boundlessnessreset():
 	if Boundlessnesses.to_float() < 9:
 		Permanence.TSpScBought = 0
 		Permanence.TDmScBought = 0
-		Permanence.PasEPBought = 0
+		Permanence.PasPPBought = 0
 	PermaDims.reset()
 	DupHandler.reset()
 	TachyonDims.reset(2)
@@ -275,7 +275,7 @@ func format_time(f:float) -> String:
 		pad_zeroes(int_to_string(int(f / 60) % 60)),
 		pad_zeroes(int_to_string(int(f) % 60))]
 	if f >=    1:		return "%ss" % float_to_string(f)
-	return "%sms" % int_to_string(f * 1000)
+	return "%sms" % float_to_string(f * 1000)
 
 func pad_zeroes(s:String, howmany := 2):
 	var num = 0
@@ -304,7 +304,7 @@ func percent_to_string(f:float, precision:=2) -> String:
 		DisplayMode.Dozenal:
 			return float_to_string(f * 144, precision) + "pß"
 		DisplayMode.Roman:
-			return float_to_string(f * 100) + "÷C"
+			return float_to_string(f * 100) + "/C"
 		_:
 			return float_to_string(f * 100, precision) + "%"
 

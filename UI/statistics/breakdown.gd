@@ -20,7 +20,10 @@ var text := {
 	"Challenge 9" : "⁈ Ⅸ",
 	"Challenge 14": "⁈ ⅩⅣ",
 	"Base gain from Tachyons": "Ψ→",
-	"Permanence Challenge 1 reward" : "Δ⁈ Ⅰ",
+	"Permanence Challenge 1 reward" : "Δ⁈ Ⅰ→",
+	"Permanence Challenge 3" : "Δ⁈ Ⅲ",
+	"Permanence Challenge 6 reward" : "Δ⁈ Ⅵ→",
+	"Repeatable ×2 multiplier" : " ×2"
 }
 var colors := {
 	"Timespeed": Color("#4D5E42"),
@@ -33,6 +36,8 @@ var colors := {
 	"Challenge 9" : Color("#B03737"),
 	"Challenge 14": Color("#B03737"),
 	"Base gain from Tachyons": Color("#63DD17"),
+	"Permanence Challenge 3": Color("#B341E0"),
+	"Permanence Challenge 6 reward": Color("#B341E0"),
 }
 
 func _process(_delta):
@@ -204,53 +209,70 @@ func process_tachyon_mults():
 					item.visible = true
 			_:
 				if mult is Currencies.Multiplier:
-					if not mult.is_power:
-						slice.size_flags_stretch_ratio = \
-						mult.power.power(min(mult.dims, active_dimensions)).log2() \
-						/ base.log2()
-						var item : TreeItem
-						if tree_root.get_child_count() < HOW_MANY:
-							item = $Tachyons/Tree.create_item(tree_root)
-						else: item = tree_root.get_child(HOW_MANY - 1)
-						if mult.dims > 1:
-							if key in divisors:
-								item.set_text(0, "%s: %s (/%s on %s Dimension%s → /%s)" % [
-									Globals.percent_to_string(
-										mult.power.log2() / base.log2()\
-										 * min(mult.dims, active_dimensions)
-									), key, mult.power.power(-1).to_string(),
-									Globals.int_to_string(min(mult.dims, active_dimensions)),
-									"" if min(mult.dims, active_dimensions) == 1 else "s",
-									mult.power.power(-min(mult.dims, active_dimensions)).to_string()
-								])
-							else:
-								item.set_text(0, "%s: %s (×%s on %s Dimension%s → ×%s)" % [
-									Globals.percent_to_string(
-										mult.power.log2() / base.log2()\
-										 * min(mult.dims, active_dimensions)
-									), key, mult.power.to_string(),
-									Globals.int_to_string(min(mult.dims, active_dimensions)),
-									"" if min(mult.dims, active_dimensions) == 1 else "s",
-									mult.power.power(min(mult.dims, active_dimensions)).to_string()
-								])
+					slice.size_flags_stretch_ratio = \
+					mult.power.power(min(mult.dims, active_dimensions)).log2() \
+					/ base.log2()
+					var item : TreeItem
+					if tree_root.get_child_count() < HOW_MANY:
+						item = $Tachyons/Tree.create_item(tree_root)
+					else: item = tree_root.get_child(HOW_MANY - 1)
+					if mult.dims > 1:
+						if key in divisors:
+							item.set_text(0, "%s: %s (/%s on %s Dimension%s → /%s)" % [
+								Globals.percent_to_string(
+									mult.power.log2() / base.log2()\
+									 * min(mult.dims, active_dimensions)
+								), key, mult.power.power(-1).to_string(),
+								Globals.int_to_string(min(mult.dims, active_dimensions)),
+								"" if min(mult.dims, active_dimensions) == 1 else "s",
+								mult.power.power(-min(mult.dims, active_dimensions)).to_string()
+							])
 						else:
+							item.set_text(0, "%s: %s (×%s on %s Dimension%s → ×%s)" % [
+								Globals.percent_to_string(
+									mult.power.log2() / base.log2()\
+									 * min(mult.dims, active_dimensions)
+								), key, mult.power.to_string(),
+								Globals.int_to_string(min(mult.dims, active_dimensions)),
+								"" if min(mult.dims, active_dimensions) == 1 else "s",
+								mult.power.power(min(mult.dims, active_dimensions)).to_string()
+							])
+					else:
+						if mult.force_power == 0:
 							item.set_text(0, "%s: %s (×%s)" % [
 								Globals.percent_to_string(
 									mult.power.log2() / base.log2()\
 									 * min(mult.dims, active_dimensions)
 								), key, mult.power.to_string()
 							])
-						if mult.power.log2() == 0:
-							slice.hide()
-							item.visible = false
-						elif abs(
-							base.log2() / mult.power.power(mult.dims).log2()
-						) > 1e5:
-							slice.hide()
 						else:
-							slice.show()
-							item.visible = true
+							item.set_text(0, "%s: %s (^%s → ×%s)" % [
+								Globals.percent_to_string(
+									mult.power.log2() / base.log2()
+								), key,
+								Globals.float_to_string(mult.force_power),
+								mult.power.to_string()
+							])
+					if mult.power.log2() == 0:
+						slice.hide()
+						item.visible = false
+					elif abs(
+						base.log2() / mult.power.power(mult.dims).log2()
+					) > 1e5:
+						slice.hide()
+					else:
+						slice.show()
+						item.visible = true
 				if mult is Dictionary:
+					if mult.size() == 0:
+						if tree_root.get_child_count() == HOW_MANY:
+							tree_root.remove_child(tree_root.get_child(HOW_MANY - 1))
+						if tree_root.get_child_count() > HOW_MANY:
+							tree_root.get_child(HOW_MANY - 1).visible = false
+							tree_root.get_child(HOW_MANY - 1).set_text(0, "")
+						slice.visible = false
+						continue
+					
 					var total = largenum.new(1)
 					for i in mult:
 						total.mult2self(mult[i].power.power(min(mult[i].dims, active_dimensions)))
@@ -297,6 +319,8 @@ func process_tachyon_mults():
 							])
 					
 					if total.log2() == 0:
+						if tree_root.get_child_count() >= HOW_MANY:
+							tree_root.get_child(HOW_MANY - 1).visible = false
 						slice.hide()
 						item.visible = false
 					elif abs(base.log2() / total.log2()) > 1e5:
@@ -307,7 +331,7 @@ func process_tachyon_mults():
 				if mult == null:
 					if tree_root.get_child_count() >= HOW_MANY:
 						tree_root.get_child(HOW_MANY - 1).visible = false
-					slice.hide()
+					slice.visible = false
 		slice.size_flags_stretch_ratio = abs(slice.size_flags_stretch_ratio)
 	
 	$Tachyons/Slices/Div.visible = (divs.log2() > 0)
@@ -346,9 +370,9 @@ func process_pp_mults():
 					else:
 						base.mult2self(j.power)
 		if i is Array:
-			var k = 0
+			#var k = 0
 			for j in i:
-				k += 1
+				#k += 1
 				if j is Currencies.Multiplier:
 					if j.power.exponent < 0:
 						divs.mult2self(j.power.power(-1))
@@ -399,30 +423,36 @@ func process_pp_mults():
 		#match key:
 			#_:
 		if mult is Currencies.Multiplier:
-			if not mult.is_power:
-				slice.size_flags_stretch_ratio = \
-				mult.power.log2() \
-				/ base.log2()
-				var item : TreeItem
-				if tree_root.get_child_count() < HOW_MANY:
-					item = $"Permanence Points/Tree".create_item(tree_root)
-				else: item = tree_root.get_child(HOW_MANY - 1)
-				
+			slice.size_flags_stretch_ratio = \
+			mult.power.log2() \
+			/ base.log2()
+			var item : TreeItem
+			if tree_root.get_child_count() < HOW_MANY:
+				item = $"Permanence Points/Tree".create_item(tree_root)
+			else: item = tree_root.get_child(HOW_MANY - 1)
+			
+			if mult.force_power == 0:
 				item.set_text(0, "%s: %s (×%s)" % [
 					Globals.percent_to_string(
 						mult.power.log2() / base.log2()
 					), key, mult.power.to_string()
 				])
-				if mult.power.log2() == 0:
-					slice.hide()
-					item.visible = false
-				elif abs(
-					base.log2() / mult.power.power(mult.dims).log2()
-				) > 1e5:
-					slice.hide()
-				else:
-					slice.show()
-					item.visible = true
+			else:
+				item.set_text(0, "%s: %s (^%s)" % [
+					Globals.percent_to_string(
+						mult.power.log2() / base.log2()
+					), key, Globals.float_to_string(mult.force_power)
+				])
+			if mult.power.log2() == 0:
+				slice.hide()
+				item.visible = false
+			elif abs(
+				base.log2() / mult.power.power(mult.dims).log2()
+			) > 1e5:
+				slice.hide()
+			else:
+				slice.show()
+				item.visible = true
 		if mult is Dictionary:
 			var total = largenum.new(1)
 			for i in mult:

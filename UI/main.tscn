@@ -154,22 +154,6 @@ tracks/5/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_sfx5g"]
-resource_name = "boundless"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:zoom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.8, 1.2, 1.5, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.01, 0.01), Vector2(0.01, 0.01), Vector2(0.01, 1), Vector2(0.01, 1), Vector2(1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_a3cka"]
 resource_name = "overcome"
 length = 2.0
@@ -217,12 +201,28 @@ tracks/2/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_sfx5g"]
+resource_name = "transcend"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.8, 1.2, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.01, 0.01), Vector2(0.01, 0.01), Vector2(0.01, 1), Vector2(0.01, 1), Vector2(1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8dv4p"]
 _data = {
 &"RESET": SubResource("Animation_wxu8m"),
 &"bang": SubResource("Animation_m0sop"),
-&"boundless": SubResource("Animation_sfx5g"),
-&"overcome": SubResource("Animation_a3cka")
+&"overcome": SubResource("Animation_a3cka"),
+&"transcend": SubResource("Animation_sfx5g")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sl1qb"]
@@ -337,12 +337,9 @@ layout_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Tachyons"]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -13.0
-offset_bottom = 15.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
@@ -351,6 +348,7 @@ Tachyons[/center]"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+vertical_alignment = 1
 
 [node name="Rewind" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true

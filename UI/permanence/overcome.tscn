@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://he7tbtpxfjwr" path="res://UI/permanence/overcome.gd" id="1_b4j68"]
 
 [node name="Overcome Eternity" type="Control"]
+custom_minimum_size = Vector2(578, 452)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

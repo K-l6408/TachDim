@@ -13,7 +13,7 @@ var Multipliers : Array[largenum] = [
 
 const TachLogReq := [
 	1000,  1400,  4000,  9400,
-	18000, 26000, 42000, 80000.903
+	18000, 26000, 42000, 80000.90309
 ]
 
 var DimsUnlocked := 0
@@ -34,7 +34,7 @@ var TreshMult    : float :
 				#return 1.75
 			#return 2.0
 		if Globals.ECCompleted(5):
-			return 1.9
+			return 1.95
 		return 2.0
 
 func dimcost(which):
@@ -42,7 +42,7 @@ func dimcost(which):
 		4, 6, 15, 30, 45, 70, 130, 200
 	][which-1]
 	var increase = [
-		3, 5, 8, 15, 20, 25, 30, 35
+		3, 5, 8, 15, 25, 30, 35, 40
 	][which-1]
 	return largenum.ten_to_the(start + increase * DimPurchase[which-1])
 
@@ -86,9 +86,6 @@ func _process(delta: float) -> void:
 		
 		mult.mult2self(largenum.new(buymult[i-1]).power(DimPurchase[i-1]))
 		
-		if Globals.Challenge == 20:
-			mult.pow2self(1.1)
-		
 		if Globals.progressBL >= GL.Progression.Duplicantes:
 			mult.mult2self(Formulas.duplicantes())
 		
@@ -97,6 +94,9 @@ func _process(delta: float) -> void:
 		
 		if Globals.ECCompleted(2) and i <= 4:
 			mult.mult2self(Formulas.ec2_reward())
+		
+		if Globals.Challenge == 20:
+			mult.pow2self(2)
 		
 		Multipliers[i-1] = mult
 		

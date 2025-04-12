@@ -15,7 +15,7 @@ var TDilation := 0
 var TGalaxies := 0
 
 var DistantScaling :
-	get: return 75
+	get: return 50
 
 var TSpeedBoost :
 	get:
@@ -353,7 +353,7 @@ func galacost():
 		Cost -= 10
 	if TGalaxies > DistantScaling:
 		var the = (TGalaxies - DistantScaling)
-		Cost += the * (the + 1)
+		Cost += the * (the + 1) / 2 * 5
 	if TGalaxies > 600:
 		var the = (TGalaxies - 600)
 		Cost *= 1.002 ** the
@@ -535,10 +535,10 @@ func _process(delta):
 		"Challenge 14": null,
 		"Achievements": {},
 		"Permanence Upgrades": {},
-		"Overcome Time Upgrades": {}
+		"Overcome Time Upgrades": {},
+		"Permanence Challenge 3": null,
+		"Permanence Challenge 6 reward": null,
 	}
-	if Globals.Challenge == 18:
-		Currencies.Tachyons.mults["Permanence Challenge 3"] = {}
 	Currencies.Tachyons.mults["Space Studies"] = {}
 	
 	for i in range(DimsUnlocked, 0, -1):
@@ -700,14 +700,23 @@ func _process(delta):
 		# POWER EFFECTS GO HERE
 		
 		if Globals.Challenge == 18 and i != latest_purchased:
-			Currencies.Tachyons.mults["Permanence Challenge 3"][i] = \
-			Currencies.Multiplier.new(multiplier.power(-0.8), 1, true)
+			if Currencies.Tachyons.mults["Permanence Challenge 3"] == null:
+				Currencies.Tachyons.mults["Permanence Challenge 3"] = \
+				Currencies.Multiplier.new(largenum.new(1), 1, 0.2)
+			
+			Currencies.Tachyons.mults["Permanence Challenge 3"].\
+				power.mult2self(multiplier.power(-0.8))
 			multiplier.pow2self(0.2)
+		
+		if Globals.ECCompleted(6):
+			Currencies.Tachyons.mults["Permanence Challenge 6 reward"] = \
+			Currencies.Multiplier.new(multiplier.power(0.05), 1, 1.05)
+			multiplier.pow2self(1.05)
 		
 		if "6×1" in Globals.Studies.purchased:
 			if not Currencies.Tachyons.mults["Space Studies"].has("6×1"):
 				Currencies.Tachyons.mults["Space Studies"]["6×1"] = \
-				Currencies.Multiplier.new(multiplier.power(0.02), 8, true)
+				Currencies.Multiplier.new(multiplier.power(0.02), 1, 1.02)
 			multiplier.pow2self(1.02)
 		
 		#if i != 8:
