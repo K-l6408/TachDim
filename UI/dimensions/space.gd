@@ -118,7 +118,7 @@ func _process(delta):
 		if "Space2" in Globals.Studies.purchased:
 			mult.mult2self(Formulas.study_space2())
 		if "Space3" in Globals.Studies.purchased:
-			mult.mult2self(max(Globals.DupHandler.dupGalaxies, 1))
+			mult.mult2self(max(Duplicantes.dupGalaxies, 1))
 		
 		dims[i].get_node("N&M/Multiplier").text = "×%s" % mult.to_string()
 		dims[i].get_node("N&M/Multiplier").show()

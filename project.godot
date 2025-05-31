@@ -27,6 +27,7 @@ Autobuyers="*res://internal/autobuyers.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 PermaDims="*res://internal/dimensions/permanence.gd"
 Hotkeys="*res://internal/hotkeys.gd"
+Duplicantes="*res://internal/duplicantes.gd"
 
 [display]
 

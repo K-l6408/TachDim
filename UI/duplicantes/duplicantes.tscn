@@ -20,6 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 4
 split_offset = 478
+dragging_enabled = false
 dragger_visibility = 1
 
 [node name="DUpgrades" type="VBoxContainer" parent="HSplitContainer"]
@@ -118,14 +119,9 @@ text = "Reset Duplicantes and Duplicantes Upgrades
 for a Duplicantes Galaxy
 (Requires 1.80e308 Duplicantes
 and maxed out upgrades)"
+autowrap_mode = 2
 
 [node name="Label" type="Label" parent="HSplitContainer/DupLimit"]
 layout_mode = 2
-text = "You can only keep 5 Duplicantes Galaxies on Eternities."
+text = "You can only keep 5 Duplicantes Galaxies after Big Bangs."
 horizontal_alignment = 1
-
-[connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Chance" to="." method="buy_chance"]
-[connection signal="pressed" from="HSplitContainer/DUpgrades/HBoxContainer/Interval" to="." method="buy_interval"]
-[connection signal="pressed" from="HSplitContainer/DupLimit/HBoxContainer/Limit" to="." method="buy_limit"]
-[connection signal="pressed" from="HSplitContainer/DupLimit/HBoxContainer/MaxGal" to="." method="buy_maxgal"]
-[connection signal="pressed" from="HSplitContainer/DupLimit/Galaxy" to="." method="buy_galaxy"]

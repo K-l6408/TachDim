@@ -52,12 +52,10 @@ var Overcame :
 		return progressBL >= Progression.Overcome
 
 var TachTotal := largenum.new(10)
-var TachTotalBL     := largenum.new(10)
+var TachTotalBL := largenum.new(10)
 
 var BoundlessPts    := largenum.new(0)
 var Boundlessnesses := largenum.new(0)
-
-var Duplicantes := largenum.new(1)
 
 var Challenge := 0
 var CompletedChallenges := 0
@@ -69,7 +67,6 @@ func ECCompleted(which):		return (CompletedECs >> (which - 1)) & 1
 var SDHandler  : Control
 var Achievemer : Control
 var VisualSett : Control
-var DupHandler : Control
 var Studies    : Control
 
 var NotifHandler : Control
@@ -157,7 +154,7 @@ func boundlessnessreset():
 		Permanence.TDmScBought = 0
 		Permanence.PasPPBought = 0
 	PermaDims.reset()
-	DupHandler.reset()
+	Duplicantes.reset()
 	TachyonDims.reset(2)
 	SDHandler.boundlessed()
 	TachTotalBL = largenum.new(Currencies.Tachyons.AMOUNT)

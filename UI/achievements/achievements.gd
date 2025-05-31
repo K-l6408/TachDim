@@ -91,7 +91,7 @@ func achreqs(r, c):
 			5: return "Have at least %s of all TDs except for the %s." % [
 				Globals.float_to_string(10**10), Globals.ordinal(8)
 			] + "\n(Reward: All TDs are %s stronger.)" % Globals.percent_to_string(0.1)
-			6: return "Unlock all TD autobuyers."
+			6: return "Unlock all TD autobuyers, as well as the Timespeed autobuyer."
 			7: return "Buy a single %s TD when you have over %s of them." % [
 				Globals.ordinal(1), largenum.ten_to_the(100).to_string()
 			] + "\n(Reward: The %s TD is %s stronger.)" % [Globals.ordinal(1), Globals.percent_to_string(0.5)]
@@ -101,7 +101,7 @@ func achreqs(r, c):
 			1: return "Get any TD multiplier above %s." % largenum.ten_to_the(40)
 			2: return "Big Bang %s times." % Globals.int_to_string(10)
 			3: return "Keep the game closed for more than %s." % Globals.format_time(3600*6)
-			4: return "Big Bang without any %s Dimensions." % Globals.ordinal(8) + \
+			4: return "Big Bang without any %s Dimensions,\noutside of a Challenge." % Globals.ordinal(8) + \
 			"\n(Reward: TDs %s-%s are %s stronger.)" % [
 				Globals.int_to_string(1), Globals.int_to_string(7),
 				Globals.percent_to_string(.5)
@@ -145,8 +145,8 @@ func achreqs(r, c):
 			6: return "Complete Challenge %s in %s or less." % [
 				Globals.int_to_string(2), Globals.format_time(30)
 			] + "\n(Reward: Tachyon Dimensions are stronger" + \
-			"\nin the first %s each Permanence.)\n(Currently: ×%s)" % [
-				Globals.format_time(120), Globals.float_to_string(Formulas.achievement_56())
+			"\nin the first %s each Permanence.)\n(%s)" % [
+				Globals.format_time(120), Formulas.achievement_56().to_string()
 			]
 			7: return "Complete a Permanence Challenge."
 			8: return "Get the Overcome upgrade that powers up Galaxies."
@@ -287,22 +287,22 @@ func _process(_delta):
 		if not Currencies.Tachyons.AMOUNT.less(largenum.ten_to_the(9999).multiply(9)):
 			set_unlocked(6, 1)
 	if not is_unlocked(6, 5):
-		if not Globals.Duplicantes.less(Currencies.PermanencePts.AMOUNT):
+		if not Currencies.Duplicantes.AMOUNT.less(Currencies.PermanencePts.AMOUNT):
 			set_unlocked(6, 5)
 	if not is_unlocked(6, 7):
-		if Globals.DupHandler.chance >= 50:
+		if Duplicantes.chance >= 50:
 			set_unlocked(6, 7)
 	if not is_unlocked(6, 8):
-		if Globals.DupHandler.limitUpgrades >= 6:
+		if Duplicantes.limitUpgrades >= 6:
 			set_unlocked(6, 8)
 	if not is_unlocked(7, 1):
-		if Globals.DupHandler.dupGalaxies >= 1:
+		if Duplicantes.dupGalaxies >= 1:
 			set_unlocked(7, 1)
 	if not is_unlocked(7, 2):
 		if Globals.ECTimes[3-1] <= 30 and Globals.ECTimes[3-1] > 0:
 			set_unlocked(7, 2)
 	if not is_unlocked(7, 7):
-		if Globals.DupHandler.dupGalaxies >= 3:
+		if Duplicantes.dupGalaxies >= 3:
 			set_unlocked(7, 7)
 	if not is_unlocked(7, 8):
 		if Globals.progress >= GL.Progression.Boundlessness:

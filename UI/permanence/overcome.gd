@@ -28,10 +28,10 @@ func _process(delta):
 		$upgrades/TSpSc.disabled = true
 		$upgrades/TSpSc.add_theme_stylebox_override("disabled", \
 		get_theme_stylebox("enabled", "ButtonEtern"))
-		$upgrades/TSpSc.text = "%s\n%s %s.\n\n%s ×%s" % [
+		$upgrades/TSpSc.text = "%s\n%s %s.\n\nCurrently: ×%s" % [
 			"Reduce Timespeed Upgrade",
 			"cost scaling after", largenum.two_to_the(1024).to_string(),
-			"Currently:", Globals.int_to_string(10 - Permanence.TSpScBought),
+			Globals.int_to_string(10 - Permanence.TSpScBought),
 		]
 	else:
 		$upgrades/TSpSc.remove_theme_stylebox_override("disabled")
@@ -94,7 +94,7 @@ func _process(delta):
 	# ðis essentially makes ðe behavior "swappable"
 	if Permanence.overcome_upgrade_bought(1) != Input.is_key_label_pressed(KEY_SHIFT):
 		$upgrades/TachMult.text = \
-		"Tachyon Dimensions\nget a multiplier\nbased on current Tachyon\namount.\n \nCurrently: ×%s" % \
+		"Tachyon Dimensions\nget a multiplier\nbased on current Tachyon\namount.\n \n%s" % \
 		Formulas.overcome_1().to_string()
 	else:
 		$upgrades/TachMult.text = \
@@ -118,11 +118,10 @@ func _process(delta):
 		[Globals.percent_to_string(.45, 0), Globals.float_to_string(Permanence.OvercomeCosts[2], 0)]
 	
 	if Permanence.overcome_upgrade_bought(4) != Input.is_key_label_pressed(KEY_SHIFT):
-		$upgrades/EPForm.text = "\n%s %s%s\n\n%s ^%s" % [
+		$upgrades/EPForm.text = "\n%s %s%s\n\n%s" % [
 			"Permanence Upgrade", Globals.int_to_string(9),
 			"'s\nformula is improved\nby Permanences.",
-			"Currently:",
-			Globals.float_to_string(Currencies.Permanences.AMOUNT.log2() ** 1.5)
+			Formulas.overcome_4().to_string()
 		]
 	else:
 		$upgrades/EPForm.text = "\n%s %s%s\n\n%s %s PP" % [
@@ -163,8 +162,8 @@ func _process(delta):
 				worst     =                    1 + ch
 		$upgrades/ChallengeMult.text = \
 		"Tachyon Dimensions get a\nmultiplier based on your\nslowest Challenge." + \
-		"\n\nCurrently: ×%s\n(%s)" % [
-			Globals.float_to_string(Formulas.overcome_7()),
+		"\n\n%s\n(%s)" % [
+			Formulas.overcome_7().to_string(),
 			"Not all Challenges completed" if (worsttime < 0 or worst == 0) else \
 			"Challenge %s: %s" % [
 				Globals.int_to_string(worst), Globals.format_time(worsttime)
@@ -188,7 +187,7 @@ func _process(delta):
 	if Permanence.overcome_upgrade_bought(9) != Input.is_key_label_pressed(KEY_SHIFT):
 		$upgrades/EterMult.text = \
 		"\nTachyon Dimensions get a\nmultiplier based on\nPermanences." + \
-		"\n\nCurrently: ×%s" % Formulas.overcome_9().to_string()
+		"\n\n%s" % Formulas.overcome_9().to_string()
 	else:
 		$upgrades/EterMult.text = \
 		"\nTachyon Dimensions get a\nmultiplier based on\nPermanences." + \

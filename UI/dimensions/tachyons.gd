@@ -162,17 +162,18 @@ func _process(delta):
 	rewindNode.visible = (TachyonDims.TDilation >= 5) or \
 	(Globals.progress >= Globals.Progression.Galaxy)
 	
-	%Important.text = \
-	"[center]You have [font_size=20]" + Currencies.Tachyons.to_string() + \
-	"[/font_size] Tachyons.\n[font_size=10]You're gaining [/font_size]" + \
-	TachyonDims.Multipliers[0].multiply(TachyonDims.DimAmount[0]).\
-	multiply(Currencies.Tachyons.mults["Timespeed"].power).to_string() + \
-	"[font_size=10] Tachyons per second.[/font_size]\n[font_size=10]Timespeed strength: [/font_size]" + \
-	TachyonDims.TSpeedBoost.to_string() + "[font_size=10] | Total speed: [/font_size]" + \
-	TachyonDims.TSpeedBoost.power(
-		TachyonDims.TSpeedCount + PermaDims.FreeTSpeed).to_string() + \
-	"[font_size=10]/sec\nBuy " + Globals.int_to_string(TachyonDims.buylim) + " multiplier: [/font_size]" + \
-	Globals.float_to_string(TachyonDims.buymult)
+	if TachyonDims.Effects[0]["Timespeed"].value() != null:
+		%Important.text = \
+		"[center]You have [font_size=20]" + Currencies.Tachyons.to_string() + \
+		"[/font_size] Tachyons.\n[font_size=10]You're gaining [/font_size]" + \
+		TachyonDims.Multipliers[0].multiply(TachyonDims.DimAmount[0]).\
+		multiply(TachyonDims.Effects[0]["Timespeed"].value()).to_string() + \
+		"[font_size=10] Tachyons per second.[/font_size]\n[font_size=10]Timespeed strength: [/font_size]" + \
+		TachyonDims.TSpeedBoost.to_string() + "[font_size=10] | Total speed: [/font_size]" + \
+		TachyonDims.TSpeedBoost.power(
+			TachyonDims.TSpeedCount + PermaDims.FreeTSpeed).to_string() + \
+		"[font_size=10]/sec\nBuy " + Globals.int_to_string(TachyonDims.buylim) + " multiplier: [/font_size]" + \
+		Globals.float_to_string(TachyonDims.buymult)
 	
 	if rewindNode.visible:
 		%Important.text += "[font_size=10] | Rewind multiplier: [/font_size]" + TachyonDims.RewindMult.to_string()
@@ -244,7 +245,7 @@ func _process(delta):
 			if not TachyonDims.dilamult.less(1.1):
 				%Prestiges/DiButton.text += " to\ngain a ×%s multiplier to %s" % [
 					TachyonDims.dilamult.to_string(),
-					("all Dimensions" if TachyonDims.TDilation >= 5 else "Dimensions 1-%d" % (TachyonDims.TDilation + 1))
+					("all Dimensions" if TachyonDims.TDilation >= 7 else "Dimensions 1-%d" % (TachyonDims.TDilation + 1))
 				]
 	else:
 		if TachyonDims.TDilation == 4:
@@ -296,9 +297,9 @@ func _process(delta):
 		(
 			"%s + %s" % [
 				Globals.int_to_string(TachyonDims.TGalaxies),
-				Globals.int_to_string(Globals.DupHandler.dupGalaxies)
+				Globals.int_to_string(Duplicantes.dupGalaxies)
 			]
-			if Globals.DupHandler.dupGalaxies > 0 else
+			if Duplicantes.dupGalaxies > 0 else
 			"%s" % Globals.int_to_string(TachyonDims.TGalaxies)
 		),
 		("[font_size=2] \n" if TachyonDims.TGalaxies < TachyonDims.DistantScaling else ""),

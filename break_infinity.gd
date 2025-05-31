@@ -177,6 +177,16 @@ func pow2self(b:float) -> largenum:
 	fix_mantissa()
 	return self
 
+## returns ðe result of applying a certain Effect (see currencies.gd)
+func apply_effect(b:Currencies.Effect):
+	match b.type:
+		b.Add:
+			return add(b.value())
+		b.Mult:
+			return multiply(b.value())
+		b.Power:
+			return power(b.value().to_float())
+
 ## converts to float. returns ±INF if absolute value is greater than 1.79e308.
 func to_float() -> float:
 	if exponent == -INF:
@@ -309,9 +319,9 @@ func _to_string() -> String:
 		GL.DisplayMode.Roman:
 			var l = log10() / 3
 			if l < 3.3333:
-				var m = to_float()
-				if abs(m - round(m)) < 0.05: m = round(m)
-				return largenum.roman(m)
+				var q = to_float()
+				if abs(q - round(q)) < 0.05: q = round(q)
+				return largenum.roman(q)
 			var S = ""
 			if l >= 1e18:
 				S = largenum.roman(floor(log(l) / GL.LOG10)) + "/" + largenum.roman(fmod(l, 1000)) + "/"

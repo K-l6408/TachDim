@@ -211,12 +211,12 @@ func saveF(file : String = saveFilePath):
 		DATA["ECtimes"] = Globals.ECTimes
 	
 	if Globals.progress >= GL.Progression.Duplicantes:
-		DATA["duplicantes"]  = Globals.Duplicantes.to_bytes()
-		DATA["dupe chance"]  = Globals.DupHandler.chance
-		DATA["dupe interv"]  = Globals.DupHandler.intervUpgrades
-		DATA["dupe limit"]   = Globals.DupHandler.limitUpgrades
-		DATA["dupe max gal"] = Globals.DupHandler.maxGalaxies
-		DATA["dupe galaxies"]= Globals.DupHandler.dupGalaxies
+		DATA["duplicantes"]  = Currencies.Duplicantes.AMOUNT.to_bytes()
+		DATA["dupe chance"]  = Duplicantes.chance
+		DATA["dupe interv"]  = Duplicantes.intervUpgrades
+		DATA["dupe limit"]   = Duplicantes.limitUpgrades
+		DATA["dupe max gal"] = Duplicantes.maxGalaxies
+		DATA["dupe galaxies"]= Duplicantes.dupGalaxies
 	
 	if Globals.progress >= GL.Progression.Boundlessness:
 		DATA["bln progress"] = Globals.progressBL
@@ -436,13 +436,13 @@ func loadF(file : String = saveFilePath):
 				Globals.ECTimes.append(-1)
 	
 	if Globals.progress >= GL.Progression.Duplicantes:
-		Globals.Duplicantes.from_bytes(DATA["duplicantes"])
-		Globals.DupHandler.chance = DATA["dupe chance"]
-		Globals.DupHandler.intervUpgrades = DATA["dupe interv"]
-		Globals.DupHandler.limitUpgrades = DATA["dupe limit"]
+		Currencies.Duplicantes.AMOUNT.from_bytes(DATA["duplicantes"])
+		Duplicantes.chance = DATA["dupe chance"]
+		Duplicantes.intervUpgrades = DATA["dupe interv"]
+		Duplicantes.limitUpgrades = DATA["dupe limit"]
 		if DATA.has("dupe galaxies"):
-			Globals.DupHandler.maxGalaxies = DATA["dupe max gal"]
-			Globals.DupHandler.dupGalaxies = DATA["dupe galaxies"]
+			Duplicantes.maxGalaxies = DATA["dupe max gal"]
+			Duplicantes.dupGalaxies = DATA["dupe galaxies"]
 	
 	if Globals.progress >= GL.Progression.Boundlessness:
 		Globals.Boundlessnesses.from_bytes(DATA["bln-es"])
@@ -526,12 +526,12 @@ func gameReset():
 		-1, -1, -1,
 		-1
 	]
-	Globals.Duplicantes  = largenum.new(0)
-	Globals.DupHandler.chance = 1
-	Globals.DupHandler.intervUpgrades = 0
-	Globals.DupHandler.limitUpgrades  = 0
-	Globals.DupHandler.maxGalaxies    = 0
-	Globals.DupHandler.dupGalaxies    = 0
+	Currencies.Duplicantes.AMOUNT = largenum.new(0)
+	Duplicantes.chance = 1
+	Duplicantes.intervUpgrades = 0
+	Duplicantes.limitUpgrades  = 0
+	Duplicantes.maxGalaxies    = 0
+	Duplicantes.dupGalaxies    = 0
 	Globals.Boundlessnesses = largenum.new(0)
 	Globals.BoundlessPts = largenum.new(0)
 	Globals.TachTotalBL  = largenum.new(Globals.TachTotal)

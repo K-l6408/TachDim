@@ -45,183 +45,183 @@ func on_reset():
 		for i in sds:
 			buy_study("SD%d" % (i + 1))
 
-func _ready():
-	for tree in %Trees.get_children():
-		for i in tree.get_children():
-			if i is Study:
-				i.connect("pressed", buy_study.bind(i))
-
-func _process(_delta):
-	$ST/Buy/TC.text = " Cost: %s TC " % \
-	theorem_cost_tc().to_string().replace(".00e", "e").replace("00e", "e")\
-	.trim_suffix(".00").trim_suffix(";00")
-	$ST/Buy/TC.disabled = not theorem_cost_tc().less(Currencies.Tachyons.AMOUNT)
-	
-	$ST/Buy/EP.text = " Cost: %s EP " % \
-	theorem_cost_ep().to_string().replace(".00e", "e").replace(";00e", "e")\
-	.trim_suffix(".00").trim_suffix(";00")
-	$ST/Buy/EP.disabled = not theorem_cost_ep().less(Currencies.PermanencePts.AMOUNT)
-	
-	$ST/Buy/BP.text = " Cost: %s BP " % \
-	theorem_cost_bp().to_string().trim_suffix(".00").trim_suffix(";00")
-	$ST/Buy/BP.disabled = not theorem_cost_bp().less(Globals.BoundlessPts)
-	
-	$ST/Buy/Max.disabled = (
-		$ST/Buy/TC.disabled and $ST/Buy/EP.disabled and $ST/Buy/BP.disabled
-	)
-	
-	$ST/Amount.text = "%s Space Theorem%s" % [
-		ST.to_string().trim_suffix(".00").trim_suffix(";00"),
-		"" if ST.exponent == 0 else "s"
-	]
-	
-	
-	%StudyTree1/SD1.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
-	Globals.ordinal(1)
-	
-	%StudyTree1/DupM.text = "\nImprove Duplicantes'\nmultiplier.\n\n" + \
-	"Currently: ×%s\n\n" % \
-	Formulas.dupli_yes11().divide(Formulas.dupli_no11()).to_string()
-	
-	%StudyTree1/DupSp.text = \
-	"\n\nYou gain Duplicantes\n%s times faster.\n\n\n" % Globals.int_to_string(5)
-	
-	%StudyTree1/Dila2Eter.text = "\nTime Dilation boosts\nEternity gain.\n\n" + \
-	"Currently: ×%s\n\n" % Globals.int_to_string(max(TachyonDims.TDilation, 1))
-	
-	%StudyTree1/EtMultPow.text = "\nMultipliers based on\nPermanencePts are\n" + \
-	"raised ^%s.\n\n\n" % Globals.float_to_string(4)
-	
-	%StudyTree1/TGScaling.text = "\n%s\n%s %s %s\n%s %s.\n\n\n" % [
-		"Tachyon Galaxy costs", "scale by", Globals.int_to_string(55),
-		"Dimensions", "instead of", Globals.int_to_string(60)
-	]
-	
-	%StudyTree1/TG2EP.text = \
-	"\nEach Tachyon Galaxy\ngives a ×%s\nmultiplier to\nEP gained.\n\n" % \
-	Globals.float_to_string(1.5, 1)
-	
-	%StudyTree1/SD2.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
-	Globals.ordinal(2)
-	
-	for i in %StudyTree1.get_children():
-		if i is Study:
-			i.text += "Cost: %s Space Theorem%s" % [
-				Globals.int_to_string(i.cost),
-				"" if i.cost == 1 else "s"
-			]
-	
-	%StudyTree2.visible = ("SD2" in purchased)
-	
-	%StudyTree2/DGIn.text = \
-	"\nDuplicantes Galaxies\ndon't reset\nInterval upgrades.\n\n\n"
-	
-	%StudyTree2/DGCh.text = \
-	"\nDuplicantes Galaxies\ndon't reset\nChance upgrades.\n\n\n"
-	
-	%StudyTree2/EPx.text = \
-	"\n\nGain ×%s more\nBoundlessness Points.\n\n\n" % \
-	Globals.int_to_string(5)
-	
-	
-	%StudyTree2/Tach1.text = \
-	"Dimensional Rewind\naffects all other\n" + \
-	"Tachyon Dimensions with\nreduced effect.\n(Currently: ×%s)\n\n" % \
-	Formulas.study_tach1()
-	
-	%StudyTree2/Tach2.text = "\nThe boost from\nTime Dilation gets\n" + \
-	"an additional ×%s\nmultiplier.\n\n" % Globals.float_to_string(2)
-	
-	%StudyTree2/Tach3.text = "Tachyon Dimensions are\nmultiplied by " + \
-	"the\ncurrent amount\nof Duplicantes.\n(Currently: ×%s)\n\n" % (
-		Globals.Duplicantes.to_string()
-		if Globals.Duplicantes.exponent >= 0
-		else Globals.float_to_string(1)
-	)
-	
-	
-	%StudyTree2/Time1.text = \
-	"Dimensional Rewind\naffects the first " + \
-	Globals.int_to_string(4) + \
-	"\nEternity Dimensions with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
-	Formulas.study_time1().to_string()
-	
-	%StudyTree2/Time2.text = \
-	"\nTime Dilation affects\nEternity Dimensions with" + \
-	"\nreduced effect.\n(Currently: ×%s)\n\n" % \
-	Formulas.study_time2().to_string()
-	
-	%StudyTree2/Time3.text = "The Duplicantes\nmultiplier is raised" + \
-	"\nto a power based on\nDuplicantes Galaxies.\n(Currently: ^%s)\n\n" % \
-	Globals.float_to_string(Formulas.study_time3())
-	
-	
-	%StudyTree2/Space1.text = \
-	"Dimensional Rewind\naffects the " + \
-	 Globals.ordinal(2) + \
-	"\nSpace Dimension with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
-	Formulas.study_space1().to_string()
-	
-	%StudyTree2/Space2.text = \
-	"\nTime Dilation affects\n" + \
-	"Space Dimensions with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
-	Formulas.study_space2().to_string()
-	
-	%StudyTree2/Space3.text = \
-	"Space Dimensions are\nmultiplied by your\nDuplcantes Galaxy\namount.\n(Currently: ×%s)\n\n" % \
-	Globals.float_to_string(max(Globals.DupHandler.dupGalaxies, 1))
-	
-	
-	%"StudyTree2/TD^".text = \
-	"\nRaise Tachyon\nDimensions'\nmultipliers ^%s.\n\n\n" % \
-	Globals.float_to_string(1.02)
-	
-	%"StudyTree2/BPow+".text = \
-	"\nImprove Boundless\nPower's effect.\n\n" + \
-	"(^%s → ^%s)\n\n" % [
-		Globals.float_to_string(1./3., 3),
-		Globals.float_to_string(2./3., 3)
-	]
-	
-	%StudyTree2/SD3.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
-	Globals.ordinal(3)
-	
-	for i in %StudyTree2.get_children():
-		if i is Study:
-			i.text += "Cost: %s Space Theorem%s" % [
-				Globals.int_to_string(i.cost),
-				"" if i.cost == 1 else "s"
-			]
-	
-	%StudyTree3.visible = ("SD3" in purchased)
-	
-	%StudyTree3/DupIx.text = "\nReduce the\n" + \
-	"base Duplicantes\nInterval cap.\n(%s → %s)\n\n" % [
-		Globals.format_time(0.05),
-		Globals.format_time(0.005)
-	]
-	
-	%StudyTree3/Active1 .text = \
-	"Gain more BP\ndepending on how fast\n" + \
-	"your last %s\nBoundlessnesses were.\n(%s: ×%s)\n\n" % [
-		Globals.int_to_string(10),
-		"Capped" if Formulas.study_act1() == 50 else "Currently",
-		Globals.float_to_string(Formulas.study_act1())
-	]
-	
-	%StudyTree3/Passive1.text = \
-	"\n\nGain ×%s more\nBoundlessness Points.\n\n\n" % \
-	Globals.int_to_string(35)
-	
-	%StudyTree3/Idle1   .text = "NYI\n\n"
-	
-	for i in %StudyTree3.get_children():
-		if i is Study:
-			i.text += "Cost: %s Space Theorem%s" % [
-				Globals.int_to_string(i.cost),
-				"" if i.cost == 1 else "s"
-			]
-
+#func _ready():
+	#for tree in %Trees.get_children():
+		#for i in tree.get_children():
+			#if i is Study:
+				#i.connect("pressed", buy_study.bind(i))
+#
+#func _process(_delta):
+	#$ST/Buy/TC.text = " Cost: %s TC " % \
+	#theorem_cost_tc().to_string().replace(".00e", "e").replace("00e", "e")\
+	#.trim_suffix(".00").trim_suffix(";00")
+	#$ST/Buy/TC.disabled = not theorem_cost_tc().less(Currencies.Tachyons.AMOUNT)
+	#
+	#$ST/Buy/EP.text = " Cost: %s EP " % \
+	#theorem_cost_ep().to_string().replace(".00e", "e").replace(";00e", "e")\
+	#.trim_suffix(".00").trim_suffix(";00")
+	#$ST/Buy/EP.disabled = not theorem_cost_ep().less(Currencies.PermanencePts.AMOUNT)
+	#
+	#$ST/Buy/BP.text = " Cost: %s BP " % \
+	#theorem_cost_bp().to_string().trim_suffix(".00").trim_suffix(";00")
+	#$ST/Buy/BP.disabled = not theorem_cost_bp().less(Globals.BoundlessPts)
+	#
+	#$ST/Buy/Max.disabled = (
+		#$ST/Buy/TC.disabled and $ST/Buy/EP.disabled and $ST/Buy/BP.disabled
+	#)
+	#
+	#$ST/Amount.text = "%s Space Theorem%s" % [
+		#ST.to_string().trim_suffix(".00").trim_suffix(";00"),
+		#"" if ST.exponent == 0 else "s"
+	#]
+	#
+	#
+	#%StudyTree1/SD1.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
+	#Globals.ordinal(1)
+	#
+	#%StudyTree1/DupM.text = "\nImprove Duplicantes'\nmultiplier.\n\n" + \
+	#"Currently: ×%s\n\n" % \
+	#Formulas.dupli_yes11().divide(Formulas.dupli_no11()).to_string()
+	#
+	#%StudyTree1/DupSp.text = \
+	#"\n\nYou gain Duplicantes\n%s times faster.\n\n\n" % Globals.int_to_string(5)
+	#
+	#%StudyTree1/Dila2Eter.text = "\nTime Dilation boosts\nEternity gain.\n\n" + \
+	#"Currently: ×%s\n\n" % Globals.int_to_string(max(TachyonDims.TDilation, 1))
+	#
+	#%StudyTree1/EtMultPow.text = "\nMultipliers based on\nPermanencePts are\n" + \
+	#"raised ^%s.\n\n\n" % Globals.float_to_string(4)
+	#
+	#%StudyTree1/TGScaling.text = "\n%s\n%s %s %s\n%s %s.\n\n\n" % [
+		#"Tachyon Galaxy costs", "scale by", Globals.int_to_string(55),
+		#"Dimensions", "instead of", Globals.int_to_string(60)
+	#]
+	#
+	#%StudyTree1/TG2EP.text = \
+	#"\nEach Tachyon Galaxy\ngives a ×%s\nmultiplier to\nEP gained.\n\n" % \
+	#Globals.float_to_string(1.5, 1)
+	#
+	#%StudyTree1/SD2.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
+	#Globals.ordinal(2)
+	#
+	#for i in %StudyTree1.get_children():
+		#if i is Study:
+			#i.text += "Cost: %s Space Theorem%s" % [
+				#Globals.int_to_string(i.cost),
+				#"" if i.cost == 1 else "s"
+			#]
+	#
+	#%StudyTree2.visible = ("SD2" in purchased)
+	#
+	#%StudyTree2/DGIn.text = \
+	#"\nDuplicantes Galaxies\ndon't reset\nInterval upgrades.\n\n\n"
+	#
+	#%StudyTree2/DGCh.text = \
+	#"\nDuplicantes Galaxies\ndon't reset\nChance upgrades.\n\n\n"
+	#
+	#%StudyTree2/EPx.text = \
+	#"\n\nGain ×%s more\nBoundlessness Points.\n\n\n" % \
+	#Globals.int_to_string(5)
+	#
+	#
+	#%StudyTree2/Tach1.text = \
+	#"Dimensional Rewind\naffects all other\n" + \
+	#"Tachyon Dimensions with\nreduced effect.\n(Currently: ×%s)\n\n" % \
+	#Formulas.study_tach1()
+	#
+	#%StudyTree2/Tach2.text = "\nThe boost from\nTime Dilation gets\n" + \
+	#"an additional ×%s\nmultiplier.\n\n" % Globals.float_to_string(2)
+	#
+	#%StudyTree2/Tach3.text = "Tachyon Dimensions are\nmultiplied by " + \
+	#"the\ncurrent amount\nof Duplicantes.\n(Currently: ×%s)\n\n" % (
+		#Currencies.Duplicantes.AMOUNT.to_string()
+		#if Currencies.Duplicantes.AMOUNT.exponent >= 0
+		#else Globals.float_to_string(1)
+	#)
+	#
+	#
+	#%StudyTree2/Time1.text = \
+	#"Dimensional Rewind\naffects the first " + \
+	#Globals.int_to_string(4) + \
+	#"\nEternity Dimensions with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
+	#Formulas.study_time1().to_string()
+	#
+	#%StudyTree2/Time2.text = \
+	#"\nTime Dilation affects\nEternity Dimensions with" + \
+	#"\nreduced effect.\n(Currently: ×%s)\n\n" % \
+	#Formulas.study_time2().to_string()
+	#
+	#%StudyTree2/Time3.text = "The Duplicantes\nmultiplier is raised" + \
+	#"\nto a power based on\nDuplicantes Galaxies.\n(Currently: ^%s)\n\n" % \
+	#Globals.float_to_string(Formulas.study_time3())
+	#
+	#
+	#%StudyTree2/Space1.text = \
+	#"Dimensional Rewind\naffects the " + \
+	 #Globals.ordinal(2) + \
+	#"\nSpace Dimension with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
+	#Formulas.study_space1().to_string()
+	#
+	#%StudyTree2/Space2.text = \
+	#"\nTime Dilation affects\n" + \
+	#"Space Dimensions with\ngreatly reduced effect.\n(Currently: ×%s)\n\n" % \
+	#Formulas.study_space2().to_string()
+	#
+	#%StudyTree2/Space3.text = \
+	#"Space Dimensions are\nmultiplied by your\nDuplcantes Galaxy\namount.\n(Currently: ×%s)\n\n" % \
+	#Globals.float_to_string(max(Globals.DupHandler.dupGalaxies, 1))
+	#
+	#
+	#%"StudyTree2/TD^".text = \
+	#"\nRaise Tachyon\nDimensions'\nmultipliers ^%s.\n\n\n" % \
+	#Globals.float_to_string(1.02)
+	#
+	#%"StudyTree2/BPow+".text = \
+	#"\nImprove Boundless\nPower's effect.\n\n" + \
+	#"(^%s → ^%s)\n\n" % [
+		#Globals.float_to_string(1./3., 3),
+		#Globals.float_to_string(2./3., 3)
+	#]
+	#
+	#%StudyTree2/SD3.text = "\n\nUnlock the %s\nSpace Dimension.\n\n\n" % \
+	#Globals.ordinal(3)
+	#
+	#for i in %StudyTree2.get_children():
+		#if i is Study:
+			#i.text += "Cost: %s Space Theorem%s" % [
+				#Globals.int_to_string(i.cost),
+				#"" if i.cost == 1 else "s"
+			#]
+	#
+	#%StudyTree3.visible = ("SD3" in purchased)
+	#
+	#%StudyTree3/DupIx.text = "\nReduce the\n" + \
+	#"base Duplicantes\nInterval cap.\n(%s → %s)\n\n" % [
+		#Globals.format_time(0.05),
+		#Globals.format_time(0.005)
+	#]
+	#
+	#%StudyTree3/Active1 .text = \
+	#"Gain more BP\ndepending on how fast\n" + \
+	#"your last %s\nBoundlessnesses were.\n(%s: ×%s)\n\n" % [
+		#Globals.int_to_string(10),
+		#"Capped" if Formulas.study_act1() == 50 else "Currently",
+		#Globals.float_to_string(Formulas.study_act1())
+	#]
+	#
+	#%StudyTree3/Passive1.text = \
+	#"\n\nGain ×%s more\nBoundlessness Points.\n\n\n" % \
+	#Globals.int_to_string(35)
+	#
+	#%StudyTree3/Idle1   .text = "NYI\n\n"
+	#
+	#for i in %StudyTree3.get_children():
+		#if i is Study:
+			#i.text += "Cost: %s Space Theorem%s" % [
+				#Globals.int_to_string(i.cost),
+				#"" if i.cost == 1 else "s"
+			#]
+#
 
 func respec():
 	for id in purchased:

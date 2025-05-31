@@ -16,6 +16,8 @@ var TSpScBought := 0
 var TDmScBought := 0
 var PasPPBought := 0
 
+var PPEffects := {}
+
 func upgrade_bought(which):
 	return ((BoughtUpgrades >> (which - 1)) & 1) == 1
 
@@ -102,26 +104,24 @@ func process_pp_gain():
 	#return epgain
 	
 	var ppgain = largenum.new(1)
-	Currencies.PermanencePts.mults = {}
+	PPEffects = {}
 	
-	Currencies.PermanencePts.mults["Base gain from Tachyons"] = null
+	PPEffects["Base gain from Tachyons"] = null
 	
-	Currencies.PermanencePts.mults["Base gain from Tachyons"] = \
-	Currencies.Multiplier.new(largenum.five_to_the((
+	PPEffects["Base gain from Tachyons"] = \
+	Currencies.Effect.new(largenum.five_to_the((
 		TachyonDims.topTachyonsInPermanence.log2() / 1024
 	) - 1))
-	
 	ppgain.mult2self(largenum.five_to_the((
 		TachyonDims.topTachyonsInPermanence.log2() / 1024
 	) - 1))
 	
 	if Globals.ECCompleted(1):
-		ppgain.mult2self(Formulas.ec1_reward())
-		Currencies.PermanencePts.mults["Permanence Challenge 1 reward"] = \
-		Currencies.Multiplier.new(largenum.new(Formulas.ec1_reward()))
+		ppgain.mult2self(Formulas.ec1_reward().value())
+		PPEffects["Permanence Challenge 1 reward"] = Formulas.ec1_reward()
 	
-	Currencies.PermanencePts.mults["Repeatable ×2 multiplier"] = \
-	Currencies.Multiplier.new(largenum.two_to_the(PPMultBought))
+	PPEffects["Repeatable ×2 multiplier"] = \
+	Currencies.Effect.new(largenum.two_to_the(PPMultBought))
 	ppgain.mult2self(largenum.two_to_the(PPMultBought))
 	
 	ppgain.integerize()

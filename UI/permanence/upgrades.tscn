@@ -38,7 +38,7 @@ offset_top = 8.0
 offset_right = 395.0
 offset_bottom = 460.0
 grow_horizontal = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 20
 
 [node name="Col1" type="VBoxContainer" parent="Columns"]
 layout_mode = 2
@@ -96,11 +96,11 @@ Cost: 2 EP"
 text_overrun_behavior = 2
 
 [node name="Line" type="Line2D" parent="Columns/Col1"]
-modulate = Color(1, 1, 1, 0.313726)
+modulate = Color(1, 1, 1, 0.752941)
 show_behind_parent = true
 position = Vector2(95, -4)
-points = PackedVector2Array(0, 2, 0, 59, 0, 173, 0, 287, 0, 401, 0, 458)
-width = 194.0
+points = PackedVector2Array(0, -1, 0, 59, 0, 173, 0, 287, 0, 401, 0, 461)
+width = 200.0
 gradient = SubResource("Gradient_4giol")
 
 [node name="Col2" type="VBoxContainer" parent="Columns"]
@@ -159,11 +159,11 @@ Cost: 2 EP"
 text_overrun_behavior = 2
 
 [node name="Line" type="Line2D" parent="Columns/Col2"]
-modulate = Color(1, 1, 1, 0.313726)
+modulate = Color(1, 1, 1, 0.752941)
 show_behind_parent = true
 position = Vector2(95, -4)
-points = PackedVector2Array(0, 2, 0, 59, 0, 173, 0, 287, 0, 401, 0, 458)
-width = 194.0
+points = PackedVector2Array(0, -1, 0, 59, 0, 173, 0, 287, 0, 401, 0, 461)
+width = 200.0
 gradient = SubResource("Gradient_4qcwg")
 
 [node name="Col3" type="VBoxContainer" parent="Columns"]
@@ -222,11 +222,11 @@ Cost: 10 EP"
 text_overrun_behavior = 2
 
 [node name="Line" type="Line2D" parent="Columns/Col3"]
-modulate = Color(1, 1, 1, 0.313726)
+modulate = Color(1, 1, 1, 0.752941)
 show_behind_parent = true
 position = Vector2(95, -4)
-points = PackedVector2Array(0, 2, 0, 59, 0, 173, 0, 287, 0, 401, 0, 458)
-width = 194.0
+points = PackedVector2Array(0, -1, 0, 59, 0, 173, 0, 287, 0, 401, 0, 461)
+width = 200.0
 gradient = SubResource("Gradient_nwkdg")
 
 [node name="Col4" type="VBoxContainer" parent="Columns"]
@@ -285,11 +285,11 @@ Cost: 75 EP"
 text_overrun_behavior = 2
 
 [node name="Line" type="Line2D" parent="Columns/Col4"]
-modulate = Color(1, 1, 1, 0.313726)
+modulate = Color(1, 1, 1, 0.752941)
 show_behind_parent = true
 position = Vector2(95, -4)
-points = PackedVector2Array(0, 2, 0, 59, 0, 173, 0, 287, 0, 401, 0, 458)
-width = 194.0
+points = PackedVector2Array(0, -1, 0, 59, 0, 173, 0, 287, 0, 401, 0, 461)
+width = 200.0
 gradient = SubResource("Gradient_spnas")
 
 [node name="AutoGal" type="Button" parent="."]

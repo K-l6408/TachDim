@@ -49,14 +49,14 @@ func _process(_delta):
 	$Chal/lenges/EC1/ReqRew.text = \
 	"[center]Requirement: %s TC\n\nReward: ×%s on PP gain for each PC completion." % [
 		Globals.ECTargets[0].to_string(), Globals.int_to_string(3)
-	] + "\n(Currently: ×%s)" % Globals.int_to_string(Formulas.ec1_reward())
+	] + "\n(%s)" % Formulas.ec1_reward().to_string()
 	
 	$Chal/lenges/EC2/Condition.text = \
 	"Tachyon Dimension and Timespeed cost scaling starts immediately."
 	$Chal/lenges/EC2/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
 	Globals.ECTargets[1].to_string() + \
-	"\nReward: Timespeed affects the first %s Permanence Dimensions with greatly reduced effect.\n(Currently: ×%s)" % [
+	"\nReward: Timespeed affects the first %s Permanence Dimensions with greatly reduced effect.\n(%s)" % [
 		Globals.int_to_string(4), Formulas.ec2_reward().to_string()
 	]
 	
@@ -82,7 +82,7 @@ func _process(_delta):
 	"[center]Requirement: %s TC\n" % \
 	Globals.ECTargets[4].to_string() + \
 	"\nReward: Reduce the free Timespeed threshold.\n(×%s → ×%s)" % [
-		Globals.float_to_string(2), Globals.float_to_string(1.9)
+		Globals.float_to_string(2), Globals.float_to_string(1.95)
 	]
 	
 	$Chal/lenges/EC6/ReqRew.text = \

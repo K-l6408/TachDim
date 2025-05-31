@@ -81,19 +81,19 @@ func _process(delta: float) -> void:
 	
 	var buymult = [32, 16, 8, 4, 2, 2, 2, 2]
 	
-	for i in range(1, min(DimsUnlocked+1, 8)):
+	for i in range(1, min(DimsUnlocked+1, 9)):
 		var mult := largenum.new(1)
 		
 		mult.mult2self(largenum.new(buymult[i-1]).power(DimPurchase[i-1]))
 		
 		if Globals.progressBL >= GL.Progression.Duplicantes:
-			mult.mult2self(Formulas.duplicantes())
+			mult.mult2self(Formulas.duplicantes().value())
 		
 		if "Time1" in Globals.Studies.purchased:
 			mult.mult2self(Formulas.study_time1())
 		
 		if Globals.ECCompleted(2) and i <= 4:
-			mult.mult2self(Formulas.ec2_reward())
+			mult.mult2self(Formulas.ec2_reward().value())
 		
 		if Globals.Challenge == 20:
 			mult.pow2self(2)

@@ -20,7 +20,6 @@ func _ready():
 	Globals.Achievemer = %Tabs/Achievements
 	Globals.Animater = $AnimationPlayer
 	Globals.VisualSett = %Tabs/Options/Visual
-	Globals.DupHandler = %Tabs/Duplicantes
 	Globals.Studies = %"Tabs/Transcendence/Space Studies"
 	
 	for i in %Tabs.get_child_count():
@@ -181,8 +180,8 @@ func _process(_delta):
 	%Resources/Dupl/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nDuplican%ss[/color][/center]" % [
 		get_theme_color("meow", "DupliButton").to_html(false),
-		Globals.Duplicantes.to_string().trim_suffix(".00").trim_suffix(";00"),
-		"" if Globals.Duplicantes.exponent == 0 else "te"
+		Currencies.Duplicantes.AMOUNT.to_string().trim_suffix(".00").trim_suffix(";00"),
+		"" if Currencies.Duplicantes.AMOUNT.exponent == 0 else "te"
 	]
 	%Resources/BP/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nBoundlessness Point%s[/color][/center]" % [

@@ -86,8 +86,8 @@ func _process(_delta):
 	
 	if Permanence.upgrade_bought(1) != Input.is_key_label_pressed(KEY_SHIFT):
 		$Columns/Col1/TimePlayed.text = \
-		"Tachyon Dimensions\nget a multiplier\nbased on time spent\nin this Permanence.\n \nCurrently: ×%s" % \
-		Globals.float_to_string(Formulas.permanence_11())
+		"Tachyon Dimensions\nget a multiplier\nbased on time spent\nin this Permanence.\n \n×%s" % \
+		Formulas.permanence_11().to_string()
 	else:
 		$Columns/Col1/TimePlayed.text = \
 		"Tachyon Dimensions\nget a multiplier\nbased on time spent\nin this Permanence.\n \nCost: %s PP" % \
@@ -95,7 +95,7 @@ func _process(_delta):
 	
 	if Permanence.upgrade_bought(2) != Input.is_key_label_pressed(KEY_SHIFT):
 		$Columns/Col1/Dim18mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\nCurrently: ×%s" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\n%s" % \
 		[Globals.ordinal(1), Globals.ordinal(8), Formulas.permanence_23().to_string()]
 	else:
 		$Columns/Col1/Dim18mult.text = \
@@ -104,7 +104,7 @@ func _process(_delta):
 	
 	if Permanence.upgrade_bought(3) != Input.is_key_label_pressed(KEY_SHIFT):
 		$Columns/Col1/Dim27mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\nCurrently: ×%s" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\n%s" % \
 		[Globals.ordinal(2), Globals.ordinal(7), Formulas.permanence_23().to_string()]
 	else:
 		$Columns/Col1/Dim27mult.text = \
@@ -133,7 +133,7 @@ func _process(_delta):
 	
 	if Permanence.upgrade_bought(6) != Input.is_key_label_pressed(KEY_SHIFT):
 		$Columns/Col2/Dim45mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\nCurrently: ×%s" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\n%s" % \
 		[Globals.ordinal(4), Globals.ordinal(5), Formulas.permanence_23().to_string()]
 	else:
 		$Columns/Col2/Dim45mult.text = \
@@ -142,7 +142,7 @@ func _process(_delta):
 	
 	if Permanence.upgrade_bought(7) != Input.is_key_label_pressed(KEY_SHIFT):
 		$Columns/Col2/Dim36mult.text = \
-		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\nCurrently: ×%s" % \
+		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\n%s" % \
 		[Globals.ordinal(3), Globals.ordinal(6), Formulas.permanence_23().to_string()]
 	else:
 		$Columns/Col2/Dim36mult.text = \
@@ -158,8 +158,8 @@ func _process(_delta):
 	
 	if Permanence.upgrade_bought(9) != Input.is_key_label_pressed(KEY_SHIFT):
 		$Columns/Col3/AchMult.text = \
-		"Achievements give a\nmultiplier to all\nTachyon Dimensions.\n\n\nCurrently: ×%s" % \
-		Formulas.achievement_mult()
+		"Achievements give a\nmultiplier to all\nTachyon Dimensions.\n\n\n%s" % \
+		Formulas.achievement_mult().display(2)
 	else:
 		$Columns/Col3/AchMult.text = \
 		"Achievements give a\nmultiplier to all\nTachyon Dimensions.\n\n\nCost: %s PP" % \
@@ -176,7 +176,7 @@ func _process(_delta):
 	
 	if Permanence.upgrade_bought(11) != Input.is_key_label_pressed(KEY_SHIFT):
 		$Columns/Col3/PPMult.text = \
-		"Tachyon Dimensions\nget a multiplier\nbased on unspent PP.\n\n\nCurrently: ×%s" % \
+		"Tachyon Dimensions\nget a multiplier\nbased on unspent PP.\n\n\n%s" % \
 		Currencies.PermanencePts.AMOUNT.add(1).to_string()
 	else:
 		$Columns/Col3/PPMult.text = \

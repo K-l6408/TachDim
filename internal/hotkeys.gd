@@ -2,7 +2,6 @@ extends Node
 
 func _process(delta: float) -> void:
 	
-	
 	if Input.is_key_label_pressed(KEY_ALT):
 		pass
 	else:
@@ -23,6 +22,9 @@ func _process(delta: float) -> void:
 		if Input.is_key_label_pressed(KEY_G) and\
 		TachyonDims.canGalaxy:
 			TachyonDims.galaxy()
+		if Input.is_key_label_pressed(KEY_B) and\
+		TachyonDims.canBigBang:
+			TachyonDims.permanence()
 	
 	if Input.is_key_label_pressed(KEY_M):
 		for i in 8:

@@ -1,265 +1,137 @@
 extends Control
 
-var tickFraction := 0.0
+func _ready() -> void:
+	%Chance.connect("pressed", Duplicantes.buy_chance)
+	%Interval.connect("pressed", Duplicantes.buy_interval)
+	%Limit.connect("pressed", Duplicantes.buy_limit)
+	%MaxGal.connect("pressed", Duplicantes.buy_maxgal)
+	%Galaxy.connect("pressed", Duplicantes.buy_galaxy)
 
-func on_permanence():
-	if not Globals.Achievemer.is_unlocked(6, 8):
-		Globals.Duplicantes = largenum.new(1)
-		dupGalaxies = 0
-	if dupGalaxies > 5:
-		dupGalaxies = 5
-
-func reset():
-	chance = 1
-	intervUpgrades = 0
-	limitUpgrades = 0
-	maxGalaxies = 0
-	dupGalaxies = 0
-
-var chance := 1
-func buy_chance():
-	if chance >= 100: return
-	if Globals.Boundlessnesses.to_float() < 8:
-		Globals.Duplicantes.div2self(2.0 **  chance     )
-	else:
-		Globals.Duplicantes.div2self(2.0 ** (chance / 2))
-	if Globals.Duplicantes.exponent < 61:
-		Globals.Duplicantes.mantissa >>= 61 - int(Globals.Duplicantes.exponent)
-		Globals.Duplicantes.mantissa <<= 61 - int(Globals.Duplicantes.exponent)
-	chance += 1
-	%Chance.disabled = true
-
-var intervUpgrades := 0
-var intervalCap :
-	get:
-		#if "7×1" in Globals.Studies.purchased:
-			#if "1×2" in Globals.Studies.purchased:
-				#return 0.001
-			#else:
-				#return 0.005
-		#if "1×2" in Globals.Studies.purchased:
-			#return 0.01
-		#else:
-		return 0.01
-func interval():
-	var interv = 0.9 ** intervUpgrades
-	if "1×2" in Globals.Studies.purchased:
-		interv /= 5
-	if interv <= intervalCap: return intervalCap
-	return interv
-func buy_interval():
-	if Globals.Boundlessnesses.to_float() < 8:
-		Globals.Duplicantes.div2self(3.0 **  (intervUpgrades + 1)       )
-	else:
-		Globals.Duplicantes.div2self(3.0 ** ((intervUpgrades + 1) / 2.0))
-	Globals.Duplicantes.integerize()
-	intervUpgrades += 1
-	%Interval.disabled = true
-
-var limitUpgrades := 0
-func limit():
-	return largenum.two_to_the(2 ** (limitUpgrades + 4))
-func limit_cost():
-	return largenum.ten_to_the(30 + 15 * limitUpgrades)
-func buy_limit():
-	if Currencies.PermanencePts.spend(limit_cost()):
-		limitUpgrades += 1
-		%Limit.disabled = true
-
-var maxGalaxies := 0
-func buy_maxgal():
-	if Currencies.PermanencePts.spend(
-		largenum.ten_to_the(140 + maxGalaxies * (50 + 5 * maxGalaxies))
-	):
-		maxGalaxies += 1
-		%MaxGal.disabled = true
-
-var dupGalaxies := 0
-func buy_galaxy():
-	Globals.Duplicantes = largenum.new(1)
-	if "4×2" not in Globals.Studies.purchased:
-		chance = 1
-	if "4×1" not in Globals.Studies.purchased:
-		intervUpgrades = 0
-	dupGalaxies += 1
-	#Globals.TDHandler.updateTSpeed()
-	%Galaxy.disabled = true
-
-func _process(delta):
-	if Globals.progressBL < Globals.Progression.Duplicantes:
-		if not Globals.Duplicantes.less(0):
-			Globals.Duplicantes = largenum.new(0)
-		if Globals.ECCompleted(3):
-			if  Globals.progress < Globals.Progression.Duplicantes:
-				Globals.progress = Globals.Progression.Duplicantes
-			Globals.progressBL   = Globals.Progression.Duplicantes
-	elif Globals.Duplicantes.less(1):
-		Globals.Duplicantes = largenum.new(1)
-	
+func _process(_delta):
 	$HSplitContainer.split_offset = size.x / 2 - 2
 	
 	%TextD.text = "[center]You have [font_size=20]%s[/font_size] Duplican%ss,\n" % [
-		Globals.Duplicantes.to_string().trim_suffix(".00").trim_suffix(";00"),
-		"" if Globals.Duplicantes.exponent == 0 else "te"
+		Currencies.Duplicantes.AMOUNT.to_string().trim_suffix(".00").trim_suffix(";00"),
+		"" if Currencies.Duplicantes.AMOUNT.exponent == 0 else "te"
 	] + \
-	"giving a [font_size=20]×%s[/font_size] multiplier to all Permanence Dimensions." % \
+	"giving a [font_size=20]%s[/font_size] multiplier to all Permanence Dimensions." % \
 	(
-		Formulas.duplicantes().to_string() if
-		Formulas.duplicantes() is largenum else
-		Globals.float_to_string(Formulas.duplicantes())
+		Formulas.duplicantes().display(0)
 	)
 	
 	%TextL.text = \
 	"[center]You can only hold [font_size=20]%s[/font_size] Duplicantes. (%s)" % [
-		limit().to_string(),
-		Globals.percent_to_string(Globals.Duplicantes.log2() / limit().log2())
+		Duplicantes.limit().to_string(),
+		Globals.percent_to_string(
+			Currencies.Duplicantes.AMOUNT.log2() / Duplicantes.limit().log2()
+		)
 	]
 	
 	%TextG.text = \
 	"[center]You have [font_size=20]%s[/font_size] Duplicantes Galax%s." % [
-		Globals.int_to_string(dupGalaxies),
-		"y" if dupGalaxies == 1 else "ies"
+		Globals.int_to_string(Duplicantes.dupGalaxies),
+		"y" if Duplicantes.dupGalaxies == 1 else "ies"
 	]
 	
-	if Globals.Duplicantes.exponent == -INF:
+	if Currencies.Duplicantes.AMOUNT.exponent == -INF:
 		%DupGain.text = "You are not gaining any Duplicantes."
 	else:
 		var about = ""
-		if chance < 100:
-			if   Globals.Duplicantes.log10() < 1:
+		if Duplicantes.chance < 100:
+			if   Currencies.Duplicantes.AMOUNT.log10() < 1:
 				about = "Approximately "
-			elif Globals.Duplicantes.log10() < 1.5:
+			elif Currencies.Duplicantes.AMOUNT.log10() < 1.5:
 				about = "Approx. "
-			elif Globals.Duplicantes.log10() < 2:
+			elif Currencies.Duplicantes.AMOUNT.log10() < 2:
 				about = "About "
-			elif Globals.Duplicantes.log10() < 2.5:
+			elif Currencies.Duplicantes.AMOUNT.log10() < 2.5:
 				about = "Abt "
-			elif Globals.Duplicantes.log10() < 3:
+			elif Currencies.Duplicantes.AMOUNT.log10() < 3:
 				about = "~"
 		%DupGain.text = "You are gaining ×%s Duplicantes per second. (%s%s to reach the limit)" % [
-			largenum.new(chance / 100. + 1).power(1. / interval()),
+			largenum.new(Duplicantes.chance / 100. + 1).power(1. / Duplicantes.interval()),
 			about, Globals.format_time(
-				limit().divide(Globals.Duplicantes).log2() \
-				* 100 * interval() / chance
+				Duplicantes.limit().divide(Currencies.Duplicantes.AMOUNT).log2() \
+				* 100 * Duplicantes.interval() / Duplicantes.chance
 			)
 		]
 	
-	if limitUpgrades >= 6:
+	if Duplicantes.limitUpgrades >= 6:
 		%Limit.text = "Duplicantes limit:\n%s (capped)" % \
-		limit().to_string()
+		Duplicantes.limit().to_string()
 	else:
-		%Limit.text = "Square Duplicantes limit\n(%s → %s)\nCost: %s EP" % [
-			limit().to_string(), limit().power(2).to_string(),
-			limit_cost().to_string().replace(".00", "")
+		%Limit.text = "Square Duplicantes limit\n(%s → %s)\nCost: %s PP" % [
+			Duplicantes.limit().to_string(),
+			Duplicantes.limit().power(2).to_string(),
+			Duplicantes.limit_cost().to_string().replace(".00", "")
 		]
-	%Limit.disabled = Currencies.PermanencePts.AMOUNT.less(limit_cost()) or limitUpgrades >= 6
+	%Limit.disabled = \
+		Currencies.PermanencePts.AMOUNT.less(Duplicantes.limit_cost()) or \
+		Duplicantes.limitUpgrades >= 6
 	
-	%MaxGal.text = "Max Duplicantes\nGalaxies: %s\nCost: %s EP" % [
-		Globals.int_to_string(maxGalaxies),
-		largenum.ten_to_the(140 + maxGalaxies * (50 + 5 * maxGalaxies)).to_string().replace(".00", "")
+	%MaxGal.text = "Max Duplicantes\nGalaxies: %s\nCost: %s PP" % [
+		Globals.int_to_string(Duplicantes.maxGalaxies),
+		Duplicantes.maxgal_cost().to_string().replace(".00", "")
 	]
 	%MaxGal.disabled = Currencies.PermanencePts.AMOUNT.less(
-		largenum.ten_to_the(140 + maxGalaxies * (50 + 5 * maxGalaxies))
+		Duplicantes.maxgal_cost()
 	)
 	
-	if "4×1" in Globals.Studies.purchased and "4×2" in Globals.Studies.purchased:
-		%Galaxy.text = "Reset Duplicantes to %s\nfor a Duplicantes" % \
-		Globals.int_to_string(1) + \
-		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
-		largenum.two_to_the(1024).to_string()
-	elif "4×1" in Globals.Studies.purchased:
-		%Galaxy.text = "Reset Duplicantes and Duplicantes Chance Upgrades\nfor a Duplicantes" + \
-		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
-		largenum.two_to_the(1024).to_string()
-	elif "4×2" in Globals.Studies.purchased:
-		%Galaxy.text = "Reset Duplicantes and Duplicantes Interval Upgrades\nfor a Duplicantes" + \
-		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
-		largenum.two_to_the(1024).to_string()
-	else:
-		%Galaxy.text = "Reset Duplicantes and Duplicantes Upgrades\nfor a Duplicantes" + \
-		" Galaxy\n(Requires %s Duplicantes\nand maxed out upgrades)" % \
-		largenum.two_to_the(1024).to_string()
+	%Galaxy.text = "Reset Duplicantes and Duplicantes Upgrades for a " + \
+		"Duplicantes Galaxy\n(Requires %s Duplicantes and maxed out upgrades)"\
+		% largenum.two_to_the(1024).to_string()
 	%Galaxy.disabled = (
-		Globals.Duplicantes.log2() < 1024 or chance < 100
-		or interval() < intervalCap or dupGalaxies >= maxGalaxies
+		Currencies.Duplicantes.AMOUNT.log2() < 1024 or Duplicantes.chance < 100
+		or Duplicantes.interval() < Duplicantes.intervalCap
+		or Duplicantes.dupGalaxies >= Duplicantes.maxGalaxies
 	)
-	#if not %Galaxy.disabled and Globals.Automation.DupGalEnabled:
-		#buy_galaxy()
-		#%Galaxy.disabled = true
 	
-	tickFraction += delta / interval()
-	if limit().less(Globals.Duplicantes):
-		Globals.Duplicantes = limit()
-	elif tickFraction >= 1:
-		if chance == 100:
-			Globals.Duplicantes.exponent += floor(tickFraction)
-		elif tickFraction > 10000 or Globals.Duplicantes.log10() > 3:
-			Globals.Duplicantes.mult2self(
-				largenum.new(chance / 100.0 + 1).power(floor(tickFraction))
+	%Chance.disabled = \
+		Currencies.Duplicantes.AMOUNT.less(Duplicantes.chance_cost()) \
+		or Duplicantes.chance >= 100
+	
+	%Interval.disabled = \
+		Currencies.Duplicantes.AMOUNT.less(Duplicantes.interval_cost()) \
+		or Duplicantes.interval() <= Duplicantes.intervalCap
+	
+	
+	if %Galaxy.is_hovered():
+		%Chance.text = "Duplication chance:\n%s (→ %s)" % [
+			Globals.percent_to_string(Duplicantes.chance / 100.0, 0),
+			Globals.percent_to_string(
+				(Duplicantes.dupGalaxies + 1) * 0.02 + 0.01, 0
 			)
-		else:
-			for d in int(Globals.Duplicantes.to_float()):
-				for t in int(tickFraction):
-					if randi_range(1, 100) <= chance:
-						Globals.Duplicantes.add2self(1)
-		if limit().less(Globals.Duplicantes):
-			Globals.Duplicantes = limit()
-	
-	tickFraction = fmod(tickFraction, 1.0)
-	
-	%Chance.disabled = not largenum.two_to_the(chance).less(Globals.Duplicantes) or chance >= 100
-	#while not %Chance.disabled and Globals.Automation.DupChEnabled:
-		#buy_chance()
-		#%Chance.disabled = \
-		#Globals.Duplicantes.less(2.0 ** chance - 0.0001) or chance >= 100
-	
-	%Interval.disabled = Globals.Duplicantes.less(3.0 ** (intervUpgrades + 1) - 0.001) or \
-	interval() <= intervalCap
-	#while not %Interval.disabled and Globals.Automation.DupIntEnabled:
-		#buy_interval()
-		#%Interval.disabled = \
-		#Globals.Duplicantes.less(3.0 ** (intervUpgrades + 1) - 0.001) or \
-		#interval() <= intervalCap
-	
-	if chance >= 100:
-		%Chance.text = "Duplication chance:\n%s (capped)" % [
-			Globals.percent_to_string(chance / 100.0, 0),
 		]
-	elif Globals.Boundlessnesses.to_float() < 8:
-		%Chance.text = "Improve Duplication\nchance (%s → %s)\nCost: /%s Dupl." % [
-			Globals.percent_to_string(chance / 100.0       , 0),
-			Globals.percent_to_string(chance / 100.0 + 0.01, 0),
-			Globals.int_to_string(2 ** chance) if 2.0**chance < 1e5 else
-			Globals.float_to_string(2.0 ** chance)
+	elif Duplicantes.chance >= 100:
+		%Chance.text = "Duplication chance:\n%s (capped)" % [
+			Globals.percent_to_string(Duplicantes.chance / 100.0, 0),
 		]
 	else:
-		%Chance.text = "Improve Duplication\nchance (%s → %s)\nReq: %s Dupl." % [
-			Globals.percent_to_string(chance / 100.0       , 0),
-			Globals.percent_to_string(chance / 100.0 + 0.01, 0),
-			Globals.int_to_string(2 ** chance) if 2.0**chance < 1e5 else
-			Globals.float_to_string(2.0 ** chance)
+		%Chance.text = "Improve Duplication\nchance (%s → %s)\nCost: /%s Dupl." % [
+			Globals.percent_to_string(Duplicantes.chance / 100.0       , 0),
+			Globals.percent_to_string(Duplicantes.chance / 100.0 + 0.01, 0),
+			Globals.int_to_string(Duplicantes.chance_cost())
+				if Duplicantes.chance_cost() < 1e5 else
+			Globals.float_to_string(Duplicantes.chance_cost())
 		]
 	
-	if interval() <= intervalCap:
+	if %Galaxy.is_hovered():
+		%Interval.text = "Duplication interval:\n%s (→ %s)" % [
+			Globals.format_time(Duplicantes.interval()),
+			Globals.format_time(Duplicantes.interval(
+				(Duplicantes.dupGalaxies + 1) * 2
+			))
+		]
+	elif Duplicantes.interval() <= Duplicantes.intervalCap:
 		%Interval.text = "Duplication interval:\n%s (capped)" % \
-		Globals.format_time(interval())
-	elif Globals.Boundlessnesses.to_float() < 8:
+		Globals.format_time(Duplicantes.interval())
+	else:
 		%Interval.text = "Improve Duplication\ninterval (%s → %s)" % [
-			Globals.format_time(interval()),
-			Globals.format_time(max(interval() * 0.9, intervalCap))
+			Globals.format_time(Duplicantes.interval()),
+			Globals.format_time(Duplicantes.interval(Duplicantes.intervUpgrades + 1))
 		] + \
 		"\nCost: /%s Dupl." % (
-			Globals.int_to_string(3 ** (intervUpgrades + 1)) if
-			3.0 ** (intervUpgrades + 1) < 1e5 else
-			Globals.float_to_string(3.0 ** (intervUpgrades + 1))
-		)
-	else:
-		%Interval.text = "Improve Duplication\ninterval (%s → %s)" % [
-			Globals.format_time(interval()),
-			Globals.format_time(max(interval() * 0.9, intervalCap))
-		] + \
-		"\nReq: %s Dupl." % (
-			Globals.int_to_string(3 ** (intervUpgrades + 1)) if
-			3.0 ** (intervUpgrades + 1) < 1e5 else
-			Globals.float_to_string(3.0 ** (intervUpgrades + 1))
+			Globals.int_to_string(Duplicantes.interval_cost())
+				if Duplicantes.interval_cost() < 1e5 else
+			Globals.float_to_string(Duplicantes.interval_cost())
 		)

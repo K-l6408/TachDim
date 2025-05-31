@@ -2,12 +2,11 @@
 extends Node
 
 ## base class for currencies.
-## includes reset behavior, a spend() function and a dictionary of multipliers.
+## includes reset behavior and a spend() function.
 class Currency:
 	var AMOUNT := largenum.new(0)
 	var RESET  := func(): return largenum.new(0)
 	var spendable = true
-	var mults : Dictionary = {}
 	
 	func _init(_r = null, can_spend := true):
 		if _r is Callable:
@@ -45,15 +44,46 @@ class Currency:
 	func _to_string():
 		return AMOUNT.to_string()
 
-## multipliers applied to currency gain. used in the "multiplier breakdown" tab.
-class Multiplier:
-	var power : largenum
-	var dims := 1
-	var force_power = 0
-	func _init(_power : largenum, _dims := 1, _force_power = 0):
-		power    = _power
-		dims     = _dims
-		force_power = _force_power
+## effects applied to currency gain. used in the "multiplier breakdown" tab.
+class Effect:
+	enum {Add, Mult, Power}
+	var type := Mult
+	var amount : Dictionary = {}
+	
+	func _init(_amount, _type := Mult):
+		if _amount is largenum or _amount is float or _amount is int:
+			amount["Currently"] = largenum.new(_amount)
+		if _amount is Dictionary:
+			amount = _amount.duplicate(true)
+		type = _type
+	
+	func new_section(_key:String, _value:largenum):
+		amount.erase(_key)
+		amount[_key] = largenum.new(_value)
+	func value() -> largenum:
+		if amount.is_empty(): return largenum.new(1)
+		return amount.values()[-1]
+	
+	func display(verbosity := 1):
+		if amount.is_empty(): return "null"
+		match verbosity:
+			0:
+				return "%s%s" % ["+×^"[type], amount.values()[-1].to_string()]
+			1:
+				return "%s: %s%s" % [
+					amount.keys()[-1], "+×^"[type],
+					amount.values()[-1].to_string()
+				]
+			2:
+				var S = ""
+				for i in amount:
+					S += "\n%s: %s%s" % [
+						i, "+×^"[type],
+						amount[i].to_string()
+					]
+				return S.trim_prefix("\n")
+	func _to_string() -> String:
+		return display()
 
 ## object storing tachyons as a currency.
 var Tachyons := Currency.new(
@@ -93,10 +123,10 @@ class DUP_CURR extends Currency:
 	func multiply(n):
 		if not n is largenum:
 			n = largenum.new(n)
-		if n.sign > 0 and n.exponent > 0:
+		if n.sign > 0 and n.exponent >= 0:
 			AMOUNT.mult2self(n)
 			return true
 		return false
 
 ## object storing duplicantes as a currency.
-var Duplicantes := DUP_CURR.new()
+var Duplicantes := DUP_CURR.new(largenum.new(1))

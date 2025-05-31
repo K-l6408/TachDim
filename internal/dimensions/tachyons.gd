@@ -10,6 +10,7 @@ var Multipliers : Array[largenum] = [
 	largenum.new(1),largenum.new(1),largenum.new(1),largenum.new(1),
 	largenum.new(1),largenum.new(1),largenum.new(1),largenum.new(1)
 ]
+var Effects = []
 
 var TDilation := 0
 var TGalaxies := 0
@@ -28,7 +29,7 @@ var TSpeedBoost :
 		
 		return largenum.new(1.10 if Globals.Challenge == 12 else 1.125).\
 		div2self(largenum.new(GalaxyBoost).power(
-			(TGalaxies + Globals.DupHandler.dupGalaxies) * GalaxyMult
+			(TGalaxies + Duplicantes.dupGalaxies) * GalaxyMult
 		))
 var TSpeedCount := 0
 
@@ -198,8 +199,8 @@ func buy_max(tier):
 	if tier != 1:
 		if DimPurchase[tier - 2] == 0: return false
 	
-	if largenum.two_to_the(62).less(Currencies.Tachyons.AMOUNT.divide(dimcost(tier))):
-		DimPurchase[tier - 1]
+	#if largenum.two_to_the(62).less(Currencies.Tachyons.AMOUNT.divide(dimcost(tier))):
+		#DimPurchase[tier - 1]
 	
 	while buy_until_mult(tier, true): pass 
 
@@ -313,6 +314,7 @@ func reset(level := 0, challengeReset := true):
 		Globals.eternTime = 0
 		topTachyonsInPermanence = largenum.new(0)
 		PermaDims.eternitied()
+		Duplicantes.on_permanence()
 		pass
 
 ## cost of time dilation. takes into account challenge effects.
@@ -451,8 +453,9 @@ func permanence(resetchallenge := true):
 	if not Globals.Achievemer.is_unlocked(2, 8):
 		Globals.Achievemer.set_unlocked(2, 8)
 	if DimPurchase[7] == 0:
-		if not Globals.Achievemer.is_unlocked(3, 4):
-			Globals.Achievemer.set_unlocked(3, 4)
+		if Globals.Challenge == 0:
+			if not Globals.Achievemer.is_unlocked(3, 4):
+				Globals.Achievemer.set_unlocked(3, 4)
 		if not Globals.Achievemer.is_unlocked(4, 4) and DimPurchase[6] == 0:
 			Globals.Achievemer.set_unlocked(4, 4)
 	if not Globals.Achievemer.is_unlocked(3, 6) and Globals.eternTime <= 600:
@@ -523,176 +526,120 @@ func _process(delta):
 	if Globals.Challenge == 14 or Globals.Challenge == 16:
 		C14Divisor *= 1e9 ** delta
 	
-	Currencies.Tachyons.mults = {
-		"Purchases": [],
-		"Timespeed": null,
-		"Time Dilation": [],
-		"Dimensional Rewind": null,
-		"Challenge 2" : null,
-		"Challenge 3" : null,
-		"Challenge 3 (TD3)" : null,
-		"Challenge 9" : null,
-		"Challenge 14": null,
-		"Achievements": {},
-		"Permanence Upgrades": {},
-		"Overcome Time Upgrades": {},
-		"Permanence Challenge 3": null,
-		"Permanence Challenge 6 reward": null,
-	}
-	Currencies.Tachyons.mults["Space Studies"] = {}
+	Effects = []
 	
 	for i in range(DimsUnlocked, 0, -1):
 		var multiplier = largenum.new(1)
+		Effects.push_front({})
 		
 		var purchaseMult = largenum.new(buymult).power(floor(DimPurchase[i-1] / buylim))
 		multiplier.mult2self(purchaseMult)
-		Currencies.Tachyons.mults["Purchases"].\
-		push_front(Currencies.Multiplier.new(purchaseMult))
+		Effects[0]["Purchases"] = Currencies.Effect.new(purchaseMult)
 		
 		var dilationMult : largenum
 		if Globals.Challenge == 10:
 			dilationMult = \
-				largenum.new(2.2).power(max(      C10Power    - i + 1, 0))
+				largenum.new(2.2).power(max(C10Power - i + 1, 0))
 		else:
 			dilationMult = \
 				dilamult.power(max(TDilation - i + 1, 0))
 		multiplier.mult2self(dilationMult)
-		Currencies.Tachyons.mults["Time Dilation"].\
-		push_front(Currencies.Multiplier.new(dilationMult))
+		Effects[0]["Time Dilation"] = Currencies.Effect.new(dilationMult)
 		
 		if Globals.Challenge != 13: # mults from Permanence Upgrades are disabled by C13
 			if Permanence.upgrade_bought(1):
-				multiplier.mult2self(Formulas.permanence_11())
-				if not Currencies.Tachyons.mults["Permanence Upgrades"].has("PU 1"):
-					Currencies.Tachyons.mults["Permanence Upgrades"]["PU 1"] = \
-					Currencies.Multiplier.new(largenum.new(Formulas.permanence_11()), 8)
+				multiplier.mult2self(Formulas.permanence_11().value())
+				Effects[0]["Permanence Upgrade 1"] = Formulas.permanence_11()
 			
-			var k = 0
-			if Permanence.upgrade_bought(2):
-				if i == 1 or i == 8: multiplier.mult2self(Formulas.permanence_23())
-				k += 2
-			if Permanence.upgrade_bought(3):
-				if i == 2 or i == 7: multiplier.mult2self(Formulas.permanence_23())
-				k += 2
-			if Permanence.upgrade_bought(7):
-				if i == 3 or i == 6: multiplier.mult2self(Formulas.permanence_23())
-				k += 2
-			if Permanence.upgrade_bought(6):
-				if i == 4 or i == 5: multiplier.mult2self(Formulas.permanence_23())
-				k += 2
-			if k > 0 and \
-			not Currencies.Tachyons.mults["Permanence Upgrades"].has("PUs 2, 3, 6, 7"):
-				Currencies.Tachyons.mults["Permanence Upgrades"]["PUs 2, 3, 6, 7"] = \
-				Currencies.Multiplier.new(Formulas.permanence_23(), k)
+			if (Permanence.upgrade_bought(2) and (i == 1 or i == 8))\
+			or (Permanence.upgrade_bought(3) and (i == 2 or i == 7))\
+			or (Permanence.upgrade_bought(7) and (i == 3 or i == 6))\
+			or (Permanence.upgrade_bought(6) and (i == 4 or i == 5)):
+				Effects[0]["Permanence Upgrades 2,3,6,7"] = Formulas.permanence_23()
+				multiplier.mult2self(Formulas.permanence_23().value())
 			
 			if Permanence.upgrade_bought(9):
-				multiplier.mult2self(Formulas.achievement_mult())
-				if not Currencies.Tachyons.mults["Permanence Upgrades"].has("PU 9"):
-					Currencies.Tachyons.mults["Permanence Upgrades"]["PU 9"] = \
-					Currencies.Multiplier.new(Formulas.achievement_mult(), 8)
+				multiplier.mult2self(Formulas.achievement_mult().value())
+				Effects[0]["Permanence Upgrade 9"] = Formulas.achievement_mult()
 			
 			if Permanence.upgrade_bought(11):
 				multiplier.mult2self(Currencies.PermanencePts.AMOUNT.add(1))
-				if not Currencies.Tachyons.mults["Permanence Upgrades"].has("PU 11"):
-					Currencies.Tachyons.mults["Permanence Upgrades"]["PU 11"] = \
-					Currencies.Multiplier.new(
-						Currencies.PermanencePts.AMOUNT.add(1), 8
+				Effects[0]["Permanence Upgrade 11"] = \
+					Currencies.Effect.new(
+						Currencies.PermanencePts.AMOUNT.add(1)
 					)
 		
 		if i == 8 or Globals.Challenge == 13:
 			multiplier.mult2self(RewindMult)
-			if Currencies.Tachyons.mults["Dimensional Rewind"] == null:
-				Currencies.Tachyons.mults["Dimensional Rewind"] = \
-				Currencies.Multiplier.new(
-					RewindMult, 8 if Globals.Challenge == 13 else 1
-				)
-		elif "Tach1" in Globals.Studies.purchased:
-			multiplier.mult2self(Formulas.study_tach1())
-			if not Currencies.Tachyons.mults["Space Studies"].has("Tach1"):
-				Currencies.Tachyons.mults["Space Studies"]["Tach1"] = \
-				Currencies.Multiplier.new(Formulas.study_tach1(), 7)
-		
-		if "Tach3" in Globals.Studies.purchased and \
-		Globals.Duplicantes.exponent > 0:
-			multiplier.mult2self(Globals.Duplicantes)
-			if not Currencies.Tachyons.mults["Space Studies"].has("Tach3"):
-				Currencies.Tachyons.mults["Space Studies"]["Tach3"] = \
-				Currencies.Multiplier.new(Globals.Duplicantes, 8)
+			Effects[0]["Dimensional Rewind"] = Currencies.Effect.new(RewindMult)
+		#elif "Tach1" in Globals.Studies.purchased:
+			#multiplier.mult2self(Formulas.study_tach1())
+			#Effects[0]["Study Tach1"] = \
+				#Currencies.Multiplier.new(Formulas.study_tach1(), 7)
+		#
+		#if "Tach3" in Globals.Studies.purchased and \
+		#Globals.Duplicantes.exponent > 0:
+			#multiplier.mult2self(Globals.Duplicantes)
+			#if not Effects[0]["Space Studies"].has("Tach3"):
+				#Effects[0]["Space Studies"]["Tach3"] = \
+				#Currencies.Multiplier.new(Globals.Duplicantes, 8)
 		
 		if Globals.Challenge in [2, 16]:
 			multiplier.mult2self(C2Multiplier)
-			Currencies.Tachyons.mults["Challenge 2"] = \
-			Currencies.Multiplier.new(largenum.new(C2Multiplier), 8)
+			Effects[0]["Challenge 2"] = \
+			Currencies.Effect.new(C2Multiplier)
 		if Globals.Challenge == 3:
 			if i == 3:
 				multiplier.mult2self(3)
 				if DimAmount[i-1].exponent != -INF:
-					Currencies.Tachyons.mults["Challenge 3 (TD3)"] = \
-					Currencies.Multiplier.new(largenum.new(3), 1)
+					Effects[0]["Challenge 3 (TD3)"] = Currencies.Effect.new(3)
 			if i <= 2:
 				multiplier.mult2self(0.03)
-				Currencies.Tachyons.mults["Challenge 3"] = \
-				Currencies.Multiplier.new(largenum.new(0.03), 2)
+				Effects[0]["Challenge 3"] = Currencies.Effect.new(0.03)
 		if Globals.Challenge == 9 and i != 8:
 			multiplier.div2self(Currencies.Tachyons.AMOUNT.power(0.05))
-			Currencies.Tachyons.mults["Challenge 9"] = \
-			Currencies.Multiplier.new(Currencies.Tachyons.AMOUNT.power(-0.05), 7)
+			Effects[0]["Challenge 9"] = \
+			Currencies.Effect.new(Currencies.Tachyons.AMOUNT.power(-0.05))
 		if Globals.Challenge in [14, 16]:
 			multiplier.div2self(C14Divisor)
-			Currencies.Tachyons.mults["Challenge 14"] = \
-			Currencies.Multiplier.new(largenum.new(C14Divisor).power(-1), 8)
+			Effects[0]["Challenge 14"] = \
+			Currencies.Effect.new(C14Divisor ** -1)
 		
 		if Globals.Challenge != 13:
 			if Globals.Achievemer.is_unlocked(2, 5):
 				multiplier.mult2self(1.1)
-				if not Currencies.Tachyons.mults["Achievements"].has("2×5"):
-					Currencies.Tachyons.mults["Achievements"]["2×5"] = \
-					Currencies.Multiplier.new(largenum.new(1.1), 8)
+				Effects[0]["Achievement 2×5"] = \
+					Currencies.Effect.new(1.1)
 			if Globals.Achievemer.is_unlocked(2, 7) and i == 1:
 				multiplier.mult2self(1.5)
-				Currencies.Tachyons.mults["Achievements"]["2×7"] = \
-				Currencies.Multiplier.new(largenum.new(1.5))
+				Effects[0]["Achievement 2×7"] = \
+					Currencies.Effect.new(1.5)
 			if Globals.Achievemer.is_unlocked(3, 4) and i != 8:
 				multiplier.mult2self(1.5)
-				if not Currencies.Tachyons.mults["Achievements"].has("3×4"):
-					Currencies.Tachyons.mults["Achievements"]["3×4"] = \
-					Currencies.Multiplier.new(largenum.new(1.5), 7)
+				Effects[0]["Achievement 3×4"] = \
+					Currencies.Effect.new(1.5)
 			if Globals.Achievemer.is_unlocked(4, 8):
 				multiplier.mult2self(1.2)
-				if not Currencies.Tachyons.mults["Achievements"].has("4×8"):
-					Currencies.Tachyons.mults["Achievements"]["4×8"] = \
-					Currencies.Multiplier.new(largenum.new(1.2), 8)
+				Effects[0]["Achievement 4×8"] = \
+					Currencies.Effect.new(1.2)
 			
 			if Permanence.overcome_upgrade_bought(1):
-				multiplier.mult2self(Formulas.overcome_1())
-				if not Currencies.Tachyons.\
-				mults["Overcome Time Upgrades"].has("OU 1"):
-					Currencies.Tachyons.mults["Overcome Time Upgrades"]["OU 1"] = \
-					Currencies.Multiplier.new(Formulas.overcome_1(), 8)
+				multiplier.mult2self(Formulas.overcome_1().value())
+				Effects[0]["Overcome Upgrade 1"] = Formulas.overcome_1()
 			if Permanence.overcome_upgrade_bought(7):
-				multiplier.mult2self(Formulas.overcome_7())
-				if not Currencies.Tachyons.\
-				mults["Overcome Time Upgrades"].has("OU 7"):
-					Currencies.Tachyons.mults["Overcome Time Upgrades"]["OU 7"] = \
-					Currencies.Multiplier.new(largenum.new(Formulas.overcome_7()), 8)
+				multiplier.mult2self(Formulas.overcome_7().value())
+				Effects[0]["Overcome Upgrade 7"] = Formulas.overcome_7()
 			if Permanence.overcome_upgrade_bought(9):
-				multiplier.mult2self(Formulas.overcome_9())
-				if not Currencies.Tachyons.\
-				mults["Overcome Time Upgrades"].has("OU 9"):
-					Currencies.Tachyons.mults["Overcome Time Upgrades"]["OU 9"] = \
-					Currencies.Multiplier.new(Formulas.overcome_9(), 8)
+				multiplier.mult2self(Formulas.overcome_9().value())
+				Effects[0]["Overcome Upgrade 9"] = Formulas.overcome_9()
 			
 			if Globals.Achievemer.is_unlocked(5, 6):
-				multiplier.mult2self(Formulas.achievement_56())
-				if not Currencies.Tachyons.mults["Achievements"].has("5×6"):
-					Currencies.Tachyons.mults["Achievements"]["5×6"] = \
-					Currencies.Multiplier.new(largenum.new(Formulas.achievement_56()), 8)
+				multiplier.mult2self(Formulas.achievement_56().value())
+				Effects[0]["Achievement 5×6"] = Formulas.achievement_56()
 			
 			if Globals.Achievemer.is_unlocked(6, 2) and i <= 4:
 				multiplier.mult2self(3)
-				if not Currencies.Tachyons.mults["Achievements"].has("6×2"):
-					Currencies.Tachyons.mults["Achievements"]["6×2"] = \
-					Currencies.Multiplier.new(largenum.new(3), 8)
+				Effects[0]["Achievement 6×2"] = Currencies.Effect.new(3)
 		
 		if not Globals.Achievemer.is_unlocked(3, 1) and multiplier.log10() >= 40:
 			Globals.Achievemer.set_unlocked(3, 1)
@@ -700,24 +647,14 @@ func _process(delta):
 		# POWER EFFECTS GO HERE
 		
 		if Globals.Challenge == 18 and i != latest_purchased:
-			if Currencies.Tachyons.mults["Permanence Challenge 3"] == null:
-				Currencies.Tachyons.mults["Permanence Challenge 3"] = \
-				Currencies.Multiplier.new(largenum.new(1), 1, 0.2)
-			
-			Currencies.Tachyons.mults["Permanence Challenge 3"].\
-				power.mult2self(multiplier.power(-0.8))
+			Effects[0]["Permanence Challenge 3"] = \
+				Currencies.Effect.new(0.2, Currencies.Effect.Power)
 			multiplier.pow2self(0.2)
 		
 		if Globals.ECCompleted(6):
-			Currencies.Tachyons.mults["Permanence Challenge 6 reward"] = \
-			Currencies.Multiplier.new(multiplier.power(0.05), 1, 1.05)
+			Effects[0]["Permanence Challenge 6 reward"] = \
+				Currencies.Effect.new(1.05, Currencies.Effect.Power)
 			multiplier.pow2self(1.05)
-		
-		if "6×1" in Globals.Studies.purchased:
-			if not Currencies.Tachyons.mults["Space Studies"].has("6×1"):
-				Currencies.Tachyons.mults["Space Studies"]["6×1"] = \
-				Currencies.Multiplier.new(multiplier.power(0.02), 1, 1.02)
-			multiplier.pow2self(1.02)
 		
 		#if i != 8:
 			#if DimAmount[i].exponent == -INF:	dims[i].get_node("A&G/Growth").hide()
@@ -738,7 +675,12 @@ func _process(delta):
 			Globals.TachTotal  .add2self(production.multiply(delta))
 		else:
 			DimAmount[i-2].add2self(production.multiply(delta))
-		
-	Currencies.Tachyons.mults["Timespeed"] = Currencies.Multiplier.new(
-		TSpeedBoost.power(TSpeedCount + PermaDims.FreeTSpeed), DimsUnlocked
-	)
+	for i in Effects:
+		i["Timespeed"] = Currencies.Effect.new(
+			TSpeedBoost.power(TSpeedCount + PermaDims.FreeTSpeed)
+		)
+	for i in range(DimsUnlocked, 0, -1):
+		if DimPurchase[i-1] != 0:
+			Effects[i-1]["Amount of highest purchased Dimension"] = \
+			Currencies.Effect.new(DimPurchase[i-1])
+			break
