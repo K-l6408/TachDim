@@ -5,13 +5,16 @@ class_name TooltipPanel
 const Horizontal = [SIDE_LEFT, SIDE_RIGHT ]
 const Vertical   = [SIDE_TOP , SIDE_BOTTOM]
 
-var label := Label.new()
+var label := RichTextLabel.new()
 @export var direction : Side = SIDE_LEFT
 @export var offset := 5
 
 func _ready() -> void:
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.fit_content = true
+	label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	label.bbcode_enabled = true
 	label.mouse_filter = MOUSE_FILTER_IGNORE
 	mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(label)

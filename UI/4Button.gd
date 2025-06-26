@@ -17,10 +17,13 @@ func _process(_delta):
 		add_theme_stylebox_override("normal",  get_theme_stylebox("thressed"))
 		add_theme_stylebox_override("pressed", get_theme_stylebox("fouressed"))
 		add_theme_stylebox_override("hover", get_theme_stylebox("threevered"))
+		if get_theme_stylebox("fouvered") != null:
+			add_theme_stylebox_override("hover_pressed", get_theme_stylebox("fouvered"))
 	else:
 		remove_theme_stylebox_override("normal")
 		remove_theme_stylebox_override("pressed")
 		remove_theme_stylebox_override("hover")
+		remove_theme_stylebox_override("hover_pressed")
 
 func _toggled(press):
 	if not press: pressed_two = not pressed_two

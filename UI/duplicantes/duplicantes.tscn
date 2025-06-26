@@ -16,6 +16,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 4
@@ -43,7 +46,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"DupliButton"
+theme_type_variation = &"ButtonDupli"
 text = "Improve Duplication
 chance (1% → 2%)
 Cost: /2.00 Dupl."
@@ -53,7 +56,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"DupliButton"
+theme_type_variation = &"ButtonDupli"
 disabled = true
 text = "Improve Duplication
 interval (500ms → 450ms)
@@ -83,7 +86,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"DupliButton"
+theme_type_variation = &"ButtonDupli"
 disabled = true
 text = "Square Duplicantes
 limit (6.55e4 → 4.29e9)
@@ -94,7 +97,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"DupliButton"
+theme_type_variation = &"ButtonDupli"
 disabled = true
 text = "Max Duplicantes
 Galaxies: 0
@@ -113,7 +116,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"DupliButton"
+theme_type_variation = &"ButtonDupli"
 disabled = true
 text = "Reset Duplicantes and Duplicantes Upgrades
 for a Duplicantes Galaxy
@@ -121,7 +124,15 @@ for a Duplicantes Galaxy
 and maxed out upgrades)"
 autowrap_mode = 2
 
-[node name="Label" type="Label" parent="HSplitContainer/DupLimit"]
-layout_mode = 2
+[node name="Label" type="Label" parent="HSplitContainer/DupLimit/Galaxy"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.02667
+anchor_right = 1.0
+anchor_bottom = 1.02667
+offset_top = 4.0
+offset_bottom = 17.0
+grow_horizontal = 2
 text = "You can only keep 5 Duplicantes Galaxies after Big Bangs."
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true

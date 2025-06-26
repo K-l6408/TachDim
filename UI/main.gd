@@ -77,7 +77,7 @@ func _process(_delta):
 	$ETint.global_position = TBar.get_tab_rect(3).position + TBar.global_position\
 	+ Vector2(-1, 1)
 	$ETint.size            = TBar.get_tab_rect(3).size
-	$ETint.color           = get_theme_color("font_color", "ButtonEtern")
+	$ETint.color           = get_theme_color("font_color", "ButtonPerm")
 	$ETint.material.set_shader_parameter(
 		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
 	)
@@ -86,7 +86,7 @@ func _process(_delta):
 	$DTint.global_position = TBar.get_tab_rect(4).position + TBar.global_position\
 	+ Vector2(-1, 1)
 	$DTint.size            = TBar.get_tab_rect(4).size
-	$DTint.color           = get_theme_color("meow", "DupliButton")
+	$DTint.color           = get_theme_color("font_color", "ButtonDupli")
 	$DTint.material.set_shader_parameter(
 		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
 	)
@@ -173,13 +173,13 @@ func _process(_delta):
 	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Currencies.Tachyons.to_string()
 	%Resources/PP/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nPermanence Point%s[/color][/center]" % [
-		get_theme_color("font_color", "ButtonEtern").to_html(false),
+		get_theme_color("font_color", "ButtonPerm").to_html(false),
 		Currencies.PermanencePts.AMOUNT.to_string().trim_suffix(".00").trim_suffix(";00"),
 		"" if Currencies.PermanencePts.AMOUNT.exponent == 0 else "s"
 	]
 	%Resources/Dupl/Text.text = \
 	"[center][color=%s][font_size=16]%s[/font_size]\nDuplican%ss[/color][/center]" % [
-		get_theme_color("meow", "DupliButton").to_html(false),
+		get_theme_color("font_color", "ButtonDupli").to_html(false),
 		Currencies.Duplicantes.AMOUNT.to_string().trim_suffix(".00").trim_suffix(";00"),
 		"" if Currencies.Duplicantes.AMOUNT.exponent == 0 else "te"
 	]
@@ -211,7 +211,7 @@ func _process(_delta):
 	else:
 		%Resources/Permanence/PermanenceButton.text = "Big\u00a0Bang for %s\u00a0PP (%s\u00a0PP/\u2060min)" % [
 			Permanence.process_pp_gain().to_string().trim_suffix(".00").trim_suffix(";00"),
-			Permanence.process_pp_gain().divide(Globals.eternTime/60).to_string()
+			Permanence.process_pp_gain().divide(Globals.eternTime/60.0).to_string()
 		]
 	%Resources/Permanence/PermanenceButton.size.y = 0
 	%Resources/Permanence/PermanenceButton.size.y += 10

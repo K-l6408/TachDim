@@ -96,13 +96,6 @@ func _process(delta):
 	process_pp_gain()
 
 func process_pp_gain():
-	#if "3×2" in Globals.Studies.purchased:
-		#epgain.mult2self(1.5 ** Globals.TGalaxies)
-	#
-	#epgain.integerize()
-	#
-	#return epgain
-	
 	var ppgain = largenum.new(1)
 	PPEffects = {}
 	

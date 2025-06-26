@@ -15,7 +15,7 @@ func _process(delta):
 		if Permanence.overcome_upgrade_bought(j+1):
 			$upgrades.get_child(j).disabled = true
 			$upgrades.get_child(j).add_theme_stylebox_override("disabled", \
-			get_theme_stylebox("enabled", "ButtonEtern"))
+			get_theme_stylebox("enabled", "ButtonPerm"))
 			continue
 		else:
 			$upgrades.get_child(j).remove_theme_stylebox_override("disabled")
@@ -27,7 +27,7 @@ func _process(delta):
 		Permanence.TSpScBought = 8
 		$upgrades/TSpSc.disabled = true
 		$upgrades/TSpSc.add_theme_stylebox_override("disabled", \
-		get_theme_stylebox("enabled", "ButtonEtern"))
+		get_theme_stylebox("enabled", "ButtonPerm"))
 		$upgrades/TSpSc.text = "%s\n%s %s.\n\nCurrently: ×%s" % [
 			"Reduce Timespeed Upgrade",
 			"cost scaling after", largenum.two_to_the(1024).to_string(),
@@ -48,7 +48,7 @@ func _process(delta):
 		Permanence.TDmScBought = 7
 		$upgrades/TDmSc.disabled = true
 		$upgrades/TDmSc.add_theme_stylebox_override("disabled", \
-		get_theme_stylebox("enabled", "ButtonEtern"))
+		get_theme_stylebox("enabled", "ButtonPerm"))
 		$upgrades/TDmSc.text = "%s\n%s %s.\n\n%s ×%s" % [
 			"Reduce Tachyon Dimensions",
 			"cost scaling after", largenum.two_to_the(1024).to_string(),
@@ -69,7 +69,7 @@ func _process(delta):
 		Permanence.PasPPBought = 10
 		$upgrades/PasPP.disabled = true
 		$upgrades/PasPP.add_theme_stylebox_override("disabled", \
-		get_theme_stylebox("enabled", "ButtonEtern"))
+		get_theme_stylebox("enabled", "ButtonPerm"))
 		$upgrades/PasPP.text = "%s %s %s\n%s\n%s %s %s" % [
 			"Passively generate", Globals.percent_to_string(Permanence.PasPPBought / 20., 0), "of",
 			"your best PP gain over", "the last", Globals.int_to_string(10),

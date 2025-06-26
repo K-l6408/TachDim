@@ -74,6 +74,7 @@ layout_mode = 2
 [node name="C1" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C1"]
 layout_mode = 0
@@ -107,6 +108,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C1"]
@@ -134,6 +136,7 @@ texture = ExtResource("1_nyqtu")
 [node name="C2" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C2"]
 layout_mode = 0
@@ -167,6 +170,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C2"]
@@ -194,6 +198,7 @@ texture = ExtResource("2_44jri")
 [node name="C3" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C3"]
 layout_mode = 0
@@ -227,6 +232,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C3"]
@@ -254,6 +260,7 @@ texture = ExtResource("4_cfjoj")
 [node name="C4" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C4"]
 layout_mode = 0
@@ -287,6 +294,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C4"]
@@ -314,6 +322,7 @@ texture = ExtResource("5_3reo3")
 [node name="C5" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C5"]
 layout_mode = 0
@@ -347,6 +356,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C5"]
@@ -374,6 +384,7 @@ texture = ExtResource("6_typxx")
 [node name="C6" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C6"]
 layout_mode = 0
@@ -407,6 +418,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C6"]
@@ -434,6 +446,7 @@ texture = ExtResource("7_epn58")
 [node name="C7" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C7"]
 layout_mode = 0
@@ -467,6 +480,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C7"]
@@ -494,6 +508,7 @@ texture = ExtResource("8_nf57y")
 [node name="C8" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C8"]
 layout_mode = 0
@@ -527,6 +542,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C8"]
@@ -554,6 +570,7 @@ texture = ExtResource("9_1wo7n")
 [node name="C9" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C9"]
 layout_mode = 0
@@ -587,6 +604,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C9"]
@@ -614,6 +632,7 @@ texture = ExtResource("10_0mr7a")
 [node name="C10" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C10"]
 layout_mode = 0
@@ -647,6 +666,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C10"]
@@ -674,6 +694,7 @@ texture = ExtResource("11_57tgk")
 [node name="C11" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C11"]
 layout_mode = 0
@@ -707,6 +728,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C11"]
@@ -734,6 +756,7 @@ texture = ExtResource("12_wrilm")
 [node name="C12" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C12"]
 layout_mode = 0
@@ -767,6 +790,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C12"]
@@ -794,6 +818,7 @@ texture = ExtResource("13_4oqa0")
 [node name="C13" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C13"]
 layout_mode = 0
@@ -827,6 +852,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C13"]
@@ -854,6 +880,7 @@ texture = ExtResource("14_ithnu")
 [node name="C14" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C14"]
 layout_mode = 0
@@ -887,6 +914,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C14"]
@@ -914,6 +942,7 @@ texture = ExtResource("15_w54aj")
 [node name="C15" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
+theme_type_variation = &"TachPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/C15"]
 layout_mode = 0
@@ -947,6 +976,7 @@ offset_right = 59.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"ButtonTach"
 text = "Start challenge"
 
 [node name="Reward" type="Label" parent="Chal/lenges/C15"]

@@ -36,7 +36,6 @@ anchor_bottom = 1.0
 offset_top = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_horizontal = 100
 
 [node name="Trees" type="HBoxContainer" parent="ScrollContainer"]
 unique_name_in_owner = true

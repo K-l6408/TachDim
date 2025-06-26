@@ -24,7 +24,11 @@ func _process(_delta):
 			$Chal/lenges.get_child(i).get_node("Start").text = "Completed"
 			$Chal/lenges.get_child(i).get_node("Start").add_theme_stylebox_override(
 				"normal",
-				get_theme_stylebox("pressed", "Button")
+				get_theme_stylebox("pressed", "ButtonPerm")
+			)
+			$Chal/lenges.get_child(i).get_node("Start").add_theme_color_override(
+				"font_color",
+				get_theme_color("font_pressed_color", "ButtonPerm")
 			)
 		else:
 			if Globals.Challenge == i + 15:

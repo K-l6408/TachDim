@@ -80,7 +80,7 @@ layout_mode = 2
 [node name="EC1" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-theme_type_variation = &"EternPanel"
+theme_type_variation = &"PermPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/EC1"]
 layout_mode = 0
@@ -111,6 +111,7 @@ offset_top = -48.0
 offset_right = 132.0
 offset_bottom = -13.0
 grow_vertical = 0
+theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
 [node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC1"]
@@ -141,7 +142,7 @@ texture = ExtResource("1_1j2kp")
 [node name="EC2" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-theme_type_variation = &"EternPanel"
+theme_type_variation = &"PermPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/EC2"]
 layout_mode = 0
@@ -172,6 +173,7 @@ offset_top = -48.0
 offset_right = 132.0
 offset_bottom = -13.0
 grow_vertical = 0
+theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
 [node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC2"]
@@ -201,7 +203,7 @@ texture = ExtResource("3_1f1oy")
 [node name="EC3" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-theme_type_variation = &"EternPanel"
+theme_type_variation = &"PermPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/EC3"]
 layout_mode = 0
@@ -232,6 +234,7 @@ offset_top = -48.0
 offset_right = 132.0
 offset_bottom = -13.0
 grow_vertical = 0
+theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
 [node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC3"]
@@ -261,7 +264,7 @@ texture = ExtResource("4_vrk2f")
 [node name="EC4" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-theme_type_variation = &"EternPanel"
+theme_type_variation = &"PermPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/EC4"]
 layout_mode = 0
@@ -292,6 +295,7 @@ offset_top = -48.0
 offset_right = 132.0
 offset_bottom = -13.0
 grow_vertical = 0
+theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
 [node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC4"]
@@ -321,7 +325,7 @@ texture = ExtResource("5_ukq3o")
 [node name="EC5" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-theme_type_variation = &"EternPanel"
+theme_type_variation = &"PermPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/EC5"]
 layout_mode = 0
@@ -352,6 +356,7 @@ offset_top = -48.0
 offset_right = 132.0
 offset_bottom = -13.0
 grow_vertical = 0
+theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
 [node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC5"]
@@ -381,7 +386,7 @@ texture = ExtResource("6_26ynn")
 [node name="EC6" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-theme_type_variation = &"EternPanel"
+theme_type_variation = &"PermPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/EC6"]
 layout_mode = 0
@@ -412,6 +417,7 @@ offset_top = -48.0
 offset_right = 132.0
 offset_bottom = -13.0
 grow_vertical = 0
+theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
 [node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC6"]
@@ -441,7 +447,7 @@ texture = ExtResource("7_ud5jq")
 [node name="EC7" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-theme_type_variation = &"EternPanel"
+theme_type_variation = &"PermPanel"
 
 [node name="Name" type="Label" parent="Chal/lenges/EC7"]
 layout_mode = 0
@@ -472,6 +478,7 @@ offset_top = -48.0
 offset_right = 132.0
 offset_bottom = -13.0
 grow_vertical = 0
+theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
 [node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC7"]

@@ -217,7 +217,7 @@ func _process(delta):
 								if Permanence.overcome_upgrade_bought(2) and \
 									TachyonDims.TDilation >= (
 										2 if Globals.Challenge in [6, 16] else 4
-									):
+									) and get_bit(NormModes, DILATION):
 									TachyonDims.dilate_max()
 									NormTimers[i] += DilaTimeOverride
 								else:

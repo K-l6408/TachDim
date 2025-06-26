@@ -1,6 +1,6 @@
 extends Node
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	if Input.is_key_label_pressed(KEY_ALT):
 		pass

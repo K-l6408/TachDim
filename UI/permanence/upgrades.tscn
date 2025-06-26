@@ -28,25 +28,34 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f5okh")
 
-[node name="Columns" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -395.0
-offset_top = 8.0
-offset_right = 395.0
-offset_bottom = 460.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 488.0
 grow_horizontal = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 12
 
-[node name="Col1" type="VBoxContainer" parent="Columns"]
+[node name="Label" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+text = "Hold [SHIFT] to see the effects of unbought upgrades, and the cost of bought upgrades.
+Within each column, upgrades must be bought from top to bottom."
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Columns" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Col1" type="VBoxContainer" parent="VBoxContainer/Columns"]
 layout_mode = 2
 
-[node name="TimePlayed" type="Button" parent="Columns/Col1"]
+[node name="TimePlayed" type="Button" parent="VBoxContainer/Columns/Col1"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Tachyon Dimensions
 get a multiplier
@@ -56,10 +65,10 @@ in this Eternity.
 Cost: 1 EP"
 text_overrun_behavior = 2
 
-[node name="Dim18mult" type="Button" parent="Columns/Col1"]
+[node name="Dim18mult" type="Button" parent="VBoxContainer/Columns/Col1"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "1st and 8th
 Tachyon Dimensions
@@ -69,10 +78,10 @@ based on Eternities.
 Cost: 1 EP"
 text_overrun_behavior = 2
 
-[node name="Dim27mult" type="Button" parent="Columns/Col1"]
+[node name="Dim27mult" type="Button" parent="VBoxContainer/Columns/Col1"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "2nd and 7th
 Tachyon Dimensions
@@ -82,10 +91,10 @@ based on Eternities.
 Cost: 1 EP"
 text_overrun_behavior = 2
 
-[node name="DGCheaper" type="Button" parent="Columns/Col1"]
+[node name="DGCheaper" type="Button" parent="VBoxContainer/Columns/Col1"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Dilation and Galaxies
 are cheaper by
@@ -95,7 +104,7 @@ respectively.
 Cost: 2 EP"
 text_overrun_behavior = 2
 
-[node name="Line" type="Line2D" parent="Columns/Col1"]
+[node name="Line" type="Line2D" parent="VBoxContainer/Columns/Col1"]
 modulate = Color(1, 1, 1, 0.752941)
 show_behind_parent = true
 position = Vector2(95, -4)
@@ -103,13 +112,13 @@ points = PackedVector2Array(0, -1, 0, 59, 0, 173, 0, 287, 0, 401, 0, 461)
 width = 200.0
 gradient = SubResource("Gradient_4giol")
 
-[node name="Col2" type="VBoxContainer" parent="Columns"]
+[node name="Col2" type="VBoxContainer" parent="VBoxContainer/Columns"]
 layout_mode = 2
 
-[node name="MultIncrease" type="Button" parent="Columns/Col2"]
+[node name="MultIncrease" type="Button" parent="VBoxContainer/Columns/Col2"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Increase the multiplier
 for buying 10
@@ -119,10 +128,10 @@ Tachyon Dimensions.
 Cost: 1 EP"
 text_overrun_behavior = 2
 
-[node name="Dim45mult" type="Button" parent="Columns/Col2"]
+[node name="Dim45mult" type="Button" parent="VBoxContainer/Columns/Col2"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "4th and 5th
 Tachyon Dimensions
@@ -132,10 +141,10 @@ based on Eternities.
 Cost: 1 EP"
 text_overrun_behavior = 2
 
-[node name="Dim36mult" type="Button" parent="Columns/Col2"]
+[node name="Dim36mult" type="Button" parent="VBoxContainer/Columns/Col2"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "3rd and 6th
 Tachyon Dimensions
@@ -145,10 +154,10 @@ based on Eternities.
 Cost: 1 EP"
 text_overrun_behavior = 2
 
-[node name="GalaxyBoost" type="Button" parent="Columns/Col2"]
+[node name="GalaxyBoost" type="Button" parent="VBoxContainer/Columns/Col2"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "
 Tachyon Galaxies are
@@ -158,7 +167,7 @@ twice as strong.
 Cost: 2 EP"
 text_overrun_behavior = 2
 
-[node name="Line" type="Line2D" parent="Columns/Col2"]
+[node name="Line" type="Line2D" parent="VBoxContainer/Columns/Col2"]
 modulate = Color(1, 1, 1, 0.752941)
 show_behind_parent = true
 position = Vector2(95, -4)
@@ -166,13 +175,13 @@ points = PackedVector2Array(0, -1, 0, 59, 0, 173, 0, 287, 0, 401, 0, 461)
 width = 200.0
 gradient = SubResource("Gradient_4qcwg")
 
-[node name="Col3" type="VBoxContainer" parent="Columns"]
+[node name="Col3" type="VBoxContainer" parent="VBoxContainer/Columns"]
 layout_mode = 2
 
-[node name="AchMult" type="Button" parent="Columns/Col3"]
+[node name="AchMult" type="Button" parent="VBoxContainer/Columns/Col3"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Achievements give a
 multiplier to all
@@ -182,10 +191,10 @@ Tachyon Dimensions.
 Cost: 3 EP"
 text_overrun_behavior = 2
 
-[node name="DilaMult" type="Button" parent="Columns/Col3"]
+[node name="DilaMult" type="Button" parent="VBoxContainer/Columns/Col3"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "
 The Time Dilation
@@ -195,10 +204,10 @@ multiplier is increased.
 Cost: 5 EP"
 text_overrun_behavior = 2
 
-[node name="PPMult" type="Button" parent="Columns/Col3"]
+[node name="PPMult" type="Button" parent="VBoxContainer/Columns/Col3"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Tachyon Dimensions
 get a multiplier
@@ -208,10 +217,10 @@ based on unspent EP.
 Cost: 7 EP"
 text_overrun_behavior = 2
 
-[node name="PassivePP" type="Button" parent="Columns/Col3"]
+[node name="PassivePP" type="Button" parent="VBoxContainer/Columns/Col3"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "You gain Eternity Points
 passively 3 times
@@ -221,7 +230,7 @@ fastest Eternity.
 Cost: 10 EP"
 text_overrun_behavior = 2
 
-[node name="Line" type="Line2D" parent="Columns/Col3"]
+[node name="Line" type="Line2D" parent="VBoxContainer/Columns/Col3"]
 modulate = Color(1, 1, 1, 0.752941)
 show_behind_parent = true
 position = Vector2(95, -4)
@@ -229,13 +238,13 @@ points = PackedVector2Array(0, -1, 0, 59, 0, 173, 0, 287, 0, 401, 0, 461)
 width = 200.0
 gradient = SubResource("Gradient_nwkdg")
 
-[node name="Col4" type="VBoxContainer" parent="Columns"]
+[node name="Col4" type="VBoxContainer" parent="VBoxContainer/Columns"]
 layout_mode = 2
 
-[node name="Dila1" type="Button" parent="Columns/Col4"]
+[node name="Dila1" type="Button" parent="VBoxContainer/Columns/Col4"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Start every reset with 1
 Dilation, automatically
@@ -245,10 +254,10 @@ Tachyon Dimension.
 Cost: 20 EP"
 text_overrun_behavior = 2
 
-[node name="Dila2" type="Button" parent="Columns/Col4"]
+[node name="Dila2" type="Button" parent="VBoxContainer/Columns/Col4"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Start every reset with 2
 Dilation, automatically
@@ -258,10 +267,10 @@ Tachyon Dimension.
 Cost: 35 EP"
 text_overrun_behavior = 2
 
-[node name="Dila3" type="Button" parent="Columns/Col4"]
+[node name="Dila3" type="Button" parent="VBoxContainer/Columns/Col4"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Start every reset with 3
 Dilation, automatically
@@ -271,10 +280,10 @@ Tachyon Dimension.
 Cost: 50 EP"
 text_overrun_behavior = 2
 
-[node name="Dila4" type="Button" parent="Columns/Col4"]
+[node name="Dila4" type="Button" parent="VBoxContainer/Columns/Col4"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Start every reset with 4
 Dilation, automatically
@@ -284,7 +293,7 @@ Tachyon Dimension.
 Cost: 75 EP"
 text_overrun_behavior = 2
 
-[node name="Line" type="Line2D" parent="Columns/Col4"]
+[node name="Line" type="Line2D" parent="VBoxContainer/Columns/Col4"]
 modulate = Color(1, 1, 1, 0.752941)
 show_behind_parent = true
 position = Vector2(95, -4)
@@ -306,7 +315,7 @@ offset_right = -5.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Start every reset with 5
 Dilation, automatically
@@ -330,7 +339,7 @@ offset_right = 195.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Multiply EP gained from
 Big Bangs by 2.
@@ -342,9 +351,9 @@ text_overrun_behavior = 2
 
 [node name="Max" type="Button" parent="PPMult"]
 layout_mode = 0
-offset_top = -25.0
+offset_top = -22.0
 offset_right = 189.0
-offset_bottom = -5.0
-theme_type_variation = &"ButtonEtern"
+offset_bottom = -2.0
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "(Buy max ↓)"

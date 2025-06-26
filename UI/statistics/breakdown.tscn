@@ -74,6 +74,7 @@ grow_horizontal = 2
 [node name="Mult" type="HBoxContainer" parent="Tachyons/Slices"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 1
 
 [node name="0" type="ColorRect" parent="Tachyons/Slices/Mult"]
 visible = false
@@ -109,6 +110,7 @@ color = Color(1, 1, 1, 0)
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 1
 
 [node name="0" type="ColorRect" parent="Tachyons/Slices/Div"]
 clip_contents = true
@@ -128,7 +130,9 @@ offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 3
+column_titles_visible = true
 hide_root = true
+select_mode = 1
 
 [node name="Resource" type="Label" parent="Tachyons"]
 layout_mode = 1
@@ -158,7 +162,7 @@ offset_top = 5.0
 offset_right = -2.0
 offset_bottom = 18.0
 grow_horizontal = 2
-text = "Eternity Points gained on Big Bang: 9.99e9999"
+text = "Permanence Points gained on Big Bang: 9.99e9999"
 
 [node name="ColorRect" type="ColorRect" parent="Permanence Points"]
 visible = false
@@ -196,6 +200,7 @@ grow_horizontal = 2
 [node name="Mult" type="HBoxContainer" parent="Permanence Points/Slices"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 1
 
 [node name="0" type="ColorRect" parent="Permanence Points/Slices/Mult"]
 clip_contents = true
@@ -230,6 +235,7 @@ color = Color(1, 1, 1, 0)
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 1
 
 [node name="0" type="ColorRect" parent="Permanence Points/Slices/Div"]
 clip_contents = true
@@ -248,7 +254,10 @@ offset_right = -2.0
 offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
+columns = 3
+column_titles_visible = true
 hide_root = true
+select_mode = 1
 
 [node name="Resource" type="Label" parent="Permanence Points"]
 layout_mode = 1

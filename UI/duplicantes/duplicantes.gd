@@ -86,6 +86,13 @@ func _process(_delta):
 		or Duplicantes.dupGalaxies >= Duplicantes.maxGalaxies
 	)
 	
+	%Galaxy/Label.text = "%s %s %s\n%s %s %s" % [
+		"You can only keep", Globals.int_to_string(5),
+		"Duplicantes Galaxies after Big Bangs.",
+		"Each time you reset your Duplicantes Upgrades, you keep",
+		Globals.int_to_string(2),  "more of them.",
+	]
+	
 	%Chance.disabled = \
 		Currencies.Duplicantes.AMOUNT.less(Duplicantes.chance_cost()) \
 		or Duplicantes.chance >= 100

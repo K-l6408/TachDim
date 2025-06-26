@@ -49,7 +49,7 @@ enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://add
 [gui]
 
 timers/tooltip_delay_sec=999.0
-theme/custom="res://themes/Dark.tres"
+theme/custom="uid://deor2fjoio47e"
 
 [importer_defaults]
 

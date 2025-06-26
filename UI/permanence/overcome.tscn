@@ -26,7 +26,7 @@ offset_right = 115.0
 offset_bottom = 43.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 theme_override_font_sizes/font_size = 25
 text = "OVERCOME TIME"
 
@@ -61,7 +61,7 @@ columns = 3
 [node name="TachMult" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Tachyon Dimensions get
 a multiplier based
@@ -73,7 +73,7 @@ text_overrun_behavior = 2
 [node name="MaxDila" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "
 Unlock the Buy Max Dilation
@@ -85,7 +85,7 @@ text_overrun_behavior = 2
 [node name="GalStr" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "
 All Galaxies are
@@ -97,7 +97,7 @@ text_overrun_behavior = 2
 [node name="EPForm" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "
 Improve the EP gain formula
@@ -110,7 +110,7 @@ text_overrun_behavior = 2
 [node name="DilaBoost" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Improve the Dilation
 multiplier further.
@@ -123,7 +123,7 @@ text_overrun_behavior = 2
 [node name="RewdFormula" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Improve the Rewind formula
 from being based on
@@ -136,7 +136,7 @@ text_overrun_behavior = 2
 [node name="ChallengeMult" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Tachyon Dimensions get a
 multiplier based on your
@@ -149,7 +149,7 @@ text_overrun_behavior = 2
 [node name="PasEter" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "
 Gain Eternities passively
@@ -162,7 +162,7 @@ text_overrun_behavior = 2
 [node name="EterMult" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "
 Tachyon Dimensions get a
@@ -175,7 +175,7 @@ text_overrun_behavior = 2
 [node name="TSpSc" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Reduce Timespeed Upgrade
 cost scaling after 1.8e308.
@@ -188,7 +188,7 @@ text_overrun_behavior = 2
 [node name="TDmSc" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Reduce Tachyon Dimensions
 cost scaling after 1.8e308.
@@ -201,7 +201,7 @@ text_overrun_behavior = 2
 [node name="PasPP" type="Button" parent="upgrades"]
 custom_minimum_size = Vector2(190, 110)
 layout_mode = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Passively generate 0% of
 your average EP gain

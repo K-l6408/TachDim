@@ -1,25 +1,25 @@
 extends Control
 
 func _ready() -> void:
-	$Columns/Col1/TimePlayed.connect("pressed", Permanence.buy.bind(1))
-	$Columns/Col1/Dim18mult .connect("pressed", Permanence.buy.bind(2))
-	$Columns/Col1/Dim27mult .connect("pressed", Permanence.buy.bind(3))
-	$Columns/Col1/DGCheaper .connect("pressed", Permanence.buy.bind(4))
+	%Columns/Col1/TimePlayed.connect("pressed", Permanence.buy.bind(1))
+	%Columns/Col1/Dim18mult .connect("pressed", Permanence.buy.bind(2))
+	%Columns/Col1/Dim27mult .connect("pressed", Permanence.buy.bind(3))
+	%Columns/Col1/DGCheaper .connect("pressed", Permanence.buy.bind(4))
 	
-	$Columns/Col2/MultIncrease.connect("pressed", Permanence.buy.bind(5))
-	$Columns/Col2/Dim45mult   .connect("pressed", Permanence.buy.bind(6))
-	$Columns/Col2/Dim36mult   .connect("pressed", Permanence.buy.bind(7))
-	$Columns/Col2/GalaxyBoost .connect("pressed", Permanence.buy.bind(8))
+	%Columns/Col2/MultIncrease.connect("pressed", Permanence.buy.bind(5))
+	%Columns/Col2/Dim45mult   .connect("pressed", Permanence.buy.bind(6))
+	%Columns/Col2/Dim36mult   .connect("pressed", Permanence.buy.bind(7))
+	%Columns/Col2/GalaxyBoost .connect("pressed", Permanence.buy.bind(8))
 	
-	$Columns/Col3/AchMult  .connect("pressed", Permanence.buy.bind( 9))
-	$Columns/Col3/DilaMult .connect("pressed", Permanence.buy.bind(10))
-	$Columns/Col3/PPMult   .connect("pressed", Permanence.buy.bind(11))
-	$Columns/Col3/PassivePP.connect("pressed", Permanence.buy.bind(12))
+	%Columns/Col3/AchMult  .connect("pressed", Permanence.buy.bind( 9))
+	%Columns/Col3/DilaMult .connect("pressed", Permanence.buy.bind(10))
+	%Columns/Col3/PPMult   .connect("pressed", Permanence.buy.bind(11))
+	%Columns/Col3/PassivePP.connect("pressed", Permanence.buy.bind(12))
 	
-	$Columns/Col4/Dila1.connect("pressed", Permanence.buy.bind(13))
-	$Columns/Col4/Dila2.connect("pressed", Permanence.buy.bind(14))
-	$Columns/Col4/Dila3.connect("pressed", Permanence.buy.bind(15))
-	$Columns/Col4/Dila4.connect("pressed", Permanence.buy.bind(16))
+	%Columns/Col4/Dila1.connect("pressed", Permanence.buy.bind(13))
+	%Columns/Col4/Dila2.connect("pressed", Permanence.buy.bind(14))
+	%Columns/Col4/Dila3.connect("pressed", Permanence.buy.bind(15))
+	%Columns/Col4/Dila4.connect("pressed", Permanence.buy.bind(16))
 	
 	$AutoGal.connect("pressed", Permanence.buy.bind(17))
 	
@@ -27,17 +27,17 @@ func _ready() -> void:
 	$PPMult/Max.connect("pressed", Permanence.maxPPmult)
 
 func _process(_delta):
-	for i in $Columns.get_child_count():
-		var k = $Columns.get_child(i)
+	for i in %Columns.get_child_count():
+		var k = %Columns.get_child(i)
 		for j in k.get_child_count():
 			if not k.get_child(j) is Button:
 				if k.get_child(j) is Line2D:
 					var L : Line2D = k.get_child(j)
 					for q in 4:
 						if Permanence.upgrade_bought(i*4+q+1):
-							L.gradient.colors[q + 1] = get_theme_color("font_color", "ButtonEtern")
+							L.gradient.colors[q + 1] = get_theme_color("font_color", "ButtonPerm")
 						else:
-							L.gradient.colors[q + 1] = get_theme_color("disabled_color", "ButtonEtern")
+							L.gradient.colors[q + 1] = get_theme_color("disabled_color", "ButtonPerm")
 					L.gradient.colors[0] = L.gradient.colors[1]
 					L.gradient.colors[5] = L.gradient.colors[4]
 				continue
@@ -45,7 +45,7 @@ func _process(_delta):
 			if Permanence.upgrade_bought(i*4+j+1):
 				k.get_child(j).disabled = true
 				k.get_child(j).add_theme_stylebox_override("disabled", \
-				get_theme_stylebox("enabled", "ButtonEtern"))
+				get_theme_stylebox("enabled", "ButtonPerm"))
 				continue
 			else:
 				k.get_child(j).remove_theme_stylebox_override("disabled")
@@ -59,14 +59,14 @@ func _process(_delta):
 	$PPMult    .visible = Globals.Achievemer.is_unlocked(4, 6)
 	$PPMult/Max.visible = Globals.Achievemer.is_unlocked(4, 6)
 	if Globals.Achievemer.is_unlocked(4, 6):
-		custom_minimum_size.y = 610
+		custom_minimum_size.y = 650
 	else:
-		custom_minimum_size.y = 470
+		custom_minimum_size.y = 500
 	
 	if Permanence.upgrade_bought(17):
 		$AutoGal.disabled = true
 		$AutoGal.add_theme_stylebox_override("disabled", \
-		get_theme_stylebox("enabled", "ButtonEtern"))
+		get_theme_stylebox("enabled", "ButtonPerm"))
 	else:
 		$AutoGal.remove_theme_stylebox_override("disabled")
 		$AutoGal.disabled = Currencies.PermanencePts.AMOUNT.less(Permanence.UpgradeCosts[4][0])
@@ -85,124 +85,124 @@ func _process(_delta):
 		#Permanence.maxPPmult()
 	
 	if Permanence.upgrade_bought(1) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col1/TimePlayed.text = \
+		%Columns/Col1/TimePlayed.text = \
 		"Tachyon Dimensions\nget a multiplier\nbased on time spent\nin this Permanence.\n \n×%s" % \
 		Formulas.permanence_11().to_string()
 	else:
-		$Columns/Col1/TimePlayed.text = \
+		%Columns/Col1/TimePlayed.text = \
 		"Tachyon Dimensions\nget a multiplier\nbased on time spent\nin this Permanence.\n \nCost: %s PP" % \
 		Globals.int_to_string(Permanence.UpgradeCosts[0][0])
 	
 	if Permanence.upgrade_bought(2) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col1/Dim18mult.text = \
+		%Columns/Col1/Dim18mult.text = \
 		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\n%s" % \
 		[Globals.ordinal(1), Globals.ordinal(8), Formulas.permanence_23().to_string()]
 	else:
-		$Columns/Col1/Dim18mult.text = \
+		%Columns/Col1/Dim18mult.text = \
 		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\nCost: %s PP" % \
 		[Globals.ordinal(1), Globals.ordinal(8), Globals.int_to_string(Permanence.UpgradeCosts[0][1])]
 	
 	if Permanence.upgrade_bought(3) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col1/Dim27mult.text = \
+		%Columns/Col1/Dim27mult.text = \
 		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\n%s" % \
 		[Globals.ordinal(2), Globals.ordinal(7), Formulas.permanence_23().to_string()]
 	else:
-		$Columns/Col1/Dim27mult.text = \
+		%Columns/Col1/Dim27mult.text = \
 		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\nCost: %s PP" % \
 		[Globals.ordinal(2), Globals.ordinal(7), Globals.int_to_string(Permanence.UpgradeCosts[0][2])]
 	
 	if Permanence.upgrade_bought(4) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col1/DGCheaper.text = \
+		%Columns/Col1/DGCheaper.text = \
 		"Dilation and Galaxies\nare cheaper by\n%s and %s Dimensions,\nrespectively." % \
 		[Globals.int_to_string(5), Globals.int_to_string(10)]
 	else:
-		$Columns/Col1/DGCheaper.text = \
+		%Columns/Col1/DGCheaper.text = \
 		"Dilation and Galaxies\nare cheaper by\n%s and %s Dimensions,\nrespectively.\n\nCost: %s PP" % \
 		[Globals.int_to_string(5), Globals.int_to_string(10), Globals.int_to_string(Permanence.UpgradeCosts[0][3])]
 	
 	if Permanence.upgrade_bought(5) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col2/MultIncrease.text = \
+		%Columns/Col2/MultIncrease.text = \
 		"Increase the multiplier\nfor buying %s\nTachyon Dimensions.\n\n\n(×%s → ×%s)" % \
 		[Globals.int_to_string(10),
 		Globals.float_to_string(2), Globals.float_to_string(2.22222)]
 	else:
-		$Columns/Col2/MultIncrease.text = \
+		%Columns/Col2/MultIncrease.text = \
 		"Increase the multiplier\nfor buying %s\nTachyon Dimensions.\n\n\nCost: %s PP" % \
 		[Globals.int_to_string(10),
 		Globals.int_to_string(Permanence.UpgradeCosts[1][0])]
 	
 	if Permanence.upgrade_bought(6) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col2/Dim45mult.text = \
+		%Columns/Col2/Dim45mult.text = \
 		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\n%s" % \
 		[Globals.ordinal(4), Globals.ordinal(5), Formulas.permanence_23().to_string()]
 	else:
-		$Columns/Col2/Dim45mult.text = \
+		%Columns/Col2/Dim45mult.text = \
 		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\nCost: %s PP" % \
 		[Globals.ordinal(4), Globals.ordinal(5), Globals.int_to_string(Permanence.UpgradeCosts[1][1])]
 	
 	if Permanence.upgrade_bought(7) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col2/Dim36mult.text = \
+		%Columns/Col2/Dim36mult.text = \
 		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\n%s" % \
 		[Globals.ordinal(3), Globals.ordinal(6), Formulas.permanence_23().to_string()]
 	else:
-		$Columns/Col2/Dim36mult.text = \
+		%Columns/Col2/Dim36mult.text = \
 		"%s and %s\nTachyon Dimensions\nget a multiplier\nbased on Permanences.\n\nCost: %s PP" % \
 		[Globals.ordinal(3), Globals.ordinal(6), Globals.int_to_string(Permanence.UpgradeCosts[1][2])]
 	
 	if Permanence.upgrade_bought(8) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col2/GalaxyBoost.text = "All Galaxies are\ntwice as strong."
+		%Columns/Col2/GalaxyBoost.text = "All Galaxies are\ntwice as strong."
 	else:
-		$Columns/Col2/GalaxyBoost.text = \
+		%Columns/Col2/GalaxyBoost.text = \
 		"\nAll Galaxies are\ntwice as strong.\n \n \nCost: %s PP" % \
 		Globals.int_to_string(Permanence.UpgradeCosts[1][3])
 	
 	if Permanence.upgrade_bought(9) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col3/AchMult.text = \
+		%Columns/Col3/AchMult.text = \
 		"Achievements give a\nmultiplier to all\nTachyon Dimensions.\n\n\n%s" % \
 		Formulas.achievement_mult().display(2)
 	else:
-		$Columns/Col3/AchMult.text = \
+		%Columns/Col3/AchMult.text = \
 		"Achievements give a\nmultiplier to all\nTachyon Dimensions.\n\n\nCost: %s PP" % \
 		Globals.int_to_string(Permanence.UpgradeCosts[2][0])
 	
 	if Permanence.upgrade_bought(10) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col3/DilaMult.text = \
+		%Columns/Col3/DilaMult.text = \
 		"\nTime Dilation's\nmultiplier is increased.\n\n\n(×%s → ×%s)" % \
 		[Globals.float_to_string(2,1), Globals.float_to_string(2.5,1)]
 	else:
-		$Columns/Col3/DilaMult.text = \
+		%Columns/Col3/DilaMult.text = \
 		"\nTime Dilation's\nmultiplier is increased.\n\n\nCost: %s PP" % \
 		Globals.int_to_string(Permanence.UpgradeCosts[2][1])
 	
 	if Permanence.upgrade_bought(11) != Input.is_key_label_pressed(KEY_SHIFT):
-		$Columns/Col3/PPMult.text = \
+		%Columns/Col3/PPMult.text = \
 		"Tachyon Dimensions\nget a multiplier\nbased on unspent PP.\n\n\n%s" % \
 		Currencies.PermanencePts.AMOUNT.add(1).to_string()
 	else:
-		$Columns/Col3/PPMult.text = \
+		%Columns/Col3/PPMult.text = \
 		"Tachyon Dimensions\nget a multiplier\nbased on unspent PP.\n\n\nCost: %s PP" % \
 		Globals.int_to_string(Permanence.UpgradeCosts[2][2])
 	
-	$Columns/Col3/PassivePP.text = \
+	%Columns/Col3/PassivePP.text = \
 	"You gain Permanence Points\npassively %s times\nslower than your\nfastest Permanence.\n\n" % \
 	Globals.int_to_string(3)
 	if Permanence.upgrade_bought(12) != Input.is_key_label_pressed(KEY_SHIFT):
 		if Globals.fastestEtern.time < 0:
-			$Columns/Col3/PassivePP.text += "Currently: Too slow\nto generate"
+			%Columns/Col3/PassivePP.text += "Currently: Too slow\nto generate"
 		else:
-			$Columns/Col3/PassivePP.text += "Currently: %s\nevery %s" % \
+			%Columns/Col3/PassivePP.text += "Currently: %s\nevery %s" % \
 			[Globals.fastestEtern.currency, Globals.format_time(Globals.fastestEtern.time * 3)]
 	else:
-		$Columns/Col3/PassivePP.text += "Cost: %s PP" % \
+		%Columns/Col3/PassivePP.text += "Cost: %s PP" % \
 		Globals.int_to_string(Permanence.UpgradeCosts[2][3])
 	
 	for i in 4:
 		if Permanence.upgrade_bought(13 + i) != Input.is_key_label_pressed(KEY_SHIFT):
-			$Columns/Col4.get_child(i).text = \
+			%Columns/Col4.get_child(i).text = \
 			"Start every reset with %s\nDilation," % Globals.int_to_string(i + 1) + \
 			" automatically\nunlocking the %s\nTachyon Dimension." % Globals.ordinal(i + 5)
 		else:
-			$Columns/Col4.get_child(i).text = \
+			%Columns/Col4.get_child(i).text = \
 			"Start every reset with %s\nDilation," % Globals.int_to_string(i + 1) + \
 			" automatically\nunlocking the %s\nTachyon Dimension.\n" % Globals.ordinal(i + 5) + \
 			"\nCost: %s PP" % Globals.int_to_string(Permanence.UpgradeCosts[3][i])

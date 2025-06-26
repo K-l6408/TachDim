@@ -1,8 +1,8 @@
-[gd_scene load_steps=48 format=3 uid="uid://6ny1c2muccuk"]
+[gd_scene load_steps=49 format=3 uid="uid://6ny1c2muccuk"]
 
 [ext_resource type="PackedScene" uid="uid://cmg6stncirb3o" path="res://UI/dimensions/tachyons.tscn" id="1_8gea7"]
 [ext_resource type="Script" uid="uid://ohsjtsuph3ni" path="res://UI/main.gd" id="1_qdidp"]
-[ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/Dark.tres" id="1_wxu8m"]
+[ext_resource type="Theme" uid="uid://dbbjjuko7gh5h" path="res://themes/BASE.tres" id="1_wxu8m"]
 [ext_resource type="Script" uid="uid://d2tstfb71chju" path="res://UI/dimensions/rewind.gd" id="2_4w04a"]
 [ext_resource type="Script" uid="uid://uajon8f0jvn7" path="res://UI/newsticker/newsticker.gd" id="3_7hxj0"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="3_ky8nc"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cy1o0vjg4sdbt" path="res://UI/achievements/achievements.tscn" id="6_mtmcd"]
 [ext_resource type="PackedScene" uid="uid://bb23v4wug50t3" path="res://UI/options/saving.tscn" id="6_rxys2"]
 [ext_resource type="PackedScene" uid="uid://r8keg03d3xue" path="res://UI/options/visual.tscn" id="7_qd5si"]
+[ext_resource type="Script" uid="uid://c2acqosw3x5it" path="res://UI/hovertext.gd" id="7_wxu8m"]
 [ext_resource type="Script" uid="uid://bdj8ecxuylviy" path="res://UI/boundlessness/resetbutton.gd" id="8_x0h36"]
 [ext_resource type="PackedScene" uid="uid://cbherf2m8xvad" path="res://UI/permanence/overcome.tscn" id="9_ug0mq"]
 [ext_resource type="PackedScene" uid="uid://d1v3rvuka8dmn" path="res://UI/challenges/permanence.tscn" id="10_s4e3g"]
@@ -39,7 +40,7 @@
 shader = ExtResource("3_o4cqe")
 shader_parameter/pixelsize = 0.00740741
 shader_parameter/zoom = 1.0
-shader_parameter/ignore = Color(0.8, 0.8, 0.8, 1)
+shader_parameter/ignore = Color(0.341176, 0.341176, 0.341176, 1)
 shader_parameter/disabled = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gj34f"]
@@ -305,6 +306,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "NEWS TICKER!!!"
 autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
 meta_underlined = true
 hint_underlined = true
 visible_characters_behavior = 0
@@ -316,6 +319,7 @@ layout_mode = 2
 split_offset = 150
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="VSplitContainer/HSplitContainer"]
+clip_contents = false
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 horizontal_scroll_mode = 0
@@ -351,7 +355,6 @@ autowrap_mode = 0
 vertical_alignment = 1
 
 [node name="Rewind" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
-clip_contents = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 
@@ -366,8 +369,22 @@ offset_top = 5.0
 offset_right = -7.5
 offset_bottom = 30.0
 grow_horizontal = 2
+tooltip_text = "meow"
 script = ExtResource("2_4w04a")
 smol = true
+
+[node name="TooltipPanel" type="PanelContainer" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button"]
+modulate = Color(1, 1, 1, 0)
+z_index = 400
+layout_mode = 0
+offset_left = 140.0
+offset_right = 174.0
+offset_bottom = 25.0
+mouse_filter = 2
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("7_wxu8m")
+direction = 2
+metadata/_custom_type_script = "uid://c2acqosw3x5it"
 
 [node name="Accuracy" type="ColorRect" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Rewind/Button"]
 layout_mode = 0
@@ -452,7 +469,7 @@ offset_right = -7.0
 offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 text = "Big Bang for
 1.75e115 PP
 (1.24e114 PP/s)"
@@ -499,7 +516,7 @@ offset_right = -7.0
 offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"ButtonEtern"
+theme_type_variation = &"ButtonPerm"
 disabled = true
 text = "Reach 1e2000 TC to
 unlock a new
@@ -522,7 +539,7 @@ offset_top = 5.0
 offset_right = -7.0
 offset_bottom = -5.0
 grow_horizontal = 2
-theme_type_variation = &"ButtonBLess"
+theme_type_variation = &"ButtonTrans"
 text = "Other lands await…
 gain 1.00 BP
 (next at 3.33e401 EP)"
@@ -734,6 +751,7 @@ centered = false
 script = ExtResource("29_nnwlg")
 
 [node name="TintScreen" type="ColorRect" parent="Camera2D/CanvasLayer"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

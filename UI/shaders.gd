@@ -3,7 +3,7 @@ extends Sprite2D
 
 @export var fisheye := 0.0
 
-func _process(delta):
+func _process(_delta):
 	material.set_shader_parameter("fisheye", fisheye)
 	#if not visible:
 		#texture = null

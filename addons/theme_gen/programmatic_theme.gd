@@ -310,18 +310,35 @@ func _merge_sub_dict_into_main_dict(main_dict: Dictionary, sub_dict_name: String
 
 	main_dict.erase(sub_dict_name)
 
-
 func _load_style_item(theme: Theme, type_name: String, item_name: String, value):
 	var data_type = _get_data_type_for_value(_default_theme, theme, type_name, item_name)
 	if data_type == -1:
-		push_error("Item name '%s' not recognized for type '%s'." % [item_name, type_name])
-		return
-
+		match typeof(value):
+			TYPE_COLOR:
+				data_type = Theme.DATA_TYPE_COLOR
+			TYPE_FLOAT, TYPE_INT, TYPE_VECTOR2I:
+				data_type = Theme.DATA_TYPE_CONSTANT
+			TYPE_DICTIONARY:
+				if value.type.begins_with("style"):
+					data_type = Theme.DATA_TYPE_STYLEBOX
+			TYPE_OBJECT:
+				if value is StyleBox:
+					data_type = Theme.DATA_TYPE_STYLEBOX
+				elif value is Font:
+					data_type = Theme.DATA_TYPE_FONT
+				elif value is Texture:
+					data_type = Theme.DATA_TYPE_ICON
+				else:
+					push_error("Item name '%s' not recognized for type '%s'." % [item_name, type_name])
+					return
+			_:
+				push_error("Item name '%s' not recognized for type '%s'." % [item_name, type_name])
+				return
 	if data_type == Theme.DATA_TYPE_STYLEBOX:
 		value = _create_stylebox_from_dict(value)
-
+	
+	
 	theme.set_theme_item(data_type, item_name, type_name, value)
-
 
 func _create_stylebox_from_dict(data: Dictionary):
 	var type = data["type"]
@@ -435,7 +452,7 @@ func border_width(left: int, top = null, right = null, bottom = null):
 
 func corner_radius(top_left: int, top_right = null, bottom_right = null, bottom_left = null):
 	if top_right == null: top_right = top_left
-	if bottom_right == null: bottom_right = top_right
+	if bottom_right == null: bottom_right = top_left
 	if bottom_left == null: bottom_left = top_left
 
 	return {

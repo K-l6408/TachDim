@@ -218,7 +218,7 @@ func _process(_delta):
 			%GridContainer.get_node("%dx%d" % [i,j]).self_modulate = \
 			Color("9f9") if is_unlocked(i,j) else Color("999")
 			%GridContainer.get_node("%dx%d" % [i,j]).tooltip_text = \
-			"\"%s\"\n%s" % [achnames(i,j), achreqs(i,j)]
+			"[i]\"%s\"[/i]\n%s" % [achnames(i,j), achreqs(i,j)]
 	for i in 8:
 		if not is_unlocked(1,i+1):
 			if TachyonDims.DimPurchase[i] > 0:
