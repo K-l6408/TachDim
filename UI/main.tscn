@@ -523,12 +523,12 @@ unlock a new
 Eternity Dimension."
 autowrap_mode = 2
 
-[node name="Boundlessness" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+[node name="Trancendence" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
-[node name="BoundlessButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness"]
+[node name="TrancendButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Trancendence"]
 custom_minimum_size = Vector2(30, 40)
 layout_mode = 1
 anchors_preset = -1
@@ -545,12 +545,12 @@ gain 1.00 BP
 (next at 3.33e401 EP)"
 script = ExtResource("8_x0h36")
 
-[node name="BP" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+[node name="TP" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/BP"]
+[node name="Text" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/TP"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 14
@@ -751,7 +751,6 @@ centered = false
 script = ExtResource("29_nnwlg")
 
 [node name="TintScreen" type="ColorRect" parent="Camera2D/CanvasLayer"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -885,5 +884,5 @@ process_material = SubResource("ParticleProcessMaterial_a3tro")
 [node name="Window" parent="." instance=ExtResource("33_yxlw4")]
 visible = false
 
-[connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Boundlessness/BoundlessButton" method="boundlessness"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Trancendence/TrancendButton" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Trancendence/TrancendButton" method="boundlessness"]
 [connection signal="theme_change" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options/Visual" to="." method="theme_change"]

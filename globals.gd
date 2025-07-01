@@ -35,7 +35,7 @@ enum DisplayMode {
 	Roman, toki_pona, sitelen_pona, Canonical_toki_pona, Evil, Factorial, Blind
 }
 enum Progression {
-	None, Dilation, Galaxy, Permanence, Overcome, Duplicantes, Boundlessness
+	None, Dilation, Galaxy, Permanence, Overcome, Duplicantes, Transcendence
 }
 
 const LOG2  = log(2)

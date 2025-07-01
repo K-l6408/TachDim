@@ -9,7 +9,7 @@ var tabSymbolRight = "⇢\uf1de⁉δξ∀\uf091\uf11c\uf0c9\uf0ad]!"
 var  dimensionSymbols = "Ψδ∀"
 var  challengeSymbols = "Ψδ∀"
 var permanenceSymbols = "↑⭻"
-var  boundlessSymbols = "\uf0e8\uf005"
+var  transcendSymbols = "\uf0e8\uf005"
 var      statsSymbols = "\uf036\uf162\uf0cb\uf1ec"
 var    optionsSymbols = "\uf0c7\uf1fc"
 var  celestialSymbols = "⏣⚴☾𝄽\uf1e0ɸ⸸"
@@ -36,7 +36,7 @@ func _ready():
 		[permanenceSymbols[i], %Tabs/Permanence.get_child(i).name, permanenceSymbols[i]])
 	for i in %Tabs/Transcendence.get_child_count():
 		%Tabs/Transcendence.get_tab_bar().set_tab_title(i, "%s %s %s" % \
-		[boundlessSymbols[i], %Tabs/Transcendence.get_child(i).name, boundlessSymbols[i]])
+		[transcendSymbols[i], %Tabs/Transcendence.get_child(i).name, transcendSymbols[i]])
 	for i in %Tabs/Statistics.get_child_count():
 		%Tabs/Statistics.get_tab_bar().set_tab_title(i, "%s %s %s" % \
 		[statsSymbols[i], %Tabs/Statistics.get_child(i).name, statsSymbols[i]])
@@ -65,10 +65,10 @@ func _process(_delta):
 	TBar.set_tab_hidden(2, Globals.progress < Globals.Progression.Permanence)
 	TBar.set_tab_hidden(3, Globals.progress < Globals.Progression.Permanence)
 	TBar.set_tab_hidden(4, Globals.progress < Globals.Progression.Duplicantes)
-	TBar.set_tab_hidden(5, Globals.progress < Globals.Progression.Boundlessness)
+	TBar.set_tab_hidden(5, Globals.progress < Globals.Progression.Transcendence)
 	
 	%Tabs/Dimensions.set_tab_hidden(1,
-	PermaDims.DimsUnlocked == 0 and Globals.progress < GL.Progression.Boundlessness)
+	PermaDims.DimsUnlocked == 0 and Globals.progress < GL.Progression.Transcendence)
 	%Tabs/Dimensions.set_tab_hidden(2, Globals.SDHandler.DimsUnlocked == 0)
 	%Tabs/Challenges.set_tab_hidden(
 		1, Globals.TachTotal.log10() < Globals.ECUnlocks[0]
@@ -99,7 +99,7 @@ func _process(_delta):
 	$BTint.material.set_shader_parameter(
 		"replace", get_theme_stylebox("panel", "TabContainer").bg_color
 	)
-	$BTint.visible = (Globals.progress >= GL.Progression.Boundlessness)
+	$BTint.visible = (Globals.progress >= GL.Progression.Transcendence)
 	
 	if Input.is_action_just_pressed("Debug"): debugMode = not debugMode
 	TBar.set_tab_hidden(TBar.tab_count - 1, not debugMode)
@@ -138,7 +138,7 @@ func _process(_delta):
 	%Resources/PDunlock.custom_minimum_size.y = \
 	%Resources/PDunlock/PDButton.size.y + 10
 	
-	%Resources/Boundlessness.visible = \
+	%Resources/Transcendence.visible = \
 	PermaDims.DimsUnlocked == 8 or \
 	Globals.Boundlessnesses.to_float() >= 25
 	if Currencies.PermanencePts.AMOUNT.exponent < 1024:
@@ -146,8 +146,8 @@ func _process(_delta):
 		%Resources/Boundlessness/BoundlessButton.text = "Reach %s\nPermanence Points" % \
 		largenum.two_to_the(1024)
 	else:
-		%Resources/Boundlessness/BoundlessButton.disabled = true#false
-		%Resources/Boundlessness/BoundlessButton.text = "%s\n%s %s %s\n%s" % [
+		%Resources/Transcendence/TranscendButton.disabled = true#false
+		%Resources/Transcendence/TranscendButton.text = "%s\n%s %s %s\n%s" % [
 			"Other lands await…",
 			"gain", Formulas.tpgained().to_string()\
 			.trim_suffix(".00").trim_suffix(";00"), "TP",
@@ -167,7 +167,7 @@ func _process(_delta):
 	%Resources/PP.visible = (Globals.progress >= GL.Progression.Permanence)
 	%Resources/Challenge.visible = (Globals.progress >= GL.Progression.Permanence)
 	%Resources/Dupl.visible = (Globals.progress >= GL.Progression.Duplicantes)
-	%Resources/BP.visible = (Globals.progress >= GL.Progression.Boundlessness)
+	%Resources/TP.visible = (Globals.progress >= GL.Progression.Transcendence)
 	
 	%Resources/Tachyons/Text.text = \
 	"[center][font_size=16]%s[/font_size]\nTachyons[/center]" % Currencies.Tachyons.to_string()
@@ -183,8 +183,8 @@ func _process(_delta):
 		Currencies.Duplicantes.AMOUNT.to_string().trim_suffix(".00").trim_suffix(";00"),
 		"" if Currencies.Duplicantes.AMOUNT.exponent == 0 else "te"
 	]
-	%Resources/BP/Text.text = \
-	"[center][color=%s][font_size=16]%s[/font_size]\nBoundlessness Point%s[/color][/center]" % [
+	%Resources/TP/Text.text = \
+	"[center][color=%s][font_size=16]%s[/font_size]\nTranscendence Point%s[/color][/center]" % [
 		get_theme_color("font_color", "ButtonBLess").to_html(false),
 		Globals.BoundlessPts.to_string().trim_suffix(".00").trim_suffix(";00"),
 		"" if Globals.BoundlessPts.exponent == 0 else "s"
