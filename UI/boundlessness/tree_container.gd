@@ -11,15 +11,16 @@ func _notification(what):
 		sort()
 
 func sort():
-	var rows = []
+	var rows = {}
 	for i in get_children():
 		if i is Study:
-			while rows.size() <= i.row:
-				rows.append([])
+			if not rows.has(i.row):
+				rows[i.row] = []
 			rows[i.row].append(i)
 	custom_minimum_size = Vector2(0,0)
 	var row_y = 20
-	for row in rows:
+	for R in rows:
+		var row = rows[R]
 		var total_x = 0
 		var center_x = 0
 		var max_new_y = 0

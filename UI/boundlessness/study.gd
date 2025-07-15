@@ -2,7 +2,7 @@
 extends Button
 class_name Study
 
-@export var row = 0 :
+@export var row = 0.0 :
 	set(value):
 		row = value
 		update_label()

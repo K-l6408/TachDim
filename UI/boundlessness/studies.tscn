@@ -84,7 +84,7 @@ Currently: ×?.??e????
 
 Cost: 2 ST"
 script = ExtResource("2_egti4")
-row = 1
+row = 1.0
 studies_required = [NodePath("../SD1")]
 cost = 2
 
@@ -103,7 +103,7 @@ You gain Duplicantes
 
 Cost: 2 ST"
 script = ExtResource("2_egti4")
-row = 1
+row = 1.0
 studies_required = [NodePath("../SD1")]
 cost = 2
 
@@ -121,7 +121,7 @@ Currently: ×1.00
 
 Cost: 1 ST"
 script = ExtResource("2_egti4")
-row = 2
+row = 2.0
 studies_required = [NodePath("../DupM")]
 cost = 1
 
@@ -140,7 +140,7 @@ raised ^4.00.
 
 Cost: 3 ST"
 script = ExtResource("2_egti4")
-row = 2
+row = 2.0
 studies_required = [NodePath("../DupSp")]
 cost = 3
 
@@ -532,6 +532,7 @@ cost = 10
 
 [node name="StudyTree3" type="Container" parent="ScrollContainer/Trees"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(480, 440)
 layout_mode = 2
 script = ExtResource("1_cryta")

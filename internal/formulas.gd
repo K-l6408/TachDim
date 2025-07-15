@@ -96,32 +96,35 @@ static func ec2_reward():
 	else:
 		return Currencies.Effect.new({"Capped": largenum.ten_to_the(90)})
 
-static func dupli_no11():
+static func dupli_no1x2():
 	return largenum.new(max(Currencies.Duplicantes.AMOUNT.log2() ** 2 * 3, 1))
-static func dupli_yes11():
+static func dupli_yes1x2():
 	if Currencies.Duplicantes.AMOUNT.exponent < 0:
 		return largenum.new(1)
-	return Currencies.Duplicantes.AMOUNT.power(0.03).add(dupli_no11() - 1)
+	return Currencies.Duplicantes.AMOUNT.power(0.03)
 
 static func duplicantes():
-	var base = Currencies.Effect.new({"Base": dupli_no11()})
-	if "1×1" in Globals.Studies.purchased:
-		base.new_section("After S1×1", dupli_yes11())
-	if "Time3" in Globals.Studies.purchased:
+	var base = Currencies.Effect.new({"Base": dupli_no1x2()})
+	if "1×2" in Globals.Studies.purchased:
 		base.new_section(
-			"After STime3",
+			"After S1×2",
+			dupli_no1x2().add(dupli_yes1x2()).add(-1)
+		)
+	if "Time4" in Globals.Studies.purchased:
+		base.new_section(
+			"After STime4",
 			base.value().power(study_time3().value().to_float())
 		)
 	return base
 
-static func boundlessconversion():
+static func space_conversion():
 	if "6×2" in Globals.Studies.purchased:
-		return 2./3.
+		return 0.4
 	else: return 1./3.
-static func bounlesspower(): # haha typo
+static func space_power(): # haha typo
 	if Globals.SDHandler.BoundlessPower.exponent < 0:
 		return largenum.new(1)
-	return Globals.SDHandler.BoundlessPower.power(boundlessconversion())
+	return Globals.SDHandler.BoundlessPower.power(space_conversion())
 
 static func study_tach1():
 	return Currencies.Effect.new(TachyonDims.RewindMult.power(0.1))
@@ -129,7 +132,7 @@ static func study_tach1():
 static func study_time1():
 	return Currencies.Effect.new(TachyonDims.RewindMult.power(0.002))
 static func study_time2():
-	return Currencies.Effect.new(bounlesspower().power(TachyonDims.TDilation * 0.001))
+	return Currencies.Effect.new(space_power().power(TachyonDims.TDilation * 0.001))
 static func study_time3():
 	return Currencies.Effect.new(1 + .05 * Duplicantes.dupGalaxies, Currencies.Effect.Power)
 
