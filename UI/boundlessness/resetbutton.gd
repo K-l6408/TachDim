@@ -6,8 +6,8 @@ func boundlessness():
 	Globals.BoundlessPts.add2self(tpgained)
 	Globals.Boundlessnesses.add2self(1)
 	Globals.boundlessnessreset()
-	if  Globals.progress < GL.Progression.Boundlessness:
-		Globals.progress = GL.Progression.Boundlessness
+	if  Globals.progress < GL.Progression.Transcendence:
+		Globals.progress = GL.Progression.Transcendence
 	if Globals.fastestBLess.time < 0 \
 	or Globals.fastestBLess.time > time:
 		Globals.fastestBLess = Globals.PrestigeData.new(time, tpgained, 1)

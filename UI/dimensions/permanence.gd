@@ -78,7 +78,7 @@ func _process(delta):
 	
 	%Label.text = ""
 	
-	#if Globals.ECCompleted(2):
+	#if Globals.PCCompleted(2):
 		#%Important.text += " | Timespeed: [/font_size]%s[font_size=10]/sec" % \
-		#(Formulas.ec2_reward().to_string())
+		#(Formulas.pc2_reward().to_string())
 	

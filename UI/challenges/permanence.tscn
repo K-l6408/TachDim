@@ -77,12 +77,12 @@ alignment = 1
 custom_minimum_size = Vector2(960, 0)
 layout_mode = 2
 
-[node name="EC1" type="Panel" parent="Chal/lenges"]
+[node name="PC1" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 theme_type_variation = &"PermPanel"
 
-[node name="Name" type="Label" parent="Chal/lenges/EC1"]
+[node name="Name" type="Label" parent="Chal/lenges/PC1"]
 layout_mode = 0
 offset_top = -25.0
 offset_right = 36.0
@@ -90,7 +90,7 @@ theme_override_font_sizes/font_size = 20
 text = "EC1"
 vertical_alignment = 2
 
-[node name="Condition" type="RichTextLabel" parent="Chal/lenges/EC1"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/PC1"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -101,7 +101,7 @@ offset_bottom = 118.0
 grow_horizontal = 2
 text = "Challenges 1, 2, 5, 6, 11 and 14's restrictions all apply at once."
 
-[node name="Start" type="Button" parent="Chal/lenges/EC1"]
+[node name="Start" type="Button" parent="Chal/lenges/PC1"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -114,7 +114,7 @@ grow_vertical = 0
 theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
-[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC1"]
+[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/PC1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -131,7 +131,7 @@ text = "[center]Requirement: 3.23e616 TC
 Reward: ×3 on all TDs for each EC completion.
 (Currently: ×1)"
 
-[node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC1"]
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/PC1"]
 layout_mode = 0
 offset_left = 169.0
 offset_top = 3.0
@@ -139,12 +139,12 @@ offset_right = 297.0
 offset_bottom = 131.0
 texture = ExtResource("1_1j2kp")
 
-[node name="EC2" type="Panel" parent="Chal/lenges"]
+[node name="PC2" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 theme_type_variation = &"PermPanel"
 
-[node name="Name" type="Label" parent="Chal/lenges/EC2"]
+[node name="Name" type="Label" parent="Chal/lenges/PC2"]
 layout_mode = 0
 offset_top = -25.0
 offset_right = 36.0
@@ -152,7 +152,7 @@ theme_override_font_sizes/font_size = 20
 text = "EC2"
 vertical_alignment = 2
 
-[node name="Condition" type="RichTextLabel" parent="Chal/lenges/EC2"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/PC2"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -163,7 +163,7 @@ offset_bottom = 118.0
 grow_horizontal = 2
 text = "Eternity Dimensions' multipliers are raised ^0.20"
 
-[node name="Start" type="Button" parent="Chal/lenges/EC2"]
+[node name="Start" type="Button" parent="Chal/lenges/PC2"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -176,7 +176,7 @@ grow_vertical = 0
 theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
-[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC2"]
+[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/PC2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -192,7 +192,7 @@ text = "[center]Requirement: 1.00e1500 TC
 
 Reward: Timespeed affects Eternity Dimensions with greatly reduced effeect."
 
-[node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC2"]
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/PC2"]
 layout_mode = 0
 offset_left = 169.0
 offset_top = 3.0
@@ -200,12 +200,12 @@ offset_right = 297.0
 offset_bottom = 131.0
 texture = ExtResource("3_1f1oy")
 
-[node name="EC3" type="Panel" parent="Chal/lenges"]
+[node name="PC3" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 theme_type_variation = &"PermPanel"
 
-[node name="Name" type="Label" parent="Chal/lenges/EC3"]
+[node name="Name" type="Label" parent="Chal/lenges/PC3"]
 layout_mode = 0
 offset_top = -25.0
 offset_right = 36.0
@@ -213,7 +213,7 @@ theme_override_font_sizes/font_size = 20
 text = "EC3"
 vertical_alignment = 2
 
-[node name="Condition" type="RichTextLabel" parent="Chal/lenges/EC3"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/PC3"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -224,7 +224,7 @@ offset_bottom = 118.0
 grow_horizontal = 2
 text = "All Tachyon Dimensions except the latest purchased are raised ^0.2."
 
-[node name="Start" type="Button" parent="Chal/lenges/EC3"]
+[node name="Start" type="Button" parent="Chal/lenges/PC3"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -237,7 +237,7 @@ grow_vertical = 0
 theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
-[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC3"]
+[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/PC3"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -253,7 +253,7 @@ text = "[center]Requirement: 1.00e1500 TC
 
 Reward: Timespeed affects Eternity Dimensions with greatly reduced effeect."
 
-[node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC3"]
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/PC3"]
 layout_mode = 0
 offset_left = 169.0
 offset_top = 3.0
@@ -261,12 +261,12 @@ offset_right = 297.0
 offset_bottom = 131.0
 texture = ExtResource("4_vrk2f")
 
-[node name="EC4" type="Panel" parent="Chal/lenges"]
+[node name="PC4" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 theme_type_variation = &"PermPanel"
 
-[node name="Name" type="Label" parent="Chal/lenges/EC4"]
+[node name="Name" type="Label" parent="Chal/lenges/PC4"]
 layout_mode = 0
 offset_top = -25.0
 offset_right = 36.0
@@ -274,7 +274,7 @@ theme_override_font_sizes/font_size = 20
 text = "EC4"
 vertical_alignment = 2
 
-[node name="Condition" type="RichTextLabel" parent="Chal/lenges/EC4"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/PC4"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -285,7 +285,7 @@ offset_bottom = 118.0
 grow_horizontal = 2
 text = "Tachyon Galaxies are more expensive the more Dilation you have and vice versa."
 
-[node name="Start" type="Button" parent="Chal/lenges/EC4"]
+[node name="Start" type="Button" parent="Chal/lenges/PC4"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -298,7 +298,7 @@ grow_vertical = 0
 theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
-[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC4"]
+[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/PC4"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -314,7 +314,7 @@ text = "[center]Requirement: 1.00e11500 TC
 
 Reward: Galaxies are 15% stronger and Dilation is 5 dimensions cheaper."
 
-[node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC4"]
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/PC4"]
 layout_mode = 0
 offset_left = 169.0
 offset_top = 3.0
@@ -322,12 +322,12 @@ offset_right = 297.0
 offset_bottom = 131.0
 texture = ExtResource("5_ukq3o")
 
-[node name="EC5" type="Panel" parent="Chal/lenges"]
+[node name="PC5" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 theme_type_variation = &"PermPanel"
 
-[node name="Name" type="Label" parent="Chal/lenges/EC5"]
+[node name="Name" type="Label" parent="Chal/lenges/PC5"]
 layout_mode = 0
 offset_top = -25.0
 offset_right = 36.0
@@ -335,7 +335,7 @@ theme_override_font_sizes/font_size = 20
 text = "EC5"
 vertical_alignment = 2
 
-[node name="Condition" type="RichTextLabel" parent="Chal/lenges/EC5"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/PC5"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -346,7 +346,7 @@ offset_bottom = 118.0
 grow_horizontal = 2
 text = "You cannot buy Timespeed Upgrades, but Eternity Dimensions are raised ^1.1."
 
-[node name="Start" type="Button" parent="Chal/lenges/EC5"]
+[node name="Start" type="Button" parent="Chal/lenges/PC5"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -359,7 +359,7 @@ grow_vertical = 0
 theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
-[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC5"]
+[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/PC5"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -375,7 +375,7 @@ text = "[center]Requirement: ??? TC
 
 Reward: ???"
 
-[node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC5"]
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/PC5"]
 layout_mode = 0
 offset_left = 169.0
 offset_top = 3.0
@@ -383,12 +383,12 @@ offset_right = 297.0
 offset_bottom = 131.0
 texture = ExtResource("6_26ynn")
 
-[node name="EC6" type="Panel" parent="Chal/lenges"]
+[node name="PC6" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 theme_type_variation = &"PermPanel"
 
-[node name="Name" type="Label" parent="Chal/lenges/EC6"]
+[node name="Name" type="Label" parent="Chal/lenges/PC6"]
 layout_mode = 0
 offset_top = -25.0
 offset_right = 36.0
@@ -396,7 +396,7 @@ theme_override_font_sizes/font_size = 20
 text = "EC6"
 vertical_alignment = 2
 
-[node name="Condition" type="RichTextLabel" parent="Chal/lenges/EC6"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/PC6"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -407,7 +407,7 @@ offset_bottom = 118.0
 grow_horizontal = 2
 text = "The threshold for free Timespeed Upgrades rises more than exponentially."
 
-[node name="Start" type="Button" parent="Chal/lenges/EC6"]
+[node name="Start" type="Button" parent="Chal/lenges/PC6"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -420,7 +420,7 @@ grow_vertical = 0
 theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
-[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC6"]
+[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/PC6"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -436,7 +436,7 @@ text = "[center]Requirement: ??? TC
 
 Reward: ???"
 
-[node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC6"]
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/PC6"]
 layout_mode = 0
 offset_left = 169.0
 offset_top = 3.0
@@ -444,20 +444,20 @@ offset_right = 297.0
 offset_bottom = 131.0
 texture = ExtResource("7_ud5jq")
 
-[node name="EC7" type="Panel" parent="Chal/lenges"]
+[node name="PC7" type="Panel" parent="Chal/lenges"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 theme_type_variation = &"PermPanel"
 
-[node name="Name" type="Label" parent="Chal/lenges/EC7"]
+[node name="Name" type="Label" parent="Chal/lenges/PC7"]
 layout_mode = 0
 offset_top = -25.0
 offset_right = 36.0
 theme_override_font_sizes/font_size = 20
-text = "EC7"
+text = "PC8"
 vertical_alignment = 2
 
-[node name="Condition" type="RichTextLabel" parent="Chal/lenges/EC7"]
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/PC7"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -468,7 +468,7 @@ offset_bottom = 118.0
 grow_horizontal = 2
 text = "Tachyon Galaxies are disabled, but Time Dilation's multiplier is ×10.00."
 
-[node name="Start" type="Button" parent="Chal/lenges/EC7"]
+[node name="Start" type="Button" parent="Chal/lenges/PC7"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -481,7 +481,68 @@ grow_vertical = 0
 theme_type_variation = &"ButtonPerm"
 text = "Start challenge"
 
-[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/EC7"]
+[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/PC7"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -65.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center]Requirement: ??? TC
+
+Reward: You can keep 5 Dup. Galaxies on Permanence."
+
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/PC7"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 131.0
+texture = ExtResource("8_qj3fm")
+
+[node name="PC8" type="Panel" parent="Chal/lenges"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+theme_type_variation = &"PermPanel"
+
+[node name="Name" type="Label" parent="Chal/lenges/PC8"]
+layout_mode = 0
+offset_top = -25.0
+offset_right = 36.0
+theme_override_font_sizes/font_size = 20
+text = "EC7"
+vertical_alignment = 2
+
+[node name="Condition" type="RichTextLabel" parent="Chal/lenges/PC8"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -133.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "Tachyon Galaxies are disabled, but Time Dilation's multiplier is ×10.00."
+
+[node name="Start" type="Button" parent="Chal/lenges/PC8"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = -48.0
+offset_right = 132.0
+offset_bottom = -13.0
+grow_vertical = 0
+theme_type_variation = &"ButtonPerm"
+text = "Start challenge"
+
+[node name="ReqRew" type="RichTextLabel" parent="Chal/lenges/PC8"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -497,19 +558,10 @@ text = "[center]Requirement: ??? TC
 
 Reward: ???"
 
-[node name="TextureRect" type="TextureRect" parent="Chal/lenges/EC7"]
+[node name="TextureRect" type="TextureRect" parent="Chal/lenges/PC8"]
 layout_mode = 0
 offset_left = 169.0
 offset_top = 3.0
 offset_right = 297.0
 offset_bottom = 131.0
 texture = ExtResource("8_qj3fm")
-
-[connection signal="pressed" from="CurrentChallenge/Exit" to="." method="challenge_start" binds= [0]]
-[connection signal="pressed" from="Chal/lenges/EC1/Start" to="." method="challenge_start" binds= [16]]
-[connection signal="pressed" from="Chal/lenges/EC2/Start" to="." method="challenge_start" binds= [17]]
-[connection signal="pressed" from="Chal/lenges/EC3/Start" to="." method="challenge_start" binds= [18]]
-[connection signal="pressed" from="Chal/lenges/EC4/Start" to="." method="challenge_start" binds= [19]]
-[connection signal="pressed" from="Chal/lenges/EC5/Start" to="." method="challenge_start" binds= [20]]
-[connection signal="pressed" from="Chal/lenges/EC6/Start" to="." method="challenge_start" binds= [21]]
-[connection signal="pressed" from="Chal/lenges/EC7/Start" to="." method="challenge_start" binds= [22]]

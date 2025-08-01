@@ -80,14 +80,14 @@ static func achievement_56():
 		return Currencies.Effect.new((240.0 / (Globals.eternTime + 120)) ** 5)
 	else: return Currencies.Effect.new(1)
 
-static func ec1_reward():
+static func pc1_reward():
 	var m : float = 1
 	for i in 7:
-		if Globals.ECCompleted(i + 1):
+		if Globals.PCCompleted(i + 1):
 			m *= 3
 	return Currencies.Effect.new(m)
 
-static func ec2_reward():
+static func pc2_reward():
 	var default = TachyonDims.TSpeedBoost.power(
 		(TachyonDims.TSpeedCount + PermaDims.FreeTSpeed) * 0.01
 	)

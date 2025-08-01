@@ -58,7 +58,7 @@ func _process(_delta):
 		match i:
 			0: j = (Globals.progress >= Globals.Progression.Permanence)
 			1: j = (Globals.progress >= Globals.Progression.Overcome)
-			2: j = (Globals.progress >= Globals.Progression.Boundlessness)
+			2: j = (Globals.progress >= Globals.Progression.Transcendence)
 		%AnimOptions.get_node(ANIMATION[i]).visible = j
 		if not j and not Globals.AnimOpt[i]:
 			change_anim_opt(true, i)

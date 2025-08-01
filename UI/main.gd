@@ -71,7 +71,7 @@ func _process(_delta):
 	PermaDims.DimsUnlocked == 0 and Globals.progress < GL.Progression.Transcendence)
 	%Tabs/Dimensions.set_tab_hidden(2, Globals.SDHandler.DimsUnlocked == 0)
 	%Tabs/Challenges.set_tab_hidden(
-		1, Globals.TachTotal.log10() < Globals.ECUnlocks[0]
+		1, Globals.TachTotal.log10() < Globals.PCUnlocks[0]
 	)
 	
 	$ETint.global_position = TBar.get_tab_rect(3).position + TBar.global_position\
@@ -142,8 +142,8 @@ func _process(_delta):
 	PermaDims.DimsUnlocked == 8 or \
 	Globals.Boundlessnesses.to_float() >= 25
 	if Currencies.PermanencePts.AMOUNT.exponent < 1024:
-		%Resources/Boundlessness/BoundlessButton.disabled = true
-		%Resources/Boundlessness/BoundlessButton.text = "Reach %s\nPermanence Points" % \
+		%Resources/Transcendence/TranscendButton.disabled = true
+		%Resources/Transcendence/TranscendButton.text = "Reach %s\nPermanence Points" % \
 		largenum.two_to_the(1024)
 	else:
 		%Resources/Transcendence/TranscendButton.disabled = true#false
@@ -204,7 +204,7 @@ func _process(_delta):
 	if %Resources/Permanence/PermanenceButton.disabled:
 		%Resources/Permanence/PermanenceButton.text = "Reach %s Tachyons" % (
 			largenum.two_to_the(1024) if Globals.Challenge <= 15 else
-			Globals.ECTargets[Globals.Challenge - 16]
+			Globals.PCTargets[Globals.Challenge - 16]
 		).to_string()
 	elif Globals.Challenge > 15:
 		%Resources/Permanence/PermanenceButton.text = "Big\u00a0Bang to complete the challenge"

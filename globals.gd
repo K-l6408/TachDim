@@ -59,10 +59,10 @@ var Boundlessnesses := largenum.new(0)
 
 var Challenge := 0
 var CompletedChallenges := 0
-var CompletedECs := 0
+var CompletedPCs := 0
 
 func challengeCompleted(which): return (CompletedChallenges >> (which - 1)) & 1
-func ECCompleted(which):		return (CompletedECs >> (which - 1)) & 1
+func PCCompleted(which):		return (CompletedPCs >> (which - 1)) & 1
 
 var SDHandler  : Control
 var Achievemer : Control
@@ -107,20 +107,20 @@ var challengeTimes = [
 	-1, -1, -1,
 	-1, -1, -1
 ]
-var ECTimes = [
+var PCTimes = [
 	-1, -1, -1,
 	-1, -1, -1, -1
 ]
 
-var ECTargets = [
+var PCTargets = [
 	largenum.two_to_the(2048), largenum.ten_to_the(700),
 	largenum.ten_to_the(5000), largenum.ten_to_the(10500),
 	largenum.ten_to_the(7200), largenum.ten_to_the(14000),
-	largenum.ten_to_the(5000)
+	largenum.ten_to_the(1100), largenum.ten_to_the(5000)
 ]
-const ECUnlocks = [
+const PCUnlocks = [
 	1200,  1900,  6000, 12000,
-	16000, 33333, 60000, 80000
+	16000, 33333, 42000, 60000, 80000
 ]
 
 func _process(delta):
@@ -134,7 +134,7 @@ func boundlessnessreset():
 	boundTime = 0
 	if Boundlessnesses.to_float() < 2:
 		CompletedChallenges = 0
-	CompletedECs = 0
+	CompletedPCs = 0
 	Currencies.PermanencePts.reset()
 	Currencies.Permanences  .reset()
 	last10etern = []

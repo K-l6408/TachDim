@@ -26,14 +26,14 @@ var TreshMult    : float :
 		if Globals.Challenge == 21:
 			return .09 + 1.01 ** FreeTSpeed
 		#if FreeTSpeed > 4000:
-			#if Globals.ECCompleted(6):
+			#if Globals.PCCompleted(6):
 				#return 4.375
 			#return 5.0
 		#if FreeTSpeed > 500:
-			#if Globals.ECCompleted(6):
+			#if Globals.PCCompleted(6):
 				#return 1.75
 			#return 2.0
-		if Globals.ECCompleted(5):
+		if Globals.PCCompleted(5):
 			return 1.95
 		return 2.0
 
@@ -92,11 +92,14 @@ func _process(delta: float) -> void:
 		if "Time1" in Globals.Studies.purchased:
 			mult.mult2self(Formulas.study_time1())
 		
-		if Globals.ECCompleted(2) and i <= 4:
-			mult.mult2self(Formulas.ec2_reward().value())
+		if Globals.PCCompleted(2) and i <= 4:
+			mult.mult2self(Formulas.pc2_reward().value())
 		
 		if Globals.Challenge == 20:
 			mult.pow2self(2)
+		
+		if Globals.Challenge == 22:
+			mult = largenum.ten_to_the(mult.log10() ** .8)
 		
 		Multipliers[i-1] = mult
 		

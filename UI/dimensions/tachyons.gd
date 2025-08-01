@@ -121,7 +121,7 @@ func _process(delta):
 	if Globals.Challenge == 20:
 		%TopButtons/Timespeed.disabled = true
 		%TopButtons/Timespeed/BuyMax.disabled = true
-		%TopButtons/Timespeed.text = "Timespeed disabled (EC5)"
+		%TopButtons/Timespeed.text = "Timespeed disabled (PC5)"
 	else:
 		%TopButtons/Timespeed.disabled = Currencies.Tachyons.AMOUNT.less(TachyonDims.tspcost())
 		%TopButtons/Timespeed/BuyMax.disabled = Currencies.Tachyons.AMOUNT.less(TachyonDims.tspcost())
@@ -142,7 +142,7 @@ func _process(delta):
 	
 	if Globals.Challenge > 15:
 		%Progress.value = TachyonDims.topTachyonsInPermanence.log2()
-		%Progress.max_value = Globals.ECTargets[Globals.Challenge - 16].log2()
+		%Progress.max_value = Globals.PCTargets[Globals.Challenge - 16].log2()
 		%Progress.tooltip_text += "Challenge goal"
 	elif Globals.Overcame and PermaDims.DimsUnlocked < 8:
 		%Progress.value = TachyonDims.topTachyonsInPermanence.log10()

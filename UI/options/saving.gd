@@ -207,8 +207,8 @@ func saveF(file : String = saveFilePath):
 		DATA["TTIE"] = TachyonDims.topTachyonsInPermanence.to_bytes()
 		
 		DATA["dila buyer max time"] = Autobuyers.DilaTimeOverride
-		DATA["ECcompl"] = Globals.CompletedECs
-		DATA["ECtimes"] = Globals.ECTimes
+		DATA["ECcompl"] = Globals.CompletedPCs
+		DATA["ECtimes"] = Globals.PCTimes
 	
 	if Globals.progress >= GL.Progression.Duplicantes:
 		DATA["duplicantes"]  = Currencies.Duplicantes.AMOUNT.to_bytes()
@@ -218,7 +218,7 @@ func saveF(file : String = saveFilePath):
 		DATA["dupe max gal"] = Duplicantes.maxGalaxies
 		DATA["dupe galaxies"]= Duplicantes.dupGalaxies
 	
-	if Globals.progress >= GL.Progression.Boundlessness:
+	if Globals.progress >= GL.Progression.Transcendence:
 		DATA["bln progress"] = Globals.progressBL
 		
 		DATA["bln-es"] = Globals.Boundlessnesses.to_bytes()
@@ -430,10 +430,10 @@ func loadF(file : String = saveFilePath):
 			DATA["dila buyer max time"]
 		
 		if DATA.has("ECcompl"):
-			Globals.CompletedECs = DATA["ECcompl"]
-			Globals.ECTimes = DATA["ECtimes"]
-			while Globals.ECTimes.size() < 7:
-				Globals.ECTimes.append(-1)
+			Globals.CompletedPCs = DATA["ECcompl"]
+			Globals.PCTimes = DATA["ECtimes"]
+			while Globals.PCTimes.size() < 8:
+				Globals.PCTimes.append(-1)
 	
 	if Globals.progress >= GL.Progression.Duplicantes:
 		Currencies.Duplicantes.AMOUNT.from_bytes(DATA["duplicantes"])
@@ -444,7 +444,7 @@ func loadF(file : String = saveFilePath):
 			Duplicantes.maxGalaxies = DATA["dupe max gal"]
 			Duplicantes.dupGalaxies = DATA["dupe galaxies"]
 	
-	if Globals.progress >= GL.Progression.Boundlessness:
+	if Globals.progress >= GL.Progression.Transcendence:
 		Globals.Boundlessnesses.from_bytes(DATA["bln-es"])
 		Globals.BoundlessPts.from_bytes(DATA["bln points"])
 		Globals.TachTotalBL.from_bytes(DATA["top tachyons in bln"])
@@ -520,8 +520,8 @@ func gameReset():
 		-1, -1, -1,
 		-1, -1, -1
 	]
-	Globals.CompletedECs = 0
-	Globals.ECTimes      = [
+	Globals.CompletedPCs = 0
+	Globals.PCTimes      = [
 		-1, -1, -1,
 		-1, -1, -1,
 		-1

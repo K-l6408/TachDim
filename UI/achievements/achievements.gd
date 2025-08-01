@@ -278,7 +278,7 @@ func _process(_delta):
 		if Globals.challengeTimes[2-1] <= 30 and Globals.challengeTimes[2-1] > 0:
 			set_unlocked(5, 6)
 	if not is_unlocked(5, 7):
-		if Globals.CompletedECs > 0:
+		if Globals.CompletedPCs > 0:
 			set_unlocked(5, 7)
 	if not is_unlocked(5, 8):
 		if Permanence.overcome_upgrade_bought(3):
@@ -299,11 +299,11 @@ func _process(_delta):
 		if Duplicantes.dupGalaxies >= 1:
 			set_unlocked(7, 1)
 	if not is_unlocked(7, 2):
-		if Globals.ECTimes[3-1] <= 30 and Globals.ECTimes[3-1] > 0:
+		if Globals.PCTimes[3-1] <= 30 and Globals.PCTimes[3-1] > 0:
 			set_unlocked(7, 2)
 	if not is_unlocked(7, 7):
 		if Duplicantes.dupGalaxies >= 3:
 			set_unlocked(7, 7)
 	if not is_unlocked(7, 8):
-		if Globals.progress >= GL.Progression.Boundlessness:
+		if Globals.progress >= GL.Progression.Transcendence:
 			set_unlocked(7, 8)

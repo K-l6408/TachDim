@@ -109,9 +109,9 @@ func process_pp_gain():
 		TachyonDims.topTachyonsInPermanence.log2() / 1024
 	) - 1))
 	
-	if Globals.ECCompleted(1):
-		ppgain.mult2self(Formulas.ec1_reward().value())
-		PPEffects["Permanence Challenge 1 reward"] = Formulas.ec1_reward()
+	if Globals.PCCompleted(1):
+		ppgain.mult2self(Formulas.pc1_reward().value())
+		PPEffects["Permanence Challenge 1 reward"] = Formulas.pc1_reward()
 	
 	PPEffects["Repeatable ×2 multiplier"] = \
 	Currencies.Effect.new(largenum.two_to_the(PPMultBought))

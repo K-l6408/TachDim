@@ -25,7 +25,7 @@ var TSpeedBoost :
 		
 		if Permanence.upgrade_bought(8): GalaxyMult *= 2
 		if Permanence.overcome_upgrade_bought(3): GalaxyMult *= 1.5
-		if Globals.ECCompleted(4): GalaxyMult *= 1.02
+		if Globals.PCCompleted(4): GalaxyMult *= 1.02
 		
 		return largenum.new(1.10 if Globals.Challenge == 12 else 1.125).\
 		div2self(largenum.new(GalaxyBoost).power(
@@ -70,14 +70,14 @@ var canRewind :
 var canGalaxy :
 	get:
 		if (not Globals.Overcame) and canBigBang: return false
-		if Globals.Challenge in [8, 22]: return false
+		if Globals.Challenge in [8, 23]: return false
 		if Globals.Challenge in [6, 16]:
 			return (DimPurchase[5] >= galacost())
 		return (DimPurchase[7] >= galacost())
 var canBigBang:
 	get:
 		if Globals.Challenge > 15:
-			return Globals.ECTargets[Globals.Challenge - 16].less(topTachyonsInPermanence)
+			return Globals.PCTargets[Globals.Challenge - 16].less(topTachyonsInPermanence)
 		var logfinity = 2048 if Globals.Challenge == 15 else 1024
 		return (topTachyonsInPermanence.log2() >= logfinity)
 var topTachyonsInPermanence := largenum.new(0)
@@ -224,7 +224,7 @@ func rewind():
 		rewindBoost().divide(RewindMult).less(600)
 	):
 		Globals.Achievemer.set_unlocked(3, 5) # rewind boost >= ×600, achievement 3×5
-	if TachyonDims.rewindScore() >= 0.9:
+	if rewindScore() >= 0.9:
 		if not Globals.Achievemer.is_unlocked(2, 4):
 			Globals.Achievemer.set_unlocked(2, 4)
 	if RewindMult.less(rewindBoost()):
@@ -237,7 +237,7 @@ func rewind():
 		TSpeedCount = TS
 	else:
 		for i in 7:
-			DimAmount[i].pow2self(1 - TachyonDims.rewindScore())
+			DimAmount[i].pow2self(1 - rewindScore())
 			if DimAmount[i].less(DimPurchase[i]):
 				DimAmount[i] = largenum.new(DimPurchase[i])
 
@@ -255,7 +255,7 @@ func rewindBoost() -> largenum:
 	if Globals.Achievemer.is_unlocked(5, 4): RBoost.pow2self(1.2)
 	
 	if Globals.Achievemer.is_unlocked(2, 4): RBoost.div2self(RewindMult)
-	RBoost.pow2self(TachyonDims.rewindScore())
+	RBoost.pow2self(rewindScore())
 	if Globals.Achievemer.is_unlocked(2, 4): RBoost.mult2self(RewindMult)
 	
 	return RBoost
@@ -332,7 +332,7 @@ func dilacost():
 		Cost += TGalaxies * 15
 	if Permanence.upgrade_bought(4):
 		Cost -= 5
-	if Globals.ECCompleted(4):
+	if Globals.PCCompleted(4):
 		Cost -= 5
 	
 	return Cost
@@ -421,12 +421,12 @@ func permanence(resetchallenge := true):
 			or  Globals.challengeTimes[Globals.Challenge - 1] < 0:
 				Globals.challengeTimes[Globals.Challenge - 1] = Globals.eternTime
 		if Globals.Challenge > 15:
-			Globals.CompletedECs |= 1 << (Globals.Challenge - 16)
-			if Globals.ECTimes.size() < Globals.Challenge - 15:
-				Globals.ECTimes.append(-1)
-			if  Globals.ECTimes[Globals.Challenge - 16] > Globals.eternTime \
-			or  Globals.ECTimes[Globals.Challenge - 16] < 0:
-				Globals.ECTimes[Globals.Challenge - 16] = Globals.eternTime
+			Globals.CompletedPCs |= 1 << (Globals.Challenge - 16)
+			if Globals.PCTimes.size() < Globals.Challenge - 15:
+				Globals.PCTimes.append(-1)
+			if  Globals.PCTimes[Globals.Challenge - 16] > Globals.eternTime \
+			or  Globals.PCTimes[Globals.Challenge - 16] < 0:
+				Globals.PCTimes[Globals.Challenge - 16] = Globals.eternTime
 	
 	var ppgain = Permanence.process_pp_gain()
 	var etgain = 1
@@ -509,16 +509,16 @@ func _process(delta):
 	dilamult = 2.0
 	if Permanence.upgrade_bought(10): dilamult = 2.5
 	if Permanence.overcome_upgrade_bought(5): dilamult = 3.0
-	if Globals.ECCompleted(7): dilamult = 5.0
+	if Globals.PCCompleted(7): dilamult = 5.0
 	if Globals.Challenge == 10:
 		dilamult = 2.2 ** (1 - abs(C10Score()))
 	if Globals.Challenge == 8: dilamult = 1
-	if Globals.Challenge == 22: dilamult = 10
+	if Globals.Challenge == 23: dilamult = 10
 	if "Tach2" in Globals.Studies.purchased:
 		dilamult *= 2
 	dilamult = largenum.new(dilamult)
-	if Globals.progress >= Globals.Progression.Boundlessness:
-		dilamult.mult2self(Formulas.bounlesspower())
+	if Globals.progress >= Globals.Progression.Transcendence:
+		dilamult.mult2self(Formulas.space_power())
 	
 	if Globals.Challenge == 2  or Globals.Challenge == 16:
 		C2Multiplier += delta / 60
@@ -651,11 +651,15 @@ func _process(delta):
 				Currencies.Effect.new(0.2, Currencies.Effect.Power)
 			multiplier.pow2self(0.2)
 		
-		if Globals.ECCompleted(6):
+		if Globals.PCCompleted(6):
 			Effects[0]["Permanence Challenge 6 reward"] = \
 				Currencies.Effect.new(1.05, Currencies.Effect.Power)
 			multiplier.pow2self(1.05)
 		
+		if Globals.Challenge == 22:
+			Effects[0]["Permanence Challenge 7"] = \
+				Currencies.Effect.new(multiplier.log10() ** -.2, Currencies.Effect.Power)
+			multiplier.pow2self(multiplier.log10() ** -.2)
 		#if i != 8:
 			#if DimAmount[i].exponent == -INF:	dims[i].get_node("A&G/Growth").hide()
 			#else:								dims[i].get_node("A&G/Growth").show()

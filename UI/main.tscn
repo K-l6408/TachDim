@@ -523,12 +523,12 @@ unlock a new
 Eternity Dimension."
 autowrap_mode = 2
 
-[node name="Trancendence" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
+[node name="Transcendence" type="Panel" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
-[node name="TrancendButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Trancendence"]
+[node name="TranscendButton" type="Button" parent="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Transcendence"]
 custom_minimum_size = Vector2(30, 40)
 layout_mode = 1
 anchors_preset = -1
@@ -884,5 +884,5 @@ process_material = SubResource("ParticleProcessMaterial_a3tro")
 [node name="Window" parent="." instance=ExtResource("33_yxlw4")]
 visible = false
 
-[connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Trancendence/TrancendButton" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Trancendence/TrancendButton" method="boundlessness"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Transcendence/TranscendButton" to="VSplitContainer/HSplitContainer/ScrollContainer2/Resources/Transcendence/TranscendButton" method="boundlessness"]
 [connection signal="theme_change" from="VSplitContainer/HSplitContainer/ScrollContainer/MarginContainer/Tabs/Options/Visual" to="." method="theme_change"]

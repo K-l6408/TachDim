@@ -81,11 +81,11 @@ func _process(_delta):
 			]
 		text += "You have spent %s in this Permanence." % Globals.format_time(Globals.eternTime)
 	
-	if Globals.progress >= Globals.Progression.Boundlessness:
+	if Globals.progress >= Globals.Progression.Transcendence:
 		text += "\n\n[color=%s][font_size=30]%s[/font_size][/color]\n%s %s %s\n%s %s.\n%s %s %s" % [
 			boundlessColor,
-			"Boundlessness",
-			"You have", Globals.Boundlessnesses.to_string().trim_suffix(".00"), "Boundlessnesses.",
-			"Your fastest Boundlessness was", Globals.format_time(Globals.fastestBLess.time),
-			"You have spent", Globals.format_time(Globals.boundTime), "in this Boundlessness."
+			"Transcendence",
+			"You have", Globals.Boundlessnesses.to_string().trim_suffix(".00"), "Transcendences.",
+			"Your fastest Transcendence was", Globals.format_time(Globals.fastestBLess.time),
+			"You have spent", Globals.format_time(Globals.boundTime), "in this Transcendence."
 		]

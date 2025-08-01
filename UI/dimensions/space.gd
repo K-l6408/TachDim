@@ -83,8 +83,8 @@ func _process(delta):
 	%Important.text = \
 	"[center]%s [font_size=20]%s[/font_size] %s [font_size=20]^%s[/font_size] %s [font_size=20]×%s[/font_size]." % [
 		"You have", BoundlessPower.to_string(), "Boundless Power,\nraised",
-		Globals.float_to_string(Formulas.boundlessconversion(), 3),
-		"to boost Time Dilation's multiplier by", Formulas.bounlesspower().to_string()
+		Globals.float_to_string(Formulas.space_conversion(), 3),
+		"to boost Time Dilation's multiplier by", Formulas.space_power().to_string()
 	]
 	%Important.text += "\n[font_size=10]%s [/font_size]%s[font_size=10] %s" % [
 		"You're gaining", BLPperS.to_string(), "Boundless Power per second."

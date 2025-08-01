@@ -2,9 +2,9 @@ extends Node
 
 class SpaceStudy:
 	var id := ""
-	var reqs : Array[SpaceStudy] = []
+	var reqs : Array = []
 	var cost := 100
-	var excludes : Array[SpaceStudy] = []
+	var excludes : Array = []
 	var multibranch := false
 	var row := 0
 	var size := Vector2(1,1)

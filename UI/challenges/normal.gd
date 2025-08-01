@@ -1,5 +1,11 @@
 extends Control
 
+func _ready() -> void:
+	$CurrentChallenge/Exit.connect(&"pressed", challenge_start.bind(0))
+	for i in $Chal/lenges.get_child_count():
+		if i == 0: continue
+		$Chal/lenges.get_child(i).get_node("Start").connect(&"pressed", challenge_start.bind(i))
+
 func challenge_start(which):
 	Globals.Challenge = which
 	TachyonDims.reset(2, false)

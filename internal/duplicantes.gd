@@ -5,6 +5,7 @@ var tickFraction := 0.0
 func on_permanence():
 	if not Globals.Achievemer.is_unlocked(6, 8):
 		Currencies.Duplicantes.reset()
+	if not Globals.PCCompleted(7):
 		dupGalaxies = 0
 	if dupGalaxies > 5:
 		dupGalaxies = 5
@@ -76,7 +77,7 @@ func _process(delta):
 	if Globals.progressBL < Globals.Progression.Duplicantes:
 		if not Currencies.Duplicantes.AMOUNT.less(0):
 			Currencies.Duplicantes.AMOUNT = largenum.new(0)
-		if Globals.ECCompleted(3):
+		if Globals.PCCompleted(3):
 			if  Globals.progress < Globals.Progression.Duplicantes:
 				Globals.progress = Globals.Progression.Duplicantes
 			Globals.progressBL   = Globals.Progression.Duplicantes

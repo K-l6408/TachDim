@@ -39,7 +39,7 @@ class Currency:
 	
 	func reset():
 		var _r = RESET.call()
-		if _r is largenum: AMOUNT = _r
+		if _r is largenum: AMOUNT = largenum.new(_r)
 	
 	func _to_string():
 		return AMOUNT.to_string()

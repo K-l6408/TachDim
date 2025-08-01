@@ -1,5 +1,11 @@
 extends Control
 
+func _ready() -> void:
+	$CurrentChallenge/Exit.connect(&"pressed", challenge_start.bind(0))
+	for i in $Chal/lenges.get_child_count():
+		if i == 0: continue
+		$Chal/lenges.get_child(i).get_node("Start").connect(&"pressed", challenge_start.bind(i + 15))
+
 func challenge_start(which):
 	Globals.Challenge = which
 	if TachyonDims.canBigBang:
@@ -15,12 +21,12 @@ func _process(_delta):
 	for i in $Chal/lenges.get_child_count():
 		if i == 0: continue
 		$Chal/lenges.get_child(i).get_node("Name").text = "PC%s" % Globals.int_to_string(i)
-		$Chal/lenges.get_child(i).visible = Globals.TachTotalBL.log10() >= Globals.ECUnlocks[i-1]
+		$Chal/lenges.get_child(i).visible = Globals.TachTotalBL.log10() >= Globals.PCUnlocks[i-1]
 		if $Chal/lenges.get_child(i).visible:
 			seen += 1
 			if Globals.Boundlessnesses.to_float() >= 5:
-				Globals.CompletedECs |= 1 << (i - 1)
-		if Globals.ECCompleted(i):
+				Globals.CompletedPCs |= 1 << (i - 1)
+		if Globals.PCCompleted(i):
 			$Chal/lenges.get_child(i).get_node("Start").text = "Completed"
 			$Chal/lenges.get_child(i).get_node("Start").add_theme_stylebox_override(
 				"normal",
@@ -41,66 +47,74 @@ func _process(_delta):
 		$Meow.text = "You have seen %s out of %s Permanence Challenges." % \
 		[Globals.int_to_string(seen), Globals.int_to_string($Chal/lenges.get_child_count() - 1)] + \
 		"\nThe next PC is unlocked at %s total Tachyons." % \
-		largenum.ten_to_the(Globals.ECUnlocks[seen])
+		largenum.ten_to_the(Globals.PCUnlocks[seen])
 	else:
 		$Meow.text = "You have seen all %s Permanence Challenges." % Globals.int_to_string(seen)
 	
-	$Chal/lenges/EC1/Condition.text = \
+	$Chal/lenges/PC1/Condition.text = \
 	"Challenges %s, %s, %s, %s, %s and %s's restrictions all apply at once." % [
 		Globals.int_to_string(1), Globals.int_to_string( 2), Globals.int_to_string( 5),
 		Globals.int_to_string(6), Globals.int_to_string(11), Globals.int_to_string(14)
 	]
-	$Chal/lenges/EC1/ReqRew.text = \
+	$Chal/lenges/PC1/ReqRew.text = \
 	"[center]Requirement: %s TC\n\nReward: ×%s on PP gain for each PC completion." % [
-		Globals.ECTargets[0].to_string(), Globals.int_to_string(3)
-	] + "\n(%s)" % Formulas.ec1_reward().to_string()
+		Globals.PCTargets[0].to_string(), Globals.int_to_string(3)
+	] + "\n(%s)" % Formulas.pc1_reward().to_string()
 	
-	$Chal/lenges/EC2/Condition.text = \
+	$Chal/lenges/PC2/Condition.text = \
 	"Tachyon Dimension and Timespeed cost scaling starts immediately."
-	$Chal/lenges/EC2/ReqRew.text = \
+	$Chal/lenges/PC2/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
-	Globals.ECTargets[1].to_string() + \
+	Globals.PCTargets[1].to_string() + \
 	"\nReward: Timespeed affects the first %s Permanence Dimensions with greatly reduced effect.\n(%s)" % [
-		Globals.int_to_string(4), Formulas.ec2_reward().to_string()
+		Globals.int_to_string(4), Formulas.pc2_reward().to_string()
 	]
 	
-	$Chal/lenges/EC3/Condition.text = \
+	$Chal/lenges/PC3/Condition.text = \
 	"All Tachyon Dimensions except the latest purchased are raised ^%s." % \
 	Globals.float_to_string(0.2, 1)
-	$Chal/lenges/EC3/ReqRew.text = \
+	$Chal/lenges/PC3/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
-	Globals.ECTargets[2].to_string() + \
+	Globals.PCTargets[2].to_string() + \
 	"\nReward: Unlock Duplicantes."
 	
-	$Chal/lenges/EC4/ReqRew.text = \
+	$Chal/lenges/PC4/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
-	Globals.ECTargets[3].to_string() + \
+	Globals.PCTargets[3].to_string() + \
 	"\nReward: Galaxies are %s stronger and Dilation is %s dimensions cheaper." % [
 		Globals.percent_to_string(0.02).replace(".00", ""), Globals.int_to_string(5)
 	]
 	
-	$Chal/lenges/EC5/Condition.text = \
+	$Chal/lenges/PC5/Condition.text = \
 	"You cannot buy Timespeed Upgrades, but Permanence Dimensions are raised ^%s." % \
 	Globals.float_to_string(2, 1)
-	$Chal/lenges/EC5/ReqRew.text = \
+	$Chal/lenges/PC5/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
-	Globals.ECTargets[4].to_string() + \
+	Globals.PCTargets[4].to_string() + \
 	"\nReward: Reduce the free Timespeed threshold.\n(×%s → ×%s)" % [
 		Globals.float_to_string(2), Globals.float_to_string(1.95)
 	]
 	
-	$Chal/lenges/EC6/ReqRew.text = \
+	$Chal/lenges/PC6/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
-	Globals.ECTargets[5].to_string() + \
+	Globals.PCTargets[5].to_string() + \
 	"\nReward: Raise all Tachyon Dimension multipliers ^%s." % \
 		Globals.float_to_string(1.05)
 	
-	$Chal/lenges/EC7/Condition.text = \
+	$Chal/lenges/PC7/Condition.text = \
+	"Tachyon and Permanence Dimension multipliers' exponents are raised ^%s." % \
+	Globals.float_to_string(0.8)
+	$Chal/lenges/PC7/ReqRew.text = \
+	"[center]Requirement: %s TC\n" % \
+	Globals.PCTargets[7].to_string() + \
+	"\nReward: You can keep %s Duplicantes Galaxies on Permanence." % Globals.int_to_string(5)
+	
+	$Chal/lenges/PC8/Condition.text = \
 	"Tachyon Galaxies are disabled, but Time Dilation's multiplier is ×%s." % \
 	Globals.float_to_string(10)
-	$Chal/lenges/EC7/ReqRew.text = \
+	$Chal/lenges/PC8/ReqRew.text = \
 	"[center]Requirement: %s TC\n" % \
-	Globals.ECTargets[6].to_string() + \
+	Globals.PCTargets[6].to_string() + \
 	"\nReward: Increase the Dilation multiplier further.\n(×%s → ×%s)" % [
 		Globals.int_to_string(3), Globals.int_to_string(5)
 	]

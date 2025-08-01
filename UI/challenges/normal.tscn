@@ -1000,20 +1000,3 @@ offset_top = 3.0
 offset_right = 297.0
 offset_bottom = 131.0
 texture = ExtResource("16_lt2i0")
-
-[connection signal="pressed" from="CurrentChallenge/Exit" to="." method="challenge_start" binds= [0]]
-[connection signal="pressed" from="Chal/lenges/C1/Start" to="." method="challenge_start" binds= [1]]
-[connection signal="pressed" from="Chal/lenges/C2/Start" to="." method="challenge_start" binds= [2]]
-[connection signal="pressed" from="Chal/lenges/C3/Start" to="." method="challenge_start" binds= [3]]
-[connection signal="pressed" from="Chal/lenges/C4/Start" to="." method="challenge_start" binds= [4]]
-[connection signal="pressed" from="Chal/lenges/C5/Start" to="." method="challenge_start" binds= [5]]
-[connection signal="pressed" from="Chal/lenges/C6/Start" to="." method="challenge_start" binds= [6]]
-[connection signal="pressed" from="Chal/lenges/C7/Start" to="." method="challenge_start" binds= [7]]
-[connection signal="pressed" from="Chal/lenges/C8/Start" to="." method="challenge_start" binds= [8]]
-[connection signal="pressed" from="Chal/lenges/C9/Start" to="." method="challenge_start" binds= [9]]
-[connection signal="pressed" from="Chal/lenges/C10/Start" to="." method="challenge_start" binds= [10]]
-[connection signal="pressed" from="Chal/lenges/C11/Start" to="." method="challenge_start" binds= [11]]
-[connection signal="pressed" from="Chal/lenges/C12/Start" to="." method="challenge_start" binds= [12]]
-[connection signal="pressed" from="Chal/lenges/C13/Start" to="." method="challenge_start" binds= [13]]
-[connection signal="pressed" from="Chal/lenges/C14/Start" to="." method="challenge_start" binds= [14]]
-[connection signal="pressed" from="Chal/lenges/C15/Start" to="." method="challenge_start" binds= [15]]
